@@ -9,9 +9,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TeacherEvaluation.BusinessLogic\TeacherEvaluation.BusinessLogic.csproj" />
     <ProjectReference Include="..\TeacherEvaluation.DataAccess\TeacherEvaluation.DataAccess.csproj" />
   </ItemGroup>
 

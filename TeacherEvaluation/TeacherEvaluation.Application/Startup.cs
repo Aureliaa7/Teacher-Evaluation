@@ -5,9 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TeacherEvaluation.BusinessLogic.Commands;
 using TeacherEvaluation.DataAccess.Data;
 using TeacherEvaluation.DataAccess.Repositories;
 using TeacherEvaluation.Domain.Identity;
+using MediatR;
 
 namespace TeacherEvaluation.Application
 {
@@ -33,6 +35,10 @@ namespace TeacherEvaluation.Application
               .AddDefaultTokenProviders();
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+            //services.AddMediatR(typeof(TeacherRegistrationCommand));
+            services.AddMediatR(typeof(TeacherRegistrationCommand));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

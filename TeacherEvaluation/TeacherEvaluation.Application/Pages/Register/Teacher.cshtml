@@ -1,0 +1,73 @@
+﻿@page
+@model TeacherEvaluation.Application.Pages.Register.TeacherModel
+@{
+    ViewData["Title"] = "Teacher";
+}
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<h3 class="align-text-center">Register Teacher</h3>
+
+<div class="container">
+    <form method="post">
+        <div class="row my-row">
+            <div class="col-md-3">
+                <label asp-for="FirstName">First name</label><br />
+                <input asp-for="FirstName" class="form-control">
+                <span asp-validation-for="FirstName"></span>
+            </div>
+            <div class="col-md-3 add-left-margins">
+                <label asp-for="LastName">Last name</label><br />
+                <input asp-for="LastName" class="form-control">
+                <span asp-validation-for="LastName"></span>
+            </div>
+        </div>
+
+        <div class="row my-row">
+            <div class="col-md-3">
+                <label asp-for="PIN"></label><br />
+                <input asp-for="PIN" class="form-control">
+                <span asp-validation-for="PIN"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="FathersInitial">Father's initial</label><br />
+                <input asp-for="FathersInitial" class="form-control">
+                <span asp-validation-for="FathersInitial"></span>
+            </div>
+        </div>
+
+        <div class="row my-row">
+            <div class="col-md-3">
+                <label asp-for="Degree"></label><br />
+                <input asp-for="Degree" class="form-control">
+                <span asp-validation-for="Degree"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="Department"></label><br />
+                <select asp-for="Department" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Department>()" class="set-width-dropdown">
+                    <option selected="selected" value="">Please select</option>
+                </select>
+                <span asp-validation-for="Department" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="row my-row">
+            <div class="col-md-3">
+                <label asp-for="Email"></label><br />
+                <input asp-for="Email" class="form-control">
+                <span asp-validation-for="Email"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="Password"></label><br />
+                <input asp-for="Password" class="form-control">
+                <span asp-validation-for="Password"></span>
+            </div>
+        </div>
+
+        <div class="row my-row">
+            <input type="submit" value="Register teacher" class="btn btn-dark"/>
+        </div>
+    </form>
+</div>
