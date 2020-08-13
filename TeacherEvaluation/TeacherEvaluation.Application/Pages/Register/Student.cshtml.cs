@@ -9,7 +9,7 @@ using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.Application.Pages.Register
 {
-    public class TeacherModel : PageModel
+    public class StudentModel : PageModel
     {
         private readonly IMediator mediator;
 
@@ -18,15 +18,6 @@ namespace TeacherEvaluation.Application.Pages.Register
         [RegularExpression(pattern: "^(?!(.)\\1{3})(?!19|20)\\d{13}$", ErrorMessage = "Invalid text")]
         [MaxLength(13)]
         public string PIN { get; set; }
-
-        [BindProperty]
-        [Required(ErrorMessage = "Degree is required")]
-        [RegularExpression(pattern: "^[a-zA-Z-]+$", ErrorMessage = "Invalid text")]
-        public string Degree { get; set; }
-
-        [BindProperty]
-        [EnumDataType(typeof(Department))]
-        public Department Department { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "First name is required")]
@@ -55,9 +46,29 @@ namespace TeacherEvaluation.Application.Pages.Register
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        [BindProperty]
+        [Required(ErrorMessage = "Study year is required")]
+        public int StudyYear { get; set; }
+
+
+        [BindProperty]
+        [EnumDataType(typeof(StudyProgramme))]
+        [Required(ErrorMessage = "Study programme is required")]
+        public StudyProgramme StudyProgramme { get; set; }
+
+        [BindProperty]
+        [Required(ErrorMessage = "Section is required")]
+        [RegularExpression(pattern: "^[a-zA-Z-]+$", ErrorMessage = "Invalid text")]
+        public string Section { get; set; }
+
+        [BindProperty]
+        [Required(ErrorMessage = "Group is required")]
+        [RegularExpression(pattern: "^[a-zA-Z1-4\\.1-4a-zA-Z]+$", ErrorMessage = "Invalid text")]
+        public string Group { get; set; }
+
         public List<string> ErrorMessages { get; set; }
 
-        public TeacherModel(IMediator mediator)
+        public StudentModel(IMediator mediator)
         {
             this.mediator = mediator;
         }
@@ -70,16 +81,18 @@ namespace TeacherEvaluation.Application.Pages.Register
         {
             if (ModelState.IsValid)
             {
-                TeacherRegistrationCommand command = new TeacherRegistrationCommand
+                StudentRegistrationCommand command = new StudentRegistrationCommand
                 {
                     FirstName = FirstName,
                     LastName = LastName,
-                    Department = Department,
-                    Degree = Degree,
                     Email = Email,
                     FathersInitial = FathersInitial,
                     Password = Password,
-                    PIN = PIN
+                    PIN = PIN,
+                    Group = Group,
+                    Section = Section,
+                    StudyProgramme = StudyProgramme,
+                    StudyYear = StudyYear
                 };
                 await mediator.Send(command);
                 return RedirectToPage("../Index");
