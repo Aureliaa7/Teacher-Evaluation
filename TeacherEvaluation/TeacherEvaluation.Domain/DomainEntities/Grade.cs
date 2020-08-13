@@ -2,9 +2,10 @@
 
 namespace TeacherEvaluation.Domain.DomainEntities
 {
-    public class Group
+    public class Grade
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
+        public int Value { get; set; }
+        public DateTime Date { get; set; }
     }
 }
