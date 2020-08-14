@@ -6,7 +6,6 @@ namespace TeacherEvaluation.Application.Pages.Account
     {
         public void OnGet()
         {
-
         }
     }
 }

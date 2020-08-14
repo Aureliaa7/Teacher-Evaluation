@@ -30,3 +30,11 @@
 #login-button {
     width: 100%;
 }
+
+.add-margin-bottom {
+    margin-bottom: 100px;
+}
+
+#userDropdown {
+    float: right;
+}
