@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Security.Cryptography.X509Certificates;
 using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.Identity;
 

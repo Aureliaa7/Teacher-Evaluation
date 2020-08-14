@@ -60,6 +60,8 @@ namespace TeacherEvaluation.Application
 
             app.UseRouting();
 
+            DatabaseSeeding.AddDeanAndAdministrator(userManager);
+
             app.UseAuthentication();
             app.UseAuthorization();
 
