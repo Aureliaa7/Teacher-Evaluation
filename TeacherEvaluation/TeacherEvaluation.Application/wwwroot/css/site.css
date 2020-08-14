@@ -20,3 +20,13 @@
 .set-width-dropdown {
     width: 240px;
 }
+
+.align-input-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#login-button {
+    width: 100%;
+}

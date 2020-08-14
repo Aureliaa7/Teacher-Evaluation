@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.Application.Pages.Register
 {
+    [Authorize(Roles = "Administrator")]
     public class TeacherModel : PageModel
     {
         private readonly IMediator mediator;
