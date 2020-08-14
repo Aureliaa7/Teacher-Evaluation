@@ -24,7 +24,9 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                     <a class="dropdown-item" asp-page="../Account/ChangePassword">Change password</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" asp-page="../Account/Logout">Logout</a>
+                    <form class="form-inline dropdown-item" method="post" asp-page="../Account/Logout">
+                        <button type="submit" class="nav-link btn text-dark" style="align-self:center;">Log out</button>
+                    </form>
                 </div>
             </li>
         </ul>
