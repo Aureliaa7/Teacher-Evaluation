@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Commands;
+using TeacherEvaluation.BusinessLogic.Helpers;
 
 namespace TeacherEvaluation.Application.Pages.Account
 {
@@ -37,17 +38,30 @@ namespace TeacherEvaluation.Application.Pages.Account
             if (ModelState.IsValid)
             {
                 LoginCommand loginUserCommand = new LoginCommand { Email = Email, Password = Password };
-                List<string> responseErrors = await mediator.Send(loginUserCommand);
+                LoginResult loginResult = await mediator.Send(loginUserCommand);
 
-                if (responseErrors == null)
+                if (loginResult.ErrorMessages == null)
                 {
-                    return RedirectToPage("../Index");
+                    if(string.Equals(loginResult.UserRole, "Administrator"))
+                    {
+                        return RedirectToPage("../Admin/Home");
+                    }
+                    else if (string.Equals(loginResult.UserRole, "Dean"))
+                    {
+                        return RedirectToPage("../Dean/Home");
+                    }
+                    else if (string.Equals(loginResult.UserRole, "Student"))
+                    {
+                        return RedirectToPage("../Student/Home");
+                    }
+                    else if (string.Equals(loginResult.UserRole, "Teacher"))
+                    {
+                        return RedirectToPage("../Teacher/Home");
+                    }
                 }
-
-                errorMessages = responseErrors;
+                errorMessages = loginResult.ErrorMessages;
             }
             return Page();
         }
-
     }
 }
