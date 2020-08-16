@@ -29,9 +29,9 @@ namespace TeacherEvaluation.BusinessLogic.Commands
             if (result.Succeeded)
             {
                 loginResult.ErrorMessages = null;
-                var user = await userManager.FindByNameAsync(command.Email);
+                var user = await userManager.FindByEmailAsync(command.Email);
                 var roles = await userManager.GetRolesAsync(user);
-                loginResult.UserRole = roles.ElementAt(0);
+                loginResult.UserRole = roles.FirstOrDefault();
             }
             else
             {

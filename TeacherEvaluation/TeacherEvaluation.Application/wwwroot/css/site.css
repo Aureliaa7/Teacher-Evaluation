@@ -38,3 +38,17 @@
 #userDropdown {
     float: right;
 }
+
+.add-top-margin {
+    margin-top: 60px;
+}
+
+#form-button {
+    width: 100%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

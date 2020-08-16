@@ -1,8 +1,9 @@
-﻿using System;
+﻿using MediatR;
+using System;
 
-namespace TeacherEvaluation.Domain.DomainEntities
+namespace TeacherEvaluation.BusinessLogic.Commands
 {
-    public class Subject
+    public class UpdateSubjectCommand : IRequest
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

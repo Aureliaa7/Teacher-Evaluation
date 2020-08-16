@@ -1,0 +1,39 @@
+﻿@page
+@model TeacherEvaluation.Application.Pages.Subjects.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<h4 class="row align-input-center add-top-margin">Subjects</h4>
+
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th>
+                Subject Name 
+            </th>
+            <th>
+                Number Of Credits
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Subjects) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfCredits)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
