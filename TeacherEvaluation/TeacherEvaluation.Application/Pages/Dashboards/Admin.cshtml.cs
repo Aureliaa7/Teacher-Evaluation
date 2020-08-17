@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace TeacherEvaluation.Application.Pages.Dean
+namespace TeacherEvaluation.Application.Pages.Dashboards
 {
-    public class HomeModel : PageModel
+    public class AdminModel : PageModel
     {
         public void OnGet()
         {

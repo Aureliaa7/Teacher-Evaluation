@@ -44,19 +44,19 @@ namespace TeacherEvaluation.Application.Pages.Account
                 {
                     if(string.Equals(loginResult.UserRole, "Administrator"))
                     {
-                        return RedirectToPage("../Admin/Home");
+                        return RedirectToPage("../Dashboards/Admin");
                     }
                     else if (string.Equals(loginResult.UserRole, "Dean"))
                     {
-                        return RedirectToPage("../Dean/Home");
+                        return RedirectToPage("../Dashboards/Dean");
                     }
                     else if (string.Equals(loginResult.UserRole, "Student"))
                     {
-                        return RedirectToPage("../Student/Home");
+                        return RedirectToPage("../Dashboards/Student");
                     }
                     else if (string.Equals(loginResult.UserRole, "Teacher"))
                     {
-                        return RedirectToPage("../Teacher/Home");
+                        return RedirectToPage("../Dashboards/Teacher");
                     }
                 }
                 errorMessages = loginResult.ErrorMessages;

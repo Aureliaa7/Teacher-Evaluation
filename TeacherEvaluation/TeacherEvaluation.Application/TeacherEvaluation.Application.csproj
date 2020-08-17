@@ -22,4 +22,11 @@
     <ProjectReference Include="..\TeacherEvaluation.DataAccess\TeacherEvaluation.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Admin\" />
+    <Folder Include="Pages\Dean\" />
+    <Folder Include="Pages\Student\" />
+    <Folder Include="Pages\Teacher\" />
+  </ItemGroup>
+
 </Project>
