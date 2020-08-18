@@ -2,7 +2,7 @@
 using System;
 using TeacherEvaluation.Domain.DomainEntities;
 
-namespace TeacherEvaluation.BusinessLogic.Commands
+namespace TeacherEvaluation.BusinessLogic.Commands.Students
 {
     public class UpdateStudentCommand : IRequest
     {

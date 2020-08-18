@@ -5,7 +5,7 @@ using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.DataAccess.Repositories;
 using TeacherEvaluation.Domain.DomainEntities;
 
-namespace TeacherEvaluation.BusinessLogic.Commands
+namespace TeacherEvaluation.BusinessLogic.Commands.Subjects
 {
     public class GetSubjectByIdCommandHandler : IRequestHandler<GetSubjectByIdCommand, Subject>
     {

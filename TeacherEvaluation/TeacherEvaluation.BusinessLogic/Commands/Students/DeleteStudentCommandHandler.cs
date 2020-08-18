@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.DataAccess.Repositories;
 
-namespace TeacherEvaluation.BusinessLogic.Commands
+namespace TeacherEvaluation.BusinessLogic.Commands.Students
 {
     public class DeleteStudentCommandHandler : AsyncRequestHandler<DeleteStudentCommand>
     {

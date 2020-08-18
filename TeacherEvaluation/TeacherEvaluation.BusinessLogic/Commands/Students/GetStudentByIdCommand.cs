@@ -2,9 +2,9 @@
 using System;
 using TeacherEvaluation.Domain.DomainEntities;
 
-namespace TeacherEvaluation.BusinessLogic.Commands
+namespace TeacherEvaluation.BusinessLogic.Commands.Students
 {
-    public class GetSubjectByIdCommand : IRequest<Subject>
+    public class GetStudentByIdCommand : IRequest<Student>
     {
         public Guid Id { get; set; }
     }

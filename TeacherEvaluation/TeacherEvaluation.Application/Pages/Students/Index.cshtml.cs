@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using TeacherEvaluation.BusinessLogic.Commands;
+using TeacherEvaluation.BusinessLogic.Commands.Students;
 using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.Application.Pages.Students
 {
+    [Authorize(Roles = "Administrator")]
     public class IndexModel : PageModel
     {
         private IMediator mediator;

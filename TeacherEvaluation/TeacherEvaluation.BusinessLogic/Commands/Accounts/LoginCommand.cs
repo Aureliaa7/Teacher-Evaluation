@@ -1,7 +1,6 @@
 ﻿using MediatR;
-using TeacherEvaluation.BusinessLogic.Helpers;
 
-namespace TeacherEvaluation.BusinessLogic.Commands
+namespace TeacherEvaluation.BusinessLogic.Commands.Accounts
 {
     public class LoginCommand : IRequest<LoginResult>
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TeacherEvaluation.BusinessLogic.Helpers
+namespace TeacherEvaluation.BusinessLogic.Commands.Accounts
 {
     public class LoginResult
     {

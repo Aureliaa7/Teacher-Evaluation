@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TeacherEvaluation.BusinessLogic.Commands;
+using TeacherEvaluation.BusinessLogic.Commands.Teachers;
 using TeacherEvaluation.DataAccess.Data;
 using TeacherEvaluation.DataAccess.Repositories;
 using TeacherEvaluation.Domain.Identity;

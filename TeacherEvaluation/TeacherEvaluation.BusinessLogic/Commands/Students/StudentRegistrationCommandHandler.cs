@@ -7,19 +7,19 @@ using TeacherEvaluation.DataAccess.Repositories;
 using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.Identity;
 
-namespace TeacherEvaluation.BusinessLogic.Commands
+namespace TeacherEvaluation.BusinessLogic.Commands.Students
 {
-    public class TeacherRegistrationCommandHandler : IRequestHandler<TeacherRegistrationCommand, List<string>>
+    public class StudentRegistrationCommandHandler : IRequestHandler<StudentRegistrationCommand, List<string>>
     {
-        private readonly IRepository<Teacher> teacherRepository;
+        private readonly IRepository<Student> studentRepository;
         private readonly UserManager<ApplicationUser> userManager;
-        public TeacherRegistrationCommandHandler(IRepository<Teacher> teacherRepository, UserManager<ApplicationUser> userManager)
+        public StudentRegistrationCommandHandler(IRepository<Student> studentRepository, UserManager<ApplicationUser> userManager)
         {
-            this.teacherRepository = teacherRepository;
+            this.studentRepository = studentRepository;
             this.userManager = userManager;
         }
 
-        public async Task<List<string>> Handle(TeacherRegistrationCommand command, CancellationToken cancellationToken)
+        public async Task<List<string>> Handle(StudentRegistrationCommand command, CancellationToken cancellationToken)
         {
             List<string> errorMessages = new List<string>();
             ApplicationUser newApplicationUser = new ApplicationUser
@@ -35,16 +35,18 @@ namespace TeacherEvaluation.BusinessLogic.Commands
 
             if (result.Succeeded)
             {
-                await userManager.AddToRoleAsync(newApplicationUser, "Teacher");
+                await userManager.AddToRoleAsync(newApplicationUser, "Student");
 
-                Teacher teacher = new Teacher
+                Student student = new Student
                 {
-                    Degree = command.Degree,
-                    Department = command.Department,
+                    StudyProgramme = command.StudyProgramme,
+                    Group = command.Group,
+                    Section = command.Section,
+                    StudyYear = command.StudyYear,
                     PIN = command.PIN,
                     User = newApplicationUser
                 };
-                await teacherRepository.Add(teacher);
+                await studentRepository.Add(student);
                 errorMessages = null;
             }
             else

@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.Domain.Identity;
 
-namespace TeacherEvaluation.BusinessLogic.Commands
+namespace TeacherEvaluation.BusinessLogic.Commands.Accounts
 {
     public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand, List<string>>
     {

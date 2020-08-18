@@ -4,10 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using TeacherEvaluation.BusinessLogic.Helpers;
 using TeacherEvaluation.Domain.Identity;
 
-namespace TeacherEvaluation.BusinessLogic.Commands
+namespace TeacherEvaluation.BusinessLogic.Commands.Accounts
 {
     public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResult>
     {

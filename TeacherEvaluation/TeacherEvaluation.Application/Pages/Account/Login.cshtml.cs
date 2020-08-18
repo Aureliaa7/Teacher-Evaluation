@@ -5,8 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using TeacherEvaluation.BusinessLogic.Commands;
-using TeacherEvaluation.BusinessLogic.Helpers;
+using TeacherEvaluation.BusinessLogic.Commands.Accounts;
 
 namespace TeacherEvaluation.Application.Pages.Account
 {

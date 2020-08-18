@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace TeacherEvaluation.BusinessLogic.Commands
+namespace TeacherEvaluation.BusinessLogic.Commands.Subjects
 {
     public class AddSubjectCommand : IRequest
     {

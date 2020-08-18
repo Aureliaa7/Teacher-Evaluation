@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using System;
 
-namespace TeacherEvaluation.BusinessLogic.Commands
+namespace TeacherEvaluation.BusinessLogic.Commands.Subjects
 {
     public class UpdateSubjectCommand : IRequest
     {
