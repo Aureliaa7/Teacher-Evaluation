@@ -84,7 +84,7 @@ namespace TeacherEvaluation.Application.Pages.Register
                     PIN = PIN
                 };
                 await mediator.Send(command);
-                return RedirectToPage("../Index");
+                return RedirectToPage("../Teachers/Index");
             }
             return Page();
         }

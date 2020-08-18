@@ -21,10 +21,9 @@ namespace TeacherEvaluation.BusinessLogic.Commands
             bool subjectExists = await subjectRepository.Exists(x => x.Id == request.Id);
             if (subjectExists)
             {
-                Subject searchedSubject = await subjectRepository.Get(request.Id);
-                return searchedSubject;
+                return await subjectRepository.Get(request.Id);
             }
-            throw new ItemNotFoundException("The subject to be deleted was not found...");
+            throw new ItemNotFoundException("The subject was not found...");
         }
     }
 }

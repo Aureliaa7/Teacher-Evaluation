@@ -32,6 +32,10 @@ namespace TeacherEvaluation.Application.Pages.Subjects
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
+            if(id == null)
+            {
+                return RedirectToPage("../Errors/404");
+            }
             SubjectId = (Guid)id;
             GetSubjectByIdCommand command = new GetSubjectByIdCommand
             {
@@ -61,7 +65,7 @@ namespace TeacherEvaluation.Application.Pages.Subjects
             }
             catch(ItemNotFoundException)
             {
-                return RedirectToPage("../Errors/404"); // create this error page
+                return RedirectToPage("../Errors/404");
             }
             return RedirectToPage("../Subjects/Index");
         }

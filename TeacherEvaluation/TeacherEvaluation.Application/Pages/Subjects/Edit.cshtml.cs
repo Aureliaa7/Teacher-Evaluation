@@ -35,6 +35,10 @@ namespace TeacherEvaluation.Application.Pages.Subjects
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
+            if(id == null)
+            {
+                return RedirectToPage("../Errors/404");
+            }
             SubjectId = (Guid)id;
             GetSubjectByIdCommand command = new GetSubjectByIdCommand
             {

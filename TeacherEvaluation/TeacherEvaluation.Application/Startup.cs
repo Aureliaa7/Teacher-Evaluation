@@ -35,8 +35,8 @@ namespace TeacherEvaluation.Application
               .AddDefaultTokenProviders();
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IStudentRepository, StudentRepository>();
 
-            //services.AddMediatR(typeof(TeacherRegistrationCommand));
             services.AddMediatR(typeof(TeacherRegistrationCommand));
 
         }
@@ -50,7 +50,7 @@ namespace TeacherEvaluation.Application
             }
             else
             {
-                app.UseExceptionHandler("/Errors/Error");
+                app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }

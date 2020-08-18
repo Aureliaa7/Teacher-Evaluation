@@ -50,7 +50,7 @@ namespace TeacherEvaluation.Application.Pages.Register
 
         [BindProperty]
         [Required(ErrorMessage = "Study year is required")]
-        public int StudyYear { get; set; }
+        public int? StudyYear { get; set; } = null;
 
 
         [BindProperty]
@@ -94,10 +94,10 @@ namespace TeacherEvaluation.Application.Pages.Register
                     Group = Group,
                     Section = Section,
                     StudyProgramme = StudyProgramme,
-                    StudyYear = StudyYear
+                    StudyYear = (int)StudyYear
                 };
                 await mediator.Send(command);
-                return RedirectToPage("../Index");
+                return RedirectToPage("../Students/Index");
             }
             return Page();
         }
