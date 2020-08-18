@@ -18,8 +18,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students
 
         protected override async Task Handle(UpdateStudentCommand request, CancellationToken cancellationToken)
         {
-            bool subjectExists = await studentRepository.Exists(x => x.Id == request.Id);
-            if (subjectExists)
+            bool studentExists = await studentRepository.Exists(x => x.Id == request.Id);
+            if (studentExists)
             { 
                 Student studentToBeUpdated = await studentRepository.GetStudent(request.Id);
                 studentToBeUpdated.PIN = request.PIN;

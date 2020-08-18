@@ -20,7 +20,6 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students
             bool studentExists = await studentRepository.Exists(x => x.Id == request.Id);
             if (studentExists)
             {
-                var studentToBeDeleted = await studentRepository.GetStudent(request.Id);
                 await studentRepository.Delete(request.Id);
             }
             else
