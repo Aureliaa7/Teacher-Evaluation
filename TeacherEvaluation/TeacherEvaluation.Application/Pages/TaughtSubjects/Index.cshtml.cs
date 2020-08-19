@@ -1,29 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using MediatR;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using TeacherEvaluation.DataAccess.Data;
+using TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects;
 using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.Application.Pages.TaughtSubjects
 {
     public class IndexModel : PageModel
     {
-        private readonly TeacherEvaluation.DataAccess.Data.ApplicationDbContext _context;
+        private readonly IMediator mediator;
 
-        public IndexModel(TeacherEvaluation.DataAccess.Data.ApplicationDbContext context)
+        public IndexModel(IMediator mediator)
         {
-            _context = context;
+            this.mediator = mediator;
+            TaughtSubjects = new List<TaughtSubject>();
         }
 
-        public IList<TaughtSubject> TaughtSubject { get;set; }
+        public IEnumerable<TaughtSubject> TaughtSubjects { get; set; }
 
         public async Task OnGetAsync()
         {
-            TaughtSubject = await _context.TaughtSubjects.ToListAsync();
+            GetAllTaughtSubjectsCommand command = new GetAllTaughtSubjectsCommand();
+            TaughtSubjects = await mediator.Send(command);
         }
     }
 }
