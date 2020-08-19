@@ -16,12 +16,10 @@ namespace TeacherEvaluation.DataAccess.Repositories
 
         public async Task<Student> GetStudent(Guid id)
         {
-            var student = await Context.Set<Student>()
+            return await Context.Set<Student>()
                 .Where(x => x.Id == id)
                 .Include(x => x.User)
                 .FirstAsync();
-
-            return student;
         }
 
         public async Task Delete(Guid id)

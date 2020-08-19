@@ -17,12 +17,10 @@ namespace TeacherEvaluation.DataAccess.Repositories
 
         public async Task<Teacher> GetTeacher(Guid id)
         {
-            var teacher = await Context.Set<Teacher>()
+            return await Context.Set<Teacher>()
               .Where(x => x.Id == id)
               .Include(x => x.User)
               .FirstAsync();
-
-            return teacher;
         }
 
         public async Task Delete(Guid id)
@@ -37,12 +35,10 @@ namespace TeacherEvaluation.DataAccess.Repositories
 
         public async Task<IEnumerable<Teacher>> GetAllWithRelatedEntities()
         {
-            var teachers = await Context.Set<Teacher>()
+            return await Context.Set<Teacher>()
                 .Include(x => x.User)
                 .AsNoTracking()
                 .ToListAsync();
-
-            return teachers;
         }
     }
 }

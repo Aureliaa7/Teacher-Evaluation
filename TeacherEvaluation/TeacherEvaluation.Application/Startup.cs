@@ -36,7 +36,8 @@ namespace TeacherEvaluation.Application
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IStudentRepository, StudentRepository>();
-            services.AddScoped<ITeacherRepository, TeacherRepository>();
+            services.AddScoped<ITeacherRepository, TeacherRepository>(); 
+            services.AddScoped<ITaughtSubjectRepository, TaughtSubjectRepository>();
 
             services.AddMediatR(typeof(TeacherRegistrationCommand));
 

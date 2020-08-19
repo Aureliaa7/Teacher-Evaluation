@@ -1,59 +1,78 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using TeacherEvaluation.DataAccess.Data;
+using TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects;
+using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.Application.Pages.TaughtSubjects
 {
     public class DeleteModel : PageModel
     {
-        private readonly TeacherEvaluation.DataAccess.Data.ApplicationDbContext _context;
-
-        public DeleteModel(TeacherEvaluation.DataAccess.Data.ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        private readonly IMediator mediator;
 
         [BindProperty]
-        public TaughtSubject TaughtSubject { get; set; }
+        public Guid TaughtSubjectId { get; set; }
+
+        [BindProperty]
+        [Display(Name = "Teacher name")]
+        public string TeacherName { get; set; }
+
+        [BindProperty]
+        [Display(Name = "Subject title")]
+        public string SubjectTitle{ get; set; }
+
+        [BindProperty]
+        public TaughtSubjectType Type { get; set; }
+
+        public DeleteModel(IMediator mediator)
+        {
+            this.mediator = mediator;
+        }
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToPage("../Errors/404");
             }
-
-            TaughtSubject = await _context.TaughtSubjects.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (TaughtSubject == null)
+            TaughtSubjectId = (Guid)id;
+            GetTaughtSubjectByIdCommand command = new GetTaughtSubjectByIdCommand
             {
-                return NotFound();
+                Id = (Guid)id
+            };
+            try
+            {
+                TaughtSubject taughtSubjectToBeDeleted = await mediator.Send(command);
+                TeacherName = taughtSubjectToBeDeleted.Teacher.User.FirstName + " " + taughtSubjectToBeDeleted.Teacher.User.LastName;
+                SubjectTitle = taughtSubjectToBeDeleted.Subject.Name;
+                Type = taughtSubjectToBeDeleted.Type;
+            }
+            catch (ItemNotFoundException)
+            {
+                return RedirectToPage("../Errors/404");
             }
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(Guid? id)
+        public async Task<IActionResult> OnPostAsync()
         {
-            if (id == null)
+            try
             {
-                return NotFound();
+                DeleteTaughtSubjectCommand command = new DeleteTaughtSubjectCommand
+                {
+                    Id = TaughtSubjectId
+                };
+                await mediator.Send(command);
             }
-
-            TaughtSubject = await _context.TaughtSubjects.FindAsync(id);
-
-            if (TaughtSubject != null)
+            catch (ItemNotFoundException)
             {
-                _context.TaughtSubjects.Remove(TaughtSubject);
-                await _context.SaveChangesAsync();
+                return RedirectToPage("../Errors/404");
             }
-
-            return RedirectToPage("./Index");
+            return RedirectToPage("../TaughtSubjects/Index");
         }
     }
 }
