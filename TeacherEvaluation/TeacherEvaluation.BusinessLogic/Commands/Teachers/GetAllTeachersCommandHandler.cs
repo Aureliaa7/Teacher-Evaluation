@@ -9,16 +9,16 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Teachers
 {
     public class GetAllTeachersCommandHandler : IRequestHandler<GetAllTeachersCommand, IEnumerable<Teacher>>
     {
-        private readonly IRepository<Teacher> teacherRepository;
+        private readonly ITeacherRepository teacherRepository;
 
-        public GetAllTeachersCommandHandler(IRepository<Teacher> teacherRepository)
+        public GetAllTeachersCommandHandler(ITeacherRepository teacherRepository)
         {
             this.teacherRepository = teacherRepository;
         }
 
         public async Task<IEnumerable<Teacher>> Handle(GetAllTeachersCommand request, CancellationToken cancellationToken)
         {
-            return await teacherRepository.GetAll();
+            return await teacherRepository.GetAllWithRelatedEntities();
         }
     }
 }

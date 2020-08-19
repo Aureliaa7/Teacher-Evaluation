@@ -1,0 +1,55 @@
+﻿@page "{handler?}"
+@model TeacherEvaluation.Application.Pages.TaughtSubjects.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/assignSubjectToTeacher.js"></script>
+}
+
+<h4>Assign Subject to Teacher</h4>
+<hr />
+<div class="row my-row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TeacherId" class="control-label">Teacher Name</label><br />
+                <select id="teacher-field" asp-for="TeacherId" asp-items="@Model.Teachers" class="set-width-dropdown">
+                    <option>Select teacher</option>
+                </select>
+                <span asp-validation-for="TeacherId" class="text-danger" />
+            </div>
+            <div class="form-group">
+                <label asp-for="SubjectId" class="control-label">Subject</label><br />
+                <select id="subject-field" asp-for="SubjectId" asp-items="@Model.Subjects" class="set-width-dropdown">
+                    <option>Select subject</option>
+                </select>
+                <span asp-validation-for="SubjectId" class="text-danger" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Type">Study programme</label><br />
+                <select id="type-field" asp-for="Type" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.TaughtSubjectType>()"
+                        class="set-width-dropdown" onchange="get_info()">
+                    <option selected="selected" value="">Please select</option>
+                </select>
+                <span asp-validation-for="Type" class="text-danger" />
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Info</label>
+                <input id="info-field" class="form-control set-width-dropdown" disabled />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-dark set-width-dropdown"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+

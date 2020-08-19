@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TeacherEvaluation.DataAccess.Data;
@@ -32,6 +33,16 @@ namespace TeacherEvaluation.DataAccess.Repositories
             Context.Set<ApplicationUser>().Remove(userToBeDeleted);
 
             await Context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Teacher>> GetAllWithRelatedEntities()
+        {
+            var teachers = await Context.Set<Teacher>()
+                .Include(x => x.User)
+                .AsNoTracking()
+                .ToListAsync();
+
+            return teachers;
         }
     }
 }
