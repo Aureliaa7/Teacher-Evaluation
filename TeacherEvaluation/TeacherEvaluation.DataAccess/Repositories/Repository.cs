@@ -34,7 +34,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
         public async Task<T> Get(Guid id)
         {
             var searched = await Context.Set<T>().FindAsync(id);
-            Context.Entry(searched).State = EntityState.Detached;
+            //Context.Entry(searched).State = EntityState.Detached;
             return searched;
         }
 

@@ -16,6 +16,12 @@
  
         success: function (result) {
             $("#info-field").val(result);
+            if (result == "This assignment already exists") {
+                $("#submit-button").attr("disabled", "disabled");
+            }
+            else {
+                $("#submit-button").removeAttr("disabled");
+            }
             console.log(result);
         },
         error: function () {

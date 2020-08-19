@@ -19,14 +19,14 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="TeacherId" class="control-label">Teacher Name</label><br />
-                <select id="teacher-field" asp-for="TeacherId" asp-items="@Model.Teachers" class="set-width-dropdown">
+                <select id="teacher-field" asp-for="TeacherId" asp-items="@Model.Teachers" class="form-control set-width-dropdown" onchange="get_info()">
                     <option>Select teacher</option>
                 </select>
                 <span asp-validation-for="TeacherId" class="text-danger" />
             </div>
             <div class="form-group">
                 <label asp-for="SubjectId" class="control-label">Subject</label><br />
-                <select id="subject-field" asp-for="SubjectId" asp-items="@Model.Subjects" class="set-width-dropdown">
+                <select id="subject-field" asp-for="SubjectId" asp-items="@Model.Subjects" class="form-control set-width-dropdown" onchange="get_info()">
                     <option>Select subject</option>
                 </select>
                 <span asp-validation-for="SubjectId" class="text-danger" />
@@ -34,19 +34,17 @@
             <div class="form-group">
                 <label asp-for="Type">Study programme</label><br />
                 <select id="type-field" asp-for="Type" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.TaughtSubjectType>()"
-                        class="set-width-dropdown" onchange="get_info()">
-                    <option selected="selected" value="">Please select</option>
+                        class="form-control set-width-dropdown" onchange="get_info()">
+                    <option selected disabled hidden>Please select</option>
                 </select>
                 <span asp-validation-for="Type" class="text-danger" />
             </div>
-
             <div class="form-group">
                 <label class="control-label">Info</label>
                 <input id="info-field" class="form-control set-width-dropdown" disabled />
             </div>
-
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-dark set-width-dropdown"/>
+                <input id="submit-button" type="submit" value="Assign" class="btn btn-dark set-width-dropdown"/>
             </div>
         </form>
     </div>
