@@ -95,12 +95,6 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
             };
             IEnumerable<Teacher> teachers = new List<Teacher>();
             teachers = mediator.Send(command).Result;
-            var toBeReturned = teachers.Select(x =>
-                                            new SelectListItem
-                                            {
-                                                Value = x.Id.ToString(),
-                                                Text = x.User.FirstName + " " + x.User.LastName
-                                            }).ToList();
             return new JsonResult(teachers);
         }
 

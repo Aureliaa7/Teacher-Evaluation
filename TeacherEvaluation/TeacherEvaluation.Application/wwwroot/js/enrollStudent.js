@@ -65,7 +65,6 @@ function get_teachers() {
     });
 }
 
-
 function update_data() {
     get_teachers();
     check_enrollment_existence();
