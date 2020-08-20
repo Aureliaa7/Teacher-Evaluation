@@ -6,13 +6,17 @@
     Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Index</h1>
+@section scripts{
+    <script src="~/js/dataTable.js"></script>
+}
 
-<table class="table">
+<h4 class="row align-input-center add-top-margin">Teachers</h4>
+
+<table id="my-table" class="table table-striped table-bordered set-max-width">
     <thead>
         <tr>
             <th>
-                PIN
+                Teacher Name
             </th>
             <th>
                 Degree
@@ -24,23 +28,25 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Teachers) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PIN)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Degree)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Department)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Teachers)
+        {
+            var fullName = item.User.LastName + " " + item.User.FathersInitial + " " + item.User.FirstName;
+            <tr>
+                <td>
+                    @fullName
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Degree)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

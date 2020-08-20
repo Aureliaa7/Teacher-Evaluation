@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TeacherEvaluation.Domain.DomainEntities;
 
@@ -8,5 +9,6 @@ namespace TeacherEvaluation.DataAccess.Repositories
     {
         Task<Student> GetStudent(Guid id);
         Task Delete(Guid id);
+        Task<IEnumerable<Student>> GetAllWithRelatedEntities();
     }
 }
