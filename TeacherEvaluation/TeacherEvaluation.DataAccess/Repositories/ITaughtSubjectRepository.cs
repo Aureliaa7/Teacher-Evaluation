@@ -9,5 +9,6 @@ namespace TeacherEvaluation.DataAccess.Repositories
     {
         Task<TaughtSubject> GetTaughtSubject(Guid id);
         Task<IEnumerable<TaughtSubject>> GetAllWithRelatedEntities();
+        Task<TaughtSubject> GetTaughtSubject(Guid teacherId, Guid subjectId, TaughtSubjectType type);
     }
 }

@@ -20,37 +20,6 @@ namespace TeacherEvaluation.DataAccess.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            AddRoles(modelBuilder);
-        }
-
-        private void AddRoles(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<ApplicationRole>().HasData(
-                new ApplicationRole
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Administrator",
-                    NormalizedName = "ADMINISTRATOR"
-                },
-                 new ApplicationRole
-                 {
-                     Id = Guid.NewGuid(),
-                     Name = "Dean",
-                     NormalizedName = "DEAN"
-                 },
-                 new ApplicationRole
-                 {
-                     Id = Guid.NewGuid(),
-                     Name = "Student",
-                     NormalizedName = "STUDENT"
-                 },
-                   new ApplicationRole
-                   {
-                       Id = Guid.NewGuid(),
-                       Name = "Teacher",
-                       NormalizedName = "TEACHER"
-                   }
-                );
         }
     }
 }

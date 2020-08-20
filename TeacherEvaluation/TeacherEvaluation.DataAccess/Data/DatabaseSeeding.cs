@@ -45,6 +45,49 @@ namespace TeacherEvaluation.DataAccess.Data
                 }
             }
         }
+
+        public static void AddRoles(RoleManager<ApplicationRole> roleManager)
+        {
+            if(roleManager.FindByNameAsync("Administrator").Result == null)
+            {
+                ApplicationRole administratorRole = new ApplicationRole
+                {
+                    Name = "Administrator",
+                    NormalizedName = "ADMINISTRATOR"
+                };
+                IdentityResult resultAdmin = roleManager.CreateAsync(administratorRole).Result;
+            }
+
+            if (roleManager.FindByNameAsync("Dean").Result == null)
+            {
+                ApplicationRole deanRole = new ApplicationRole
+                {
+                    Name = "Dean",
+                    NormalizedName = "DEAN"
+                };
+                IdentityResult resultDean = roleManager.CreateAsync(deanRole).Result;
+            }
+
+            if (roleManager.FindByNameAsync("Student").Result == null)
+            {
+                ApplicationRole studentRole = new ApplicationRole
+                {
+                    Name = "Student",
+                    NormalizedName = "STUDENT"
+                };
+                IdentityResult resultStudent = roleManager.CreateAsync(studentRole).Result;
+            }
+
+            if (roleManager.FindByNameAsync("Teacher").Result == null)
+            {
+                ApplicationRole teacherRole = new ApplicationRole
+                {
+                    Name = "Teacher",
+                    NormalizedName = "TEACHER"
+                };
+                IdentityResult resultTeacher = roleManager.CreateAsync(teacherRole).Result;
+            }
+        }
     }
 }
 

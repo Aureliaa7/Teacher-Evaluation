@@ -44,7 +44,8 @@ namespace TeacherEvaluation.Application
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<ApplicationUser> userManager)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+            UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -64,6 +65,7 @@ namespace TeacherEvaluation.Application
 
             app.UseRouting();
 
+            DatabaseSeeding.AddRoles(roleManager);
             DatabaseSeeding.AddDeanAndAdministrator(userManager);
 
             app.UseAuthentication();

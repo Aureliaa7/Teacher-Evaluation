@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Pages\Enrollments\Create.cshtml.cs~RF14e9eda6.TMP" />
     <None Remove="Startup.cs~RF9bd5640.TMP" />
   </ItemGroup>
 

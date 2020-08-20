@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TeacherEvaluation.DataAccess.Data;
 
 namespace TeacherEvaluation.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200820175334_ChangedGradesTable")]
+    partial class ChangedGradesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -289,6 +291,36 @@ namespace TeacherEvaluation.DataAccess.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("38fbaf3f-1ca2-4f9a-818d-bf7cd98541e6"),
+                            ConcurrencyStamp = "d415202c-f07e-4886-9122-421b5599103a",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = new Guid("8460ae5c-f0ea-4a42-a09b-e4865a30f20e"),
+                            ConcurrencyStamp = "317bfa2f-6593-4d68-bbd5-3eb06ab67b8f",
+                            Name = "Dean",
+                            NormalizedName = "DEAN"
+                        },
+                        new
+                        {
+                            Id = new Guid("08b599e5-709a-4249-bfc8-10e7d1ff8f34"),
+                            ConcurrencyStamp = "3430cbe2-c331-4736-9541-00680223f20a",
+                            Name = "Student",
+                            NormalizedName = "STUDENT"
+                        },
+                        new
+                        {
+                            Id = new Guid("6ffafc63-baf7-4651-b218-5296a48efa1c"),
+                            ConcurrencyStamp = "7f3a1fb8-5e71-4912-bd48-712aab437cbd",
+                            Name = "Teacher",
+                            NormalizedName = "TEACHER"
+                        });
                 });
 
             modelBuilder.Entity("TeacherEvaluation.Domain.Identity.ApplicationUser", b =>

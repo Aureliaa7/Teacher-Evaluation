@@ -33,5 +33,15 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .AsNoTracking()
                 .ToListAsync();
         }
+
+        public async Task<TaughtSubject> GetTaughtSubject(Guid teacherId, Guid subjectId, TaughtSubjectType type)
+        {
+            return await Context.Set<TaughtSubject>()
+              .Where(x => x.Teacher.Id == teacherId && x.Subject.Id == subjectId && x.Type == type)
+              .Include(entity => entity.Teacher)
+                  .ThenInclude(teacher => teacher.User)
+              .Include(entity => entity.Subject)
+              .FirstAsync();
+        }
     }
 }
