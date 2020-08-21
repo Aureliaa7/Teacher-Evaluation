@@ -9,7 +9,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Enrollments
 {
     public class DeleteEnrollmentCommandHandler : AsyncRequestHandler<DeleteEnrollmentCommand>
     {
-        private IRepository<Enrollment> enrollmentRepository;
+        private readonly IRepository<Enrollment> enrollmentRepository;
 
         public DeleteEnrollmentCommandHandler(IRepository<Enrollment> enrollmentRepository)
         {

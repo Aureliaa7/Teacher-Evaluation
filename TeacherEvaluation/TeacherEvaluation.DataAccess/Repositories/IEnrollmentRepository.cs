@@ -9,5 +9,6 @@ namespace TeacherEvaluation.DataAccess.Repositories
     {
         Task<Enrollment> GetEnrollment(Guid id);
         Task<IEnumerable<Enrollment>> GetAllWithRelatedEntities();
+        Task<IEnumerable<Enrollment>> GetForStudent(Guid studentId);
     }
 }

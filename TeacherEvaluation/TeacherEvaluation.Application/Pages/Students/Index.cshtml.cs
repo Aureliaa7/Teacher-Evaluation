@@ -11,7 +11,7 @@ namespace TeacherEvaluation.Application.Pages.Students
     [Authorize(Roles = "Administrator")]
     public class IndexModel : PageModel
     {
-        private IMediator mediator;
+        private readonly IMediator mediator;
 
         public IEnumerable<Student> Students { get; set; }
 

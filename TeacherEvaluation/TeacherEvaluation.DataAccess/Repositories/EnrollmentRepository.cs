@@ -43,5 +43,21 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .AsNoTracking()
                 .ToListAsync();
         }
+
+        public async Task<IEnumerable<Enrollment>> GetForStudent(Guid studentId)
+        {
+            return await Context.Set<Enrollment>()
+                .Where(x => x.Student.Id == studentId)
+                .Include(x => x.TaughtSubject)
+                    .ThenInclude(x => x.Teacher)
+                        .ThenInclude(x => x.User)
+                .Include(x => x.TaughtSubject)
+                    .ThenInclude(x => x.Subject)
+                .Include(x => x.Student)
+                    .ThenInclude(x => x.User)
+                .Include(x => x.Grade)
+                .AsNoTracking()
+                .ToListAsync();
+        }
     }
 }
