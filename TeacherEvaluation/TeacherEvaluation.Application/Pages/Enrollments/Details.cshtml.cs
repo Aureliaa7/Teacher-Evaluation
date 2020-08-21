@@ -11,21 +11,16 @@ using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.Application.Pages.Enrollments
 {
-    [Authorize(Roles = "Administrator")]
-    public class DeleteModel : PageModel
+    [Authorize]
+    public class DetailsModel : PageModel
     {
         private readonly IMediator mediator;
-
-        public DeleteModel(IMediator mediator)
-        {
-            this.mediator = mediator;
-        }
 
         [BindProperty]
         public Guid EnrollmentId { get; set; }
 
         [BindProperty]
-        [Display(Name ="Student Name")]
+        [Display(Name = "Student Name")]
         public string StudentName { get; set; }
 
         [BindProperty]
@@ -53,6 +48,12 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
         [BindProperty]
         public string Group { get; set; }
 
+
+        public DetailsModel(IMediator mediator)
+        {
+            this.mediator = mediator;
+        }
+
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
             if (id == null)
@@ -72,7 +73,7 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
                 string studentLastName = enrollment.Student.User.LastName;
 
                 string teacherFirstName = enrollment.TaughtSubject.Teacher.User.FirstName;
-                string teacherFathersInitial = enrollment.TaughtSubject .Teacher.User.FathersInitial;
+                string teacherFathersInitial = enrollment.TaughtSubject.Teacher.User.FathersInitial;
                 string teacherLastName = enrollment.TaughtSubject.Teacher.User.LastName;
 
                 TeacherName = string.Join(" ", teacherLastName, teacherFathersInitial, teacherFirstName);
@@ -89,14 +90,6 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
                 return RedirectToPage("../Errors/404");
             }
             return Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync()
-        {
-            DeleteEnrollmentCommand command = new DeleteEnrollmentCommand { Id = EnrollmentId };
-            await mediator.Send(command);
-
-            return RedirectToPage("./Index");
         }
     }
 }
