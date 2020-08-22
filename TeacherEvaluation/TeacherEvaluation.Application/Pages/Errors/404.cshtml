@@ -24,13 +24,12 @@
             </div>
         </div>
         <div class="glowing_stars">
-            <div class="star"></div>
-            <div class="star"></div>
-            <div class="star"></div>
-            <div class="star"></div>
-            <div class="star"></div>
-
+            @for (int index = 0; index < 80; index++)
+            {
+                <div class="star"></div>
+            }
         </div>
+        <h2>Go <a asp-page=@Model.RedirectPage>Home!</a>!</h2>
     </div>
 </body>
 
