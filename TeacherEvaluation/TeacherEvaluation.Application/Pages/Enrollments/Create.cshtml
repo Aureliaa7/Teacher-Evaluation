@@ -19,7 +19,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="StudentId" class="control-label">Student Name</label><br />
-                <select id="student-field" asp-for="StudentId" asp-items="@Model.Students" class="form-control set-width-dropdown" onchange="update_data()">
+                <select id="student-id-field" asp-for="StudentId" asp-items="@Model.Students" class="form-control set-width-dropdown" onchange="update_data()">
                     <option>Select student</option>
                 </select>
                 <span asp-validation-for="StudentId" class="text-danger" />
@@ -27,7 +27,7 @@
 
             <div class="form-group">
                 <label asp-for="SubjectId" class="control-label">Subject</label><br />
-                <select id="subject-field" asp-for="SubjectId" asp-items="@Model.Subjects" class="form-control set-width-dropdown" onchange="update_data()">
+                <select id="subject-id-field" asp-for="SubjectId" asp-items="@Model.Subjects" class="form-control set-width-dropdown" onchange="update_data()">
                     <option>Select subject</option>
                 </select>
                 <span asp-validation-for="SubjectId" class="text-danger" />
@@ -35,7 +35,7 @@
 
             <div class="form-group">
                 <label asp-for="Type">Taught Subject Type</label><br />
-                <select id="type-field" asp-for="Type" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.TaughtSubjectType>()"
+                <select id="type-id-field" asp-for="Type" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.TaughtSubjectType>()"
                         class="form-control set-width-dropdown" onchange="update_data()">
                     <option selected disabled hidden>Please select</option>
                 </select>
@@ -44,7 +44,7 @@
 
             <div class="form-group">
                 <label asp-for="TeacherId" class="control-label">Teacher Name</label><br />
-                <select id="teacher-field" asp-for="TeacherId" class="form-control set-width-dropdown" onchange="check_enrollment_existence()">
+                <select id="teacher-id-field" asp-for="TeacherId" class="form-control set-width-dropdown" onclick="check_enrollment_existence()">
                 </select>
                 <span asp-validation-for="TeacherId" class="text-danger" />
             </div>
@@ -55,7 +55,7 @@
             </div>
 
             <div class="form-group">
-                <input id="submit-button" type="submit" value="Enroll" class="btn btn-dark set-width-dropdown" />
+                <input id="enroll-button" type="submit" value="Enroll" class="btn btn-dark set-width-dropdown" />
             </div>
         </form>
     </div>

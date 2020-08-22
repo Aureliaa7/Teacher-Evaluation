@@ -70,9 +70,9 @@ namespace TeacherEvaluation.Application.Pages.Grades
             return new JsonResult(subjects);
         }
 
-        public IActionResult OnGetCheckEnrollmentExistence(string studentId, string subjectId, string type)
+        public IActionResult OnGetCheckEnrollment(string studentId, string subjectId, string type)
         {
-            CheckEnrollmentExistenceCommand command = new CheckEnrollmentExistenceCommand
+            EnrollmentExistsCommand command = new EnrollmentExistsCommand
             {
                 StudentId = new Guid(studentId),
                 SubjectId = new Guid(subjectId),

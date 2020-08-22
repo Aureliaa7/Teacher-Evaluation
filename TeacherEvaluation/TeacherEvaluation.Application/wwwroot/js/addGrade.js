@@ -1,6 +1,6 @@
 ﻿function get_subjects() {
     var search_details = {
-        studentId: $("#student-field").val()
+        studentId: $("#student").val()
     };
     console.log(search_details);
 
@@ -12,12 +12,13 @@
         url: "../Grades/Edit?handler=ReturnSubjects",
 
         success: function (result) {
+            $("#subject option").remove();
             console.log(result);
             $.each(result, function (index, item) {
                 console.log("enrollment id: " + item.id);
                 console.log("subject id: " + item.taughtSubject.subject.id);
                 console.log(item.taughtSubject.subject.name);
-                $("#subject-field").append('<option value="' + item.taughtSubject.subject.id + '">' + item.taughtSubject.subject.name + '</option>');
+                $("#subject").append('<option value="' + item.taughtSubject.subject.id + '">' + item.taughtSubject.subject.name + '</option>');
             });
         },
         error: function () {
@@ -26,25 +27,25 @@
     });
 }
 
-function check_enrollment_existence() {
+function enrollment_exists() {
     var enrollment_details = {
-        studentId: $("#student-field").val(),
-        subjectId: $("#subject-field").val(),
-        type: $("#type-field").val(),
+        studentId: $("#student").val(),
+        subjectId: $("#subject").val(),
+        type: $("#type").val(),
     };
     console.log(enrollment_details);
     $.ajax({
         type: "GET",
         data: enrollment_details,
-        url: "../Grades/Edit?handler=CheckEnrollmentExistence",
+        url: "../Grades/Edit?handler=CheckEnrollment",
 
         success: function (result) {
             console.log(result);
-            if (result == "The enrollment exists") {
-                $("#submit-button").removeAttr("disabled");
+            if (result == "The enrollment does not exist") {
+                $("#grade-button").attr("disabled", "disabled");
             }
             else {
-                $("#submit-button").attr("disabled", "disabled");
+                $("#grade-button").removeAttr("disabled");
             }
         },
         error: function () {

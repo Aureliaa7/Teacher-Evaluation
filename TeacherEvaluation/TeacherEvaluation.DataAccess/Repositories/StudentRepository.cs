@@ -27,6 +27,10 @@ namespace TeacherEvaluation.DataAccess.Repositories
         { 
             var studentToBeDeleted = await GetStudent(id);
             var userToBeDeleted = studentToBeDeleted.User;
+            var enrollments = Context.Set<Enrollment>().Where(x => x.Student.Id == id);
+            var grades = enrollments.Select(x => x.Grade);
+            Context.Set<Enrollment>().RemoveRange(enrollments);
+            Context.Set<Grade>().RemoveRange(grades);
             Context.Set<Student>().Remove(studentToBeDeleted);
             Context.Set<ApplicationUser>().Remove(userToBeDeleted);
 
