@@ -76,3 +76,14 @@ input::-webkit-inner-spin-button {
 .set-max-width {
     width: 100%;
 }
+
+.login-image {
+    margin-bottom: 60px;
+    background-image: url("../images/notebook.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.add-margin-top-200 {
+    margin-top: 200px;
+}

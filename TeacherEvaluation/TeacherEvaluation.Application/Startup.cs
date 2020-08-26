@@ -10,6 +10,7 @@ using TeacherEvaluation.DataAccess.Data;
 using TeacherEvaluation.DataAccess.Repositories;
 using TeacherEvaluation.Domain.Identity;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TeacherEvaluation.Application
 {
@@ -41,6 +42,11 @@ namespace TeacherEvaluation.Application
             services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
 
             services.AddMediatR(typeof(TeacherRegistrationCommand));
+
+            services.AddMvc().AddRazorPagesOptions(options =>
+            {
+                options.Conventions.AddPageRoute("/Account/Login", "");
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
         }
 
