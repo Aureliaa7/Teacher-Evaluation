@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects;
+using TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities;
 
@@ -30,7 +30,7 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
             Guid currentTeacherId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
             try
             {
-                GetSubjectsForTeacherCommand command = new GetSubjectsForTeacherCommand { UserId = currentTeacherId, Type = TaughtSubjectType.Laboratory };
+                GetTaughtSubjectsByTypeCommand command = new GetTaughtSubjectsByTypeCommand { UserId = currentTeacherId, Type = TaughtSubjectType.Laboratory };
                 TaughtSubjects = await mediator.Send(command);
             }
             catch (ItemNotFoundException)

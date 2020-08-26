@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TeacherEvaluation.BusinessLogic.Commands.Students;
+using TeacherEvaluation.BusinessLogic.Commands.Students.StudentsForTaughtSubject;
 using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.Application.Pages.Students

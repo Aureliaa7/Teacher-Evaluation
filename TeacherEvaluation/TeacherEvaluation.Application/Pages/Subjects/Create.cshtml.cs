@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using TeacherEvaluation.BusinessLogic.Commands.Subjects;
+using TeacherEvaluation.BusinessLogic.Commands.Subjects.CrudOperations;
 
 namespace TeacherEvaluation.Application.Pages.Subjects
 {

@@ -8,10 +8,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using TeacherEvaluation.BusinessLogic.Commands.Enrollments;
-using TeacherEvaluation.BusinessLogic.Commands.Students;
-using TeacherEvaluation.BusinessLogic.Commands.Subjects;
-using TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects;
+using TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations;
+using TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations;
+using TeacherEvaluation.BusinessLogic.Commands.Subjects.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities;
 

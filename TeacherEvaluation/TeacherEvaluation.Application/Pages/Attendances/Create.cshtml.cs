@@ -8,9 +8,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using TeacherEvaluation.BusinessLogic.Commands.Attendances;
-using TeacherEvaluation.BusinessLogic.Commands.Students.Attendance;
-using TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects;
+using TeacherEvaluation.BusinessLogic.Commands.Attendances.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities;
 
