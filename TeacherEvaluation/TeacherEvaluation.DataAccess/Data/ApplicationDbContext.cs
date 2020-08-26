@@ -16,6 +16,7 @@ namespace TeacherEvaluation.DataAccess.Data
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<TaughtSubject> TaughtSubjects { get; set; }
         public DbSet<Grade> Grades { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

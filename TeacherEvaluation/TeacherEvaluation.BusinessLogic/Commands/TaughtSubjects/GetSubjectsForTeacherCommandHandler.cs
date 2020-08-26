@@ -13,26 +13,26 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects
     public class GetSubjectsForTeacherCommandHandler : IRequestHandler<GetSubjectsForTeacherCommand, IEnumerable<TaughtSubject>>
     {
         private readonly ITeacherRepository teacherRepository;
-        private readonly ITaughtSubjectRepository taughtSubjectRepository;
         private readonly IRepository<ApplicationUser> userRepository;
+        private readonly ITaughtSubjectRepository taughtSubjectRepository;
 
-        public GetSubjectsForTeacherCommandHandler(ITeacherRepository teacherRepository, ITaughtSubjectRepository taughtSubjectRepository,
-            IRepository<ApplicationUser> userRepository)
+        public GetSubjectsForTeacherCommandHandler(ITeacherRepository teacherRepository, 
+            IRepository<ApplicationUser> userRepository, ITaughtSubjectRepository taughtSubjectRepository)
         {
             this.teacherRepository = teacherRepository;
-            this.taughtSubjectRepository = taughtSubjectRepository;
             this.userRepository = userRepository;
+            this.taughtSubjectRepository = taughtSubjectRepository;
         }
 
         public async Task<IEnumerable<TaughtSubject>> Handle(GetSubjectsForTeacherCommand request, CancellationToken cancellationToken)
         {
             bool userExists = await userRepository.Exists(x => x.Id == request.UserId);
-            if (userExists)
+            bool teacherExists = await teacherRepository.Exists(x => x.User.Id == request.UserId);
+            if(userExists && teacherExists)
             {
-                var allTeachers = await teacherRepository.GetAllWithRelatedEntities();
-                var teacher = allTeachers.Where(x => x.User.Id == request.UserId).First();
-                var allTaughtSubjects = await taughtSubjectRepository.GetAllWithRelatedEntities();
-                return allTaughtSubjects.Where(x => x.Teacher.Id == teacher.Id && x.Type == request.Type);
+                var teacher = (await teacherRepository.GetAllWithRelatedEntities()).Where(x => x.User.Id == request.UserId).First();
+                var taughtSubjects = await taughtSubjectRepository.GetAllWithRelatedEntities();
+                return (IEnumerable<TaughtSubject>)taughtSubjects.Where(x => x.Teacher.Id == teacher.Id);
             }
             throw new ItemNotFoundException("The teacher was not found...");
         }

@@ -72,7 +72,6 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .Include(x => x.Student)
                     .ThenInclude(x => x.User)
                 .Include(x => x.Grade)
-                .AsNoTracking()
                 .ToListAsync();
         }
     }

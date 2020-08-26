@@ -5,8 +5,9 @@ using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects
 {
-    public class GetSubjectsForTeacherCommand : IRequest<IEnumerable<TaughtSubject>>
+    public class GetTaughtSubjectsByTypeCommand : IRequest<IEnumerable<TaughtSubject>>
     {
         public Guid UserId { get; set; }
+        public TaughtSubjectType Type { get; set; }
     }
 }
