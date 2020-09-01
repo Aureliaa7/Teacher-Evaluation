@@ -1,0 +1,12 @@
+﻿Hello {0},
+
+Please confirm your email address for your Teacher Evaluation account by clicking the link below:
+
+{1}
+
+After the email address is confirmed, you can use the following password to log in: {2} 
+We recommend you to change this password after the first login.
+
+Have a nice day!
+Teacher Evaluation
+

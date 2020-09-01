@@ -8,6 +8,7 @@ using TeacherEvaluation.DataAccess.Repositories;
 using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.Identity;
 using TeacherEvaluation.EmailSender.NotificationModel;
+using TeacherEvaluation.EmailSender.NotificationService;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
 {
@@ -56,7 +57,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
                 };
                 await teacherRepository.Add(teacher);
 
-                Notification notification = ConfigureNotificationMessage(confirmationUrl, newApplicationUser, request.Password);
+                Notification notification = EmailSending.ConfigureNotificationMessage(confirmationUrl, newApplicationUser, request.Password);
                 emailService.Send(notification);
 
                 errorMessages = null;
@@ -69,40 +70,6 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
                 }
             }
             return errorMessages;
-        }
-
-        private Notification ConfigureNotificationMessage(string url, ApplicationUser newApplicationUser, string password)
-        {
-            Notification notification = CreateNotificationMessage(url, newApplicationUser, password);
-
-            NotificationAddress recipient = GetRecipientAddress(newApplicationUser);
-            notification.ToAddresses.Add(recipient);
-            notification.FromAddress = new NotificationAddress("noreply-teacher.evaluation", "teacher.evaluation.project2021@gmail.com");
-
-            return notification;
-        }
-
-        private Notification CreateNotificationMessage(string loginUrl, ApplicationUser newApplicationUser, string password)
-        {
-            string bodyResourceName = "TeacherEvaluation.BusinessLogic.NotificationTemplates.EmailConfirmationNotificationBody.txt";
-            string subjectResourceName = "TeacherEvaluation.BusinessLogic.NotificationTemplates.EmailConfirmationNotificationSubject.txt";
-
-            string notificationBody = ResourceProvider.GetResourceText(bodyResourceName);
-            string notificationSubject = ResourceProvider.GetResourceText(subjectResourceName);
-            string recipientName = GetRecipientAddress(newApplicationUser).Name;
-
-            return new Notification
-            {
-                Subject = notificationSubject,
-                Content = string.Format(notificationBody, recipientName, loginUrl, password)
-            };
-        }
-
-        private NotificationAddress GetRecipientAddress(ApplicationUser newApplicationUser)
-        {
-            ApplicationUser user = newApplicationUser;
-            string name = string.Join(" ", newApplicationUser.LastName, newApplicationUser.FathersInitial, newApplicationUser.FirstName);
-            return new NotificationAddress(name, user.Email);
         }
     }
 }
