@@ -10,7 +10,7 @@ using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.Application.Pages.Register
 {
-    [Authorize(Roles="Administrator")]
+    [Authorize(Roles = "Administrator")]
     public class StudentModel : PageModel
     {
         private readonly IMediator mediator;
@@ -83,6 +83,12 @@ namespace TeacherEvaluation.Application.Pages.Register
         {
             if (ModelState.IsValid)
             {
+                string confirmationUrlTemplate = Url.Page(
+                        "/Account/ConfirmEmail",
+                        pageHandler: null,
+                        values: new { id = "((userId))", token = "((token))" },
+                        protocol: Request.Scheme);
+
                 StudentRegistrationCommand command = new StudentRegistrationCommand
                 {
                     FirstName = FirstName,
@@ -94,7 +100,8 @@ namespace TeacherEvaluation.Application.Pages.Register
                     Group = Group,
                     Section = Section,
                     StudyProgramme = StudyProgramme,
-                    StudyYear = (int)StudyYear
+                    StudyYear = (int)StudyYear,
+                    ConfirmationUrlTemplate = confirmationUrlTemplate
                 };
                 await mediator.Send(command);
                 return RedirectToPage("../Students/Index");

@@ -72,6 +72,12 @@ namespace TeacherEvaluation.Application.Pages.Register
         {
             if (ModelState.IsValid)
             {
+                string confirmationUrlTemplate = Url.Page(
+                        "/Account/ConfirmEmail",
+                        pageHandler: null,
+                        values: new { id = "((userId))", token = "((token))" },
+                        protocol: Request.Scheme);
+
                 TeacherRegistrationCommand command = new TeacherRegistrationCommand
                 {
                     FirstName = FirstName,
@@ -81,7 +87,8 @@ namespace TeacherEvaluation.Application.Pages.Register
                     Email = Email,
                     FathersInitial = FathersInitial,
                     Password = Password,
-                    PIN = PIN
+                    PIN = PIN,
+                    ConfirmationUrlTemplate = confirmationUrlTemplate
                 };
                 await mediator.Send(command);
                 return RedirectToPage("../Teachers/Index");

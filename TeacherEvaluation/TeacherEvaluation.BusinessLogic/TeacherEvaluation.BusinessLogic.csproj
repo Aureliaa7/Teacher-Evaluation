@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="NotificationTemplates\EmailConfirmationNotificationBody.txt" />
+    <EmbeddedResource Include="NotificationTemplates\EmailConfirmationNotificationSubject.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MediatR" Version="8.1.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
@@ -13,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TeacherEvaluation.DataAccess\TeacherEvaluation.DataAccess.csproj" />
     <ProjectReference Include="..\TeacherEvaluation.Domain\TeacherEvaluation.Domain.csproj" />
+    <ProjectReference Include="..\TeacherEvaluation.EmailSender\TeacherEvaluation.EmailSender.csproj" />
   </ItemGroup>
 
 </Project>

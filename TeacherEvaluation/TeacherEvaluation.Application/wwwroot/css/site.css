@@ -84,6 +84,11 @@ input::-webkit-inner-spin-button {
     background-size: cover;
 }
 
-.add-margin-top-200 {
-    margin-top: 200px;
+.add-margin-top-300 {
+    margin-top: 300px;
+}
+
+.email-confirmation {
+    text-align: center;
+    margin-top: 300px;
 }

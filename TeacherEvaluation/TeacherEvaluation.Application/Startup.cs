@@ -11,6 +11,9 @@ using TeacherEvaluation.DataAccess.Repositories;
 using TeacherEvaluation.Domain.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TeacherEvaluation.EmailSender.NotificationService;
+using TeacherEvaluation.EmailSender.NotificationModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TeacherEvaluation.Application
 {
@@ -27,11 +30,10 @@ namespace TeacherEvaluation.Application
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-
             services.AddDbContext<ApplicationDbContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, ApplicationRole>()
+            services.AddIdentity<ApplicationUser, ApplicationRole>(config => config.SignIn.RequireConfirmedEmail = true)
               .AddEntityFrameworkStores<ApplicationDbContext>()
               .AddDefaultTokenProviders();
 
@@ -48,6 +50,18 @@ namespace TeacherEvaluation.Application
                 options.Conventions.AddPageRoute("/Account/Login", "");
             }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
+            services.AddSingleton<IEmailConfiguration>(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
+            services.AddTransient<INotificationService, EmailService>();
+
+            //var notificationMetadata = Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
+            //services.AddSingleton(notificationMetadata);
+
+            //services.AddAuthorization(options =>
+            //{
+            //    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+            //        .RequireAuthenticatedUser()
+            //        .Build();
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

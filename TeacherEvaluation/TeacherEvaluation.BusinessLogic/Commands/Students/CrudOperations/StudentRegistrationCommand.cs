@@ -16,5 +16,6 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
         public string FathersInitial { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string ConfirmationUrlTemplate { get; set; }
     }
 }

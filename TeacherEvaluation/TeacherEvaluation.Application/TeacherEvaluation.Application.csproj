@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TeacherEvaluation.BusinessLogic\TeacherEvaluation.BusinessLogic.csproj" />
     <ProjectReference Include="..\TeacherEvaluation.DataAccess\TeacherEvaluation.DataAccess.csproj" />
+    <ProjectReference Include="..\TeacherEvaluation.EmailSender\TeacherEvaluation.EmailSender.csproj" />
   </ItemGroup>
 
 </Project>

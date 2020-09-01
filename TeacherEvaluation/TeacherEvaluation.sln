@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeacherEvaluation.DataAcces
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeacherEvaluation.Domain", "TeacherEvaluation.Domain\TeacherEvaluation.Domain.csproj", "{5A552243-3AF0-4C87-9EA6-8B0B1C5EE839}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeacherEvaluation.BusinessLogic", "TeacherEvaluation.BusinessLogic\TeacherEvaluation.BusinessLogic.csproj", "{6C2FBC46-B712-4223-B8F8-16F1F3759C19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeacherEvaluation.BusinessLogic", "TeacherEvaluation.BusinessLogic\TeacherEvaluation.BusinessLogic.csproj", "{6C2FBC46-B712-4223-B8F8-16F1F3759C19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeacherEvaluation.EmailSender", "TeacherEvaluation.EmailSender\TeacherEvaluation.EmailSender.csproj", "{9EE613D0-787A-48A6-9299-216376073814}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{6C2FBC46-B712-4223-B8F8-16F1F3759C19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C2FBC46-B712-4223-B8F8-16F1F3759C19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C2FBC46-B712-4223-B8F8-16F1F3759C19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EE613D0-787A-48A6-9299-216376073814}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EE613D0-787A-48A6-9299-216376073814}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EE613D0-787A-48A6-9299-216376073814}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EE613D0-787A-48A6-9299-216376073814}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
