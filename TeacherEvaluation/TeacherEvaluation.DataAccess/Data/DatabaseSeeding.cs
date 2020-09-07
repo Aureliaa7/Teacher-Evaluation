@@ -17,7 +17,8 @@ namespace TeacherEvaluation.DataAccess.Data
                     FathersInitial = "R.",
                     UserName = "alexpop@gmail.com",
                     NormalizedUserName = "ALEXPOP@GMAIL.COM",
-                    NormalizedEmail = "ALEXPOP@GMAIL.COM"
+                    NormalizedEmail = "ALEXPOP@GMAIL.COM",
+                    EmailConfirmed = true
                 };
                 IdentityResult resultAdministrator = userManager.CreateAsync(administrator, "Admin_ucv98@").Result;
                 if (resultAdministrator.Succeeded)
@@ -36,7 +37,8 @@ namespace TeacherEvaluation.DataAccess.Data
                     FathersInitial = "M.",
                     UserName = "silviunegrea@gmail.com",
                     NormalizedUserName = "SILVIUNEGREA@GMAIL.COM",
-                    NormalizedEmail = "SILVIUNEGREA@GMAIL.COM"
+                    NormalizedEmail = "SILVIUNEGREA@GMAIL.COM",
+                    EmailConfirmed = true
                 };
                 IdentityResult resultDean = userManager.CreateAsync(dean, "Dean_ucv98@").Result;
                 if (resultDean.Succeeded)
