@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -9,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations;
-using TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities;
 
@@ -41,7 +39,19 @@ namespace TeacherEvaluation.Application.Pages.Grades
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime? DateTime { get; set; }
 
-        public List<SelectListItem> Students { get; set; }
+        [BindProperty]
+        [EnumDataType(typeof(StudyProgramme))]
+        [Required(ErrorMessage = "Study programme is required")]
+        public StudyProgramme StudyProgramme { get; set; }
+
+        [BindProperty]
+        [Required(ErrorMessage = "Study domain is required")]
+        public Guid StudyDomainId { get; set; }
+
+        [BindProperty]
+        [Display(Name = "Study domain")]
+        [Required(ErrorMessage = "Specialization is required")]
+        public Guid SpecializationId { get; set; }
 
         public List<SelectListItem> TaughtSubjects { get; set; }
 
@@ -50,17 +60,8 @@ namespace TeacherEvaluation.Application.Pages.Grades
             this.mediator = mediator;
         }
 
-        public async Task<IActionResult> OnGetAsync(Guid? id)
+        public IActionResult OnGetAsync()
         {
-            GetAllStudentsCommand getStudentsCommand = new GetAllStudentsCommand();
-            var students = await mediator.Send(getStudentsCommand);
-
-            Students = students.Select(x =>
-                                            new SelectListItem
-                                            {
-                                                Value = x.Id.ToString(),
-                                                Text = x.User.FirstName + " " + x.User.LastName
-                                            }).ToList();
             return Page();
         }
 
