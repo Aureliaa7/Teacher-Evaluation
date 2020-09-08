@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
@@ -52,16 +53,19 @@ namespace TeacherEvaluation.Application.Pages.Register
         [Required(ErrorMessage = "Study year is required")]
         public int? StudyYear { get; set; } = null;
 
-
         [BindProperty]
         [EnumDataType(typeof(StudyProgramme))]
         [Required(ErrorMessage = "Study programme is required")]
         public StudyProgramme StudyProgramme { get; set; }
 
         [BindProperty]
-        [Required(ErrorMessage = "Section is required")]
-        [RegularExpression(pattern: "^[a-zA-Z-]+$", ErrorMessage = "Invalid text")]
-        public string Section { get; set; }
+        [Required(ErrorMessage = "Study domain is required")]
+        public Guid StudyDomainId { get; set; }
+
+        [BindProperty]
+        [Display(Name = "Study domain")]
+        [Required(ErrorMessage = "Specialization is required")]
+        public Guid SpecializationId { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "Group is required")]
@@ -75,8 +79,24 @@ namespace TeacherEvaluation.Application.Pages.Register
             this.mediator = mediator;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
+        {            
+            return Page();
+        }
+
+        public IActionResult OnGetReturnDomains(string studyProgramme)
         {
+            StudyProgramme programme = (StudyProgramme)Enum.Parse(typeof(StudyProgramme), studyProgramme);
+            GetStudyDomainsByProgrammeCommand command = new GetStudyDomainsByProgrammeCommand { StudyProgramme = programme };
+            var domains = mediator.Send(command).Result;
+            return new JsonResult(domains);
+        }
+
+        public IActionResult OnGetReturnSpecializations(string studyDomainId)
+        {
+            GetSpecializationsByDomainCommand command = new GetSpecializationsByDomainCommand {StudyDomainId = new Guid(studyDomainId) };
+            var specializations = mediator.Send(command).Result;
+            return new JsonResult(specializations);
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -98,8 +118,7 @@ namespace TeacherEvaluation.Application.Pages.Register
                     Password = Password,
                     PIN = PIN,
                     Group = Group,
-                    Section = Section,
-                    StudyProgramme = StudyProgramme,
+                    SpecializationId = SpecializationId,
                     StudyYear = (int)StudyYear,
                     ConfirmationUrlTemplate = confirmationUrlTemplate
                 };

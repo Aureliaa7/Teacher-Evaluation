@@ -47,11 +47,7 @@ namespace TeacherEvaluation.Application.Pages.Students
         public int? StudyYear { get; set; } = null;
 
         [BindProperty]
-        [Display(Name = "Study programme")]
-        public StudyProgramme StudyProgramme { get; set; }
-
-        [BindProperty]
-        public string Section { get; set; }
+        public Specialization Specialization { get; set; }
 
         [BindProperty]
         public string Group { get; set; }
@@ -69,16 +65,15 @@ namespace TeacherEvaluation.Application.Pages.Students
             };
             try
             {
-                Student studentToBeDeleted = await mediator.Send(command);
-                FirstName = studentToBeDeleted.User.FirstName;
-                LastName = studentToBeDeleted.User.LastName;
-                Email = studentToBeDeleted.User.Email;
-                FathersInitial = studentToBeDeleted.User.FathersInitial;
-                PIN = studentToBeDeleted.PIN;
-                Group = studentToBeDeleted.Group;
-                Section = studentToBeDeleted.Section;
-                StudyProgramme = studentToBeDeleted.StudyProgramme;
-                StudyYear = studentToBeDeleted.StudyYear;
+                Student student = await mediator.Send(command);
+                FirstName = student.User.FirstName;
+                LastName = student.User.LastName;
+                Email = student.User.Email;
+                FathersInitial = student.User.FathersInitial;
+                PIN = student.PIN;
+                Group = student.Group;
+                Specialization = student.Specialization;
+                StudyYear = student.StudyYear;
             }
             catch (ItemNotFoundException)
             {

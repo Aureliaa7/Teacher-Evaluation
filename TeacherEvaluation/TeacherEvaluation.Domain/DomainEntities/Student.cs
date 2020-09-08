@@ -9,8 +9,7 @@ namespace TeacherEvaluation.Domain.DomainEntities
         public ApplicationUser User { get; set; }
         public string PIN { get; set; }
         public int StudyYear { get; set; }
-        public StudyProgramme StudyProgramme { get; set; }
-        public string Section { get; set; }
+        public Specialization Specialization { get; set; }
         public string Group { get; set; }
     }
 }

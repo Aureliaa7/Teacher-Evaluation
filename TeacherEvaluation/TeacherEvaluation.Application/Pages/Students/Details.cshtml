@@ -31,22 +31,34 @@
             @Html.DisplayFor(model => model.LastName)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FathersInitial)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FathersInitial)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.StudyYear)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.StudyYear)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.StudyProgramme)
+            Study programme
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.StudyProgramme)
+            @Html.DisplayFor(model => model.Specialization.StudyDomain.StudyProgramme)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Section)
+            Study domain
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Section)
+            @Html.DisplayFor(model => model.Specialization.StudyDomain.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Specialization
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Specialization.Name)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Group)

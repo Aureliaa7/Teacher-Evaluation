@@ -81,8 +81,8 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
                 Type = enrollment.TaughtSubject.Type;
                 StudentName = string.Join(" ", studentLastName, studentFathersInitial, studentFirstName);
                 Group = enrollment.Student.Group;
-                Section = enrollment.Student.Section;
-                StudyProgramme = enrollment.Student.StudyProgramme;
+                //Section = enrollment.Student.Section;
+                //StudyProgramme = enrollment.Student.StudyProgramme;
                 StudyYear = enrollment.Student.StudyYear;
             }
             catch (ItemNotFoundException)

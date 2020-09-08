@@ -47,11 +47,7 @@ namespace TeacherEvaluation.Application.Pages.Students
         public int? StudyYear { get; set; } = null;
 
         [BindProperty]
-        [Display(Name = "Study programme")]
-        public StudyProgramme StudyProgramme { get; set; }
-
-        [BindProperty]
-        public string Section { get; set; }
+        public Specialization Specialization { get; set; }
 
         [BindProperty]
         public string Group { get; set; }
@@ -76,8 +72,7 @@ namespace TeacherEvaluation.Application.Pages.Students
                 FathersInitial = studentToBeDeleted.User.FathersInitial;
                 PIN = studentToBeDeleted.PIN;
                 Group = studentToBeDeleted.Group;
-                Section = studentToBeDeleted.Section;
-                StudyProgramme = studentToBeDeleted.StudyProgramme;
+                Specialization = studentToBeDeleted.Specialization;
                 StudyYear = studentToBeDeleted.StudyYear;
             }
             catch (ItemNotFoundException)

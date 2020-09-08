@@ -20,6 +20,8 @@ namespace TeacherEvaluation.DataAccess.Repositories
             return await Context.Set<Student>()
                 .Where(x => x.Id == id)
                 .Include(x => x.User)
+                .Include(x => x.Specialization)
+                    .ThenInclude(x => x.StudyDomain)
                 .FirstAsync();
         }
 
@@ -41,6 +43,8 @@ namespace TeacherEvaluation.DataAccess.Repositories
         {
             return await Context.Set<Student>()
                 .Include(x => x.User)
+                .Include(x => x.Specialization)
+                    .ThenInclude(x => x.StudyDomain)
                 .AsNoTracking()
                 .ToListAsync();
         }

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities;
@@ -54,9 +56,15 @@ namespace TeacherEvaluation.Application.Pages.Students
         public StudyProgramme StudyProgramme { get; set; }
 
         [BindProperty]
-        [Required(ErrorMessage = "Section is required")]
-        [RegularExpression(pattern: "^[a-zA-Z-]+$", ErrorMessage = "Invalid text")]
-        public string Section { get; set; }
+        [Required(ErrorMessage = "Study domain is required")]
+        public Guid StudyDomainId { get; set; }
+
+        [BindProperty]
+        [Required(ErrorMessage = "Specialization is required")]
+        public Guid SpecializationId { get; set; }
+
+        [BindProperty]
+        public Specialization Specialization { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "Group is required")]
@@ -89,8 +97,9 @@ namespace TeacherEvaluation.Application.Pages.Students
                 FathersInitial = student.User.FathersInitial;
                 PIN = student.PIN;
                 Group = student.Group;
-                Section = student.Section;
-                StudyProgramme = student.StudyProgramme;
+                Specialization = student.Specialization;
+                StudyDomainId = StudyDomainId;
+                SpecializationId = student.Specialization.Id;
                 StudyYear = student.StudyYear;
             }
             catch (ItemNotFoundException)
@@ -98,6 +107,17 @@ namespace TeacherEvaluation.Application.Pages.Students
                 return RedirectToPage("../Errors/404");
             }
             return Page();
+        }
+
+        public IActionResult OnGetReturnStudyProgrammes()
+        {
+            var studyProgrammes = new SelectList(Enum.GetValues(typeof(StudyProgramme)).OfType<Enum>()
+                                                                                       .Select(x => new SelectListItem
+                                                                                       {
+                                                                                           Text = Enum.GetName(typeof(StudyProgramme), x),
+                                                                                           Value = (Convert.ToInt32(x)).ToString()
+                                                                                       }), "Value", "Text");
+            return new JsonResult(studyProgrammes);
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -115,8 +135,7 @@ namespace TeacherEvaluation.Application.Pages.Students
                         Group = Group,
                         LastName = LastName,
                         PIN = PIN,
-                        Section = Section,
-                        StudyProgramme = StudyProgramme,
+                        SpecializationId = SpecializationId,
                         StudyYear = (int)StudyYear
                     };
                     await mediator.Send(command);
@@ -131,3 +150,4 @@ namespace TeacherEvaluation.Application.Pages.Students
         }
     }
 }
+

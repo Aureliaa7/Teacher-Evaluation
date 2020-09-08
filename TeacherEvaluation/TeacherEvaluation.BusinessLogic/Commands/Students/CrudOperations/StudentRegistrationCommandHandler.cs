@@ -17,11 +17,14 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
         private readonly IRepository<Student> studentRepository;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly INotificationService emailService;
-        public StudentRegistrationCommandHandler(IRepository<Student> studentRepository, UserManager<ApplicationUser> userManager, INotificationService emailService)
+        private readonly ISpecializationRepository specializationRepository;
+        public StudentRegistrationCommandHandler(IRepository<Student> studentRepository, UserManager<ApplicationUser> userManager, 
+            INotificationService emailService, ISpecializationRepository specializationRepository)
         {
             this.studentRepository = studentRepository;
             this.userManager = userManager;
             this.emailService = emailService;
+            this.specializationRepository = specializationRepository;
         }
 
         public async Task<List<string>> Handle(StudentRegistrationCommand request, CancellationToken cancellationToken)
@@ -48,21 +51,30 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
 
                 await userManager.AddToRoleAsync(newApplicationUser, "Student");
 
-                Student student = new Student
+                bool specializationExists = await specializationRepository.Exists(x => x.Id == request.SpecializationId);
+                if (specializationExists)
                 {
-                    StudyProgramme = request.StudyProgramme,
-                    Group = request.Group,
-                    Section = request.Section,
-                    StudyYear = request.StudyYear,
-                    PIN = request.PIN,
-                    User = newApplicationUser
-                };
-                await studentRepository.Add(student);
+                    var specialization = await specializationRepository.GetSpecialization(request.SpecializationId);
 
-                Notification notification = EmailSending.ConfigureNotificationMessage(confirmationUrl, newApplicationUser, request.Password);
-                emailService.Send(notification);
+                    Student student = new Student
+                    {
+                        Specialization = specialization,
+                        Group = request.Group,
+                        StudyYear = request.StudyYear,
+                        PIN = request.PIN,
+                        User = newApplicationUser
+                    };
+                    await studentRepository.Add(student);
 
-                errorMessages = null;
+                    Notification notification = EmailSending.ConfigureNotificationMessage(confirmationUrl, newApplicationUser, request.Password);
+                    emailService.Send(notification);
+
+                    errorMessages = null;
+                }
+                else
+                {
+                    errorMessages.Add("The specialization does not exist");
+                }
             }
             else
             {

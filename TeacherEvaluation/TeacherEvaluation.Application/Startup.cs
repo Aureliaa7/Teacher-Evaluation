@@ -42,6 +42,7 @@ namespace TeacherEvaluation.Application
             services.AddScoped<ITeacherRepository, TeacherRepository>(); 
             services.AddScoped<ITaughtSubjectRepository, TaughtSubjectRepository>();
             services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
+            services.AddScoped<ISpecializationRepository, SpecializationRepository>();
 
             services.AddMediatR(typeof(TeacherRegistrationCommand));
 
@@ -52,21 +53,11 @@ namespace TeacherEvaluation.Application
 
             services.AddSingleton<IEmailConfiguration>(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
             services.AddTransient<INotificationService, EmailService>();
-
-            //var notificationMetadata = Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
-            //services.AddSingleton(notificationMetadata);
-
-            //services.AddAuthorization(options =>
-            //{
-            //    options.FallbackPolicy = new AuthorizationPolicyBuilder()
-            //        .RequireAuthenticatedUser()
-            //        .Build();
-            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
-            UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<ApplicationUser> userManager, 
+            RoleManager<ApplicationRole> roleManager, ApplicationDbContext context)
         {
             if (env.IsDevelopment())
             {
@@ -88,6 +79,7 @@ namespace TeacherEvaluation.Application
 
             DatabaseSeeding.AddRoles(roleManager);
             DatabaseSeeding.AddDeanAndAdministrator(userManager);
+            DatabaseSeeding.AddStudyDomainsAndSpecializations(context);
 
             app.UseAuthentication();
             app.UseAuthorization();

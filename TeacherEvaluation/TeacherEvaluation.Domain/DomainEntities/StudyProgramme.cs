@@ -3,6 +3,7 @@
     public enum StudyProgramme
     {
         License,
-        Master
+        Master,
+        Doctorate
     }
 }

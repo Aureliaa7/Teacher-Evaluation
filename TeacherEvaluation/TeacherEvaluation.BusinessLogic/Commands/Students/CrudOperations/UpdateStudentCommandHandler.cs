@@ -10,22 +10,25 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
     public class UpdateStudentCommandHandler : AsyncRequestHandler<UpdateStudentCommand>
     {
         private readonly IStudentRepository studentRepository;
+        private readonly ISpecializationRepository specializationRepository;
 
-        public UpdateStudentCommandHandler(IStudentRepository studentRepository)
+        public UpdateStudentCommandHandler(IStudentRepository studentRepository, ISpecializationRepository specializationRepository)
         {
             this.studentRepository = studentRepository;
+            this.specializationRepository = specializationRepository;
         }
 
         protected override async Task Handle(UpdateStudentCommand request, CancellationToken cancellationToken)
         {
             bool studentExists = await studentRepository.Exists(x => x.Id == request.Id);
-            if (studentExists)
-            { 
+            bool specializationExists = await specializationRepository.Exists(x => x.Id == request.SpecializationId);
+            if (studentExists && specializationExists)
+            {
+                var specialization = await specializationRepository.GetSpecialization(request.SpecializationId);
                 Student studentToBeUpdated = await studentRepository.GetStudent(request.Id);
                 studentToBeUpdated.PIN = request.PIN;
-                studentToBeUpdated.Section = request.Section;
+                studentToBeUpdated.Specialization = specialization;
                 studentToBeUpdated.Group = request.Group;
-                studentToBeUpdated.StudyProgramme = request.StudyProgramme;
                 studentToBeUpdated.StudyYear = request.StudyYear;
                 studentToBeUpdated.User.FirstName = request.FirstName;
                 studentToBeUpdated.User.LastName = request.LastName;
@@ -35,7 +38,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
             }
             else
             {
-                throw new ItemNotFoundException("The student was not found...");
+                throw new ItemNotFoundException("The student or the specialization was not found...");
             }
         }
     }
