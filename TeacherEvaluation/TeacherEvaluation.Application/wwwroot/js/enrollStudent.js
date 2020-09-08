@@ -70,3 +70,33 @@ function update_data() {
     get_teachers();
     check_enrollment_existence();
 }
+
+function get_students_by_specialization() {
+    var search_details = {
+        specializationId: $("#specialization").val(),
+    };
+    console.log(search_details);
+
+    $.ajax({
+        type: "GET",
+        data: search_details,
+        dataType: 'json',
+        contextType: 'application/json',
+        url: "../Enrollments/Create?handler=ReturnStudents",
+
+        success: function (result) {
+            $("#student option").remove();
+            console.log(result);
+            $.each(result, function (index, item) {
+                console.log(item.id);
+                var fullNameArray = [item.user.firstName, item.user.fathersInitial, item.user.lastName];
+                var fullName = fullNameArray.join(" ");
+                console.log(fullName);
+                $("#student").append('<option value="' + item.id + '">' + fullName + '</option>');
+            });
+        },
+        error: function () {
+            console.log("Something went wrong");
+        }
+    });
+}

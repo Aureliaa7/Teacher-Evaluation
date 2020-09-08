@@ -48,7 +48,12 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
         public StudyProgramme StudyProgramme { get; set; }
 
         [BindProperty]
-        public string Section { get; set; }
+        [Display(Name = "Study Domain")]
+        public string StudyDomain { get; set; }
+
+        [BindProperty]
+        [Display(Name = "Specialization")]
+        public string Specialization { get; set; }
 
         [BindProperty]
         public string Group { get; set; }
@@ -80,8 +85,9 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
                 Type = enrollment.TaughtSubject.Type;
                 StudentName = string.Join(" ", studentLastName, studentFathersInitial, studentFirstName);
                 Group = enrollment.Student.Group;
-                //Section = enrollment.Student.Section;
-                //StudyProgramme = enrollment.Student.StudyProgramme;
+                Specialization = enrollment.Student.Specialization.Name;
+                StudyDomain = enrollment.Student.Specialization.StudyDomain.Name;
+                StudyProgramme = enrollment.Student.Specialization.StudyDomain.StudyProgramme;
                 StudyYear = enrollment.Student.StudyYear;
             }
             catch (ItemNotFoundException)

@@ -16,16 +16,16 @@
     <thead>
         <tr>
             <th>
-                Teacher Name
+                Teacher
             </th>
             <th>
-                Subject Title
+                Subject
             </th>
             <th>
                 Type
             </th>
             <th>
-                Student Name
+                Student
             </th>
             <th>
                 Study Year
@@ -34,12 +34,14 @@
                 Study Programme
             </th>
             <th>
-                Section
+                Study Domain
+            </th>
+            <th>
+                Specialization
             </th>
             <th>
                 Group
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -54,35 +56,38 @@
             var studentFathersInitial = item.Student.User.FathersInitial;
             var studentFirstName = item.Student.User.FirstName;
             var studentName = studentLastName + " " + studentFathersInitial + " " + studentFirstName;
-        <tr>
-            <td>
-                @teacherName
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaughtSubject.Subject.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaughtSubject.Type)
-            </td>
-            <td>
-                @studentName
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Student.StudyYear)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Student.StudyProgramme)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Student.Section)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.Student.Group)
-            </td>
-            <td>
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @teacherName
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaughtSubject.Subject.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaughtSubject.Type)
+                </td>
+                <td>
+                    @studentName
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.StudyYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.Specialization.StudyDomain.StudyProgramme)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.Specialization.StudyDomain.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.Specialization.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.Group)
+                </td>
+                <td>
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

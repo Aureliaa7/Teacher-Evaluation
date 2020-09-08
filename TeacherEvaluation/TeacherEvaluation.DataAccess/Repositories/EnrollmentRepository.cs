@@ -25,6 +25,9 @@ namespace TeacherEvaluation.DataAccess.Repositories
                     .ThenInclude(x => x.Subject)
                 .Include(x => x.Student)
                     .ThenInclude(x => x.User)
+                .Include(x => x.Student)
+                    .ThenInclude(x => x.Specialization)
+                        .ThenInclude(x => x.StudyDomain)
                 .Include(x => x.Grade)
                 .FirstAsync();
         }
@@ -39,6 +42,9 @@ namespace TeacherEvaluation.DataAccess.Repositories
                     .ThenInclude(x => x.Subject)
                 .Include(x => x.Student)
                     .ThenInclude(x => x.User)
+                .Include(x => x.Student)
+                    .ThenInclude(x => x.Specialization)
+                        .ThenInclude(x => x.StudyDomain)
                 .Include(x => x.Grade)
                 .AsNoTracking()
                 .ToListAsync();
@@ -55,6 +61,9 @@ namespace TeacherEvaluation.DataAccess.Repositories
                     .ThenInclude(x => x.Subject)
                 .Include(x => x.Student)
                     .ThenInclude(x => x.User)
+                .Include(x => x.Student)
+                    .ThenInclude(x => x.Specialization)
+                        .ThenInclude(x => x.StudyDomain)
                 .Include(x => x.Grade)
                 .AsNoTracking()
                 .ToListAsync();
@@ -71,6 +80,9 @@ namespace TeacherEvaluation.DataAccess.Repositories
                     .ThenInclude(x => x.Subject)
                 .Include(x => x.Student)
                     .ThenInclude(x => x.User)
+                .Include(x => x.Student)
+                    .ThenInclude(x => x.Specialization)
+                        .ThenInclude(x => x.StudyDomain)
                 .Include(x => x.Grade)
                 .ToListAsync();
         }

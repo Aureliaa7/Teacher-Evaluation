@@ -37,7 +37,19 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
         [EnumDataType(typeof(TaughtSubjectType))]
         public TaughtSubjectType Type { get; set; }
 
-        public List<SelectListItem> Students { get; set; }
+        [BindProperty]
+        [EnumDataType(typeof(StudyProgramme))]
+        [Required(ErrorMessage = "Study programme is required")]
+        public StudyProgramme StudyProgramme { get; set; }
+
+        [BindProperty]
+        [Required(ErrorMessage = "Study domain is required")]
+        public Guid StudyDomainId { get; set; }
+
+        [BindProperty]
+        [Display(Name = "Study domain")]
+        [Required(ErrorMessage = "Specialization is required")]
+        public Guid SpecializationId { get; set; }
 
         public List<SelectListItem> Subjects { get; set; }
 
@@ -47,20 +59,9 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
         }
 
         public async Task<IActionResult> OnGet()
-        {
-            GetAllStudentsCommand getStudentsCommand = new GetAllStudentsCommand();
-            var students = await mediator.Send(getStudentsCommand);
-
+        { 
             GetAllSubjectsCommand getSubjectsCommand = new GetAllSubjectsCommand();
             var subjects = await mediator.Send(getSubjectsCommand);
-
-            Students = students.Select(x =>
-                                            new SelectListItem
-                                            {
-                                                Value = x.Id.ToString(),
-                                                Text = x.User.FirstName + " " + x.User.LastName
-                                            }).ToList();
-
             Subjects = subjects.Select(x =>
                                             new SelectListItem
                                             {
@@ -97,6 +98,14 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
             IEnumerable<Teacher> teachers = new List<Teacher>();
             teachers = mediator.Send(command).Result;
             return new JsonResult(teachers);
+        }
+
+
+        public IActionResult OnGetReturnStudents(string specializationId)
+        {
+            GetStudentsBySpecializationIdCommand command = new GetStudentsBySpecializationIdCommand { SpecializationId = new Guid(specializationId) };
+            var students = mediator.Send(command).Result;
+            return new JsonResult(students);
         }
 
         public async Task<IActionResult> OnPostAsync()
