@@ -25,12 +25,12 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
             TaughtSubjects = new List<TaughtSubject>();
         }
 
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            Guid currentTeacherId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            Guid currentUserId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
             try
             {
-                GetTaughtSubjectsByTypeCommand command = new GetTaughtSubjectsByTypeCommand { UserId = currentTeacherId, Type = TaughtSubjectType.Course };
+                GetTaughtSubjectsByTypeCommand command = new GetTaughtSubjectsByTypeCommand { UserId = currentUserId, Type = TaughtSubjectType.Course };
                 TaughtSubjects = await mediator.Send(command);
             }catch (ItemNotFoundException)
             {

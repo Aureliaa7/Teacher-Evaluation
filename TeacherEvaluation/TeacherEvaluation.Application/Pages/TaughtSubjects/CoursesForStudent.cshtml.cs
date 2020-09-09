@@ -12,14 +12,14 @@ using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.Application.Pages.TaughtSubjects
 {
-    [Authorize(Roles = "Teacher")]
-    public class LaboratoriesForTeacherModel : PageModel
+    [Authorize(Roles = "Student")]
+    public class CoursesForStudentModel : PageModel
     {
         private readonly IMediator mediator;
 
         public IEnumerable<TaughtSubject> TaughtSubjects { get; set; }
 
-        public LaboratoriesForTeacherModel(IMediator mediator)
+        public CoursesForStudentModel(IMediator mediator)
         {
             this.mediator = mediator;
             TaughtSubjects = new List<TaughtSubject>();
@@ -28,9 +28,9 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
         public async Task<IActionResult> OnGetAsync()
         {
             Guid currentUserId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            GetSubjectsForStudentCommand command = new GetSubjectsForStudentCommand { SubjectType = TaughtSubjectType.Course, UserId = currentUserId };
             try
             {
-                GetTaughtSubjectsByTypeCommand command = new GetTaughtSubjectsByTypeCommand { UserId = currentUserId, Type = TaughtSubjectType.Laboratory };
                 TaughtSubjects = await mediator.Send(command);
             }
             catch (ItemNotFoundException)
