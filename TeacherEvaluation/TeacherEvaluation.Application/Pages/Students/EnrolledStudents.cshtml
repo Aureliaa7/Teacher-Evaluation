@@ -24,7 +24,10 @@
                 Study Programme
             </th>
             <th>
-                Section
+                Study Domain
+            </th>
+            <th>
+                Specialization
             </th>
             <th>
                 Group
@@ -35,23 +38,26 @@
         @foreach (var item in Model.EnrolledStudents)
         {
             var fullName = item.User.LastName + " " + item.User.FathersInitial + " " + item.User.FirstName;
-            <tr>
-                <td>
-                    @fullName
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StudyYear)
-                </td>
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.StudyProgramme)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Section)
-                </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.Group)
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @fullName
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudyYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Specialization.StudyDomain.StudyProgramme)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Specialization.StudyDomain.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Specialization.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Group)
+            </td>
+        </tr>
         }
     </tbody>
 </table>

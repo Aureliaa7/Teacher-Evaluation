@@ -13,3 +13,21 @@ $(document).ready(function () {
         'columnDefs': [{ 'orderable': false, 'targets': 9 }]
     });
 });
+
+$(document).ready(function () {
+    $('#teachers-index').DataTable({
+        'columnDefs': [{ 'orderable': false, 'targets': 3 }]
+    });
+});
+
+$(document).ready(function () {
+    $('#taught-subjects-index').DataTable({
+        'columnDefs': [{ 'orderable': false, 'targets': 3 }]
+    });
+});
+
+$(document).ready(function () {
+    $('#subjects-index').DataTable({
+        'columnDefs': [{ 'orderable': false, 'targets': 2 }]
+    });
+});
