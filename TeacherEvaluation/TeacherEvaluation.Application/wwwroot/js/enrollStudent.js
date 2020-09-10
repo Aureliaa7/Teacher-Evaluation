@@ -1,11 +1,11 @@
-﻿function check_enrollment_existence() {
-    var student_id = { id: $("#student-id-field").val() };
+﻿function check_enrollment_availability() {
+    var student_id = { id: $("#student").val() };
     var subject_id = { id: $("#subject-id-field").val() };
     var teacher_id = { id: $("#teacher-id-field").val() };
     var subject_type = { id: $("#type-id-field") };
 
     var enrollment_details = {
-        studentId: $("#student-id-field").val(),
+        studentId: $("#student").val(),
         subjectId: $("#subject-id-field").val(),
         teacherId: $("#teacher-id-field").val(),
         type: $("#type-id-field").val(),
@@ -14,12 +14,12 @@
     $.ajax({
         type: "GET",
         data: enrollment_details,
-        url: "../Enrollments/Create?handler=CheckEnrollmentExistence",
+        url: "../Enrollments/Create?handler=CheckEnrollmentAvailability",
 
         success: function (result) {
             $("#info-field").val(result);
             console.log(result);
-            if (result == "The enrollment already exists") {
+            if (result == "The enrollment is not available") {
                 $("#enroll-button").attr("disabled", "disabled");
             }
             else {
@@ -68,7 +68,7 @@ function get_teachers() {
 
 function update_data() {
     get_teachers();
-    check_enrollment_existence();
+    check_enrollment_availability();
 }
 
 function get_students_by_specialization() {

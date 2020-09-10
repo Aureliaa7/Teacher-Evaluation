@@ -19,13 +19,14 @@ namespace TeacherEvaluation.Application.Pages.Subjects
         [BindProperty]
         public Guid SubjectId { get; set; }
         [BindProperty]
-        [Display(Name = "Subject name")]
-        [Required(ErrorMessage = "Subject name is required")]
-        [RegularExpression(pattern: "^[a-zA-Z-]+(?: [a-zA-Z-]+)+$", ErrorMessage = "Invalid text")]
+        [Display(Name = "Subject title")]
+        [Required(ErrorMessage = "Subject title is required")]
+        [RegularExpression(pattern: "[a-zA-Z\\s]+", ErrorMessage = "Invalid text")]
         public string SubjectName { get; set; }
         [BindProperty]
         [Display(Name = "Number of credits")]
         [Required(ErrorMessage = "Number of credits is required")]
+        [Range(1, 5, ErrorMessage = "Number of credits must be between 1 and 5")]
         public int NumberOfCredits { get; set; }
 
         public EditModel(IMediator mediator)

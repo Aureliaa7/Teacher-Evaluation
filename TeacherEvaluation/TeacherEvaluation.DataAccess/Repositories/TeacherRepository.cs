@@ -40,5 +40,13 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .AsNoTracking()
                 .ToListAsync();
         }
+
+        public async Task<IEnumerable<Teacher>> GetByDepartment(Department department)
+        {
+            return await Context.Set<Teacher>()
+                .Where(x => x.Department == department)
+                .Include(x => x.User)
+                .ToListAsync();
+        }
     }
 }

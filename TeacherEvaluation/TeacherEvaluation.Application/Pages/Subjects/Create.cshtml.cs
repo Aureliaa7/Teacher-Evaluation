@@ -14,12 +14,13 @@ namespace TeacherEvaluation.Application.Pages.Subjects
         private readonly IMediator mediator;
 
         [BindProperty]
-        [Required(ErrorMessage = "Subject name is required")]
-        [RegularExpression(pattern: "^[a-zA-Z-]+(?: [a-zA-Z-]+)+$", ErrorMessage = "Invalid text")]
+        [Required(ErrorMessage = "Subject title is required")]
+        [RegularExpression(pattern: "[a-zA-Z\\s]+", ErrorMessage = "Invalid text")]
         [MinLength(5)]
         public string SubjectName { get; set; }
         [BindProperty]
         [Required(ErrorMessage = "Number of credits is required")]
+        [Range(1,5, ErrorMessage ="Number of credits must be between 1 and 5")]
         public int? NumberOfCredits { get; set; } = null;
 
         public CreateModel(IMediator mediator)

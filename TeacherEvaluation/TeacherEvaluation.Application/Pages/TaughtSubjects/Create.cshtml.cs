@@ -33,7 +33,9 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
         [Required(ErrorMessage = "Subject is required")]
         public Guid SubjectId { get; set; }
 
-        public List<SelectListItem> Teachers { get; set; }
+        [BindProperty]
+        [EnumDataType(typeof(Department))]
+        public Department Department { get; set; }
 
         public List<SelectListItem> Subjects { get; set; }
         
@@ -45,18 +47,8 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
 
         public async Task<IActionResult> OnGet()
         {
-            GetAllTeachersCommand getTeachersCommand = new GetAllTeachersCommand();
-            var teachers = await mediator.Send(getTeachersCommand);
-
             GetAllSubjectsCommand getSubjectsCommand = new GetAllSubjectsCommand();
             var subjects = await mediator.Send(getSubjectsCommand);
-
-            Teachers = teachers.Select(x =>
-                                            new SelectListItem
-                                            {
-                                                Value = x.Id.ToString(),
-                                                Text = x.User.FirstName + " " + x.User.LastName
-                                            }).ToList();
 
             Subjects = subjects.Select(x =>
                                             new SelectListItem
@@ -65,6 +57,13 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
                                                 Text = x.Name
                                             }).ToList();
             return Page();
+        }
+
+        public IActionResult OnGetReturnTeachersByDepartment(string department)
+        {
+            GetTeachersByDepartmentCommand command = new GetTeachersByDepartmentCommand { Department = (Department)Enum.Parse(typeof(Department), department) };
+            var teachers = mediator.Send(command).Result;
+            return new JsonResult(teachers);
         }
 
         public IActionResult OnGetUpdateInfoField(string teacherId, string subjectId, string type)

@@ -4,7 +4,7 @@ using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations
 {
-    public class CheckEnrollmentExistenceCommand : IRequest<bool>
+    public class CheckEnrollmentAvailabilityCommand : IRequest<bool>
     {
         public Guid StudentId { get; set; }
         public Guid SubjectId { get; set; }

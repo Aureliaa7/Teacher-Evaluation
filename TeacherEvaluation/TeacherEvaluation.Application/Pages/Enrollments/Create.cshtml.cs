@@ -71,21 +71,21 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
             return Page();
         }
 
-        public IActionResult OnGetCheckEnrollmentExistence(string studentId, string subjectId, string teacherId, string type)
+        public IActionResult OnGetCheckEnrollmentAvailability(string studentId, string subjectId, string teacherId, string type)
         {
-            CheckEnrollmentExistenceCommand command = new CheckEnrollmentExistenceCommand
+            CheckEnrollmentAvailabilityCommand command = new CheckEnrollmentAvailabilityCommand
             {
                 TeacherId = new Guid(teacherId),
                 StudentId = new Guid(studentId),
                 SubjectId = new Guid(subjectId),
                 Type = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type)
             };
-            bool enrollmentExists = mediator.Send(command).Result;
-            if (enrollmentExists)
+            bool enrollmentIsAvailable = mediator.Send(command).Result;
+            if (enrollmentIsAvailable)
             {
-                return new JsonResult("The enrollment already exists");
+                return new JsonResult("This enrollment is available");
             }
-            return new JsonResult("This enrollment is available");
+            return new JsonResult("The enrollment is not available");
         }
 
         public IActionResult OnGetReturnTeachers(string subjectId, string type)

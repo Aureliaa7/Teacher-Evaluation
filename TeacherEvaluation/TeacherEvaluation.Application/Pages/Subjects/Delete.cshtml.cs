@@ -19,7 +19,7 @@ namespace TeacherEvaluation.Application.Pages.Subjects
         [BindProperty]
         public Guid SubjectId { get; set; }
         [BindProperty]
-        [Display(Name = "Subject name")]
+        [Display(Name = "Subject title")]
         public string SubjectName { get; set; }
         [BindProperty]
         [Display(Name = "Number of credits")]

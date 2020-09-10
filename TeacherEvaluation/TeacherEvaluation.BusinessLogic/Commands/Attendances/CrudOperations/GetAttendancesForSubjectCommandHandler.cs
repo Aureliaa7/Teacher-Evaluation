@@ -32,7 +32,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Attendances.CrudOperations
         {
             bool taughtSubjectExists = await taughtSubjectRepository.Exists(x => x.Id == request.TaughtSubjectId);
             bool userExists = await userRepository.Exists(x => x.Id == request.UserId);
-            if (taughtSubjectExists)
+            if (taughtSubjectExists && userExists)
             {
                 var students = await studentRepository.GetAllWithRelatedEntities();
                 var student = students.Where(x => x.User.Id == request.UserId).First();
@@ -41,7 +41,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Attendances.CrudOperations
                 var enrollment = enrollments.Where(x => x.Student.Id == student.Id).First();
                 return await attendanceRepository.GetAttendancesWithRelatedEntities(enrollment.Id);
             }
-            throw new ItemNotFoundException("The subject was not found...");
+            throw new ItemNotFoundException("The subject or the user was not found...");
         }
     }
 }

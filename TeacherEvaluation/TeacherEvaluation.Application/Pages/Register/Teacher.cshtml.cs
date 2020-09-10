@@ -17,13 +17,14 @@ namespace TeacherEvaluation.Application.Pages.Register
 
         [BindProperty]
         [Required(ErrorMessage = "Personal identification number is required")]
-        [RegularExpression(pattern: "^(?!(.)\\1{3})(?!19|20)\\d{13}$", ErrorMessage = "Invalid text")]
+        [RegularExpression(pattern: "[1-9]([0-9]{12}$)", ErrorMessage = "Invalid text")]
         [MaxLength(13)]
         public string PIN { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "Degree is required")]
-        [RegularExpression(pattern: "^[a-zA-Z-]+$", ErrorMessage = "Invalid text")]
+        [RegularExpression(pattern: "[a-zA-Z\\s]+", ErrorMessage = "Invalid text")]
+        [MinLength(2)]
         public string Degree { get; set; }
 
         [BindProperty]
@@ -32,12 +33,14 @@ namespace TeacherEvaluation.Application.Pages.Register
 
         [BindProperty]
         [Required(ErrorMessage = "First name is required")]
-        [RegularExpression(pattern: "^[a-zA-Z-]+$", ErrorMessage = "Invalid text")]
+        [RegularExpression(pattern: "[a-zA-Z\\s]+", ErrorMessage = "Invalid text")]
+        [MinLength(3)]
         public string FirstName { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "Last name is required")]
-        [RegularExpression(pattern: "^[a-zA-Z-]+$", ErrorMessage = "Invalid text")]
+        [RegularExpression(pattern: "[a-zA-Z\\s]+", ErrorMessage = "Invalid text")]
+        [MinLength(3)]
         public string LastName { get; set; }
 
         [BindProperty]

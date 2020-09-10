@@ -29,3 +29,29 @@
         }
     });
 }
+
+function get_teachers_by_department() {
+    var search_details = {
+        department: $("#department-field").val(),
+    };
+    console.log(search_details);
+    $.ajax({
+        type: "GET",
+        data: search_details,
+        url: "../TaughtSubjects/Create?handler=ReturnTeachersByDepartment",
+
+        success: function (result) {
+            $("#teacher-field option").remove();
+            console.log(result);
+            $.each(result, function (index, item) {
+                console.log("teacher: " + item);
+                var fullNameArray = [item.user.firstName, item.user.fathersInitial, item.user.lastName];
+                var fullName = fullNameArray.join(" ");
+                $("#teacher-field").append('<option value="' + item.id + '">' + fullName + '</option>');
+            });
+        },
+        error: function () {
+            console.log("Something went wrong");
+        }
+    })
+}
