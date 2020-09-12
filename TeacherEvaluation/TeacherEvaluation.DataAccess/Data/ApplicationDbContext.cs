@@ -19,6 +19,8 @@ namespace TeacherEvaluation.DataAccess.Data
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<StudyDomain> StudyDomains { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
+        public DbSet<QuestionWithOptionAnswer> QuestionWithOptionAnswers { get; set; }
+        public DbSet<AnswerToQuestionWithOption> AnswerToQuestionWithOptions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
