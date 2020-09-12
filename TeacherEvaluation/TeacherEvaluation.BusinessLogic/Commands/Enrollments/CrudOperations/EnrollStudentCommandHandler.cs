@@ -42,7 +42,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations
                 {
                     Student = student,
                     TaughtSubject = taughtSubject,
-                    Grade = grade
+                    Grade = grade,
+                    State = EnrollmentState.InProgress
                 };
                 await enrollmentRepository.Add(newEnrollment);
             }

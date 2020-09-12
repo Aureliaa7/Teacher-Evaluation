@@ -32,12 +32,16 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations
             if (studentExists && subjectExists)
             {
                 IEnumerable<Enrollment> enrollments = await enrollmentRepository.GetForStudent(request.StudentId);
-                Grade gradeToBeUpdated = enrollments.Where(x => x.TaughtSubject.Subject.Id == request.SubjectId && x.TaughtSubject.Type == request.Type)
-                                                   .Select(x => x.Grade)
-                                                   .First();
-                gradeToBeUpdated.Value = request.Value;
-                gradeToBeUpdated.Date = request.Date;
-                await gradeRepository.Update(gradeToBeUpdated);
+                Enrollment enrollment = enrollments.Where(x => x.TaughtSubject.Subject.Id == request.SubjectId && x.TaughtSubject.Type == request.Type).First();
+                //Grade gradeToBeUpdated = enrollment.Grade;
+                //gradeToBeUpdated.Value = request.Value;
+                //gradeToBeUpdated.Date = request.Date;
+
+                enrollment.Grade.Value = request.Value;
+                enrollment.Grade.Date = request.Date;
+                enrollment.State = EnrollmentState.Done;
+                await enrollmentRepository.Update(enrollment);
+                //await gradeRepository.Update(gradeToBeUpdated);
             }
             else
             {
