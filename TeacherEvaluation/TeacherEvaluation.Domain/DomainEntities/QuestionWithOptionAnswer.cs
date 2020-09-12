@@ -7,6 +7,7 @@ namespace TeacherEvaluation.Domain.DomainEntities
     {
         public Guid Id { get; set; }
         public string Question { get; set; }
+        public Form Form { get; set; }
         public ICollection<AnswerToQuestionWithOption> Answers { get; set; }
         
         public QuestionWithOptionAnswer()

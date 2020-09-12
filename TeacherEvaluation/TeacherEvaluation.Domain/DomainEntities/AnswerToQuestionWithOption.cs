@@ -7,6 +7,5 @@ namespace TeacherEvaluation.Domain.DomainEntities
         public Guid Id { get; set; }
         public Enrollment Enrollment { get; set; }
         public OptionAnswer Answer { get; set; }
-        public Form Form { get; set; }
     }
 }
