@@ -11,15 +11,13 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations
 {
     public class UpdateGradeCommandHandler : AsyncRequestHandler<UpdateGradeCommand>
     {
-        private readonly IRepository<Grade> gradeRepository;
         private readonly IEnrollmentRepository enrollmentRepository;
         private readonly IRepository<Student> studentRepository;
         private readonly IRepository<Subject> subjectRepository;
 
-        public UpdateGradeCommandHandler(IRepository<Grade> gradeRepository, IEnrollmentRepository enrollmentRepository,
+        public UpdateGradeCommandHandler(IEnrollmentRepository enrollmentRepository,
             IRepository<Student> studentRepository, IRepository<Subject> subjectRepository)
         {
-            this.gradeRepository = gradeRepository;
             this.enrollmentRepository = enrollmentRepository;
             this.studentRepository = studentRepository;
             this.subjectRepository = subjectRepository;
@@ -33,15 +31,10 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations
             {
                 IEnumerable<Enrollment> enrollments = await enrollmentRepository.GetForStudent(request.StudentId);
                 Enrollment enrollment = enrollments.Where(x => x.TaughtSubject.Subject.Id == request.SubjectId && x.TaughtSubject.Type == request.Type).First();
-                //Grade gradeToBeUpdated = enrollment.Grade;
-                //gradeToBeUpdated.Value = request.Value;
-                //gradeToBeUpdated.Date = request.Date;
-
                 enrollment.Grade.Value = request.Value;
                 enrollment.Grade.Date = request.Date;
                 enrollment.State = EnrollmentState.Done;
                 await enrollmentRepository.Update(enrollment);
-                //await gradeRepository.Update(gradeToBeUpdated);
             }
             else
             {
