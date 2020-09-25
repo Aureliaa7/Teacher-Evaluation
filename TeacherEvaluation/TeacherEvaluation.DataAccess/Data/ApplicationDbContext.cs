@@ -21,6 +21,7 @@ namespace TeacherEvaluation.DataAccess.Data
         public DbSet<Specialization> Specializations { get; set; }
         public DbSet<QuestionWithOptionAnswer> QuestionWithOptionAnswers { get; set; }
         public DbSet<AnswerToQuestionWithOption> AnswerToQuestionWithOptions { get; set; }
+        public DbSet<Form> Forms { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

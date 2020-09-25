@@ -92,3 +92,8 @@ input::-webkit-inner-spin-button {
     text-align: center;
     margin-top: 300px;
 }
+
+#submit-form-btn{
+    margin-bottom: 60px;
+    width: 100%;
+}

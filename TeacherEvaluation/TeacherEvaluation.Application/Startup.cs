@@ -45,6 +45,8 @@ namespace TeacherEvaluation.Application
             services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
             services.AddScoped<ISpecializationRepository, SpecializationRepository>();
             services.AddScoped<IAttendanceRepository, AttendanceRepository>();
+            services.AddScoped<IQuestionWithOptionAnswerRepository, QuestionWithOptionAnswerRepository>();
+            services.AddScoped<IFormRepository, FormRepository>();
 
             services.AddMediatR(typeof(TeacherRegistrationCommand));
 

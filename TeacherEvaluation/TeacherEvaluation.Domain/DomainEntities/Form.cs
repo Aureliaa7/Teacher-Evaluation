@@ -8,6 +8,7 @@ namespace TeacherEvaluation.Domain.DomainEntities
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public FormType Type { get; set; }
-        public EnrollmentState ForEnrollmentState { get; set; }
+        public EnrollmentState EnrollmentState { get; set; }
+        public int MinNumberOfAttendances { get; set; }
     }
 }

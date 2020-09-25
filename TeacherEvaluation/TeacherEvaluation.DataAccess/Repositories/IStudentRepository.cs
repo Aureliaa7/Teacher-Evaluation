@@ -10,5 +10,6 @@ namespace TeacherEvaluation.DataAccess.Repositories
         Task<Student> GetStudent(Guid id);
         Task Delete(Guid id);
         Task<IEnumerable<Student>> GetAllWithRelatedEntities();
+        Task<Student> GetByUserId(Guid id);
     }
 }

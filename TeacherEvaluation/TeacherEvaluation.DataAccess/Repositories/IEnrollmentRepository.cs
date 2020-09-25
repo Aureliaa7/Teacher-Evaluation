@@ -11,5 +11,6 @@ namespace TeacherEvaluation.DataAccess.Repositories
         Task<IEnumerable<Enrollment>> GetAllWithRelatedEntities();
         Task<IEnumerable<Enrollment>> GetForStudent(Guid studentId);
         Task<IEnumerable<Enrollment>> GetEnrollmentsForTaughtSubject(Guid id);
+        Task<Enrollment> GetEnrollmentBySubjectStateTypeAndStudent(Guid subjectId, EnrollmentState state, TaughtSubjectType subjectType, Guid studentId);
     }
 }

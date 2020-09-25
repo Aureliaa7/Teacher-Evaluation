@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWithOptionAnswer;
 using TeacherEvaluation.Domain.DomainEntities;
 
-namespace TeacherEvaluation.Application.Pages.Forms.QuestionsWithOptionAnswer
+namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOptionAnswer
 {
     public class CreateModel : PageModel
     {
@@ -28,10 +28,12 @@ namespace TeacherEvaluation.Application.Pages.Forms.QuestionsWithOptionAnswer
 
         [BindProperty]
         [Required(ErrorMessage = "The start date is required")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime StartDate { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "The end date is required")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime EndDate { get; set; }
 
 

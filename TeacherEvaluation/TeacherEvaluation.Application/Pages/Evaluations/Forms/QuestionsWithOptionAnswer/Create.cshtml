@@ -1,5 +1,5 @@
 ﻿@page "{handler?}"
-@model TeacherEvaluation.Application.Pages.Forms.QuestionsWithOptionAnswer.CreateModel
+@model TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOptionAnswer.CreateModel
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Pages/Shared/_DeanLayout.cshtml";
@@ -45,7 +45,7 @@
                 @for (var contor = 0; contor < 10; contor++)
                 {
                     <label>Question @(contor+1)</label>
-                    <input id="question" asp-for="Questions[contor]" class="form-control" />
+                    <textarea id="question" asp-for="Questions[contor]" class="form-control" rows="3" cols="50"></textarea>
                     <span asp-validation-for="Questions[contor]"></span>
                 }
             </div>

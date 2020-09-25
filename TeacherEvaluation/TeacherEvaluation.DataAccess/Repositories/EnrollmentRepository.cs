@@ -86,5 +86,25 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .Include(x => x.Grade)
                 .ToListAsync();
         }
+
+        public async Task<Enrollment> GetEnrollmentBySubjectStateTypeAndStudent(Guid subjectId, EnrollmentState state, TaughtSubjectType type, Guid studentId)
+        {
+            return await Context.Set<Enrollment>()
+                .Where(x => x.TaughtSubject.Subject.Id == subjectId && 
+                    x.State == state && x.Student.Id == studentId && 
+                    x.TaughtSubject.Type == type)
+                .Include(x => x.TaughtSubject)
+                    .ThenInclude(x => x.Teacher)
+                        .ThenInclude(x => x.User)
+                .Include(x => x.TaughtSubject)
+                    .ThenInclude(x => x.Subject)
+                .Include(x => x.Student)
+                    .ThenInclude(x => x.User)
+                .Include(x => x.Student)
+                    .ThenInclude(x => x.Specialization)
+                        .ThenInclude(x => x.StudyDomain)
+                .Include(x => x.Grade)
+                .FirstAsync();
+        }
     }
 }

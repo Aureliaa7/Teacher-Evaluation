@@ -23,7 +23,9 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWith
             {
                 StartDate = request.StartDate,
                 EndDate = request.EndDate,
-                ForEnrollmentState = request.EnrollmentState
+                EnrollmentState = request.EnrollmentState,
+                Type = FormType.Option, 
+                MinNumberOfAttendances = request.MinNumberAttendances
             };
             await formRepository.Add(form);
 
