@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
@@ -23,6 +24,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWith
             this.questionRepository = questionRepository;
             this.enrollmentRepository = enrollmentRepository;
             this.userRepository = userRepository;
+            this.studentRepository = studentRepository;
         }
 
         protected override async Task Handle(SaveEvaluationFormResponsesCommand request, CancellationToken cancellationToken)
@@ -44,9 +46,13 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWith
                     int contor = 0;
                     foreach(var question in request.Questions)
                     {
-                        var response = new AnswerToQuestionWithOption { Answer = request.Responses[contor++], Enrollment = enrollment };
-                        question.Answers.Add(response);
-                        await questionRepository.Update(question);
+                        try
+                        {
+                            var response = new AnswerToQuestionWithOption { Answer = request.Responses[contor++], Enrollment = enrollment };
+                            question.Answers.Add(response);
+                            await questionRepository.Update(question);
+                        }
+                        catch (ArgumentOutOfRangeException) { throw; }
                     }
                 }
                 else

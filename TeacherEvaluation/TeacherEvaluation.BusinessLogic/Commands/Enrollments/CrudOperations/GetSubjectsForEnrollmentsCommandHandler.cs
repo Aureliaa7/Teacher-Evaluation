@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Org.BouncyCastle.Math.EC.Rfc7748;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -33,7 +34,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations
                 var allEnrollments = await enrollmentRepository.GetForStudent(student.Id);
                 var enrollments = allEnrollments.Where(x => x.State == request.EnrollmentState);
 
-                return enrollments.Select(x => x.TaughtSubject.Subject);
+                var subjectEnrollments = enrollments.GroupBy(x => x.TaughtSubject.Subject.Name).Select(x => x.First()).ToList();
+                return subjectEnrollments.Select(x => x.TaughtSubject.Subject).ToList();
             }
             throw new ItemNotFoundException("The user was not found...");
         }

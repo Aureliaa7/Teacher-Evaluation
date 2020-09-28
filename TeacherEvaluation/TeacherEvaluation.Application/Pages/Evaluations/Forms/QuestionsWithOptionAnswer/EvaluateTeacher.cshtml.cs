@@ -46,25 +46,30 @@ namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOpt
         {
             this.mediator = mediator;
             Questions = new List<QuestionWithOptionAnswer>();
-            GetEvaluationFormCommand command = new GetEvaluationFormCommand();
-            form = mediator.Send(command).Result;
+            try
+            {
+                GetEvaluationFormCommand command = new GetEvaluationFormCommand();
+                form = mediator.Send(command).Result;
+                GetQuestionsForFormCommand getQuestionsCommand = new GetQuestionsForFormCommand { FormId = form.Id };
+                Questions = mediator.Send(getQuestionsCommand).Result;
+            }
+            catch (NoEvaluationFormException)
+            {
+                RedirectToPage("/Errors/NoEvaluationForm");
+            }
         }
 
 
         public async Task<IActionResult> OnGet()
         {
             Guid userIdStudent = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            try
+
+            GetSubjectsForEnrollmentsCommand getSubjectsCommand = new GetSubjectsForEnrollmentsCommand
             {
-                GetQuestionsForFormCommand getQuestionsCommand = new GetQuestionsForFormCommand { FormId = form.Id };
-                Questions = await mediator.Send(getQuestionsCommand);
-
-                GetSubjectsForEnrollmentsCommand getSubjectsCommand = new GetSubjectsForEnrollmentsCommand
-                {
-                    UserId = userIdStudent,
-                    EnrollmentState = form.EnrollmentState
-                };
-
+                UserId = userIdStudent,
+                EnrollmentState = form.EnrollmentState
+            };
+            try { 
                 var subjects = await mediator.Send(getSubjectsCommand);
                 Subjects = subjects.Select(x =>
                                                 new SelectListItem
@@ -74,13 +79,10 @@ namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOpt
                                                 }).ToList();
                 return Page();
             }
-            catch (NoEvaluationFormException)
-            {
-                return RedirectToPage("../Errors/NoEvaluationForm");
-            }
+          
             catch (ItemNotFoundException)
             {
-                return RedirectToPage("../Errors/404");
+                return RedirectToPage("/Errors/404");
             }
         }
 
@@ -152,6 +154,10 @@ namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOpt
             try
             {
                 await mediator.Send(command);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                return RedirectToPage("/Evaluations/Forms/QuestionsWithOptionAnswer/EvaluateTeacher");
             }
             catch (ItemNotFoundException)
             {
