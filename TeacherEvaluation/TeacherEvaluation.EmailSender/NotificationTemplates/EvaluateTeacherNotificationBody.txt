@@ -1,0 +1,8 @@
+﻿Hello,
+
+A new evaluation form has been added. You can evaluate your teachers within the following time interval: 
+
+{0}.
+
+Have a nice day!
+Teacher Evaluation

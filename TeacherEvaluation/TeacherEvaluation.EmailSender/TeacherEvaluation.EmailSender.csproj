@@ -7,11 +7,15 @@
   <ItemGroup>
     <None Remove="NotificationTemplates\EmailConfirmationNotificationBody.txt" />
     <None Remove="NotificationTemplates\EmailConfirmationNotificationSubject.txt" />
+    <None Remove="NotificationTemplates\EvaluateTeacherNotificationBody.txt" />
+    <None Remove="NotificationTemplates\EvaluateTeacherNotificationSubject.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="NotificationTemplates\EmailConfirmationNotificationBody.txt" />
     <EmbeddedResource Include="NotificationTemplates\EmailConfirmationNotificationSubject.txt" />
+    <EmbeddedResource Include="NotificationTemplates\EvaluateTeacherNotificationSubject.txt" />
+    <EmbeddedResource Include="NotificationTemplates\EvaluateTeacherNotificationBody.txt" />
   </ItemGroup>
 
   <ItemGroup>

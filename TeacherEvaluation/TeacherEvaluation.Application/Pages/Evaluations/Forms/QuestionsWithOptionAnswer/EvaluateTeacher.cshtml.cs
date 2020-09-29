@@ -22,6 +22,7 @@ namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOpt
     {
         private readonly IMediator mediator;
         private Form form;
+        private bool formIsAvailable;
 
         public IEnumerable<QuestionWithOptionAnswer> Questions { get; set; }
         public List<SelectListItem> Subjects { get; set; }
@@ -46,6 +47,7 @@ namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOpt
         {
             this.mediator = mediator;
             Questions = new List<QuestionWithOptionAnswer>();
+            formIsAvailable = true;
             try
             {
                 GetEvaluationFormCommand command = new GetEvaluationFormCommand();
@@ -53,36 +55,44 @@ namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOpt
                 GetQuestionsForFormCommand getQuestionsCommand = new GetQuestionsForFormCommand { FormId = form.Id };
                 Questions = mediator.Send(getQuestionsCommand).Result;
             }
-            catch (NoEvaluationFormException)
+            catch (AggregateException)
             {
-                RedirectToPage("/Errors/NoEvaluationForm");
+                formIsAvailable = false;
             }
         }
-
 
         public async Task<IActionResult> OnGet()
         {
             Guid userIdStudent = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            GetSubjectsForEnrollmentsCommand getSubjectsCommand = new GetSubjectsForEnrollmentsCommand
+            if (formIsAvailable)
             {
-                UserId = userIdStudent,
-                EnrollmentState = form.EnrollmentState
-            };
-            try { 
-                var subjects = await mediator.Send(getSubjectsCommand);
-                Subjects = subjects.Select(x =>
-                                                new SelectListItem
-                                                {
-                                                    Value = x.Id.ToString(),
-                                                    Text = x.Name
-                                                }).ToList();
-                return Page();
+                GetSubjectsForEnrollmentsCommand getSubjectsCommand = new GetSubjectsForEnrollmentsCommand
+                {
+                    UserId = userIdStudent,
+                    EnrollmentState = form.EnrollmentState
+                };
+
+                try
+                {
+                    var subjects = await mediator.Send(getSubjectsCommand);
+                    Subjects = subjects.Select(x =>
+                                                    new SelectListItem
+                                                    {
+                                                        Value = x.Id.ToString(),
+                                                        Text = x.Name
+                                                    }).ToList();
+                    return Page();
+                }
+
+                catch (ItemNotFoundException)
+                {
+                    return RedirectToPage("/Errors/404");
+                }
             }
-          
-            catch (ItemNotFoundException)
+            else
             {
-                return RedirectToPage("/Errors/404");
+                return RedirectToPage("/Errors/NoEvaluationForm");
             }
         }
 

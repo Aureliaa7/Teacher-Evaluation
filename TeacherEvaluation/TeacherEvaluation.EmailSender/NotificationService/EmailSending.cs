@@ -1,13 +1,14 @@
-﻿using TeacherEvaluation.Domain.Identity;
+﻿using System.Collections.Generic;
+using TeacherEvaluation.Domain.Identity;
 using TeacherEvaluation.EmailSender.NotificationModel;
 
 namespace TeacherEvaluation.EmailSender.NotificationService
 {
     public class EmailSending
     {
-        public static Notification ConfigureNotificationMessage(string url, ApplicationUser newApplicationUser, string password)
+        public static Notification ConfigureAccountCreationMessage(string url, ApplicationUser newApplicationUser, string password)
         {
-            Notification notification = CreateNotificationMessage(url, newApplicationUser, password);
+            Notification notification = NotifyAccountCreation(url, newApplicationUser, password);
 
             NotificationAddress recipient = GetRecipientAddress(newApplicationUser);
             notification.ToAddresses.Add(recipient);
@@ -16,7 +17,7 @@ namespace TeacherEvaluation.EmailSender.NotificationService
             return notification;
         }
 
-        private static Notification CreateNotificationMessage(string url, ApplicationUser newApplicationUser, string password)
+        private static Notification NotifyAccountCreation(string url, ApplicationUser newApplicationUser, string password)
         {
             string bodyResourceName = "TeacherEvaluation.EmailSender.NotificationTemplates.EmailConfirmationNotificationBody.txt";
             string subjectResourceName = "TeacherEvaluation.EmailSender.NotificationTemplates.EmailConfirmationNotificationSubject.txt";

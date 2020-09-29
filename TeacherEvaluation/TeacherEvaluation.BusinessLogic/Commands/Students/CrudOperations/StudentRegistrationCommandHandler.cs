@@ -66,7 +66,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
                     };
                     await studentRepository.Add(student);
 
-                    Notification notification = EmailSending.ConfigureNotificationMessage(confirmationUrl, newApplicationUser, request.Password);
+                    Notification notification = EmailSending.ConfigureAccountCreationMessage(confirmationUrl, newApplicationUser, request.Password);
                     emailService.Send(notification);
 
                     errorMessages = null;

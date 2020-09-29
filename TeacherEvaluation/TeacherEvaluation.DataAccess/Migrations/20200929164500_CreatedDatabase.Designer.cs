@@ -10,8 +10,8 @@ using TeacherEvaluation.DataAccess.Data;
 namespace TeacherEvaluation.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200820175334_ChangedGradesTable")]
-    partial class ChangedGradesTable
+    [Migration("20200929164500_CreatedDatabase")]
+    partial class CreatedDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -122,6 +122,52 @@ namespace TeacherEvaluation.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.AnswerToQuestionWithOption", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Answer")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("EnrollmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("QuestionWithOptionAnswerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EnrollmentId");
+
+                    b.HasIndex("QuestionWithOptionAnswerId");
+
+                    b.ToTable("AnswerToQuestionWithOptions");
+                });
+
+            modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.Attendance", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("EnrollmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EnrollmentId");
+
+                    b.ToTable("Attendances");
+                });
+
             modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.Enrollment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -130,6 +176,9 @@ namespace TeacherEvaluation.DataAccess.Migrations
 
                     b.Property<Guid?>("GradeId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("State")
+                        .HasColumnType("int");
 
                     b.Property<Guid?>("StudentId")
                         .HasColumnType("uniqueidentifier");
@@ -146,6 +195,32 @@ namespace TeacherEvaluation.DataAccess.Migrations
                     b.HasIndex("TaughtSubjectId");
 
                     b.ToTable("Enrollments");
+                });
+
+            modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.Form", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EnrollmentState")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MinNumberOfAttendances")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Forms");
                 });
 
             modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.Grade", b =>
@@ -168,6 +243,44 @@ namespace TeacherEvaluation.DataAccess.Migrations
                     b.ToTable("Grades");
                 });
 
+            modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.QuestionWithOptionAnswer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("FormId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Question")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FormId");
+
+                    b.ToTable("QuestionWithOptionAnswers");
+                });
+
+            modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.Specialization", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("StudyDomainId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudyDomainId");
+
+                    b.ToTable("Specializations");
+                });
+
             modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.Student", b =>
                 {
                     b.Property<Guid>("Id")
@@ -180,11 +293,8 @@ namespace TeacherEvaluation.DataAccess.Migrations
                     b.Property<string>("PIN")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Section")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("StudyProgramme")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("SpecializationId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("StudyYear")
                         .HasColumnType("int");
@@ -194,9 +304,28 @@ namespace TeacherEvaluation.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("SpecializationId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.StudyDomain", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StudyProgramme")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StudyDomains");
                 });
 
             modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.Subject", b =>
@@ -291,36 +420,6 @@ namespace TeacherEvaluation.DataAccess.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("38fbaf3f-1ca2-4f9a-818d-bf7cd98541e6"),
-                            ConcurrencyStamp = "d415202c-f07e-4886-9122-421b5599103a",
-                            Name = "Administrator",
-                            NormalizedName = "ADMINISTRATOR"
-                        },
-                        new
-                        {
-                            Id = new Guid("8460ae5c-f0ea-4a42-a09b-e4865a30f20e"),
-                            ConcurrencyStamp = "317bfa2f-6593-4d68-bbd5-3eb06ab67b8f",
-                            Name = "Dean",
-                            NormalizedName = "DEAN"
-                        },
-                        new
-                        {
-                            Id = new Guid("08b599e5-709a-4249-bfc8-10e7d1ff8f34"),
-                            ConcurrencyStamp = "3430cbe2-c331-4736-9541-00680223f20a",
-                            Name = "Student",
-                            NormalizedName = "STUDENT"
-                        },
-                        new
-                        {
-                            Id = new Guid("6ffafc63-baf7-4651-b218-5296a48efa1c"),
-                            ConcurrencyStamp = "7f3a1fb8-5e71-4912-bd48-712aab437cbd",
-                            Name = "Teacher",
-                            NormalizedName = "TEACHER"
-                        });
                 });
 
             modelBuilder.Entity("TeacherEvaluation.Domain.Identity.ApplicationUser", b =>
@@ -449,6 +548,24 @@ namespace TeacherEvaluation.DataAccess.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.AnswerToQuestionWithOption", b =>
+                {
+                    b.HasOne("TeacherEvaluation.Domain.DomainEntities.Enrollment", "Enrollment")
+                        .WithMany()
+                        .HasForeignKey("EnrollmentId");
+
+                    b.HasOne("TeacherEvaluation.Domain.DomainEntities.QuestionWithOptionAnswer", null)
+                        .WithMany("Answers")
+                        .HasForeignKey("QuestionWithOptionAnswerId");
+                });
+
+            modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.Attendance", b =>
+                {
+                    b.HasOne("TeacherEvaluation.Domain.DomainEntities.Enrollment", "Enrollment")
+                        .WithMany()
+                        .HasForeignKey("EnrollmentId");
+                });
+
             modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.Enrollment", b =>
                 {
                     b.HasOne("TeacherEvaluation.Domain.DomainEntities.Grade", "Grade")
@@ -464,8 +581,26 @@ namespace TeacherEvaluation.DataAccess.Migrations
                         .HasForeignKey("TaughtSubjectId");
                 });
 
+            modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.QuestionWithOptionAnswer", b =>
+                {
+                    b.HasOne("TeacherEvaluation.Domain.DomainEntities.Form", "Form")
+                        .WithMany()
+                        .HasForeignKey("FormId");
+                });
+
+            modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.Specialization", b =>
+                {
+                    b.HasOne("TeacherEvaluation.Domain.DomainEntities.StudyDomain", "StudyDomain")
+                        .WithMany()
+                        .HasForeignKey("StudyDomainId");
+                });
+
             modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.Student", b =>
                 {
+                    b.HasOne("TeacherEvaluation.Domain.DomainEntities.Specialization", "Specialization")
+                        .WithMany()
+                        .HasForeignKey("SpecializationId");
+
                     b.HasOne("TeacherEvaluation.Domain.Identity.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
