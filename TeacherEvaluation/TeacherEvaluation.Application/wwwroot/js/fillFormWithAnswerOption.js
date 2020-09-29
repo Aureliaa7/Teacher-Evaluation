@@ -43,6 +43,7 @@ function disable_or_enable_btn() {
             if (result == "disable") {
                 $("#teacher-field").val('');
                 $("#submit-form-btn").attr("disabled", "disabled");
+                $('#myModal').modal('show');
             }
             else {
                 $("#submit-form-btn").removeAttr("disabled");
