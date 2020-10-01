@@ -1,10 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
+using TeacherEvaluation.Application.Convertors;
 using TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWithOptionAnswer;
 using TeacherEvaluation.Domain.DomainEntities;
 
@@ -20,6 +23,8 @@ namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOpt
         [BindProperty]
         [EnumDataType(typeof(EnrollmentState))]
         public EnrollmentState EnrollmentState { get; set; }
+
+        public List<SelectListItem> EnrollmentStates = new List<SelectListItem>();
 
         [BindProperty]
         [Required(ErrorMessage ="The minimum number of attendances is required")]
@@ -40,6 +45,14 @@ namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOpt
         public CreateModel(IMediator mediator)
         {
             this.mediator = mediator;
+            EnrollmentStates = Enum.GetValues(typeof(EnrollmentState))
+                .Cast<EnrollmentState>()
+                .Select(x =>
+                {
+                    string displayText = EnrollmentStateConvertor.ToDisplayString(x);
+                    return new SelectListItem(displayText, x.ToString());
+                })
+                .ToList();
         }
 
         public void OnGet()

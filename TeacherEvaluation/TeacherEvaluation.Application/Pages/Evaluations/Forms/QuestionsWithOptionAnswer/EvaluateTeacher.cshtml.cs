@@ -17,7 +17,7 @@ using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOptionAnswer
 {
-    [Authorize(Roles="Student")]
+    [Authorize(Roles = "Student")]
     public class EvaluateTeacherModel : PageModel
     {
         private readonly IMediator mediator;
@@ -31,6 +31,8 @@ namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOpt
         [EnumDataType(typeof(TaughtSubjectType))]
         public TaughtSubjectType Type { get; set; }
 
+        public List<SelectListItem> AnswerOptions = new List<SelectListItem>();
+
         [BindProperty]
         [Required(ErrorMessage = "Subject is required")]
         public Guid SubjectId { get; set; }
@@ -40,14 +42,23 @@ namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOpt
 
         [BindProperty]
         [Required(ErrorMessage = "Answer is required")]
-        [EnumDataType(typeof(OptionAnswer))]
-        public List<OptionAnswer> Answers  { get; set; }
+        [EnumDataType(typeof(AnswerOption))]
+        public List<AnswerOption> Answers { get; set; }
 
         public EvaluateTeacherModel(IMediator mediator)
         {
             this.mediator = mediator;
             Questions = new List<QuestionWithOptionAnswer>();
             formIsAvailable = true;
+            AnswerOptions = Enum.GetValues(typeof(AnswerOption))
+               .Cast<AnswerOption>()
+               .Select(x =>
+               {
+                   string displayText = AnswerOptionConvertor.ToDisplayString(x);
+                   return new SelectListItem(displayText, x.ToString());
+               })
+               .ToList();
+
             try
             {
                 GetEvaluationFormCommand command = new GetEvaluationFormCommand();
@@ -101,18 +112,19 @@ namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOpt
             Guid userIdStudent = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
             Guid subjectIdGuid = new Guid(subjectId);
             TaughtSubjectType taughtSubjectType = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type);
-            GetTeacherByCriteriaCommand command = new GetTeacherByCriteriaCommand {
+            GetTeacherByCriteriaCommand command = new GetTeacherByCriteriaCommand
+            {
                 SubjectId = subjectIdGuid,
                 UserIdForStudent = userIdStudent,
                 EnrollmentState = form.EnrollmentState,
-                SubjectType = taughtSubjectType 
+                SubjectType = taughtSubjectType
             };
             try
             {
                 var teacher = mediator.Send(command).Result;
                 return new JsonResult(teacher);
             }
-            catch(ItemNotFoundException e)
+            catch (ItemNotFoundException e)
             {
                 return new JsonResult(e.Message);
             }

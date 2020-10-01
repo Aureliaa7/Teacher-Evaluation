@@ -46,7 +46,7 @@
                     <label>Question @(contor+1)</label>
                     <textarea id="question" asp-for="Questions.ElementAt(contor).Question" class="form-control set-width-280 non-resizable"
                               rows="3" cols="50" readonly></textarea>
-                    <select asp-for="@Model.Answers[contor]" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.OptionAnswer>()"
+                    <select asp-for="@Model.Answers[contor]" asp-items="@Model.AnswerOptions"
                             class="form-control set-width-280">
                         <option selected>Choose answer</option>
                     </select><br />

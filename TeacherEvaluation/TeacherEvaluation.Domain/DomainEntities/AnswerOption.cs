@@ -1,6 +1,6 @@
 ﻿namespace TeacherEvaluation.Domain.DomainEntities
 {
-    public enum OptionAnswer
+    public enum AnswerOption
     {
         StronglyDisagree,
         Disagree,

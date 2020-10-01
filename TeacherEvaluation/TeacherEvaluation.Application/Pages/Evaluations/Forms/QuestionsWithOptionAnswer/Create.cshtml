@@ -16,7 +16,7 @@
         <form method="post">
             <div class="form-group">
                 <label asp-for="EnrollmentState">For enrollment status</label><br />
-                <select asp-for="EnrollmentState" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.EnrollmentState>()"
+                <select asp-for="EnrollmentState" asp-items="@Model.EnrollmentStates"
                         class="form-control set-width-dropdown">
                     <option selected disabled hidden>Please select</option>
                 </select>
