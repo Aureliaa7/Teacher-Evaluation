@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TeacherEvaluation.DataAccess.Migrations
 {
-    public partial class CreatedDatabase : Migration
+    public partial class CreatedDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,7 @@ namespace TeacherEvaluation.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(maxLength: 60, nullable: false),
-                    NormalizedName = table.Column<string>(maxLength: 60, nullable: false),
+                    NormalizedName = table.Column<string>(maxLength: 60, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -26,10 +26,10 @@ namespace TeacherEvaluation.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 60, nullable: true),
+                    UserName = table.Column<string>(maxLength: 60, nullable: false),
                     NormalizedUserName = table.Column<string>(maxLength: 60, nullable: false),
                     Email = table.Column<string>(maxLength: 60, nullable: false),
-                    NormalizedEmail = table.Column<string>(maxLength: 60, nullable: false),
+                    NormalizedEmail = table.Column<string>(maxLength: 60, nullable: true),
                     EmailConfirmed = table.Column<bool>(nullable: false),
                     PasswordHash = table.Column<string>(nullable: true),
                     SecurityStamp = table.Column<string>(nullable: true),
@@ -216,9 +216,9 @@ namespace TeacherEvaluation.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: true),
-                    PIN = table.Column<string>(nullable: true),
-                    Degree = table.Column<string>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: false),
+                    PIN = table.Column<string>(nullable: false),
+                    Degree = table.Column<string>(nullable: false),
                     Department = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -275,8 +275,8 @@ namespace TeacherEvaluation.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    SubjectId = table.Column<Guid>(nullable: false),
-                    TeacherId = table.Column<Guid>(nullable: false),
+                    SubjectId = table.Column<Guid>(nullable: true),
+                    TeacherId = table.Column<Guid>(nullable: true),
                     Type = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -287,13 +287,13 @@ namespace TeacherEvaluation.DataAccess.Migrations
                         column: x => x.SubjectId,
                         principalTable: "Subjects",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_TaughtSubjects_Teachers_TeacherId",
                         column: x => x.TeacherId,
                         principalTable: "Teachers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -330,7 +330,7 @@ namespace TeacherEvaluation.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     StudentId = table.Column<Guid>(nullable: false),
-                    TaughtSubjectId = table.Column<Guid>(nullable: false),
+                    TaughtSubjectId = table.Column<Guid>(nullable: true),
                     GradeId = table.Column<Guid>(nullable: false),
                     State = table.Column<int>(nullable: false)
                 },
@@ -342,7 +342,7 @@ namespace TeacherEvaluation.DataAccess.Migrations
                         column: x => x.GradeId,
                         principalTable: "Grades",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Enrollments_Students_StudentId",
                         column: x => x.StudentId,
@@ -354,7 +354,7 @@ namespace TeacherEvaluation.DataAccess.Migrations
                         column: x => x.TaughtSubjectId,
                         principalTable: "TaughtSubjects",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(

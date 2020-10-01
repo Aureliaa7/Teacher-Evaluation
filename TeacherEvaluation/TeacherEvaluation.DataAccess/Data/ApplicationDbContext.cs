@@ -6,7 +6,7 @@ using TeacherEvaluation.Domain.Identity;
 
 namespace TeacherEvaluation.DataAccess.Data
 {
-    public class ApplicationDbContext :  IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 

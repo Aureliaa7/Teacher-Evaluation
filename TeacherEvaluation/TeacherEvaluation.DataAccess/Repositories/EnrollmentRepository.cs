@@ -17,7 +17,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
         public async Task<Enrollment> GetEnrollment(Guid id)
         {
             return await Context.Set<Enrollment>()
-               .Where(x => x.Id == id)
+               .Where(x => x.Id == id && x.TaughtSubject != null)
                .Include(x => x.TaughtSubject)
                     .ThenInclude(x => x.Teacher)
                         .ThenInclude(x => x.User)
@@ -35,6 +35,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
         public async Task<IEnumerable<Enrollment>> GetAllWithRelatedEntities()
         {
             return await Context.Set<Enrollment>()
+                .Where(x => x.TaughtSubject != null)
                 .Include(x => x.TaughtSubject)
                     .ThenInclude(x => x.Teacher)
                         .ThenInclude(x => x.User)
@@ -53,7 +54,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
         public async Task<IEnumerable<Enrollment>> GetForStudent(Guid studentId)
         {
             return await Context.Set<Enrollment>()
-                .Where(x => x.Student.Id == studentId)
+                .Where(x => x.Student.Id == studentId && x.TaughtSubject != null)
                 .Include(x => x.TaughtSubject)
                     .ThenInclude(x => x.Teacher)
                         .ThenInclude(x => x.User)
@@ -90,7 +91,8 @@ namespace TeacherEvaluation.DataAccess.Repositories
         public async Task<Enrollment> GetEnrollmentBySubjectStateTypeAndStudent(Guid subjectId, EnrollmentState state, TaughtSubjectType type, Guid studentId)
         {
             return await Context.Set<Enrollment>()
-                .Where(x => x.TaughtSubject.Subject.Id == subjectId && 
+                .Where(x => x.TaughtSubject != null &&
+                    x.TaughtSubject.Subject.Id == subjectId && 
                     x.State == state && x.Student.Id == studentId && 
                     x.TaughtSubject.Type == type)
                 .Include(x => x.TaughtSubject)

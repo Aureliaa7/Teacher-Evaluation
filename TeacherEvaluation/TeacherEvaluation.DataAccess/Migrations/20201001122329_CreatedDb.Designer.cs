@@ -10,8 +10,8 @@ using TeacherEvaluation.DataAccess.Data;
 namespace TeacherEvaluation.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200929164500_CreatedDatabase")]
-    partial class CreatedDatabase
+    [Migration("20201001122329_CreatedDb")]
+    partial class CreatedDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
