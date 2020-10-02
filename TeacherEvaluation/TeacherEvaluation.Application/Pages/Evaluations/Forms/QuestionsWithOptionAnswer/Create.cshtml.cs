@@ -61,16 +61,23 @@ namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOpt
 
         public async Task<IActionResult> OnPostAsync()
         {
-            CreateFormForQuestionWithOptionCommand command = new CreateFormForQuestionWithOptionCommand
+            if (ModelState.IsValid)
             {
-                MinNumberAttendances = (int)NumberOfAttendances,
-                EnrollmentState = EnrollmentState,
-                StartDate = StartDate,
-                EndDate = EndDate, 
-                Questions = Questions
-            };
-            await mediator.Send(command);
-            return RedirectToPage("/Dashboards/Dean");
+                CreateFormForQuestionWithOptionCommand command = new CreateFormForQuestionWithOptionCommand
+                {
+                    MinNumberAttendances = (int)NumberOfAttendances,
+                    EnrollmentState = EnrollmentState,
+                    StartDate = StartDate,
+                    EndDate = EndDate,
+                    Questions = Questions
+                };
+                await mediator.Send(command);
+                return RedirectToPage("/Dashboards/Dean");
+            }
+            else
+            {
+                return Page();
+            }
         }
 
         public void OnPostAddQuestion(string question)

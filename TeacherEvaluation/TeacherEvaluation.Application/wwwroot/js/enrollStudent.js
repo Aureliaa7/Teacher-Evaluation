@@ -71,9 +71,13 @@ function update_data() {
     check_enrollment_availability();
 }
 
-function get_students_by_specialization() {
+function get_students_by_specialization_and_study_year() {
+    var specialization_id = { id: $("#specialization").val() };
+    var study_year = { id: $("#study-year") };
+
     var search_details = {
         specializationId: $("#specialization").val(),
+        studyYear: $("#study-year").val(),
     };
     console.log(search_details);
 
@@ -82,7 +86,7 @@ function get_students_by_specialization() {
         data: search_details,
         dataType: 'json',
         contextType: 'application/json',
-        url: "../Enrollments/Create?handler=ReturnStudents",
+        url: "/Enrollments/Create?handler=ReturnStudents",
 
         success: function (result) {
             $("#student option").remove();

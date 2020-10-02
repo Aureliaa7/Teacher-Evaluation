@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations;
+using TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities;
 
@@ -53,6 +55,12 @@ namespace TeacherEvaluation.Application.Pages.Grades
         [Required(ErrorMessage = "Specialization is required")]
         public Guid SpecializationId { get; set; }
 
+        [BindProperty]
+        [Display(Name = "Study year")]
+        [Required(ErrorMessage = "Study year is required")]
+        [Range(1, 4, ErrorMessage = "The study year must be between 1 and 4")]
+        public int? StudyYear { get; set; } = null;
+
         public List<SelectListItem> TaughtSubjects { get; set; }
 
         public EditModel(IMediator mediator)
@@ -67,9 +75,22 @@ namespace TeacherEvaluation.Application.Pages.Grades
 
         public IActionResult OnGetReturnSubjects(string studentId)
         {
-            GetEnrollmentsForStudentCommand getSubjectsCommand = new GetEnrollmentsForStudentCommand { Id = new Guid(studentId)};
-            var subjects = mediator.Send(getSubjectsCommand).Result;
-            return new JsonResult(subjects);
+            GetUserIdForStudentCommand getUserIdCommand = new GetUserIdForStudentCommand { StudentId = new Guid(studentId) };
+            try
+            {
+                Guid userIdStudent = mediator.Send(getUserIdCommand).Result;
+                GetSubjectsForEnrollmentsCommand getSubjectsCommand = new GetSubjectsForEnrollmentsCommand
+                {
+                    UserId = userIdStudent,
+                    EnrollmentState = EnrollmentState.InProgress
+                };
+                var subjects = mediator.Send(getSubjectsCommand).Result;
+                return new JsonResult(subjects);
+            }
+            catch (ItemNotFoundException e)
+            {
+                return new JsonResult(e.Message);
+            }
         }
 
         public IActionResult OnGetCheckEnrollment(string studentId, string subjectId, string type)

@@ -15,10 +15,9 @@
             $("#subject option").remove();
             console.log(result);
             $.each(result, function (index, item) {
-                console.log("enrollment id: " + item.id);
-                console.log("subject id: " + item.taughtSubject.subject.id);
-                console.log(item.taughtSubject.subject.name);
-                $("#subject").append('<option value="' + item.taughtSubject.subject.id + '">' + item.taughtSubject.subject.name + '</option>');
+                console.log("subject id: " + item.id);
+                console.log(item.name);
+                $("#subject").append('<option value="' + item.id + '">' + item.name + '</option>');
             });
         },
         error: function () {
@@ -53,3 +52,4 @@ function enrollment_exists() {
         }
     });
 }
+

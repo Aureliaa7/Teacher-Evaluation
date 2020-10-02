@@ -13,7 +13,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TeacherEvaluation.EmailSender.NotificationService;
 using TeacherEvaluation.EmailSender.NotificationModel;
-using Microsoft.AspNetCore.Authorization;
 
 namespace TeacherEvaluation.Application
 {

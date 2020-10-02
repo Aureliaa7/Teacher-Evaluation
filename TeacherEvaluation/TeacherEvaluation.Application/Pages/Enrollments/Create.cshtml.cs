@@ -51,6 +51,12 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
         [Required(ErrorMessage = "Specialization is required")]
         public Guid SpecializationId { get; set; }
 
+        [BindProperty]
+        [Display(Name = "Study year")]
+        [Required(ErrorMessage = "Study year is required")]
+        [Range(1, 4, ErrorMessage = "The study year must be between 1 and 4")]
+        public int? StudyYear { get; set; } = null;
+
         public List<SelectListItem> Subjects { get; set; }
 
         public CreateModel(IMediator mediator)
@@ -101,9 +107,13 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
         }
 
 
-        public IActionResult OnGetReturnStudents(string specializationId)
+        public IActionResult OnGetReturnStudents(string specializationId, string studyYear)
         {
-            GetStudentsBySpecializationIdCommand command = new GetStudentsBySpecializationIdCommand { SpecializationId = new Guid(specializationId) };
+            GetStudentsBySpecializationIdAndYearCommand command = new GetStudentsBySpecializationIdAndYearCommand
+            {
+                SpecializationId = new Guid(specializationId),
+                StudyYear = int.Parse(studyYear)
+            };
             var students = mediator.Send(command).Result;
             return new JsonResult(students);
         }
