@@ -32,7 +32,9 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
                 var students = await studentRepository.GetAllWithRelatedEntities();
                 var studentId = students.Where(x => x.User.Id == request.UserId).Select(x => x.Id).First();
                 var enrollments = await enrollmentRepository.GetForStudent(studentId);
-                var taughtSubjects = enrollments.Where(x => x.TaughtSubject.Type == request.SubjectType).Select(x => x.TaughtSubject);
+                var taughtSubjects = enrollments.Where(x => x.TaughtSubject.Type == request.SubjectType && x.State == request.EnrollmentState)
+                                                .Select(x => x.TaughtSubject);
+                
                 return taughtSubjects;
             }
             throw new ItemNotFoundException("The user was not found...");

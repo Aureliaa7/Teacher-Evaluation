@@ -9,5 +9,6 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
     {
         public Guid UserId { get; set; }
         public TaughtSubjectType SubjectType { get; set; }
+        public EnrollmentState EnrollmentState { get; set; }
     }
 }

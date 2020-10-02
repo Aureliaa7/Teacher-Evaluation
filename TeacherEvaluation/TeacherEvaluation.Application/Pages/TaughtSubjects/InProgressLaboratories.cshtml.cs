@@ -1,11 +1,11 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities;
@@ -13,13 +13,13 @@ using TeacherEvaluation.Domain.DomainEntities;
 namespace TeacherEvaluation.Application.Pages.TaughtSubjects
 {
     [Authorize(Roles = "Student")]
-    public class CoursesForStudentModel : PageModel
+    public class InProgressLaboratoriesModel : PageModel
     {
         private readonly IMediator mediator;
 
         public IEnumerable<TaughtSubject> TaughtSubjects { get; set; }
 
-        public CoursesForStudentModel(IMediator mediator)
+        public InProgressLaboratoriesModel(IMediator mediator)
         {
             this.mediator = mediator;
             TaughtSubjects = new List<TaughtSubject>();
@@ -28,14 +28,15 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
         public async Task<IActionResult> OnGetAsync()
         {
             Guid currentUserId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            GetSubjectsForStudentCommand command = new GetSubjectsForStudentCommand { SubjectType = TaughtSubjectType.Course, UserId = currentUserId };
+            GetSubjectsForStudentCommand command = new GetSubjectsForStudentCommand { SubjectType = TaughtSubjectType.Laboratory, 
+                UserId = currentUserId, EnrollmentState = EnrollmentState.InProgress};
             try
             {
                 TaughtSubjects = await mediator.Send(command);
             }
             catch (ItemNotFoundException)
             {
-                return RedirectToPage("../Errors/404");
+                return RedirectToPage("/Errors/404");
             }
             return Page();
         }
