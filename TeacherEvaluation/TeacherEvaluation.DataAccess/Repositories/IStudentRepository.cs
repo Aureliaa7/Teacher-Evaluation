@@ -11,5 +11,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
         Task Delete(Guid id);
         Task<IEnumerable<Student>> GetAllWithRelatedEntities();
         Task<Student> GetByUserId(Guid id);
+        Task<IEnumerable<Student>> GetByCriteriaWithRelatedEntities(StudyProgramme studyProgramme, 
+            Guid studyDomainId, Guid specializationId, int studyYear);
     }
 }

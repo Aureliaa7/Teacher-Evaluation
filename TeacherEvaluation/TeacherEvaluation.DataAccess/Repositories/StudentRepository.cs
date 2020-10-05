@@ -58,5 +58,19 @@ namespace TeacherEvaluation.DataAccess.Repositories
                     .ThenInclude(x => x.StudyDomain)
                 .FirstAsync();
         }
+
+        public async Task<IEnumerable<Student>> GetByCriteriaWithRelatedEntities(StudyProgramme studyProgramme, 
+            Guid studyDomainId, Guid specializationId, int studyYear)
+        {
+            return await Context.Set<Student>()
+                .Where(x => x.Specialization.Id == specializationId &&
+                       x.Specialization.StudyDomain.StudyProgramme == studyProgramme &&
+                       x.Specialization.StudyDomain.Id == studyDomainId &&
+                       x.StudyYear == studyYear)
+                .Include(x => x.User)
+                .Include(x => x.Specialization)
+                    .ThenInclude(x => x.StudyDomain)
+                .ToListAsync();
+        }
     }
 }

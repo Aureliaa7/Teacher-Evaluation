@@ -43,5 +43,15 @@ namespace TeacherEvaluation.DataAccess.Repositories
               .Include(entity => entity.Subject)
               .FirstAsync();
         }
+
+        public async Task<IEnumerable<TaughtSubject>> GetTaughtSubjectsByCriteria(Department department, TaughtSubjectType taughtSubjectType)
+        {
+            return await Context.Set<TaughtSubject>()
+                .Where(x => x.Teacher.Department == department && x.Type == taughtSubjectType)
+                .Include(entity => entity.Teacher)
+                    .ThenInclude(teacher => teacher.User)
+                .Include(entity => entity.Subject)
+                .ToListAsync();
+        }
     }
 }
