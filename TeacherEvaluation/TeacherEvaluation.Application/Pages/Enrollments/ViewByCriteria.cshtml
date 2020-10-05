@@ -6,6 +6,7 @@
 }
 
 @section scripts{
+    <partial name="_ValidationScriptsPartial" />
     <script src="~/js/dataTable.js"></script>
     <script src="~/js/registerOrEditStudent.js"></script>
 }
@@ -76,86 +77,86 @@
 
 @if (Model.DisplayTable)
 {
-<table id="enrollments-index" class="table table-striped table-bordered set-max-width">
-    <thead>
-        <tr>
-            <th>
-                Teacher
-            </th>
-            <th>
-                Subject
-            </th>
-            <th>
-                Type
-            </th>
-            <th>
-                Student
-            </th>
-            <th>
-                Study Year
-            </th>
-            <th>
-                Study Programme
-            </th>
-            <th>
-                Study Domain
-            </th>
-            <th>
-                Specialization
-            </th>
-            <th>
-                Group
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Enrollments)
-        {
-            var teacherLastName = item.TaughtSubject.Teacher.User.LastName;
-            var teacherFathersInitial = item.TaughtSubject.Teacher.User.FathersInitial;
-            var teacherFirstName = item.TaughtSubject.Teacher.User.FirstName;
-            var teacherName = teacherLastName + " " + teacherFathersInitial + " " + teacherFirstName;
+    <table id="enrollments-index" class="table table-striped table-bordered set-max-width">
+        <thead>
+            <tr>
+                <th>
+                    Teacher
+                </th>
+                <th>
+                    Subject
+                </th>
+                <th>
+                    Type
+                </th>
+                <th>
+                    Student
+                </th>
+                <th>
+                    Study Year
+                </th>
+                <th>
+                    Study Programme
+                </th>
+                <th>
+                    Study Domain
+                </th>
+                <th>
+                    Specialization
+                </th>
+                <th>
+                    Group
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Enrollments)
+            {
+                var teacherLastName = item.TaughtSubject.Teacher.User.LastName;
+                var teacherFathersInitial = item.TaughtSubject.Teacher.User.FathersInitial;
+                var teacherFirstName = item.TaughtSubject.Teacher.User.FirstName;
+                var teacherName = teacherLastName + " " + teacherFathersInitial + " " + teacherFirstName;
 
-            var studentLastName = item.Student.User.LastName;
-            var studentFathersInitial = item.Student.User.FathersInitial;
-            var studentFirstName = item.Student.User.FirstName;
-            var studentName = studentLastName + " " + studentFathersInitial + " " + studentFirstName;
-        <tr>
-            <td>
-                @teacherName
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaughtSubject.Subject.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaughtSubject.Type)
-            </td>
-            <td>
-                @studentName
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Student.StudyYear)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Student.Specialization.StudyDomain.StudyProgramme)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Student.Specialization.StudyDomain.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Student.Specialization.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Student.Group)
-            </td>
-            <td>
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
-<br/>
-<br/>
+                var studentLastName = item.Student.User.LastName;
+                var studentFathersInitial = item.Student.User.FathersInitial;
+                var studentFirstName = item.Student.User.FirstName;
+                var studentName = studentLastName + " " + studentFathersInitial + " " + studentFirstName;
+                <tr>
+                    <td>
+                        @teacherName
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TaughtSubject.Subject.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TaughtSubject.Type)
+                    </td>
+                    <td>
+                        @studentName
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Student.StudyYear)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Student.Specialization.StudyDomain.StudyProgramme)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Student.Specialization.StudyDomain.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Student.Specialization.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Student.Group)
+                    </td>
+                    <td>
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <br />
 }

@@ -1,0 +1,74 @@
+﻿@page
+@model TeacherEvaluation.Application.Pages.Teachers.ViewByDepartmentModel
+
+@{
+    ViewData["Title"] = "Teachers";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/dataTable.js"></script>
+}
+
+<h4 class="row align-input-center add-top-margin">View Teachers by Department</h4>
+<div class="row align-input-center add-top-margin">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Department"></label><br />
+                <select id="study-programme" asp-for="Department" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Department>()"
+                        class="set-width-dropdown">
+                    <option selected="selected" value="">Please select</option>
+                </select>
+                <span asp-validation-for="Department" class="text-danger" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Search" class="btn btn-dark set-width-dropdown add-margin-top-35" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (Model.TableIsVisible)
+{
+    <table id="teachers-index" class="table table-striped table-bordered set-max-width">
+        <thead>
+            <tr>
+                <th>
+                    Teacher Name
+                </th>
+                <th>
+                    Degree
+                </th>
+                <th>
+                    Department
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Teachers)
+            {
+                var fullName = item.User.LastName + " " + item.User.FathersInitial + " " + item.User.FirstName;
+                <tr>
+                    <td>
+                        @fullName
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Degree)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Department)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
