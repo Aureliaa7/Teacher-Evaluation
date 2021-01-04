@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TeacherEvaluation.Domain.DomainEntities;
 
-namespace TeacherEvaluation.DataAccess.Repositories
+namespace TeacherEvaluation.DataAccess.Repositories.Interfaces
 {
     public interface IStudentRepository : IRepository<Student>
     {

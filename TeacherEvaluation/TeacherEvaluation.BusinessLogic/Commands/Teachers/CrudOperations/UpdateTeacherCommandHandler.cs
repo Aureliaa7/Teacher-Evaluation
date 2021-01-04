@@ -2,26 +2,26 @@
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
-using TeacherEvaluation.DataAccess.Repositories;
+using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
 {
     public class UpdateTeacherCommandHandler : AsyncRequestHandler<UpdateTeacherCommand>
     {
-        private readonly ITeacherRepository teacherRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public UpdateTeacherCommandHandler(ITeacherRepository teacherRepository)
+        public UpdateTeacherCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.teacherRepository = teacherRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         protected override async Task Handle(UpdateTeacherCommand request, CancellationToken cancellationToken)
         {
-            bool teacherExists = await teacherRepository.Exists(x => x.Id == request.Id);
+            bool teacherExists = await unitOfWork.TeacherRepository.Exists(x => x.Id == request.Id);
             if (teacherExists)
             {
-                Teacher teacherToBeUpdated = await teacherRepository.GetTeacher(request.Id);
+                Teacher teacherToBeUpdated = await unitOfWork.TeacherRepository.GetTeacher(request.Id);
                 teacherToBeUpdated.PIN = request.PIN;
                 teacherToBeUpdated.Degree = request.Degree;
                 teacherToBeUpdated.Department = request.Department;
@@ -29,7 +29,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
                 teacherToBeUpdated.User.LastName = request.LastName;
                 teacherToBeUpdated.User.Email = request.Email;
                 teacherToBeUpdated.User.FathersInitial = request.FathersInitial;
-                await teacherRepository.Update(teacherToBeUpdated);
+                await unitOfWork.TeacherRepository.Update(teacherToBeUpdated);
             }
             else
             {

@@ -1,18 +1,18 @@
 ﻿using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using TeacherEvaluation.DataAccess.Repositories;
+using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.Subjects.CrudOperations
 {
     public class AddSubjectCommandHandler : AsyncRequestHandler<AddSubjectCommand>
     {
-        private readonly IRepository<Subject> subjectRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public AddSubjectCommandHandler(IRepository<Subject> subjectRepository)
+        public AddSubjectCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.subjectRepository = subjectRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         protected override async Task Handle(AddSubjectCommand request, CancellationToken cancellationToken)
@@ -22,7 +22,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Subjects.CrudOperations
                 Name = request.Name,
                 NumberOfCredits = request.NumberOfCredits
             };
-            await subjectRepository.Add(newSubject);
+            await unitOfWork.SubjectRepository.Add(newSubject);
         }
     }
 }

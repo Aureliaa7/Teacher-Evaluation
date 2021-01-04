@@ -2,26 +2,25 @@
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
-using TeacherEvaluation.DataAccess.Repositories;
-using TeacherEvaluation.Domain.DomainEntities;
+using TeacherEvaluation.DataAccess.UnitOfWork;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations
 {
     public class DeleteEnrollmentCommandHandler : AsyncRequestHandler<DeleteEnrollmentCommand>
     {
-        private readonly IRepository<Enrollment> enrollmentRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public DeleteEnrollmentCommandHandler(IRepository<Enrollment> enrollmentRepository)
+        public DeleteEnrollmentCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.enrollmentRepository = enrollmentRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         protected override async Task Handle(DeleteEnrollmentCommand request, CancellationToken cancellationToken)
         {
-            bool enrollmentExists = await enrollmentRepository.Exists(x => x.Id == request.Id);
+            bool enrollmentExists = await unitOfWork.EnrollmentRepository.Exists(x => x.Id == request.Id);
             if (enrollmentExists)
             {
-                await enrollmentRepository.Remove(request.Id);
+                await unitOfWork.EnrollmentRepository.Remove(request.Id);
             }
             else
             {

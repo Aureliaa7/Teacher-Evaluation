@@ -3,31 +3,26 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
-using TeacherEvaluation.DataAccess.Repositories;
+using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations
 { 
     public class GetEnrollmentsForStudentCommandHandler : IRequestHandler<GetEnrollmentsForStudentCommand, IEnumerable<Enrollment>>
     {
-        private readonly IEnrollmentRepository enrollmentRepository;
-        private readonly IRepository<Student> studentRepository;
-        private readonly IRepository<Grade> gradeRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public GetEnrollmentsForStudentCommandHandler(IEnrollmentRepository enrollmentRepository, 
-            IRepository<Student> studentRepository, IRepository<Grade> gradeRepository)
+        public GetEnrollmentsForStudentCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.enrollmentRepository = enrollmentRepository;
-            this.studentRepository = studentRepository;
-            this.gradeRepository = gradeRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<IEnumerable<Enrollment>> Handle(GetEnrollmentsForStudentCommand request, CancellationToken cancellationToken)
         {
-            bool studentExists = await studentRepository.Exists(x => x.Id == request.Id);
+            bool studentExists = await unitOfWork.StudentRepository.Exists(x => x.Id == request.Id);
             if (studentExists)
             {
-                return await enrollmentRepository.GetForStudent(request.Id);
+                return await unitOfWork.EnrollmentRepository.GetForStudent(request.Id);
             }
             throw new ItemNotFoundException("The student was not found...");
         }

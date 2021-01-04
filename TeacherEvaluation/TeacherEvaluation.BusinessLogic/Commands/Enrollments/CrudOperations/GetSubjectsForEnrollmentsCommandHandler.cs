@@ -1,37 +1,30 @@
 ﻿using MediatR;
-using Org.BouncyCastle.Math.EC.Rfc7748;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
-using TeacherEvaluation.DataAccess.Repositories;
+using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
-using TeacherEvaluation.Domain.Identity;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations
 {
     public class GetSubjectsForEnrollmentsCommandHandler : IRequestHandler<GetSubjectsForEnrollmentsCommand, IEnumerable<Subject>>
     {
-        private readonly IRepository<ApplicationUser> userRepository;
-        private readonly IStudentRepository studentRepository;
-        private readonly IEnrollmentRepository enrollmentRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public GetSubjectsForEnrollmentsCommandHandler(IRepository<ApplicationUser> userRepository, IStudentRepository studentRepository,
-           IEnrollmentRepository enrollmentRepository)
+        public GetSubjectsForEnrollmentsCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.userRepository = userRepository;
-            this.studentRepository = studentRepository;
-            this.enrollmentRepository = enrollmentRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<IEnumerable<Subject>> Handle(GetSubjectsForEnrollmentsCommand request, CancellationToken cancellationToken)
         {
-            bool userExists = await userRepository.Exists(x => x.Id == request.UserId);
+            bool userExists = await unitOfWork.UserRepository.Exists(x => x.Id == request.UserId);
             if(userExists)
             {
-                var student = await studentRepository.GetByUserId(request.UserId);
-                var allEnrollments = await enrollmentRepository.GetForStudent(student.Id);
+                var student = await unitOfWork.StudentRepository.GetByUserId(request.UserId);
+                var allEnrollments = await unitOfWork.EnrollmentRepository.GetForStudent(student.Id);
                 var enrollments = allEnrollments.Where(x => x.State == request.EnrollmentState);
 
                 var subjectEnrollments = enrollments.GroupBy(x => x.TaughtSubject.Subject.Name).Select(x => x.First()).ToList();

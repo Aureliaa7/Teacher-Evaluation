@@ -2,23 +2,23 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using TeacherEvaluation.DataAccess.Repositories;
+using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
 {
     public class GetAllTaughtSubjectsCommandHandler : IRequestHandler<GetAllTaughtSubjectsCommand, IEnumerable<TaughtSubject>>
     {
-        private readonly ITaughtSubjectRepository taughtSubjectRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public GetAllTaughtSubjectsCommandHandler(ITaughtSubjectRepository taughtSubjectRepository)
+        public GetAllTaughtSubjectsCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.taughtSubjectRepository = taughtSubjectRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<IEnumerable<TaughtSubject>> Handle(GetAllTaughtSubjectsCommand request, CancellationToken cancellationToken)
         {
-            return await taughtSubjectRepository.GetAllWithRelatedEntities();
+            return await unitOfWork.TaughtSubjectRepository.GetAllWithRelatedEntities();
         }
     }
 }

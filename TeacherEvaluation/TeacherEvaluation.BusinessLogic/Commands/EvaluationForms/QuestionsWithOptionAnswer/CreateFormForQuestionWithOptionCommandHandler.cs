@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using TeacherEvaluation.DataAccess.Repositories;
+using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.Identity;
 using TeacherEvaluation.EmailSender;
@@ -14,16 +14,13 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWith
 {
     public class CreateFormForQuestionWithOptionCommandHandler : AsyncRequestHandler<CreateFormForQuestionWithOptionCommand>
     {
-        private readonly IRepository<Form> formRepository;
-        private readonly IRepository<QuestionWithOptionAnswer> questionRepository;
+        private readonly IUnitOfWork unitOfWork;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly INotificationService emailService;
 
-        public CreateFormForQuestionWithOptionCommandHandler(IRepository<Form> formRepository, IRepository<QuestionWithOptionAnswer> questionRepository,
-            UserManager<ApplicationUser> userManager, INotificationService emailService)
+        public CreateFormForQuestionWithOptionCommandHandler(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, INotificationService emailService)
         {
-            this.formRepository = formRepository;
-            this.questionRepository = questionRepository;
+            this.unitOfWork = unitOfWork;
             this.userManager = userManager;
             this.emailService = emailService;
         }
@@ -38,7 +35,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWith
                 Type = FormType.Option, 
                 MinNumberOfAttendances = request.MinNumberAttendances
             };
-            await formRepository.Add(form);
+            await unitOfWork.FormRepository.Add(form);
 
             string startDate = request.StartDate.ToString("yyyy-MM-dd hh:mm:ss");
             string endDate = request.EndDate.ToString("yyyy-MM-dd hh:mm:ss");
@@ -53,7 +50,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWith
                     Question = question,
                     Form = form
                 };
-                await questionRepository.Add(newQuestion);
+                await unitOfWork.QuestionWithOptionAnswerRepository.Add(newQuestion);
             }
         }
 

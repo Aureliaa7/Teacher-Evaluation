@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using TeacherEvaluation.DataAccess.Repositories;
+using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
 {
     public class GetStudyDomainsByProgrammeCommandHandler : IRequestHandler<GetStudyDomainsByProgrammeCommand, IEnumerable<StudyDomain>>
     {
-        private readonly IRepository<StudyDomain> domainRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public GetStudyDomainsByProgrammeCommandHandler(IRepository<StudyDomain> domainRepository)
+        public GetStudyDomainsByProgrammeCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.domainRepository = domainRepository;
+            this.unitOfWork = unitOfWork;
         }
         public async Task<IEnumerable<StudyDomain>> Handle(GetStudyDomainsByProgrammeCommand request, CancellationToken cancellationToken)
         {
-            var allStudyDomains = await domainRepository.GetAll();
+            var allStudyDomains = await unitOfWork.StudyDomainRepository.GetAll();
             return allStudyDomains.Where(x => x.StudyProgramme == request.StudyProgramme);
         }
     }

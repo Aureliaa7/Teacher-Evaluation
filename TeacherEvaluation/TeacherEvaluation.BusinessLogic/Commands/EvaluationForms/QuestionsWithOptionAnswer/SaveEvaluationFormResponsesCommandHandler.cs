@@ -3,44 +3,34 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
-using TeacherEvaluation.DataAccess.Repositories;
+using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
-using TeacherEvaluation.Domain.Identity;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWithOptionAnswer
 {
     public class SaveEvaluationFormResponsesCommandHandler : AsyncRequestHandler<SaveEvaluationFormResponsesCommand>
     {
-        private readonly IRepository<Form> formRepository;
-        private readonly IQuestionWithOptionAnswerRepository questionRepository;
-        private readonly IEnrollmentRepository enrollmentRepository;
-        private readonly IRepository<ApplicationUser> userRepository;
-        private readonly IStudentRepository studentRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public SaveEvaluationFormResponsesCommandHandler(IRepository<Form> formRepository, IQuestionWithOptionAnswerRepository questionRepository,
-            IEnrollmentRepository enrollmentRepository, IRepository<ApplicationUser> userRepository, IStudentRepository studentRepository)
+        public SaveEvaluationFormResponsesCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.formRepository = formRepository;
-            this.questionRepository = questionRepository;
-            this.enrollmentRepository = enrollmentRepository;
-            this.userRepository = userRepository;
-            this.studentRepository = studentRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         protected override async Task Handle(SaveEvaluationFormResponsesCommand request, CancellationToken cancellationToken)
         {
-            bool formExists = await formRepository.Exists(x => x.Id == request.FormId);
-            bool userExists = await userRepository.Exists(x => x.Id == request.UserIdForStudent);
+            bool formExists = await unitOfWork.FormRepository.Exists(x => x.Id == request.FormId);
+            bool userExists = await unitOfWork.UserRepository.Exists(x => x.Id == request.UserIdForStudent);
             if (formExists && userExists)
             {
-                var student = await studentRepository.GetByUserId(request.UserIdForStudent);
-                var enrollmentExists = await enrollmentRepository.Exists(x => x.TaughtSubject.Subject.Id == request.SubjectId &&
+                var student = await unitOfWork.StudentRepository.GetByUserId(request.UserIdForStudent);
+                var enrollmentExists = await unitOfWork.EnrollmentRepository.Exists(x => x.TaughtSubject.Subject.Id == request.SubjectId &&
                                                                               x.State == request.EnrollmentState &&
                                                                               x.TaughtSubject.Type == request.SubjectType &&
                                                                               x.Student.Id == student.Id);
                 if (enrollmentExists)
                 {
-                    var enrollment = await enrollmentRepository.GetEnrollmentBySubjectStateTypeAndStudent(
+                    var enrollment = await unitOfWork.EnrollmentRepository.GetEnrollmentBySubjectStateTypeAndStudent(
                         request.SubjectId, request.EnrollmentState, request.SubjectType, student.Id);
     
                     int contor = 0;
@@ -50,7 +40,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWith
                         {
                             var response = new AnswerToQuestionWithOption { Answer = request.Responses[contor++], Enrollment = enrollment };
                             question.Answers.Add(response);
-                            await questionRepository.Update(question);
+                            await unitOfWork.QuestionWithOptionAnswerRepository.Update(question);
                         }
                         catch (ArgumentOutOfRangeException) { throw; }
                     }

@@ -4,37 +4,32 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
-using TeacherEvaluation.DataAccess.Repositories;
+using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations
 {
     public class UpdateGradeCommandHandler : AsyncRequestHandler<UpdateGradeCommand>
     {
-        private readonly IEnrollmentRepository enrollmentRepository;
-        private readonly IRepository<Student> studentRepository;
-        private readonly IRepository<Subject> subjectRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public UpdateGradeCommandHandler(IEnrollmentRepository enrollmentRepository,
-            IRepository<Student> studentRepository, IRepository<Subject> subjectRepository)
+        public UpdateGradeCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.enrollmentRepository = enrollmentRepository;
-            this.studentRepository = studentRepository;
-            this.subjectRepository = subjectRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         protected async override Task Handle(UpdateGradeCommand request, CancellationToken cancellationToken)
         {
-            bool studentExists = await studentRepository.Exists(x => x.Id == request.StudentId);
-            bool subjectExists = await subjectRepository.Exists(x => x.Id == request.SubjectId);
+            bool studentExists = await unitOfWork.StudentRepository.Exists(x => x.Id == request.StudentId);
+            bool subjectExists = await unitOfWork.SubjectRepository.Exists(x => x.Id == request.SubjectId);
             if (studentExists && subjectExists)
             {
-                IEnumerable<Enrollment> enrollments = await enrollmentRepository.GetForStudent(request.StudentId);
+                IEnumerable<Enrollment> enrollments = await unitOfWork.EnrollmentRepository.GetForStudent(request.StudentId);
                 Enrollment enrollment = enrollments.Where(x => x.TaughtSubject.Subject.Id == request.SubjectId && x.TaughtSubject.Type == request.Type).First();
                 enrollment.Grade.Value = request.Value;
                 enrollment.Grade.Date = request.Date;
                 enrollment.State = EnrollmentState.Done;
-                await enrollmentRepository.Update(enrollment);
+                await unitOfWork.EnrollmentRepository.Update(enrollment);
             }
             else
             {

@@ -4,28 +4,26 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
-using TeacherEvaluation.DataAccess.Repositories;
+using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
 {
     public class GetStudentsBySpecializationIdAndYearCommandHandler : IRequestHandler<GetStudentsBySpecializationIdAndYearCommand, IEnumerable<Student>>
     {
-        private readonly IStudentRepository studentRepository;
-        private readonly IRepository<Specialization> specializationRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public GetStudentsBySpecializationIdAndYearCommandHandler(IStudentRepository studentRepository, IRepository<Specialization> specializationRepository)
+        public GetStudentsBySpecializationIdAndYearCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.studentRepository = studentRepository;
-            this.specializationRepository = specializationRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<IEnumerable<Student>> Handle(GetStudentsBySpecializationIdAndYearCommand request, CancellationToken cancellationToken)
         {
-            bool specializationExists = await specializationRepository.Exists(x => x.Id == request.SpecializationId);
+            bool specializationExists = await unitOfWork.SpecializationRepository.Exists(x => x.Id == request.SpecializationId);
             if(specializationExists)
             {
-                var students = await studentRepository.GetAllWithRelatedEntities();
+                var students = await unitOfWork.StudentRepository.GetAllWithRelatedEntities();
                 return students.Where(x => x.Specialization.Id == request.SpecializationId && 
                                            x.StudyYear == request.StudyYear);
             }

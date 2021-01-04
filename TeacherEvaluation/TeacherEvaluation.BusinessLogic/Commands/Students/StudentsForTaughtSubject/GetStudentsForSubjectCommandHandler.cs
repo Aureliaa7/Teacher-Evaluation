@@ -4,28 +4,26 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
-using TeacherEvaluation.DataAccess.Repositories;
+using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.Students.StudentsForTaughtSubject
 {
     public class GetStudentsForSubjectCommandHandler : IRequestHandler<GetStudentsForSubjectCommand, IEnumerable<Student>>
     {
-        private readonly IEnrollmentRepository enrollmentRepository;
-        private readonly IRepository<TaughtSubject> taughtSubjectRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public GetStudentsForSubjectCommandHandler(IEnrollmentRepository enrollmentRepository, IRepository<TaughtSubject> taughtSubjectRepository)
+        public GetStudentsForSubjectCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.enrollmentRepository = enrollmentRepository;
-            this.taughtSubjectRepository = taughtSubjectRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<IEnumerable<Student>> Handle(GetStudentsForSubjectCommand request, CancellationToken cancellationToken)
         {
-            bool taughtSubjectExists = await taughtSubjectRepository.Exists(x => x.Id == request.TaughtSubjectId);
+            bool taughtSubjectExists = await unitOfWork.TaughtSubjectRepository.Exists(x => x.Id == request.TaughtSubjectId);
             if (taughtSubjectExists)
             {
-                var enrollments = await enrollmentRepository.GetEnrollmentsForTaughtSubject(request.TaughtSubjectId);
+                var enrollments = await unitOfWork.EnrollmentRepository.GetEnrollmentsForTaughtSubject(request.TaughtSubjectId);
                 return enrollments.Select(x => x.Student).ToList();
             }
             throw new ItemNotFoundException("The subject assignment was not found...");

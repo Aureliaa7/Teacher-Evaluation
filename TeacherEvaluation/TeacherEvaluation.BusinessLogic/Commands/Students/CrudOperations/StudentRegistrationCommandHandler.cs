@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using TeacherEvaluation.DataAccess.Repositories;
+using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.Identity;
 using TeacherEvaluation.EmailSender.NotificationModel;
@@ -14,17 +14,16 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
 {
     public class StudentRegistrationCommandHandler : IRequestHandler<StudentRegistrationCommand, List<string>>
     {
-        private readonly IRepository<Student> studentRepository;
+        private readonly IUnitOfWork unitOfWork;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly INotificationService emailService;
-        private readonly ISpecializationRepository specializationRepository;
-        public StudentRegistrationCommandHandler(IRepository<Student> studentRepository, UserManager<ApplicationUser> userManager, 
-            INotificationService emailService, ISpecializationRepository specializationRepository)
+
+        public StudentRegistrationCommandHandler(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, 
+            INotificationService emailService)
         {
-            this.studentRepository = studentRepository;
+            this.unitOfWork = unitOfWork;
             this.userManager = userManager;
             this.emailService = emailService;
-            this.specializationRepository = specializationRepository;
         }
 
         public async Task<List<string>> Handle(StudentRegistrationCommand request, CancellationToken cancellationToken)
@@ -51,10 +50,10 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
 
                 await userManager.AddToRoleAsync(newApplicationUser, "Student");
 
-                bool specializationExists = await specializationRepository.Exists(x => x.Id == request.SpecializationId);
+                bool specializationExists = await unitOfWork.SpecializationRepository.Exists(x => x.Id == request.SpecializationId);
                 if (specializationExists)
                 {
-                    var specialization = await specializationRepository.GetSpecialization(request.SpecializationId);
+                    var specialization = await unitOfWork.SpecializationRepository.GetSpecialization(request.SpecializationId);
 
                     Student student = new Student
                     {
@@ -64,7 +63,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
                         PIN = request.PIN,
                         User = newApplicationUser
                     };
-                    await studentRepository.Add(student);
+                    await unitOfWork.StudentRepository.Add(student);
 
                     Notification notification = EmailSending.ConfigureAccountCreationMessage(confirmationUrl, newApplicationUser, request.Password);
                     emailService.Send(notification);

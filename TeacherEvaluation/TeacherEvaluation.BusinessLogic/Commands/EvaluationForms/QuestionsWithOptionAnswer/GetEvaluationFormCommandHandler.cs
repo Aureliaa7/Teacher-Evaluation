@@ -3,27 +3,27 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
-using TeacherEvaluation.DataAccess.Repositories;
+using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWithOptionAnswer
 {
     public class GetEvaluationFormCommandHandler : IRequestHandler<GetEvaluationFormCommand, Form>
     {
-        private readonly IFormRepository formRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public GetEvaluationFormCommandHandler(IFormRepository formRepository)
+        public GetEvaluationFormCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.formRepository = formRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<Form> Handle(GetEvaluationFormCommand request, CancellationToken cancellationToken)
         {
             var currentDate = DateTime.Now;
-            bool availableForm = await formRepository.Exists(x => x.StartDate <= currentDate && x.EndDate > currentDate);
+            bool availableForm = await unitOfWork.FormRepository.Exists(x => x.StartDate <= currentDate && x.EndDate > currentDate);
             if (availableForm)
             {
-                return await formRepository.GetByDate(currentDate);
+                return await unitOfWork.FormRepository.GetByDate(currentDate);
             }
             throw new NoEvaluationFormException("No form available for now");
         }

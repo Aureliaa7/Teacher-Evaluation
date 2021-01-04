@@ -2,26 +2,25 @@
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
-using TeacherEvaluation.DataAccess.Repositories;
-using TeacherEvaluation.Domain.DomainEntities;
+using TeacherEvaluation.DataAccess.UnitOfWork;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
 {
     public class DeleteTaughtSubjectCommandHandler : AsyncRequestHandler<DeleteTaughtSubjectCommand>
     {
-        private readonly IRepository<TaughtSubject> taughtSubjectRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public DeleteTaughtSubjectCommandHandler(IRepository<TaughtSubject> taughtSubjectRepository)
+        public DeleteTaughtSubjectCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.taughtSubjectRepository = taughtSubjectRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         protected override async Task Handle(DeleteTaughtSubjectCommand request, CancellationToken cancellationToken)
         {
-            bool taughtSubjectExists = await taughtSubjectRepository.Exists(x => x.Id == request.Id);
+            bool taughtSubjectExists = await unitOfWork.TaughtSubjectRepository.Exists(x => x.Id == request.Id);
             if (taughtSubjectExists)
             {
-                await taughtSubjectRepository.Remove(request.Id);
+                await unitOfWork.TaughtSubjectRepository.Remove(request.Id);
             }
             else
             {

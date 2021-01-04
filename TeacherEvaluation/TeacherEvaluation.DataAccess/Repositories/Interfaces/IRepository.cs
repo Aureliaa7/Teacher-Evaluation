@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace TeacherEvaluation.DataAccess.Repositories
+namespace TeacherEvaluation.DataAccess.Repositories.Interfaces
 {
     public interface IRepository<T> where T : class
     {

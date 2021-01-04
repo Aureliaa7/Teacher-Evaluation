@@ -7,12 +7,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations;
 using TeacherEvaluation.DataAccess.Data;
-using TeacherEvaluation.DataAccess.Repositories;
 using TeacherEvaluation.Domain.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TeacherEvaluation.EmailSender.NotificationService;
 using TeacherEvaluation.EmailSender.NotificationModel;
+using TeacherEvaluation.DataAccess.UnitOfWork;
 
 namespace TeacherEvaluation.Application
 {
@@ -37,17 +37,9 @@ namespace TeacherEvaluation.Application
               .AddEntityFrameworkStores<ApplicationDbContext>()
               .AddDefaultTokenProviders();
 
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddScoped<IStudentRepository, StudentRepository>();
-            services.AddScoped<ITeacherRepository, TeacherRepository>(); 
-            services.AddScoped<ITaughtSubjectRepository, TaughtSubjectRepository>();
-            services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
-            services.AddScoped<ISpecializationRepository, SpecializationRepository>();
-            services.AddScoped<IAttendanceRepository, AttendanceRepository>();
-            services.AddScoped<IQuestionWithOptionAnswerRepository, QuestionWithOptionAnswerRepository>();
-            services.AddScoped<IFormRepository, FormRepository>();
-
             services.AddMediatR(typeof(TeacherRegistrationCommand));
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddMvc().AddRazorPagesOptions(options =>
             {
@@ -69,7 +61,6 @@ namespace TeacherEvaluation.Application
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 

@@ -2,26 +2,26 @@
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
-using TeacherEvaluation.DataAccess.Repositories;
+using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations
 {
     public class GetEnrollmentByIdCommandHandler : IRequestHandler<GetEnrollmentByIdCommand, Enrollment>
     {
-        private readonly IEnrollmentRepository enrollmentRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public GetEnrollmentByIdCommandHandler(IEnrollmentRepository enrollmentRepository)
+        public GetEnrollmentByIdCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.enrollmentRepository = enrollmentRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<Enrollment> Handle(GetEnrollmentByIdCommand request, CancellationToken cancellationToken)
         {
-            bool enrollmentExists = await enrollmentRepository.Exists(x => x.Id == request.Id);
+            bool enrollmentExists = await unitOfWork.EnrollmentRepository.Exists(x => x.Id == request.Id);
             if (enrollmentExists)
             {
-                return await enrollmentRepository.GetEnrollment(request.Id);
+                return await unitOfWork.EnrollmentRepository.GetEnrollment(request.Id);
             }
             throw new ItemNotFoundException("The enrollment was not found...");
         }

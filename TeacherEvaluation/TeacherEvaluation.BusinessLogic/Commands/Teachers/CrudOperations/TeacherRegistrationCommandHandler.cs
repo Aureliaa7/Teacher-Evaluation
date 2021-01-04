@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using TeacherEvaluation.DataAccess.Repositories;
+using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.Identity;
 using TeacherEvaluation.EmailSender.NotificationModel;
@@ -14,12 +14,12 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
 {
     public class TeacherRegistrationCommandHandler : IRequestHandler<TeacherRegistrationCommand, List<string>>
     {
-        private readonly IRepository<Teacher> teacherRepository;
+        private readonly IUnitOfWork unitOfWork;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly INotificationService emailService;
-        public TeacherRegistrationCommandHandler(IRepository<Teacher> teacherRepository, UserManager<ApplicationUser> userManager, INotificationService emailService)
+        public TeacherRegistrationCommandHandler(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, INotificationService emailService)
         {
-            this.teacherRepository = teacherRepository;
+            this.unitOfWork = unitOfWork;
             this.userManager = userManager;
             this.emailService = emailService;
         }
@@ -55,7 +55,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
                     PIN = request.PIN,
                     User = newApplicationUser
                 };
-                await teacherRepository.Add(teacher);
+                await unitOfWork.TeacherRepository.Add(teacher);
 
                 Notification notification = EmailSending.ConfigureAccountCreationMessage(confirmationUrl, newApplicationUser, request.Password);
                 emailService.Send(notification);
