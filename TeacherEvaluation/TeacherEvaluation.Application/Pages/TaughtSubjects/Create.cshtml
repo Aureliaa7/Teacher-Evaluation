@@ -13,51 +13,54 @@
 
 <h4 class="row align-input-center add-top-margin">Assign Subject to Teacher</h4>
 <hr />
-<div class="row my-row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="form-group">
+<div class="jumbotron taught-subject-jumbotron">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row my-row">
+            <div class="col-md-6">
                 <label asp-for="Department">Department</label><br />
-                <select id="department-field" asp-for="Department" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Department>()"
-                        class="form-control set-width-dropdown" onchange="get_teachers_by_department()">
+                <select id="department-field" asp-for="Department" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Enums.Department>()"
+                        class="form-control" onchange="get_teachers_by_department()">
                     <option selected disabled hidden>Please select</option>
                 </select>
                 <span asp-validation-for="Department" class="text-danger" />
             </div>
-
-            <div class="form-group">
+            <div class="col-md-6">
                 <label asp-for="TeacherId" class="control-label">Teacher Name</label><br />
-                <select id="teacher-field" asp-for="TeacherId" class="form-control set-width-dropdown" onchange="get_info()">
+                <select id="teacher-field" asp-for="TeacherId" class="form-control" onchange="get_info()">
                     <option>Select teacher</option>
                 </select>
                 <span asp-validation-for="TeacherId" class="text-danger" />
             </div>
-            <div class="form-group">
+        </div>
+        <div class="row my-row">
+            <div class="col-md-6">
                 <label asp-for="SubjectId" class="control-label">Subject</label><br />
-                <select id="subject-field" asp-for="SubjectId" asp-items="@Model.Subjects" class="form-control set-width-dropdown" onchange="get_info()">
+                <select id="subject-field" asp-for="SubjectId" asp-items="@Model.Subjects" class="form-control" onchange="get_info()">
                     <option>Select subject</option>
                 </select>
                 <span asp-validation-for="SubjectId" class="text-danger" />
             </div>
-            <div class="form-group">
+            <div class="col-md-6">
                 <label asp-for="Type">Study programme</label><br />
-                <select id="type-field" asp-for="Type" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.TaughtSubjectType>()"
-                        class="form-control set-width-dropdown" onchange="get_info()">
+                <select id="type-field" asp-for="Type" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Enums.TaughtSubjectType>()"
+                        class="form-control" onchange="get_info()">
                     <option selected disabled hidden>Please select</option>
                 </select>
                 <span asp-validation-for="Type" class="text-danger" />
             </div>
-            <div class="form-group">
+        </div>
+        <div class="row my-row">
+            <div class="col-md-6">
                 <label class="control-label">Info</label>
-                <input id="info-field" class="form-control set-width-dropdown" disabled />
+                <input id="info-field" class="form-control" disabled />
             </div>
-            <div class="form-group">
-                <input id="submit-button" type="submit" value="Assign" class="btn btn-dark set-width-dropdown" />
+            <div class="col-md-6">
+                <br/>
+                <input id="submit-button" type="submit" value="Assign" class="btn btn-dark form-control" />
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
 
 

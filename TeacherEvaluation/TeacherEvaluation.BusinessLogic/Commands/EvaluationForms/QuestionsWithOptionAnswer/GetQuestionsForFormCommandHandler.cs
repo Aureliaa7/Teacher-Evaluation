@@ -22,7 +22,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWith
             bool formExists = await unitOfWork.FormRepository.Exists(x => x.Id == request.FormId);
             if (formExists)
             {
-                 return await unitOfWork.QuestionWithOptionAnswerRepository.GetQuestionsWithRelatedEntities(request.FormId);
+                var questions = await unitOfWork.QuestionWithOptionAnswerRepository.GetQuestionsWithRelatedEntities(request.FormId);
+                return questions;
             }
             throw new ItemNotFoundException("The form was not found...");
         }

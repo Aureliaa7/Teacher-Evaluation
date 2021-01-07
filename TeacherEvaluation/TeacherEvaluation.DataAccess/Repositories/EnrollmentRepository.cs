@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TeacherEvaluation.DataAccess.Data;
 using TeacherEvaluation.DataAccess.Repositories.Interfaces;
 using TeacherEvaluation.Domain.DomainEntities;
+using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.DataAccess.Repositories
 {

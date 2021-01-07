@@ -11,23 +11,24 @@
     <script src="~/js/registerOrEditStudent.js"></script>
 }
 
-<h4 class="row align-input-center add-top-margin">View Students by Criteria</h4>
+<h4 class="row align-input-center add-top-margin">Search Students by Criteria</h4>
+<hr/>
 
-<div class="container add-margin-bottom">
+<div class="jumbotron search-students-jumbotron">
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row my-row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label asp-for="StudyProgramme">Study programme</label><br />
-                <select id="study-programme" asp-for="StudyProgramme" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.StudyProgramme>()"
-                        class="set-width-dropdown" onclick="get_domains()">
+                <select id="study-programme" asp-for="StudyProgramme" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Enums.StudyProgramme>()"
+                        class="form-control" onclick="get_domains()">
                     <option selected="selected" value="">Please select</option>
                 </select>
                 <span asp-validation-for="StudyProgramme" class="text-danger" />
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label asp-for="StudyDomainId" class="control-label">Study domain</label><br />
-                <select id="domain" asp-for="StudyDomainId" class="form-control set-width-dropdown" onclick="get_specializations()">
+                <select id="domain" asp-for="StudyDomainId" class="form-control" onclick="get_specializations()">
                     <option>Select study domain</option>
                 </select>
                 <span asp-validation-for="StudyDomainId" class="text-danger" />
@@ -35,23 +36,23 @@
         </div>
 
         <div class="row my-row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label asp-for="SpecializationId" class="control-label">Specialization</label><br />
-                <select id="specialization" asp-for="SpecializationId" class="form-control set-width-dropdown">
+                <select id="specialization" asp-for="SpecializationId" class="form-control">
                     <option>Select specialization</option>
                 </select>
                 <span asp-validation-for="SpecializationId" class="text-danger" />
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label asp-for="StudyYear" class="control-label">Study year</label>
-                <input asp-for="StudyYear" class="form-control set-width-dropdown" onchange="get_students_by_specialization_and_study_year()" />
+                <input asp-for="StudyYear" class="form-control" onchange="get_students_by_specialization_and_study_year()" />
                 <span asp-validation-for="StudyYear" class="text-danger"></span>
             </div>
         </div>
 
         <div class="row my-row">
-            <div class="col-md-3">
-                <input type="submit" value="Search" class="btn btn-dark set-width-dropdown add-margin-top-35" />
+            <div class="col-md-4">
+                <input type="submit" value="Search" class="btn btn-dark form-control add-margin-bottom-40" />
             </div>
         </div>
     </form>
@@ -59,7 +60,7 @@
 
 @if (Model.TableIsVisible)
 {
-    <table id="students-index" class="table table-striped table-bordered set-max-width">
+    <table id="students-index" class="table table-dark table-striped table-bordered set-max-width">
         <thead>
             <tr>
                 <th>

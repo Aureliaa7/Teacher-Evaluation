@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using TeacherEvaluation.Application.Convertors;
 using TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations;
 using TeacherEvaluation.Domain.DomainEntities;
+using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.Enrollments
 {

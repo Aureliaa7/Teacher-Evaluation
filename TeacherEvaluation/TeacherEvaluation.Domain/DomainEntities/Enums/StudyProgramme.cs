@@ -1,4 +1,4 @@
-﻿namespace TeacherEvaluation.Domain.DomainEntities
+﻿namespace TeacherEvaluation.Domain.DomainEntities.Enums
 {
     public enum StudyProgramme
     {

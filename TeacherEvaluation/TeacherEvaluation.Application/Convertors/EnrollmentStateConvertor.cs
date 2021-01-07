@@ -1,4 +1,4 @@
-﻿using TeacherEvaluation.Domain.DomainEntities;
+﻿using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Convertors
 {

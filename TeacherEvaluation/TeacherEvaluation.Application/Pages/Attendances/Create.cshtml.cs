@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using TeacherEvaluation.BusinessLogic.Commands.Attendances.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities;
+using TeacherEvaluation.Domain.DomainEntities.Enums;
+
 
 namespace TeacherEvaluation.Application.Pages.Attendances
 {
@@ -50,15 +52,18 @@ namespace TeacherEvaluation.Application.Pages.Attendances
             GetSubjectsForTeacherCommand command = new GetSubjectsForTeacherCommand { UserId = currentTeacherId };
             var taughtSubjects = await mediator.Send(command);
             var subjects = new List<Subject>();
-            subjects.Add(taughtSubjects.OrderBy(x => x.Subject.Name).First().Subject);
+            if (taughtSubjects.Count() > 0)
+            {
+                subjects.Add(taughtSubjects.OrderBy(x => x.Subject.Name).First().Subject);
 
 
-            Subjects = subjects.Select(x =>
-                                            new SelectListItem
-                                            {
-                                                Value = x.Id.ToString(),
-                                                Text = x.Name
-                                            }).ToList();
+                Subjects = subjects.Select(x =>
+                                                new SelectListItem
+                                                {
+                                                    Value = x.Id.ToString(),
+                                                    Text = x.Name
+                                                }).ToList();
+            }
             return Page();
         }
 

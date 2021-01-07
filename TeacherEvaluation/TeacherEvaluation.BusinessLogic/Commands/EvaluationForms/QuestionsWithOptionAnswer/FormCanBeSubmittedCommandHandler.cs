@@ -37,8 +37,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWith
                         var enrollment = await unitOfWork.EnrollmentRepository.GetEnrollmentBySubjectStateTypeAndStudent(
                             request.SubjectId, request.EnrollmentState, request.SubjectType, student.Id);
                         var attendances = await unitOfWork.AttendanceRepository.GetAttendancesWithRelatedEntities(enrollment.Id);
-                        var questionsForForm = await unitOfWork.QuestionWithOptionAnswerRepository.GetQuestionsWithRelatedEntities(request.FormId);
-                        var formSubmittedForEnrollment = (questionsForForm.Where(x => x.Answers.Where(y => y.Enrollment.Id == enrollment.Id).Any()).Any());
+                        var answersForForm = await unitOfWork.AnswerToQuestionWithOptionRepository.GetByEnrollmentAndFormId(enrollment.Id, request.FormId);
+                        var formSubmittedForEnrollment = answersForForm.Any();
                         bool minNumberOfAttendances = (attendances.Count() >= form.MinNumberOfAttendances) ? true : false;
                         if (!formSubmittedForEnrollment && minNumberOfAttendances)
                         {

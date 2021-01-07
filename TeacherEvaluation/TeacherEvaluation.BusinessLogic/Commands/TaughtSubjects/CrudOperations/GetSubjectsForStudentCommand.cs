@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using TeacherEvaluation.Domain.DomainEntities;
+using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
 {

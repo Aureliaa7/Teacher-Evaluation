@@ -13,48 +13,58 @@
 
 <h4 class="row align-input-center add-top-margin">Evaluate your teachers</h4>
 <hr />
-<div class="row my-row">
-    <div class="col-md-3">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+<div class="jumbotron evaluation-jumbotron">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row my-row">
+            <div class="col-md-4">
                 <label asp-for="SubjectId" class="control-label">Subject</label>
-                <select id="subject-field" asp-for="SubjectId" asp-items="@Model.Subjects" class="form-control set-width-280"
+                <select id="subject-field" asp-for="SubjectId" asp-items="@Model.Subjects" class="form-control"
                         onchange="disable_or_enable_btn()">
-                    <option selected>Select subject</option>
                 </select>
                 <span asp-validation-for="SubjectId" class="text-danger" />
             </div>
 
-            <div class="form-group">
+            <div class="col-md-4">
                 <label asp-for="Type">Taught Subject Type</label>
-                <select id="type-field" asp-for="Type" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.TaughtSubjectType>()"
-                        class="form-control set-width-280" onchange="disable_or_enable_btn()">
+                <select id="type-field" asp-for="Type" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Enums.TaughtSubjectType>()"
+                        class="form-control" onchange="disable_or_enable_btn()">
                     <option selected>Please select</option>
                 </select>
                 <span asp-validation-for="Type" class="text-danger" />
             </div>
 
-            <div class="form-group">
+            <div class="col-md-4">
                 <label class="control-label">Teacher</label>
-                <input id="teacher-field" class="form-control set-width-280" disabled />
+                <input id="teacher-field" class="form-control" disabled />
             </div>
+        </div>
 
-            <div class="form-group">
-                @for (var contor = 0; contor < 10; contor++)
-                {
+        @for (var contor = 0; contor < 10; contor += 2)
+        {
+            <div class="row my-row">
+                <div class="col-md-5">
                     <label>Question @(contor+1)</label>
-                    <textarea id="question" asp-for="Questions.ElementAt(contor).Question" class="form-control set-width-280 non-resizable"
+                    <textarea id="question" asp-for="Questions.ElementAt(contor).Question" class="form-control non-resizable"
                               rows="3" cols="50" readonly></textarea>
                     <select asp-for="@Model.Answers[contor]" asp-items="@Model.AnswerOptions"
-                            class="form-control set-width-280">
-                        <option selected>Choose answer</option>
-                    </select><br />
-                }
+                            class="form-control">
+                    </select>
+                </div>
+                <div class="col-md-5">
+                    <label>Question @(contor+2)</label>
+                    <textarea id="question" asp-for="Questions.ElementAt(contor+1).Question" class="form-control non-resizable"
+                              rows="3" cols="50" readonly></textarea>
+                    <select asp-for="@Model.Answers[contor+1]" asp-items="@Model.AnswerOptions"
+                            class="form-control">
+                    </select>
+                </div>
             </div>
-            <input type="submit" value="Submit" class="btn btn-dark" id="submit-form-btn" />
-        </form>
-    </div>
+        }
+        <div class="row my-row">
+            <input type="submit" value="Submit" class="btn btn-dark form-control" id="submit-form-btn" />
+        </div>
+    </form>
 </div>
 
 
@@ -68,7 +78,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>You've already evaluated this teacher for the selected subject!</p>
+                <p>You can't evaluate the selected teacher. You either have evaluated this teacher or you are't enrolled...</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

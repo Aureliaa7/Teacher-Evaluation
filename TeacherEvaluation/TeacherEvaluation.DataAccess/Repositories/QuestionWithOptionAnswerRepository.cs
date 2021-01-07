@@ -19,8 +19,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
         {
             return await Context.Set<QuestionWithOptionAnswer>()
                 .Where(x => x.Form.Id == formId)
-                .Include(x => x.Answers)
-                    .ThenInclude(x => x.Enrollment)
+                .Include(x => x.Form)
                 .ToListAsync();
         }
     }

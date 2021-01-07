@@ -21,6 +21,7 @@ namespace TeacherEvaluation.DataAccess.UnitOfWork
         private IRepository<Subject> subjectRepository;
         private IRepository<StudyDomain> studyDomainRepository;
         private IRepository<Grade> gradeRepository;
+        private IAnswerToQuestionWithOptionRepository answerToQuestionWithOptionRepository;
 
         public UnitOfWork(ApplicationDbContext dbContext)
         {
@@ -167,6 +168,18 @@ namespace TeacherEvaluation.DataAccess.UnitOfWork
                     gradeRepository = new Repository<Grade>(dbContext);
                 }
                 return gradeRepository;
+            }
+        }
+
+        public IAnswerToQuestionWithOptionRepository AnswerToQuestionWithOptionRepository
+        {
+            get
+            {
+                if(answerToQuestionWithOptionRepository == null)
+                {
+                    answerToQuestionWithOptionRepository = new AnswerToQuestionWithOptionRepository(dbContext);
+                }
+                return answerToQuestionWithOptionRepository;
             }
         }
     }

@@ -12,33 +12,25 @@
     <script src="~/js/registerOrEditStudent.js"></script>
 }
 
-<h4 class="row align-input-center add-top-margin">Edit Student's Details</h4>
+<h4 class="row align-input-center add-top-margin">Edit Student Details</h4>
 <hr />
 
-<div class="container add-margin-bottom">
+<div class="jumbotron custom-jumbotron">
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="StudentId" />
         <div class="row my-row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label asp-for="FirstName">First name</label><br />
                 <input asp-for="FirstName" class="form-control">
                 <span asp-validation-for="FirstName"></span>
             </div>
-            <div class="col-md-3 add-left-margins">
+            <div class="col-md-4">
                 <label asp-for="LastName">Last name</label><br />
                 <input asp-for="LastName" class="form-control">
                 <span asp-validation-for="LastName"></span>
             </div>
-        </div>
-
-        <div class="row my-row">
-            <div class="col-md-3">
-                <label asp-for="PIN"></label><br />
-                <input asp-for="PIN" class="form-control">
-                <span asp-validation-for="PIN"></span>
-            </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label asp-for="FathersInitial">Father's initial</label><br />
                 <input asp-for="FathersInitial" class="form-control">
                 <span asp-validation-for="FathersInitial"></span>
@@ -46,54 +38,57 @@
         </div>
 
         <div class="row my-row">
-            <div class="col-md-3">
+            <div class="col-md-4">
+                <label asp-for="PIN"></label><br />
+                <input asp-for="PIN" class="form-control">
+                <span asp-validation-for="PIN"></span>
+            </div>
+            <div class="col-md-4">
                 <label asp-for="StudyYear">Study year</label><br />
                 <input asp-for="StudyYear" class="form-control">
                 <span asp-validation-for="StudyYear"></span>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label asp-for="StudyProgramme">Study programme</label><br />
-                <select id ="study-programme" asp-for="StudyProgramme"
-                        class="set-width-dropdown" onchange="get_domains()" onclick="get_study_programmes()">
-                    <option selected="selected" value="">@Model.Specialization.StudyDomain.StudyProgramme</option>
+                <select id="study-programme" asp-for="StudyProgramme"
+                        class="form-control" onchange="get_domains()" onclick="get_study_programmes()">
+                    <option>@Model.Specialization.StudyDomain.StudyProgramme</option>
                 </select>
                 <span asp-validation-for="StudyProgramme" class="text-danger" />
             </div>
         </div>
 
         <div class="row my-row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label asp-for="StudyDomainId" class="control-label">Study domain</label><br />
-                <select id="domain" asp-for="StudyDomainId" class="form-control set-width-dropdown" onclick="get_specializations()">
+                <select id="domain" asp-for="StudyDomainId" class="form-control" onclick="get_specializations()">
                     <option>@Model.Specialization.StudyDomain.Name</option>
                 </select>
                 <span asp-validation-for="StudyDomainId" class="text-danger" />
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label asp-for="SpecializationId" class="control-label">Specialization</label><br />
-                <select id="specialization" asp-for="SpecializationId" class="form-control set-width-dropdown">
+                <select id="specialization" asp-for="SpecializationId" class="form-control">
                     <option>@Model.Specialization.Name</option>
                 </select>
                 <span asp-validation-for="SpecializationId" class="text-danger" />
             </div>
-        </div>
-
-        <div class="row my-row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label asp-for="Email"></label><br />
                 <input asp-for="Email" class="form-control" readonly>
                 <span asp-validation-for="Email"></span>
             </div>
-            <div class="col-md-3">
+        </div>
+
+        <div class="row my-row">
+            <div class="col-md-4">
                 <label asp-for="Group"></label><br />
                 <input asp-for="Group" class="form-control">
                 <span asp-validation-for="Group"></span>
             </div>
-        </div>
-
-        <div class="row my-row">
-            <div class="col-md-3">
-                <input type="submit" value="Save" class="btn btn-dark" id="form-button-with-margin-top" />
+            <div class="col-md-4">
+                <br/>
+                <input type="submit" value="Save" class="btn btn-dark form-control" />
             </div>
         </div>
     </form>

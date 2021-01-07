@@ -1,5 +1,6 @@
 ﻿using System;
 using TeacherEvaluation.Domain.Identity;
+using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Domain.DomainEntities
 {

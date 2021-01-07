@@ -1,4 +1,5 @@
 ﻿using System;
+using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Domain.DomainEntities
 {

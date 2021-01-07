@@ -10,28 +10,23 @@
     <script src="~/js/passwordValidation.js"></script>
 }
 
-<div class="container add-margin-bottom">
+<h4 class="row align-input-center add-top-margin">Register Teacher</h4>
+<hr />
+
+<div class="jumbotron register-jumbotron">
     <form method="post">
         <div class="row my-row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label asp-for="FirstName">First name</label><br />
                 <input asp-for="FirstName" class="form-control">
                 <span asp-validation-for="FirstName"></span>
             </div>
-            <div class="col-md-3 add-left-margins">
+            <div class="col-md-4">
                 <label asp-for="LastName">Last name</label><br />
                 <input asp-for="LastName" class="form-control">
                 <span asp-validation-for="LastName"></span>
             </div>
-        </div>
-
-        <div class="row my-row">
-            <div class="col-md-3">
-                <label asp-for="PIN"></label><br />
-                <input asp-for="PIN" class="form-control">
-                <span asp-validation-for="PIN"></span>
-            </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label asp-for="FathersInitial">Father's initial</label><br />
                 <input asp-for="FathersInitial" class="form-control">
                 <span asp-validation-for="FathersInitial"></span>
@@ -39,14 +34,19 @@
         </div>
 
         <div class="row my-row">
-            <div class="col-md-3">
+            <div class="col-md-4">
+                <label asp-for="PIN"></label><br />
+                <input asp-for="PIN" class="form-control">
+                <span asp-validation-for="PIN"></span>
+            </div>
+            <div class="col-md-4">
                 <label asp-for="Degree"></label><br />
                 <input asp-for="Degree" class="form-control">
                 <span asp-validation-for="Degree"></span>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label asp-for="Department"></label><br />
-                <select asp-for="Department" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Department>()" class="set-width-dropdown">
+                <select asp-for="Department" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Enums.Department>()" class="form-control">
                     <option selected="selected" value="">Please select</option>
                 </select>
                 <span asp-validation-for="Department" class="text-danger" />
@@ -54,20 +54,20 @@
         </div>
 
         <div class="row my-row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label asp-for="Email"></label><br />
                 <input asp-for="Email" class="form-control">
                 <span asp-validation-for="Email"></span>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label asp-for="Password"></label><br />
                 <input asp-for="Password" class="form-control">
                 <span asp-validation-for="Password"></span>
             </div>
-        </div>
-
-        <div class="row my-row">
-            <input type="submit" value="Register teacher" class="btn btn-dark" />
+            <div class="col-md-4">
+                <br />
+                <input type="submit" value="Register teacher" class="btn btn-dark form-control" />
+            </div>
         </div>
     </form>
 </div>

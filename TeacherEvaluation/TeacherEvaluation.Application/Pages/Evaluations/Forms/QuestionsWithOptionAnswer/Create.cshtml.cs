@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TeacherEvaluation.Application.Convertors;
 using TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWithOptionAnswer;
-using TeacherEvaluation.Domain.DomainEntities;
+using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOptionAnswer
 {

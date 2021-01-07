@@ -6,29 +6,27 @@
     Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
 
-<h3>Details</h3>
-
-<div>
-    <h4>Taught Subject</h4>
+<h4 class="row align-input-center add-top-margin">Taught Subject Details</h4>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TeacherName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TeacherName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SubjectTitle)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.SubjectTitle)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-    </dl>
-</div>
+    <div class="jumbotron taught-subject-jumbotron">
+        <dl class="row align-input-center">
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.TeacherName)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.TeacherName)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.SubjectTitle)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.SubjectTitle)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Type)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Type)
+            </dd>
+        </dl>
+    </div>

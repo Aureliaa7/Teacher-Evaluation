@@ -7,68 +7,67 @@
 }
 
 <h3 class="row align-input-center add-top-margin">Are you sure you want to delete this?</h3>
-<div>
-    <h4>Student</h4>
-    <hr />
+<hr />
+<div class="jumbotron jumbotron-details">
     <dl class="row align-input-center">
-        <dt class="col-sm-2">
+        <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.PIN)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-8">
             @Html.DisplayFor(model => model.PIN)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.FirstName)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-8">
             @Html.DisplayFor(model => model.FirstName)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.LastName)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-8">
             @Html.DisplayFor(model => model.LastName)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.FathersInitial)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-8">
             @Html.DisplayFor(model => model.FathersInitial)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.StudyYear)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-8">
             @Html.DisplayFor(model => model.StudyYear)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-4">
             Study programme
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-8">
             @Html.DisplayFor(model => model.Specialization.StudyDomain.StudyProgramme)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-4">
             Study domain
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-8">
             @Html.DisplayFor(model => model.Specialization.StudyDomain.Name)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-4">
             Specialization
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-8">
             @Html.DisplayFor(model => model.Specialization.Name)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-4">
             @Html.DisplayNameFor(model => model.Group)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-8">
             @Html.DisplayFor(model => model.Group)
         </dd>
     </dl>
 
     <form method="post">
         <input type="hidden" asp-for="StudentId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> 
+        <input type="submit" value="Delete" class="btn btn-danger form-control" />
     </form>
 </div>

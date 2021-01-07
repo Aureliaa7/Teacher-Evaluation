@@ -15,11 +15,6 @@ namespace TeacherEvaluation.Application.Pages.Account
     {
         private readonly IMediator mediator;
 
-        public bool IsAdministrator { get; private set; } 
-        public bool IsDean { get; private set; }
-        public bool IsTeacher { get; private set; }
-        public bool IsStudent { get; private set; }
-
         [BindProperty]
         [Required(ErrorMessage = "Current password is required")]
         [DataType(DataType.Password)]
@@ -45,10 +40,6 @@ namespace TeacherEvaluation.Application.Pages.Account
 
         public void OnGet()
         {
-            IsAdministrator = User.IsInRole("Administrator");
-            IsDean = User.IsInRole("Dean");
-            IsStudent = User.IsInRole("Student");
-            IsTeacher = User.IsInRole("Teacher");
         }
 
         public async Task<IActionResult> OnPostAsync()

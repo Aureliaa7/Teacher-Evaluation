@@ -93,7 +93,7 @@ input::-webkit-inner-spin-button {
     margin-top: 300px;
 }
 
-#submit-form-btn{
+#submit-form-btn {
     margin-bottom: 60px;
     width: 280px;
 }
@@ -108,4 +108,117 @@ input::-webkit-inner-spin-button {
 
 .add-margin-top-35 {
     margin-top: 35px;
+}
+
+.bckg-image {
+    background-image: url("../images/background2.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.add-margin-bottom-40 {
+    margin-bottom: 40px;
+}
+
+.custom-jumbotron {
+    width: 70%;
+    margin-left: 18%;
+    margin-bottom: 6%;
+    background-color: #e3dee0;
+}
+
+.jumbotron-details {
+    width: 40%;
+    margin-left: 27%;
+    margin-bottom: 6%;
+    background-color: #e3dee0;
+}
+
+.register-jumbotron {
+    width: 70%;
+    margin-top: 2%;
+    margin-bottom: 6%;
+    margin-left: 15%;
+    background-color: #e3dee0;
+}
+
+.search-students-jumbotron {
+    width: 60%;
+    margin-left: 23%;
+    background-color: #e3dee0;
+}
+
+.edit-teacher-jumbotron {
+    width: 60%;
+    margin-left: 22%;
+    background-color: #e3dee0;
+    margin-bottom: 6%;
+}
+
+.search-teachers-jumbotron {
+    width: 50%;
+    margin-left: 23%;
+    background-color: #e3dee0;
+}
+
+.subject-jumbotron {
+    width: 60%;
+    margin-left: 20%;
+    background-color: #e3dee0;
+}
+
+.taught-subject-jumbotron {
+    width: 60%;
+    margin-left: 20%;
+    background-color: #e3dee0;
+}
+
+.search-taught-subject-jumbotron {
+    width: 50%;
+    margin-left: 3%;
+    background-color: #e3dee0;
+    margin-bottom: 6%;
+}
+
+.enrollment-jumbotron {
+    width: 70%;
+    margin-bottom: 6%;
+    margin-left: 15%;
+    background-color: #e3dee0;
+}
+
+.add-margin-bottom-6 {
+    margin-bottom: 6%;
+}
+
+.grade-jumbotron {
+    width: 70%;
+    margin-top: 2%;
+    margin-bottom: 6%;
+    margin-left: 15%;
+    background-color: #e3dee0;
+}
+
+.change-password-jumbotron {
+    width: 50%;
+    margin-top: 2%;
+    margin-left: 25%;
+    margin-bottom: 6%;
+    background-color: #e3dee0;
+}
+
+.evaluation-jumbotron {
+    margin-top: 2%;
+    margin-bottom: 6%;
+    margin-left: 7%;
+    background-color: #e3dee0;
+}
+
+.attendance-jumbotron {
+    width: 65%;
+    margin-top: 2%;
+    margin-bottom: 6%;
+    margin-left: 20%;
+    background-color: #e3dee0;
 }

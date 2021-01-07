@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.Identity;
+using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.DataAccess.Data
 {

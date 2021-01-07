@@ -38,8 +38,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWith
                     {
                         try
                         {
-                            var response = new AnswerToQuestionWithOption { Answer = request.Responses[contor++], Enrollment = enrollment };
-                            question.Answers.Add(response);
+                            var response = new AnswerToQuestionWithOption { Answer = request.Responses[contor++], Enrollment = enrollment, Question = question };
+                            await unitOfWork.AnswerToQuestionWithOptionRepository.Add(response);
                             await unitOfWork.QuestionWithOptionAnswerRepository.Update(question);
                         }
                         catch (ArgumentOutOfRangeException) { throw; }
