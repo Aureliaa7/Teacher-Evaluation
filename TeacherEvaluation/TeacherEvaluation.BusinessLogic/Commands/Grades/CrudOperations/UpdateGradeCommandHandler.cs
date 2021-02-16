@@ -30,7 +30,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations
                 enrollment.Grade.Value = request.Value;
                 enrollment.Grade.Date = request.Date;
                 enrollment.State = EnrollmentState.Done;
-                await unitOfWork.EnrollmentRepository.Update(enrollment);
+                unitOfWork.EnrollmentRepository.Update(enrollment);
+                await unitOfWork.SaveChangesAsync();
             }
             else
             {

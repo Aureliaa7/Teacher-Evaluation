@@ -12,7 +12,7 @@
 }
 
 <h4 class="row align-input-center add-top-margin">Search Students by Criteria</h4>
-<hr/>
+<hr />
 
 <div class="jumbotron search-students-jumbotron">
     <form method="post">
@@ -60,61 +60,64 @@
 
 @if (Model.TableIsVisible)
 {
-    <table id="students-index" class="table table-dark table-striped table-bordered set-max-width">
-        <thead>
-            <tr>
-                <th>
-                    Student Name
-                </th>
-                <th>
-                    Study Year
-                </th>
-                <th>
-                    Study Programme
-                </th>
-                <th>
-                    Study Domain
-                </th>
-                <th>
-                    Specialization
-                </th>
-                <th>
-                    Group
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Students)
-            {
-                var fullName = item.User.LastName + " " + item.User.FathersInitial + " " + item.User.FirstName;
+    <div class="add-margin-bottom">
+        <table id="students-index" class="table table-dark table-striped table-bordered set-max-width">
+            <thead>
                 <tr>
-                    <td>
-                        @fullName
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StudyYear)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Specialization.StudyDomain.StudyProgramme)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Specialization.StudyDomain.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Specialization.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Group)
-                    </td>
-                    <td>
-                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
+                    <th>
+                        Student Name
+                    </th>
+                    <th>
+                        Study Year
+                    </th>
+                    <th>
+                        Study Programme
+                    </th>
+                    <th>
+                        Study Domain
+                    </th>
+                    <th>
+                        Specialization
+                    </th>
+                    <th>
+                        Group
+                    </th>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
-    <br/> <br/>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Students)
+                {
+                    var fullName = item.User.LastName + " " + item.User.FathersInitial + " " + item.User.FirstName;
+                    <tr>
+                        <td>
+                            @fullName
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StudyYear)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Specialization.StudyDomain.StudyProgramme)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Specialization.StudyDomain.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Specialization.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Group)
+                        </td>
+                        <td>
+                            <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <br />
 }

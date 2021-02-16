@@ -40,7 +40,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWith
                         {
                             var response = new AnswerToQuestionWithOption { Answer = request.Responses[contor++], Enrollment = enrollment, Question = question };
                             await unitOfWork.AnswerToQuestionWithOptionRepository.Add(response);
-                            await unitOfWork.QuestionWithOptionAnswerRepository.Update(question);
+                            unitOfWork.QuestionRepository.Update(question);
+                            await unitOfWork.SaveChangesAsync();
                         }
                         catch (ArgumentOutOfRangeException) { throw; }
                     }

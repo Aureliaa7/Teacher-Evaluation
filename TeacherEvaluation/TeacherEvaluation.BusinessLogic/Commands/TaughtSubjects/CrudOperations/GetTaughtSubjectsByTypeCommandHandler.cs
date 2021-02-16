@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
@@ -23,10 +22,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
             bool userExists = await unitOfWork.UserRepository.Exists(x => x.Id == request.UserId);
             if (userExists)
             {
-                var allTeachers = await unitOfWork.TeacherRepository.GetAllWithRelatedEntities();
-                var teacher = allTeachers.Where(x => x.User.Id == request.UserId).First();
-                var allTaughtSubjects = await unitOfWork.TaughtSubjectRepository.GetAllWithRelatedEntities();
-                return allTaughtSubjects.Where(x => x.Teacher.Id == teacher.Id && x.Type == request.Type);
+                var teacher = await unitOfWork.TeacherRepository.GetByUserId(request.UserId);
+                return await unitOfWork.TaughtSubjectRepository.GetByTeacherAndType(teacher.Id, request.Type);
             }
             throw new ItemNotFoundException("The teacher was not found...");
         }

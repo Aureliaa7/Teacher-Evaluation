@@ -5,8 +5,8 @@ using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.DataAccess.Repositories.Interfaces
 {
-    public interface IQuestionWithOptionAnswerRepository : IRepository<QuestionWithOptionAnswer>
+    public interface IQuestionRepository : IRepository<Question>
     {
-        Task<IEnumerable<QuestionWithOptionAnswer>> GetQuestionsWithRelatedEntities(Guid formId);
+        Task<IEnumerable<Question>> GetQuestionsWithRelatedEntities(Guid formId);
     }
 }

@@ -45,7 +45,7 @@
             <div class="row my-row">
                 <div class="col-md-5">
                     <label>Question @(contor+1)</label>
-                    <textarea id="question" asp-for="Questions.ElementAt(contor).Question" class="form-control non-resizable"
+                    <textarea id="question" asp-for="Questions.ElementAt(contor).Text" class="form-control non-resizable"
                               rows="3" cols="50" readonly></textarea>
                     <select asp-for="@Model.Answers[contor]" asp-items="@Model.AnswerOptions"
                             class="form-control">
@@ -53,7 +53,7 @@
                 </div>
                 <div class="col-md-5">
                     <label>Question @(contor+2)</label>
-                    <textarea id="question" asp-for="Questions.ElementAt(contor+1).Question" class="form-control non-resizable"
+                    <textarea id="question" asp-for="Questions.ElementAt(contor+1).Text" class="form-control non-resizable"
                               rows="3" cols="50" readonly></textarea>
                     <select asp-for="@Model.Answers[contor+1]" asp-items="@Model.AnswerOptions"
                             class="form-control">

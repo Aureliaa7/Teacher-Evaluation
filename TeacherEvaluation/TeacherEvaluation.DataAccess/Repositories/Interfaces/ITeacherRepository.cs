@@ -12,5 +12,6 @@ namespace TeacherEvaluation.DataAccess.Repositories.Interfaces
         Task Delete(Guid id);
         Task<IEnumerable<Teacher>> GetAllWithRelatedEntities();
         Task<IEnumerable<Teacher>> GetByDepartment(Department department);
+        Task<Teacher> GetByUserId(Guid userId);
     }
 }

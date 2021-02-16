@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TeacherEvaluation.DataAccess.Migrations
 {
-    public partial class CreatedDb : Migration
+    public partial class CreatedDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,8 +12,8 @@ namespace TeacherEvaluation.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(maxLength: 60, nullable: false),
-                    NormalizedName = table.Column<string>(maxLength: 60, nullable: true),
+                    Name = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -26,10 +26,10 @@ namespace TeacherEvaluation.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 60, nullable: false),
-                    NormalizedUserName = table.Column<string>(maxLength: 60, nullable: false),
-                    Email = table.Column<string>(maxLength: 60, nullable: false),
-                    NormalizedEmail = table.Column<string>(maxLength: 60, nullable: true),
+                    UserName = table.Column<string>(maxLength: 256, nullable: false),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: false),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(nullable: false),
                     PasswordHash = table.Column<string>(nullable: true),
                     SecurityStamp = table.Column<string>(nullable: true),
@@ -42,7 +42,8 @@ namespace TeacherEvaluation.DataAccess.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
-                    FathersInitial = table.Column<string>(nullable: false)
+                    FathersInitial = table.Column<string>(nullable: false),
+                    PIN = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,11 +55,11 @@ namespace TeacherEvaluation.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    StartDate = table.Column<DateTime>(nullable: false),
-                    EndDate = table.Column<DateTime>(nullable: false),
+                    StartDate = table.Column<DateTime>(nullable: true),
+                    EndDate = table.Column<DateTime>(nullable: true),
                     Type = table.Column<int>(nullable: false),
-                    EnrollmentState = table.Column<int>(nullable: false),
-                    MinNumberOfAttendances = table.Column<int>(nullable: false)
+                    EnrollmentState = table.Column<int>(nullable: true),
+                    MinNumberOfAttendances = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -217,7 +218,6 @@ namespace TeacherEvaluation.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
-                    PIN = table.Column<string>(nullable: false),
                     Degree = table.Column<string>(nullable: false),
                     Department = table.Column<int>(nullable: false)
                 },
@@ -233,22 +233,22 @@ namespace TeacherEvaluation.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "QuestionWithOptionAnswers",
+                name: "Questions",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Question = table.Column<string>(nullable: false),
+                    Text = table.Column<string>(nullable: false),
                     FormId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_QuestionWithOptionAnswers", x => x.Id);
+                    table.PrimaryKey("PK_Questions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_QuestionWithOptionAnswers_Forms_FormId",
+                        name: "FK_Questions_Forms_FormId",
                         column: x => x.FormId,
                         principalTable: "Forms",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -267,7 +267,7 @@ namespace TeacherEvaluation.DataAccess.Migrations
                         column: x => x.StudyDomainId,
                         principalTable: "StudyDomains",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -302,7 +302,6 @@ namespace TeacherEvaluation.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
-                    PIN = table.Column<string>(nullable: false),
                     StudyYear = table.Column<int>(nullable: false),
                     SpecializationId = table.Column<Guid>(nullable: false),
                     Group = table.Column<string>(nullable: false)
@@ -315,7 +314,7 @@ namespace TeacherEvaluation.DataAccess.Migrations
                         column: x => x.SpecializationId,
                         principalTable: "Specializations",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Students_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -364,7 +363,7 @@ namespace TeacherEvaluation.DataAccess.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     EnrollmentId = table.Column<Guid>(nullable: false),
                     Answer = table.Column<int>(nullable: false),
-                    QuestionWithOptionAnswerId = table.Column<Guid>(nullable: false)
+                    QuestionId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -376,9 +375,35 @@ namespace TeacherEvaluation.DataAccess.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AnswerToQuestionWithOptions_QuestionWithOptionAnswers_QuestionWithOptionAnswerId",
-                        column: x => x.QuestionWithOptionAnswerId,
-                        principalTable: "QuestionWithOptionAnswers",
+                        name: "FK_AnswerToQuestionWithOptions_Questions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Questions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AnswerToQuestionWithTexts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    EnrollmentId = table.Column<Guid>(nullable: false),
+                    Answer = table.Column<string>(nullable: false),
+                    QuestionId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AnswerToQuestionWithTexts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AnswerToQuestionWithTexts_Enrollments_EnrollmentId",
+                        column: x => x.EnrollmentId,
+                        principalTable: "Enrollments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AnswerToQuestionWithTexts_Questions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Questions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -409,9 +434,19 @@ namespace TeacherEvaluation.DataAccess.Migrations
                 column: "EnrollmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AnswerToQuestionWithOptions_QuestionWithOptionAnswerId",
+                name: "IX_AnswerToQuestionWithOptions_QuestionId",
                 table: "AnswerToQuestionWithOptions",
-                column: "QuestionWithOptionAnswerId");
+                column: "QuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AnswerToQuestionWithTexts_EnrollmentId",
+                table: "AnswerToQuestionWithTexts",
+                column: "EnrollmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AnswerToQuestionWithTexts_QuestionId",
+                table: "AnswerToQuestionWithTexts",
+                column: "QuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -473,8 +508,8 @@ namespace TeacherEvaluation.DataAccess.Migrations
                 column: "TaughtSubjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_QuestionWithOptionAnswers_FormId",
-                table: "QuestionWithOptionAnswers",
+                name: "IX_Questions_FormId",
+                table: "Questions",
                 column: "FormId");
 
             migrationBuilder.CreateIndex(
@@ -514,6 +549,9 @@ namespace TeacherEvaluation.DataAccess.Migrations
                 name: "AnswerToQuestionWithOptions");
 
             migrationBuilder.DropTable(
+                name: "AnswerToQuestionWithTexts");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -532,7 +570,7 @@ namespace TeacherEvaluation.DataAccess.Migrations
                 name: "Attendances");
 
             migrationBuilder.DropTable(
-                name: "QuestionWithOptionAnswers");
+                name: "Questions");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -1,0 +1,54 @@
+﻿@page
+@model TeacherEvaluation.Application.Pages.Evaluations.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/registerOrEditStudent.js"></script>
+}
+
+<h4 class="row align-input-center add-top-margin">Evaluation Form</h4>
+<hr />
+
+<div class="jumbotron custom-jumbotron">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="FormId" />
+        <div class="row my-row">
+            <div class="col-md-3">
+                <label asp-for="EnrollmentState">For enrollment status</label><br />
+                <select asp-for="EnrollmentState" asp-items="@Model.EnrollmentStates"
+                        class="form-control">
+                    <option selected disabled hidden>Please select</option>
+                </select>
+                <span asp-validation-for="EnrollmentState" class="text-danger" />
+            </div>
+            <div class="col-md-3">
+                <label asp-for="NumberOfAttendances">Min number of attendances</label><br />
+                <input asp-for="NumberOfAttendances" class="form-control">
+                <span asp-validation-for="NumberOfAttendances"></span>
+            </div>
+        </div>
+        <div class="row my-row">
+            <div class="col-md-3">
+                <label asp-for="StartDate">Start date</label><br />
+                <input asp-for="StartDate" class="form-control">
+                <span asp-validation-for="StartDate"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="EndDate">End date</label><br />
+                <input asp-for="EndDate" class="form-control">
+                <span asp-validation-for="EndDate"></span>
+            </div>
+        </div>
+        <div class="row my-row">
+            <div class="col-md-6">
+                <input type="submit" value="Submit" class="btn btn-dark form-control" />
+            </div>
+        </div>
+    </form>
+</div>

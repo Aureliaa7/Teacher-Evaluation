@@ -24,7 +24,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
             {
                 var specialization = await unitOfWork.SpecializationRepository.GetSpecialization(request.SpecializationId);
                 Student studentToBeUpdated = await unitOfWork.StudentRepository.GetStudent(request.Id);
-                studentToBeUpdated.PIN = request.PIN;
+                studentToBeUpdated.User.PIN = request.PIN;
                 studentToBeUpdated.Specialization = specialization;
                 studentToBeUpdated.Group = request.Group;
                 studentToBeUpdated.StudyYear = request.StudyYear;
@@ -32,7 +32,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
                 studentToBeUpdated.User.LastName = request.LastName;
                 studentToBeUpdated.User.Email = request.Email;
                 studentToBeUpdated.User.FathersInitial = request.FathersInitial;
-                await unitOfWork.StudentRepository.Update(studentToBeUpdated);
+                unitOfWork.StudentRepository.Update(studentToBeUpdated);
+                await unitOfWork.SaveChangesAsync();
             }
             else
             {

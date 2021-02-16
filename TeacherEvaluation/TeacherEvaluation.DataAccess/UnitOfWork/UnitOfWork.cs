@@ -1,4 +1,5 @@
-﻿using TeacherEvaluation.DataAccess.Data;
+﻿using System.Threading.Tasks;
+using TeacherEvaluation.DataAccess.Data;
 using TeacherEvaluation.DataAccess.Repositories;
 using TeacherEvaluation.DataAccess.Repositories.Interfaces;
 using TeacherEvaluation.Domain.DomainEntities;
@@ -12,14 +13,14 @@ namespace TeacherEvaluation.DataAccess.UnitOfWork
         private IAttendanceRepository attendanceRepository;
         private IEnrollmentRepository enrollmentRepository;
         private IFormRepository formRepository;
-        private IQuestionWithOptionAnswerRepository questionWithOptionAnswerRepository;
+        private IQuestionRepository questionRepository;
         private ISpecializationRepository specializationRepository;
         private IStudentRepository studentRepository;
         private ITeacherRepository teacherRepository;
         private ITaughtSubjectRepository taughtSubjectRepository;
         private IRepository<ApplicationUser> userRepository;
         private IRepository<Subject> subjectRepository;
-        private IRepository<StudyDomain> studyDomainRepository;
+        private IStudyDomainRepository studyDomainRepository;
         private IRepository<Grade> gradeRepository;
         private IAnswerToQuestionWithOptionRepository answerToQuestionWithOptionRepository;
 
@@ -64,15 +65,15 @@ namespace TeacherEvaluation.DataAccess.UnitOfWork
             }
         }
 
-        public IQuestionWithOptionAnswerRepository QuestionWithOptionAnswerRepository
+        public IQuestionRepository QuestionRepository
         {
             get
             {
-                if (questionWithOptionAnswerRepository == null)
+                if (questionRepository == null)
                 {
-                    questionWithOptionAnswerRepository = new QuestionWithOptionAnswerRepository(dbContext);
+                    questionRepository = new QuestionRepository(dbContext);
                 }
-                return questionWithOptionAnswerRepository;
+                return questionRepository;
             }
         }
 
@@ -147,13 +148,13 @@ namespace TeacherEvaluation.DataAccess.UnitOfWork
             }
         }
 
-        public IRepository<StudyDomain> StudyDomainRepository
+        public IStudyDomainRepository StudyDomainRepository
         {
             get
             {
                 if (studyDomainRepository == null)
                 {
-                    studyDomainRepository = new Repository<StudyDomain>(dbContext);
+                    studyDomainRepository = new StudyDomainRepository(dbContext);
                 }
                 return studyDomainRepository;
             }
@@ -181,6 +182,11 @@ namespace TeacherEvaluation.DataAccess.UnitOfWork
                 }
                 return answerToQuestionWithOptionRepository;
             }
+        }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await dbContext.SaveChangesAsync();
         }
     }
 }

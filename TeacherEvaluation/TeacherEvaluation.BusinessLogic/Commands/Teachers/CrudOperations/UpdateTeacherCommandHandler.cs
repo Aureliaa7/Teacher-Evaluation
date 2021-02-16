@@ -22,14 +22,15 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
             if (teacherExists)
             {
                 Teacher teacherToBeUpdated = await unitOfWork.TeacherRepository.GetTeacher(request.Id);
-                teacherToBeUpdated.PIN = request.PIN;
+                teacherToBeUpdated.User.PIN = request.PIN;
                 teacherToBeUpdated.Degree = request.Degree;
                 teacherToBeUpdated.Department = request.Department;
                 teacherToBeUpdated.User.FirstName = request.FirstName;
                 teacherToBeUpdated.User.LastName = request.LastName;
                 teacherToBeUpdated.User.Email = request.Email;
                 teacherToBeUpdated.User.FathersInitial = request.FathersInitial;
-                await unitOfWork.TeacherRepository.Update(teacherToBeUpdated);
+                unitOfWork.TeacherRepository.Update(teacherToBeUpdated);
+                await unitOfWork.SaveChangesAsync();
             }
             else
             {

@@ -7,25 +7,26 @@
 
 <h4 class="row align-input-center add-top-margin">Attendances</h4>
 <hr/>
-<table class="table table-dark table-striped table-bordered set-max-width">
-    <thead>
-        <tr>
-            <th>
-                Date
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Attendances)
-        {
+<div class="add-margin-bottom">
+    <table class="table table-dark table-striped table-bordered set-max-width">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateTime)
-                </td>
+                <th>
+                    Date
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
-
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Attendances)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateTime)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 

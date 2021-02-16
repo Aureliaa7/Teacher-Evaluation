@@ -27,6 +27,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .FirstAsync();
         }
 
+        //TODO de verificat delete student dar folosind Remove, nu Delete
         public async Task Delete(Guid id)
         { 
             var studentToBeDeleted = await GetStudent(id);
@@ -38,7 +39,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
             Context.Set<Student>().Remove(studentToBeDeleted);
             Context.Set<ApplicationUser>().Remove(userToBeDeleted);
 
-            await Context.SaveChangesAsync();
+            //await Context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Student>> GetAllWithRelatedEntities()

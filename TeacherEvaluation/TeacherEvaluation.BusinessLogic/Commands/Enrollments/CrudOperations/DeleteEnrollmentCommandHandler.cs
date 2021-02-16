@@ -21,6 +21,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations
             if (enrollmentExists)
             {
                 await unitOfWork.EnrollmentRepository.Remove(request.Id);
+                await unitOfWork.SaveChangesAsync();
             }
             else
             {

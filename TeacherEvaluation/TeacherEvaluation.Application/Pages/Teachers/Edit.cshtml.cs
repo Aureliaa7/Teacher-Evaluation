@@ -79,7 +79,7 @@ namespace TeacherEvaluation.Application.Pages.Teachers
                 LastName = teacher.User.LastName;
                 Email = teacher.User.Email;
                 FathersInitial = teacher.User.FathersInitial;
-                PIN = teacher.PIN;
+                PIN = teacher.User.PIN;
                 Degree = teacher.Degree;
                 Department = teacher.Department;
             }

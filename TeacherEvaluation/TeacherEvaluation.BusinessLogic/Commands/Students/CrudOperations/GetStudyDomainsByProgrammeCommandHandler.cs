@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.DataAccess.UnitOfWork;
@@ -18,8 +17,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
         }
         public async Task<IEnumerable<StudyDomain>> Handle(GetStudyDomainsByProgrammeCommand request, CancellationToken cancellationToken)
         {
-            var allStudyDomains = await unitOfWork.StudyDomainRepository.GetAll();
-            return allStudyDomains.Where(x => x.StudyProgramme == request.StudyProgramme);
+            return await unitOfWork.StudyDomainRepository.GetByStudyProgramme(request.StudyProgramme);
         }
     }
 }

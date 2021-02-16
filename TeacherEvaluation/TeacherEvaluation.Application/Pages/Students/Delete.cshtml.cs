@@ -70,7 +70,7 @@ namespace TeacherEvaluation.Application.Pages.Students
                 LastName = studentToBeDeleted.User.LastName;
                 Email = studentToBeDeleted.User.Email;
                 FathersInitial = studentToBeDeleted.User.FathersInitial;
-                PIN = studentToBeDeleted.PIN;
+                PIN = studentToBeDeleted.User.PIN;
                 Group = studentToBeDeleted.Group;
                 Specialization = studentToBeDeleted.Specialization;
                 StudyYear = studentToBeDeleted.StudyYear;

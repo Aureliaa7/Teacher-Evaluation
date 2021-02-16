@@ -4,55 +4,50 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.DataAccess.UnitOfWork;
-using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.Identity;
 using TeacherEvaluation.EmailSender;
 using TeacherEvaluation.EmailSender.NotificationModel;
-using TeacherEvaluation.Domain.DomainEntities.Enums;
 
-
-namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWithOptionAnswer
+namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
 {
-    public class CreateFormForQuestionWithOptionCommandHandler : AsyncRequestHandler<CreateFormForQuestionWithOptionCommand>
+    public class EditFormCommandHandler : AsyncRequestHandler<EditFormCommand>
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly INotificationService emailService;
 
-        public CreateFormForQuestionWithOptionCommandHandler(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, INotificationService emailService)
+        public EditFormCommandHandler(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, INotificationService notificationService)
         {
             this.unitOfWork = unitOfWork;
             this.userManager = userManager;
-            this.emailService = emailService;
+            emailService = notificationService;
         }
 
-        protected override async Task Handle(CreateFormForQuestionWithOptionCommand request, CancellationToken cancellationToken)
+        protected async override Task Handle(EditFormCommand request, CancellationToken cancellationToken)
         {
-            Form form = new Form
+            bool formExists = await unitOfWork.FormRepository.Exists(x => x.Id == request.FormId);
+            if(formExists)
             {
-                StartDate = request.StartDate,
-                EndDate = request.EndDate,
-                EnrollmentState = request.EnrollmentState,
-                Type = FormType.Option, 
-                MinNumberOfAttendances = request.MinNumberAttendances
-            };
-            await unitOfWork.FormRepository.Add(form);
+                var form = await unitOfWork.FormRepository.Get(request.FormId);
+                form.EndDate = request.EndDate;
+                form.StartDate = request.StartDate;
+                form.EnrollmentState = request.EnrollmentState;
+                form.MinNumberOfAttendances = request.MinNumberAttendances;
 
-            string startDate = request.StartDate.ToString("yyyy-MM-dd hh:mm:ss");
-            string endDate = request.EndDate.ToString("yyyy-MM-dd hh:mm:ss");
-            string interval = string.Join(" - ", startDate, endDate);
-            Notification notification = ConfigureNotificationMessage(interval);
-            emailService.Send(notification);
+                unitOfWork.FormRepository.Update(form);
+                await unitOfWork.SaveChangesAsync();
 
-            foreach (var question in request.Questions)
+                string startDate = request.StartDate.ToString("yyyy-MM-dd hh:mm:ss");
+                string endDate = request.EndDate.ToString("yyyy-MM-dd hh:mm:ss");
+                string interval = string.Join(" - ", startDate, endDate);
+                Notification notification = ConfigureNotificationMessage(interval);
+                emailService.Send(notification);
+            }
+            else
             {
-                QuestionWithOptionAnswer newQuestion = new QuestionWithOptionAnswer
-                {
-                    Question = question,
-                    Form = form
-                };
-                await unitOfWork.QuestionWithOptionAnswerRepository.Add(newQuestion);
+                throw new ItemNotFoundException("The form was not found...");
             }
         }
 

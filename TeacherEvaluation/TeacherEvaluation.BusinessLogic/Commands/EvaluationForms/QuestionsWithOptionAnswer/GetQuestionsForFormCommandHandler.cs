@@ -8,7 +8,7 @@ using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWithOptionAnswer
 {
-    public class GetQuestionsForFormCommandHandler : IRequestHandler<GetQuestionsForFormCommand, IEnumerable<QuestionWithOptionAnswer>>
+    public class GetQuestionsForFormCommandHandler : IRequestHandler<GetQuestionsForFormCommand, IEnumerable<Question>>
     {
         private readonly IUnitOfWork unitOfWork;
 
@@ -17,12 +17,12 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWith
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<QuestionWithOptionAnswer>> Handle(GetQuestionsForFormCommand request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Question>> Handle(GetQuestionsForFormCommand request, CancellationToken cancellationToken)
         {
             bool formExists = await unitOfWork.FormRepository.Exists(x => x.Id == request.FormId);
             if (formExists)
             {
-                var questions = await unitOfWork.QuestionWithOptionAnswerRepository.GetQuestionsWithRelatedEntities(request.FormId);
+                var questions = await unitOfWork.QuestionRepository.GetQuestionsWithRelatedEntities(request.FormId);
                 return questions;
             }
             throw new ItemNotFoundException("The form was not found...");

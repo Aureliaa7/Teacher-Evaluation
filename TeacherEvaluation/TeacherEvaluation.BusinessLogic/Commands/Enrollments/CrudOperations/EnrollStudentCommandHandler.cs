@@ -42,6 +42,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations
                     State = EnrollmentState.InProgress
                 };
                 await unitOfWork.EnrollmentRepository.Add(newEnrollment);
+                await unitOfWork.SaveChangesAsync();
             }
             else
             {

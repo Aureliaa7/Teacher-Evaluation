@@ -1,14 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
-using TeacherEvaluation.Application.Convertors;
-using TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWithOptionAnswer;
+using TeacherEvaluation.BusinessLogic.Commands.EvaluationForms;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOptionAnswer
@@ -20,39 +15,9 @@ namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOpt
         [BindProperty]
         public List<string> Questions { get; set; }
 
-        [BindProperty]
-        [EnumDataType(typeof(EnrollmentState))]
-        public EnrollmentState EnrollmentState { get; set; }
-
-        public List<SelectListItem> EnrollmentStates = new List<SelectListItem>();
-
-        [BindProperty]
-        [Required(ErrorMessage ="The minimum number of attendances is required")]
-        [Range(1, 14, ErrorMessage ="The number of attendances must be between 1 and 14")]
-        public int? NumberOfAttendances { get; set; } = null;
-
-        [BindProperty]
-        [Required(ErrorMessage = "The start date is required")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
-        public DateTime StartDate { get; set; }
-
-        [BindProperty]
-        [Required(ErrorMessage = "The end date is required")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
-        public DateTime EndDate { get; set; }
-
-
         public CreateModel(IMediator mediator)
         {
             this.mediator = mediator;
-            EnrollmentStates = Enum.GetValues(typeof(EnrollmentState))
-                .Cast<EnrollmentState>()
-                .Select(x =>
-                {
-                    string displayText = EnrollmentStateConvertor.ToDisplayString(x);
-                    return new SelectListItem(displayText, x.ToString());
-                })
-                .ToList();
         }
 
         public void OnGet()
@@ -63,12 +28,9 @@ namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOpt
         {
             if (ModelState.IsValid)
             {
-                CreateFormForQuestionWithOptionCommand command = new CreateFormForQuestionWithOptionCommand
+                CreateFormCommand command = new CreateFormCommand
                 {
-                    MinNumberAttendances = (int)NumberOfAttendances,
-                    EnrollmentState = EnrollmentState,
-                    StartDate = StartDate,
-                    EndDate = EndDate,
+                    FormType = FormType.Option,
                     Questions = Questions
                 };
                 await mediator.Send(command);

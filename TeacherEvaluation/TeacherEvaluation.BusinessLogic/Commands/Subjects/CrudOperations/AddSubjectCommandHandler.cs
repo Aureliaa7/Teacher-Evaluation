@@ -23,6 +23,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Subjects.CrudOperations
                 NumberOfCredits = request.NumberOfCredits
             };
             await unitOfWork.SubjectRepository.Add(newSubject);
+            await unitOfWork.SaveChangesAsync();
         }
     }
 }

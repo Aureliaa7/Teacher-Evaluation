@@ -25,6 +25,15 @@ namespace TeacherEvaluation.DataAccess.Repositories
               .FirstAsync();
         }
 
+        public async Task<Teacher> GetByUserId(Guid userId)
+        {
+            return await Context.Set<Teacher>()
+              .Where(x => x.User.Id == userId)
+              .Include(x => x.User)
+              .FirstAsync();
+        }
+
+        //TODO la fel ca la student
         public async Task Delete(Guid id)
         {
             var teacherToBeDeleted = await GetTeacher(id);
@@ -32,7 +41,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
             Context.Set<Teacher>().Remove(teacherToBeDeleted);
             Context.Set<ApplicationUser>().Remove(userToBeDeleted);
 
-            await Context.SaveChangesAsync();
+            //await Context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Teacher>> GetAllWithRelatedEntities()

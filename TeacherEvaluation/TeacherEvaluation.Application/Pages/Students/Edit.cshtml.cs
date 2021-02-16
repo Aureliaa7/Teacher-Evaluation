@@ -99,7 +99,7 @@ namespace TeacherEvaluation.Application.Pages.Students
                 LastName = student.User.LastName;
                 Email = student.User.Email;
                 FathersInitial = student.User.FathersInitial;
-                PIN = student.PIN;
+                PIN = student.User.PIN;
                 Group = student.Group;
                 Specialization = student.Specialization;
                 StudyDomainId = StudyDomainId;

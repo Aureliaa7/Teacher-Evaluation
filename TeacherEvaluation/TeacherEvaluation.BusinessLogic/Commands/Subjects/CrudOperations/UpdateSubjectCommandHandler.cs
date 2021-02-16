@@ -24,7 +24,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Subjects.CrudOperations
                 Subject subjectToBeUpdated = await unitOfWork.SubjectRepository.Get(request.Id);
                 subjectToBeUpdated.Name = request.Name;
                 subjectToBeUpdated.NumberOfCredits = request.NumberOfCredits;
-                await unitOfWork.SubjectRepository.Update(subjectToBeUpdated);
+                unitOfWork.SubjectRepository.Update(subjectToBeUpdated);
+                await unitOfWork.SaveChangesAsync();
             }
             else
             {

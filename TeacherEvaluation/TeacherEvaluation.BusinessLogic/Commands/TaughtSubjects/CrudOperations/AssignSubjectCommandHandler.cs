@@ -27,6 +27,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
                 Teacher teacher = await unitOfWork.TeacherRepository.GetTeacher(request.TeacherId);
                 TaughtSubject taughtSubject = new TaughtSubject { Teacher = teacher, Subject = subject, Type = request.Type };
                 await unitOfWork.TaughtSubjectRepository.Add(taughtSubject);
+                await unitOfWork.SaveChangesAsync();
             }
             else
             {

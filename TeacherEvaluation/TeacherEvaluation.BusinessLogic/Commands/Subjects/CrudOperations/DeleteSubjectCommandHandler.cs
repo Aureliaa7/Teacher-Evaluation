@@ -22,6 +22,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Subjects.CrudOperations
             if(subjectExists)
             {
                 await unitOfWork.SubjectRepository.Remove(request.Id);
+                await unitOfWork.SaveChangesAsync();
             }
             else
             {

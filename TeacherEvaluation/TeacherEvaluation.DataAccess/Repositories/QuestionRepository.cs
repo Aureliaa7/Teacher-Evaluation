@@ -9,15 +9,15 @@ using TeacherEvaluation.DataAccess.Repositories.Interfaces;
 
 namespace TeacherEvaluation.DataAccess.Repositories
 {
-    public class QuestionWithOptionAnswerRepository : Repository<QuestionWithOptionAnswer>, IQuestionWithOptionAnswerRepository
+    public class QuestionRepository : Repository<Question>, IQuestionRepository
     {
-        public QuestionWithOptionAnswerRepository(ApplicationDbContext context) : base(context)
+        public QuestionRepository(ApplicationDbContext context) : base(context)
         {
         }
 
-        public async Task<IEnumerable<QuestionWithOptionAnswer>> GetQuestionsWithRelatedEntities(Guid formId)
+        public async Task<IEnumerable<Question>> GetQuestionsWithRelatedEntities(Guid formId)
         {
-            return await Context.Set<QuestionWithOptionAnswer>()
+            return await Context.Set<Question>()
                 .Where(x => x.Form.Id == formId)
                 .Include(x => x.Form)
                 .ToListAsync();

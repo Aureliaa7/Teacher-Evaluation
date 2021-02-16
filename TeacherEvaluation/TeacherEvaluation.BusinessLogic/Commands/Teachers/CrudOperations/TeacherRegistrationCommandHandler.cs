@@ -33,7 +33,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
                 LastName = request.LastName,
                 FathersInitial = request.FathersInitial,
                 Email = request.Email,
-                UserName = request.Email
+                UserName = request.Email,
+                PIN = request.PIN
             };
 
             var result = await userManager.CreateAsync(newApplicationUser, request.Password);
@@ -52,10 +53,10 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
                 {
                     Degree = request.Degree,
                     Department = request.Department,
-                    PIN = request.PIN,
                     User = newApplicationUser
                 };
                 await unitOfWork.TeacherRepository.Add(teacher);
+                await unitOfWork.SaveChangesAsync();
 
                 Notification notification = EmailSending.ConfigureAccountCreationMessage(confirmationUrl, newApplicationUser, request.Password);
                 emailService.Send(notification);

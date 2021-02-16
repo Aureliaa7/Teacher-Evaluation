@@ -25,7 +25,7 @@ namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOpt
         private Form form;
         private bool formIsAvailable;
 
-        public IEnumerable<QuestionWithOptionAnswer> Questions { get; set; }
+        public IEnumerable<Question> Questions { get; set; }
         public List<SelectListItem> Subjects { get; set; }
 
         [BindProperty]
@@ -49,7 +49,7 @@ namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOpt
         public EvaluateTeacherModel(IMediator mediator)
         {
             this.mediator = mediator;
-            Questions = new List<QuestionWithOptionAnswer>();
+            Questions = new List<Question>();
             formIsAvailable = true;
             AnswerOptions = Enum.GetValues(typeof(AnswerOption))
                .Cast<AnswerOption>()

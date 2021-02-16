@@ -2,10 +2,10 @@
 
 namespace TeacherEvaluation.Domain.DomainEntities
 {
-    public class QuestionWithOptionAnswer
+    public class Question
     {
         public Guid Id { get; set; }
-        public string Question { get; set; }
+        public string Text { get; set; }
         public Form Form { get; set; }
     }
 }

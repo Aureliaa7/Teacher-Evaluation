@@ -21,6 +21,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
             if (studentExists)
             {
                 await unitOfWork.StudentRepository.Delete(request.Id);
+                await unitOfWork.SaveChangesAsync();
             }
             else
             {

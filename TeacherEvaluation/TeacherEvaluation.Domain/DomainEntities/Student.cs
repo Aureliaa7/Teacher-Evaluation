@@ -7,7 +7,6 @@ namespace TeacherEvaluation.Domain.DomainEntities
     {
         public Guid Id { get; set; }
         public ApplicationUser User { get; set; }
-        public string PIN { get; set; }
         public int StudyYear { get; set; }
         public Specialization Specialization { get; set; }
         public string Group { get; set; }

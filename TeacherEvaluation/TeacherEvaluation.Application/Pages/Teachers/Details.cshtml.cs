@@ -65,7 +65,7 @@ namespace TeacherEvaluation.Application.Pages.Teachers
                 LastName = teacherToBeDeleted.User.LastName;
                 Email = teacherToBeDeleted.User.Email;
                 FathersInitial = teacherToBeDeleted.User.FathersInitial;
-                PIN = teacherToBeDeleted.PIN;
+                PIN = teacherToBeDeleted.User.PIN;
                 Degree = teacherToBeDeleted.Degree;
                 Department = teacherToBeDeleted.Department;
             }

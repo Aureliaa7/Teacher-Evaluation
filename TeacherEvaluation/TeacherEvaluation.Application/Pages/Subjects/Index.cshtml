@@ -12,34 +12,35 @@
 
 <h4 class="row align-input-center add-top-margin">Subjects</h4>
 <hr/>
-
-<table id="subjects-index" class="table table-dark table-striped table-bordered set-max-width">
-    <thead>
-        <tr>
-            <th>
-                Subject Title
-            </th>
-            <th>
-                Number Of Credits
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Subjects)
-        {
+<div class="add-margin-bottom">
+    <table id="subjects-index" class="table table-dark table-striped table-bordered set-max-width">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumberOfCredits)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
+                <th>
+                    Subject Title
+                </th>
+                <th>
+                    Number Of Credits
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Subjects)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumberOfCredits)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

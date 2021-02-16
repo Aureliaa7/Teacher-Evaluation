@@ -22,6 +22,7 @@ namespace TeacherEvaluation.DataAccess.Data
                     UserName = "alexpop@gmail.com",
                     NormalizedUserName = "ALEXPOP@GMAIL.COM",
                     NormalizedEmail = "ALEXPOP@GMAIL.COM",
+                    PIN = "1760311787654",
                     EmailConfirmed = true
                 };
                 IdentityResult resultAdministrator = userManager.CreateAsync(administrator, "Admin_ucv98@").Result;
@@ -42,6 +43,7 @@ namespace TeacherEvaluation.DataAccess.Data
                     UserName = "silviunegrea@gmail.com",
                     NormalizedUserName = "SILVIUNEGREA@GMAIL.COM",
                     NormalizedEmail = "SILVIUNEGREA@GMAIL.COM",
+                    PIN = "1800202431267",
                     EmailConfirmed = true
                 };
                 IdentityResult resultDean = userManager.CreateAsync(dean, "Dean_ucv98@").Result;

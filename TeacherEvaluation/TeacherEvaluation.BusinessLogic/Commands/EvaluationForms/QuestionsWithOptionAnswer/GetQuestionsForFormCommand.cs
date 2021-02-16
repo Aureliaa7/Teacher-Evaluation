@@ -5,7 +5,7 @@ using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWithOptionAnswer
 {
-    public class GetQuestionsForFormCommand : IRequest<IEnumerable<QuestionWithOptionAnswer>>
+    public class GetQuestionsForFormCommand : IRequest<IEnumerable<Question>>
     {
         public Guid FormId { get; set; }
     }

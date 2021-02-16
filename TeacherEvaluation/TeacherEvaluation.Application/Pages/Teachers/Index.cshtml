@@ -11,43 +11,45 @@
 }
 
 <h4 class="row align-input-center add-top-margin">Teachers</h4>
-<hr/>
+<hr />
 
-<table id="teachers-index" class="table table-dark table-striped table-bordered set-max-width">
-    <thead>
-        <tr>
-            <th>
-                Teacher Name
-            </th>
-            <th>
-                Degree
-            </th>
-            <th>
-                Department
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Teachers)
-        {
-            var fullName = item.User.LastName + " " + item.User.FathersInitial + " " + item.User.FirstName;
+<div class="add-margin-bottom">
+    <table id="teachers-index" class="table table-dark table-striped table-bordered set-max-width">
+        <thead>
             <tr>
-                <td>
-                    @fullName
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Degree)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Department)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
+                <th>
+                    Teacher Name
+                </th>
+                <th>
+                    Degree
+                </th>
+                <th>
+                    Department
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Teachers)
+            {
+                var fullName = item.User.LastName + " " + item.User.FathersInitial + " " + item.User.FirstName;
+                <tr>
+                    <td>
+                        @fullName
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Degree)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Department)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -8,7 +8,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWith
 {
     public class SaveEvaluationFormResponsesCommand : IRequest
     {
-        public IEnumerable<QuestionWithOptionAnswer> Questions { get; set; }
+        public IEnumerable<Question> Questions { get; set; }
         public List<AnswerOption> Responses { get; set; }
         public Guid FormId { get; set; }
         public Guid SubjectId { get; set; }

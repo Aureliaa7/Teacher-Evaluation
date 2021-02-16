@@ -11,35 +11,36 @@
 
 <h4 class="row align-input-center add-top-margin">Laboratories</h4>
 <hr/>
-<table id="subjects-index" class="table table-dark table-striped table-bordered set-max-width">
-    <thead>
-        <tr>
-            <th>
-                Subject Title
-            </th>
-            <th>
-                Number Of Credits
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.TaughtSubjects)
-        {
+<div class="add-margin-bottom">
+    <table id="subjects-index" class="table table-dark table-striped table-bordered set-max-width">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Subject.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Subject.NumberOfCredits)
-                </td>
-                <td>
-                    <a asp-page="../Students/EnrolledStudents" asp-route-id="@item.Id">Students</a>
-                </td>
+                <th>
+                    Subject Title
+                </th>
+                <th>
+                    Number Of Credits
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
-
+        </thead>
+        <tbody>
+            @foreach (var item in Model.TaughtSubjects)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject.NumberOfCredits)
+                    </td>
+                    <td>
+                        <a asp-page="../Students/EnrolledStudents" asp-route-id="@item.Id">Students</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 

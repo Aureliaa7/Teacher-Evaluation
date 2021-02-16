@@ -47,6 +47,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Attendances.CrudOperations
                         Enrollment = searchedEnrollment
                     };
                     await unitOfWork.AttendanceRepository.Add(newAttendance);
+                    await unitOfWork.SaveChangesAsync();
                 }
                 else
                 {
