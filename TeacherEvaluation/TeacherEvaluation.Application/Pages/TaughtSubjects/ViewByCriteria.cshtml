@@ -62,6 +62,15 @@
                     <th>
                         Type
                     </th>
+                    <th>
+                        Study Programme
+                    </th>
+                    <th>
+                        Year
+                    </th>
+                    <th>
+                        Semester
+                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -69,21 +78,30 @@
                 @foreach (var item in Model.TaughtSubjects)
                 {
                     var fullName = item.Teacher.User.LastName + " " + item.Teacher.User.FathersInitial + " " + item.Teacher.User.FirstName;
-                    <tr>
-                        <td>
-                            @fullName
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Subject.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Type)
-                        </td>
-                        <td>
-                            <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        @fullName
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudyProgramme)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudyYear)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Semester)
+                    </td>
+                    <td>
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

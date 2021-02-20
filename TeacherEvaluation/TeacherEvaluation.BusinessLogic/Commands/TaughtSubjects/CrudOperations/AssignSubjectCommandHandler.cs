@@ -25,7 +25,16 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
             {
                 Subject subject = await unitOfWork.SubjectRepository.Get(request.SubjectId);
                 Teacher teacher = await unitOfWork.TeacherRepository.GetTeacher(request.TeacherId);
-                TaughtSubject taughtSubject = new TaughtSubject { Teacher = teacher, Subject = subject, Type = request.Type };
+                TaughtSubject taughtSubject = new TaughtSubject
+                {
+                    Teacher = teacher,
+                    Subject = subject,
+                    Type = request.Type,
+                    StudyProgramme = request.StudyProgramme,
+                    StudyYear = request.Year,
+                    Semester = request.Semester
+                };
+
                 await unitOfWork.TaughtSubjectRepository.Add(taughtSubject);
                 await unitOfWork.SaveChangesAsync();
             }

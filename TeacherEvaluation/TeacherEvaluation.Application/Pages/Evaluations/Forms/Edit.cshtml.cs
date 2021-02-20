@@ -6,10 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading.Tasks;
 using TeacherEvaluation.Application.Convertors;
+using TeacherEvaluation.BusinessLogic.Commands.EvaluationForms;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
 
-namespace TeacherEvaluation.Application.Pages.Evaluations
+namespace TeacherEvaluation.Application.Pages.Evaluations.Forms
 {
     public class EditModel : PageModel
     {
@@ -52,8 +54,26 @@ namespace TeacherEvaluation.Application.Pages.Evaluations
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime EndDate { get; set; }
 
-        public void OnGet()
+        public void OnGet(Guid? id)
         {
+            if(id != null)
+            {
+                FormId = (Guid)id;
+            }
+        }
+
+        public async Task<IActionResult> OnPost()
+        {
+            EditFormCommand command = new EditFormCommand
+            {
+                StartDate = StartDate,
+                EndDate = EndDate,
+                MinNumberAttendances = (int) NumberOfAttendances,
+                FormId = FormId,
+                EnrollmentState = EnrollmentState.InProgress
+            };
+            await mediator.Send(command);
+            return RedirectToPage("/Dashboards/Dean");
         }
     }
 }

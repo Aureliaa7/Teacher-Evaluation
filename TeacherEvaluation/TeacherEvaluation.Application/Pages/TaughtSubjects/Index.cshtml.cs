@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Authorization;
 using TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations;
+using TeacherEvaluation.BusinessLogic.ViewModels;
 using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.Application.Pages.TaughtSubjects
 {
-    public class IndexModel : PageModel
+    [Authorize(Roles = "Administrator")]
+    public class IndexModel : TaughtSubjectBaseModelModel
     {
         private readonly IMediator mediator;
 
@@ -17,10 +19,10 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
             TaughtSubjects = new List<TaughtSubject>();
         }
 
-        public IEnumerable<TaughtSubject> TaughtSubjects { get; set; }
-
         public async Task OnGetAsync()
         {
+            CurrentRole = new CurrentRole();
+            CurrentRole.IsAdmin = true;
             GetAllTaughtSubjectsCommand command = new GetAllTaughtSubjectsCommand();
             TaughtSubjects = await mediator.Send(command);
         }

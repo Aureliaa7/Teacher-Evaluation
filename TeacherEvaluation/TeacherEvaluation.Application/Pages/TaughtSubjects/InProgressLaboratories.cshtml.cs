@@ -5,20 +5,18 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
+using TeacherEvaluation.BusinessLogic.ViewModels;
 using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.TaughtSubjects
 {
     [Authorize(Roles = "Student")]
-    public class InProgressLaboratoriesModel : PageModel
+    public class InProgressLaboratoriesModel : TaughtSubjectBaseModelModel
     {
         private readonly IMediator mediator;
-
-        public IEnumerable<TaughtSubject> TaughtSubjects { get; set; }
 
         public InProgressLaboratoriesModel(IMediator mediator)
         {
@@ -34,6 +32,8 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
             try
             {
                 TaughtSubjects = await mediator.Send(command);
+                CurrentRole = new CurrentRole();
+                CurrentRole.IsStudent = true;
             }
             catch (ItemNotFoundException)
             {

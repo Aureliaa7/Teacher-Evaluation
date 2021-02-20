@@ -37,8 +37,17 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
         [EnumDataType(typeof(Department))]
         public Department Department { get; set; }
 
+        [BindProperty]
+        [EnumDataType(typeof(StudyProgramme))]
+        public StudyProgramme StudyProgramme { get; set; }
+
+        [BindProperty]
+        public int Year { get; set; }
+
+        [BindProperty]
+        public int Semester { get; set; }
+
         public List<SelectListItem> Subjects { get; set; }
-        
 
         public CreateModel(IMediator mediator)
         {
@@ -90,7 +99,10 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
                 {
                     TeacherId = TeacherId,
                     SubjectId = SubjectId,
-                    Type = Type
+                    Type = Type,
+                    StudyProgramme = StudyProgramme,
+                    Year = Year,
+                    Semester = Semester
                 };
                 try
                 {

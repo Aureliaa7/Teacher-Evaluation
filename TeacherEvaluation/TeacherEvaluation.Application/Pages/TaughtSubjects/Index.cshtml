@@ -12,42 +12,5 @@
 
 <h4 class="row align-input-center add-top-margin">Taught Subjects</h4>
 <hr/>
-<div class="add-margin-bottom">
-    <table id="taught-subjects-index" class="table table-dark table-striped table-bordered set-max-width">
-        <thead>
-            <tr>
-                <th>
-                    Teacher Name
-                </th>
-                <th>
-                    Subject Title
-                </th>
-                <th>
-                    Type
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.TaughtSubjects)
-            {
-                var fullName = item.Teacher.User.LastName + " " + item.Teacher.User.FathersInitial + " " + item.Teacher.User.FirstName;
-                <tr>
-                    <td>
-                        @fullName
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Subject.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Type)
-                    </td>
-                    <td>
-                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+<partial name="_TaughtSubjectPartial" model="Model" />
+

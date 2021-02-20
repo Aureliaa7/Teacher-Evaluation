@@ -32,6 +32,17 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
         [Display(Name = "Subject title")]
         public string SubjectTitle { get; set; }
 
+        [BindProperty]
+        [Display(Name = "Study Programme")]
+        public StudyProgramme StudyProgramme { get; set; }
+
+        [BindProperty]
+        [Display(Name = "Study Year")]
+        public int StudyYear { get; set; }
+
+        [BindProperty]
+        public int Semester { get; set; }
+
         public DetailsModel(IMediator mediator)
         {
             this.mediator = mediator;

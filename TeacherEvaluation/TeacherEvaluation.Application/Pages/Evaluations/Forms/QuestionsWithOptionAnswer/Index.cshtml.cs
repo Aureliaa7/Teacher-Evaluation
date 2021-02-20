@@ -6,7 +6,7 @@ using TeacherEvaluation.BusinessLogic.Commands.EvaluationForms;
 using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
 
-namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithTextAnswer
+namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOptionAnswer
 {
     public class IndexModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithTex
 
         public async Task OnGetAsync()
         {
-            GetFormsByTypeCommand command = new GetFormsByTypeCommand { Type = FormType.Text };
+            GetFormsByTypeCommand command = new GetFormsByTypeCommand { Type = FormType.Option };
             Forms = await mediator.Send(command);
         }
     }

@@ -11,35 +11,6 @@
 
 <h4 class="row align-input-center add-top-margin">Courses</h4>
 <hr/>
-<div class="add-margin-bottom">
-    <table id="subjects-index" class="table table-dark table-striped table-bordered set-max-width">
-        <thead>
-            <tr>
-                <th>
-                    Subject Title
-                </th>
-                <th>
-                    Number Of Credits
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.TaughtSubjects)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Subject.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Subject.NumberOfCredits)
-                    </td>
-                    <td>
-                        <a asp-page="../Students/EnrolledStudents" asp-route-id="@item.Id">Students</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+
+<partial name="_TaughtSubjectPartial" model="Model"/>
 

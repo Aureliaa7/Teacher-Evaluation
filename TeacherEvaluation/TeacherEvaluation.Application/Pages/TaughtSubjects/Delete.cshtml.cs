@@ -31,6 +31,17 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
         [BindProperty]
         public TaughtSubjectType Type { get; set; }
 
+        [BindProperty]
+        [Display(Name = "Study Programme")]
+        public StudyProgramme StudyProgramme { get; set; }
+
+        [BindProperty]
+        [Display(Name = "Study Year")]
+        public int StudyYear { get; set; }
+
+        [BindProperty]
+        public int Semester { get; set; }
+
         public DeleteModel(IMediator mediator)
         {
             this.mediator = mediator;

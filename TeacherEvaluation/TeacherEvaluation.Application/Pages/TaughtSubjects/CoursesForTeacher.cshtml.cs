@@ -1,24 +1,22 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
+using TeacherEvaluation.BusinessLogic.ViewModels;
 using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.TaughtSubjects
 {
     [Authorize(Roles = "Teacher")]
-    public class CoursesForTeacherModel : PageModel
+    public class CoursesForTeacherModel : TaughtSubjectBaseModelModel
     {
         private readonly IMediator mediator;
-
-        public IEnumerable<TaughtSubject> TaughtSubjects { get; set; }
 
         public CoursesForTeacherModel(IMediator mediator)
         {
@@ -33,6 +31,8 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
             {
                 GetTaughtSubjectsByTypeCommand command = new GetTaughtSubjectsByTypeCommand { UserId = currentUserId, Type = TaughtSubjectType.Course };
                 TaughtSubjects = await mediator.Send(command);
+                CurrentRole = new CurrentRole();
+                CurrentRole.IsTeacher = true;
             }catch (ItemNotFoundException)
             {
                 return RedirectToPage("../Errors/404");
