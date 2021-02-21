@@ -29,12 +29,12 @@
             </div>
             <div class="row my-row">
                 <div class="col-md-6">
-                    <label asp-for="TaughtSubjectType">Taught Subject Type</label><br />
-                    <select asp-for="TaughtSubjectType" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Enums.TaughtSubjectType>()"
+                    <label asp-for="Type">Taught Subject Type</label><br />
+                    <select asp-for="Type" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Enums.TaughtSubjectType>()"
                             class="form-control">
                         <option selected="selected">Please select</option>
                     </select>
-                    <span asp-validation-for="TaughtSubjectType" class="text-danger" />
+                    <span asp-validation-for="Type" class="text-danger" />
                 </div>
             </div>
             <div class="row my-row">
@@ -49,63 +49,5 @@
 
 @if (Model.TableIsVisible)
 {
-    <div class="add-margin-bottom">
-        <table id="taught-subjects-index" class="table table-dark table-striped table-bordered set-max-width">
-            <thead>
-                <tr>
-                    <th>
-                        Teacher Name
-                    </th>
-                    <th>
-                        Subject Title
-                    </th>
-                    <th>
-                        Type
-                    </th>
-                    <th>
-                        Study Programme
-                    </th>
-                    <th>
-                        Year
-                    </th>
-                    <th>
-                        Semester
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.TaughtSubjects)
-                {
-                    var fullName = item.Teacher.User.LastName + " " + item.Teacher.User.FathersInitial + " " + item.Teacher.User.FirstName;
-                <tr>
-                    <td>
-                        @fullName
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Subject.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Type)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StudyProgramme)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StudyYear)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Semester)
-                    </td>
-                    <td>
-                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    <br />
-    <br />
+    <partial name="_TaughtSubjectPartial" model="Model" />
 }

@@ -7,44 +7,8 @@
 }
 
 <h4 class="row align-input-center add-top-margin">Taught Subject Details</h4>
-    <hr />
-    <div class="jumbotron taught-subject-jumbotron">
-        <dl class="row align-input-center">
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.TeacherName)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.TeacherName)
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.SubjectTitle)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.SubjectTitle)
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Type)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Type)
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.StudyProgramme)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.StudyProgramme)
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.StudyYear)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.StudyYear)
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Semester)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Semester)
-            </dd>
-        </dl>
-    </div>
+<hr />
+
+<div class="jumbotron taught-subject-jumbotron">
+    <partial name="_TaughtSubjectDetailsPartial" model="Model" />
+</div>

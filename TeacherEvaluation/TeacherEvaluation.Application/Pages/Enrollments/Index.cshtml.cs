@@ -1,23 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using MediatR;
 using System.Threading.Tasks;
-using MediatR;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations;
-using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.Application.Pages.Enrollments
 {
-    public class IndexModel : PageModel
+    public class IndexModel : EnrollmentBaseModel
     {
-        private readonly IMediator mediator;
-
-        public IndexModel(IMediator mediator)
+        public IndexModel(IMediator mediator): base(mediator)
         {
-            this.mediator = mediator;
-            Enrollments = new List<Enrollment>();
         }
-
-        public IEnumerable<Enrollment> Enrollments { get;set; }
 
         public async Task OnGetAsync()
         {

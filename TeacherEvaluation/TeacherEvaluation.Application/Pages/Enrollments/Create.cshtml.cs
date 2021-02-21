@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations;
@@ -18,51 +16,12 @@ using TeacherEvaluation.Domain.DomainEntities.Enums;
 namespace TeacherEvaluation.Application.Pages.Enrollments
 {
     [Authorize(Roles = "Administrator")]
-    public class CreateModel : PageModel
+    public class CreateModel : EnrollmentBaseModel
     {
-        private readonly IMediator mediator;
-
-        [BindProperty]
-        [Required(ErrorMessage = "Student is required")]
-        public Guid StudentId { get; set; }
-
-        [BindProperty]
-        [Required(ErrorMessage = "Subject is required")]
-        public Guid SubjectId { get; set; }
-
-        [BindProperty]
-        [Required(ErrorMessage = "Teacher is required")]
-        public Guid TeacherId { get; set; }
-
-        [BindProperty]
-        [EnumDataType(typeof(TaughtSubjectType))]
-        public TaughtSubjectType Type { get; set; }
-
-        [BindProperty]
-        [EnumDataType(typeof(StudyProgramme))]
-        [Required(ErrorMessage = "Study programme is required")]
-        public StudyProgramme StudyProgramme { get; set; }
-
-        [BindProperty]
-        [Required(ErrorMessage = "Study domain is required")]
-        public Guid StudyDomainId { get; set; }
-
-        [BindProperty]
-        [Display(Name = "Study domain")]
-        [Required(ErrorMessage = "Specialization is required")]
-        public Guid SpecializationId { get; set; }
-
-        [BindProperty]
-        [Display(Name = "Study year")]
-        [Required(ErrorMessage = "Study year is required")]
-        [Range(1, 4, ErrorMessage = "The study year must be between 1 and 4")]
-        public int? StudyYear { get; set; } = null;
-
         public List<SelectListItem> Subjects { get; set; }
 
-        public CreateModel(IMediator mediator)
+        public CreateModel(IMediator mediator): base(mediator)
         {
-            this.mediator = mediator;
         }
 
         public async Task<IActionResult> OnGet()
@@ -121,14 +80,14 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ModelState.IsValid)
+            if (ModelIsValid())
             {
                 EnrollStudentCommand command = new EnrollStudentCommand
                 {
-                    TeacherId = TeacherId,
-                    SubjectId = SubjectId,
-                    StudentId = StudentId,
-                    Type = Type
+                    TeacherId = (Guid)TeacherId,
+                    SubjectId = (Guid)SubjectId,
+                    StudentId = (Guid)StudentId,
+                    Type = (TaughtSubjectType)Type
                 };
                 try
                 {
@@ -142,6 +101,11 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
                 return RedirectToPage("../Enrollments/Index");
             }
             return Page();
+        }
+
+        private bool ModelIsValid()
+        {
+            return (TeacherId != null && SubjectId != null && StudentId != null && Type != null);
         }
     }
 }

@@ -48,12 +48,12 @@
                 <span asp-validation-for="StudyYear" class="text-danger"></span>
             </div>
             <div class="col-md-4">
-                <label asp-for="TaughtSubjectType">Taught subject type</label><br />
-                <select id="type-id-field" asp-for="TaughtSubjectType" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Enums.TaughtSubjectType>()"
+                <label asp-for="Type">Taught subject type</label><br />
+                <select id="type-id-field" asp-for="Type" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Enums.TaughtSubjectType>()"
                         class="form-control" onclick="update_data()">
                     <option selected disabled hidden>Please select</option>
                 </select>
-                <span asp-validation-for="TaughtSubjectType" class="text-danger" />
+                <span asp-validation-for="Type" class="text-danger" />
             </div>
             <div class="col-md-4">
                 <label asp-for="EnrollmentState" class="control-label">Enrollment state</label><br />
@@ -74,88 +74,7 @@
 
 @if (Model.DisplayTable)
 {
-    <div class="add-margin-bottom">
-        <table id="enrollments-index" class="table table-dark table-striped table-bordered set-max-width add-margin-bottom-6">
-            <thead>
-                <tr>
-                    <th>
-                        Teacher
-                    </th>
-                    <th>
-                        Subject
-                    </th>
-                    <th>
-                        Type
-                    </th>
-                    <th>
-                        Student
-                    </th>
-                    <th>
-                        Study Year
-                    </th>
-                    <th>
-                        Study Programme
-                    </th>
-                    <th>
-                        Study Domain
-                    </th>
-                    <th>
-                        Specialization
-                    </th>
-                    <th>
-                        Group
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Enrollments)
-                {
-                    var teacherLastName = item.TaughtSubject.Teacher.User.LastName;
-                    var teacherFathersInitial = item.TaughtSubject.Teacher.User.FathersInitial;
-                    var teacherFirstName = item.TaughtSubject.Teacher.User.FirstName;
-                    var teacherName = teacherLastName + " " + teacherFathersInitial + " " + teacherFirstName;
-
-                    var studentLastName = item.Student.User.LastName;
-                    var studentFathersInitial = item.Student.User.FathersInitial;
-                    var studentFirstName = item.Student.User.FirstName;
-                    var studentName = studentLastName + " " + studentFathersInitial + " " + studentFirstName;
-                    <tr>
-                        <td>
-                            @teacherName
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TaughtSubject.Subject.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TaughtSubject.Type)
-                        </td>
-                        <td>
-                            @studentName
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Student.StudyYear)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Student.Specialization.StudyDomain.StudyProgramme)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Student.Specialization.StudyDomain.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Student.Specialization.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Student.Group)
-                        </td>
-                        <td>
-                            <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+    <partial name = "_EnrollmentsPartial" model = "Model" />
     <br />
     <br />
 }

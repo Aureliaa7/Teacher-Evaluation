@@ -1,46 +1,19 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Authorization;
 using TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations;
-using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.Students
 {
-    public class ViewByCriteriaModel : PageModel
+    [Authorize(Roles = "Administrator")]
+    public class ViewByCriteriaModel : StudentBaseModel
     {
-        private readonly IMediator mediator;
         public bool TableIsVisible;
 
-        [BindProperty]
-        public IEnumerable<Student> Students { get; set; }
-
-        [BindProperty]
-        [EnumDataType(typeof(StudyProgramme))]
-        [Required(ErrorMessage = "The study programme is required")]
-        public StudyProgramme StudyProgramme { get; set; }
-        
-        [BindProperty]
-        [Required(ErrorMessage = "The study domain is required")]
-        public Guid StudyDomainId { get; set; }
-
-        [BindProperty]
-        [Required(ErrorMessage = "The specialization is required")]
-        public Guid SpecializationId { get; set; }
-
-        [BindProperty]
-        [Required(ErrorMessage = "The study year is required")]
-        [Range(1, 4, ErrorMessage = "The study year must be between 1 and 4")]
-        public int? StudyYear { get; set; } = null;
-
-        public ViewByCriteriaModel(IMediator mediator)
+        public ViewByCriteriaModel(IMediator mediator): base(mediator)
         {
-            this.mediator = mediator;
-            Students = new List<Student>();
         }
 
         public void OnGet()
@@ -49,19 +22,24 @@ namespace TeacherEvaluation.Application.Pages.Students
 
         public async Task OnPostAsync()
         {
-            if (ModelState.IsValid)
+            if (ModelIsValid())
             {
                 TableIsVisible = true;
                 GetStudentsByCriteriaCommand command = new GetStudentsByCriteriaCommand
                 {
-                    SpecializationId = SpecializationId,
-                    StudyDomainId = StudyDomainId,
-                    StudyProgramme = StudyProgramme,
+                    SpecializationId = (Guid)SpecializationId,
+                    StudyDomainId = (Guid)StudyDomainId,
+                    StudyProgramme = (StudyProgramme)StudyProgramme,
                     StudyYear = (int)StudyYear
                 };
-
+                CurrentRole.IsAdmin = true;
                 Students = await mediator.Send(command);
             }
+        }
+
+        private bool ModelIsValid()
+        {
+            return (SpecializationId != null && StudyDomainId != null && StudyProgramme != null && StudyYear != null);
         }
     }
 }

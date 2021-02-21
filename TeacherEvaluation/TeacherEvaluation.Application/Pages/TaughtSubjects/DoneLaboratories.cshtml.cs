@@ -2,26 +2,20 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.BusinessLogic.ViewModels;
-using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.TaughtSubjects
 {
     [Authorize(Roles = "Student")]
-    public class DoneLaboratoriesModel : TaughtSubjectBaseModelModel
+    public class DoneLaboratoriesModel : TaughtSubjectBaseModel
     {
-        private readonly IMediator mediator;
-
-        public DoneLaboratoriesModel(IMediator mediator)
+        public DoneLaboratoriesModel(IMediator mediator) : base(mediator)
         {
-            this.mediator = mediator;
-            TaughtSubjects = new List<TaughtSubject>();
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -32,7 +26,6 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
             try
             {
                 TaughtSubjects = await mediator.Send(command);
-                CurrentRole = new CurrentRole();
                 CurrentRole.IsStudent = true;
             }
             catch (ItemNotFoundException)

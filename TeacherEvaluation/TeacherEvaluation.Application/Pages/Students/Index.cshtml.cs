@@ -1,30 +1,22 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations;
-using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.Application.Pages.Students
 {
     [Authorize(Roles = "Administrator")]
-    public class IndexModel : PageModel
+    public class IndexModel : StudentBaseModel
     {
-        private readonly IMediator mediator;
-
-        public IEnumerable<Student> Students { get; set; }
-
-        public IndexModel(IMediator mediator)
+        public IndexModel(IMediator mediator): base(mediator)
         {
-            this.mediator = mediator;
-            Students = new List<Student>();
         }
 
         public async Task OnGetAsync()
         {
             GetAllStudentsCommand command = new GetAllStudentsCommand();
             Students = await mediator.Send(command);
+            CurrentRole.IsAdmin = true;
         }
     }
 }

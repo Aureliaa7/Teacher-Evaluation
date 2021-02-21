@@ -34,6 +34,7 @@ namespace TeacherEvaluation.Application.Pages.Grades
 
         [BindProperty]
         [Required(ErrorMessage = "Grade is required")]
+        [Range(1, 10, ErrorMessage ="The grade must be between 1 and 10")]
         public int? Grade { get; set; } = null;
 
         [BindProperty]

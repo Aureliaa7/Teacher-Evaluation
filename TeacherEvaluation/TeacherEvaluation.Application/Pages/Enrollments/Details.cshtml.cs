@@ -1,63 +1,19 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities;
-using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.Enrollments
 {
     [Authorize]
-    public class DetailsModel : PageModel
-    {
-        private readonly IMediator mediator;
-
-        [BindProperty]
-        public Guid EnrollmentId { get; set; }
-
-        [BindProperty]
-        [Display(Name = "Student Name")]
-        public string StudentName { get; set; }
-
-        [BindProperty]
-        [Display(Name = "Teacher Name")]
-        public string TeacherName { get; set; }
-
-        [BindProperty]
-        [Display(Name = "Subject Title")]
-        public string SubjectTitle { get; set; }
-
-        [BindProperty]
-        public TaughtSubjectType Type { get; set; }
-
-        [BindProperty]
-        [Display(Name = "Study Year")]
-        public int? StudyYear { get; set; } = null;
-
-        [BindProperty]
-        [Display(Name = "Study Programme")]
-        public StudyProgramme StudyProgramme { get; set; }
-
-        [BindProperty]
-        [Display(Name = "Study Domain")]
-        public string StudyDomain { get; set; }
-
-        [BindProperty]
-        [Display(Name = "Specialization")]
-        public string Specialization { get; set; }
-
-        [BindProperty]
-        public string Group { get; set; }
-
-
-        public DetailsModel(IMediator mediator)
+    public class DetailsModel : EnrollmentBaseModel
+    { 
+        public DetailsModel(IMediator mediator): base(mediator)
         {
-            this.mediator = mediator;
         }
 
         public async Task<IActionResult> OnGetAsync(Guid? id)

@@ -1,50 +1,19 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities;
-using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.TaughtSubjects
 {
     [Authorize(Roles = "Administrator")]
-    public class DeleteModel : PageModel
+    public class DeleteModel : TaughtSubjectBaseModel
     {
-        private readonly IMediator mediator;
-
-        [BindProperty]
-        public Guid TaughtSubjectId { get; set; }
-
-        [BindProperty]
-        [Display(Name = "Teacher name")]
-        public string TeacherName { get; set; }
-
-        [BindProperty]
-        [Display(Name = "Subject title")]
-        public string SubjectTitle{ get; set; }
-
-        [BindProperty]
-        public TaughtSubjectType Type { get; set; }
-
-        [BindProperty]
-        [Display(Name = "Study Programme")]
-        public StudyProgramme StudyProgramme { get; set; }
-
-        [BindProperty]
-        [Display(Name = "Study Year")]
-        public int StudyYear { get; set; }
-
-        [BindProperty]
-        public int Semester { get; set; }
-
-        public DeleteModel(IMediator mediator)
+        public DeleteModel(IMediator mediator) : base(mediator)
         {
-            this.mediator = mediator;
         }
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
@@ -64,6 +33,9 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
                 TeacherName = taughtSubjectToBeDeleted.Teacher.User.FirstName + " " + taughtSubjectToBeDeleted.Teacher.User.LastName;
                 SubjectTitle = taughtSubjectToBeDeleted.Subject.Name;
                 Type = taughtSubjectToBeDeleted.Type;
+                Year = taughtSubjectToBeDeleted.StudyYear;
+                Semester = taughtSubjectToBeDeleted.Semester;
+                StudyProgramme = taughtSubjectToBeDeleted.StudyProgramme;
             }
             catch (ItemNotFoundException)
             {

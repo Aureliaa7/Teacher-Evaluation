@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TeacherEvaluation.BusinessLogic.Commands.Subjects.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations;
@@ -17,41 +15,12 @@ using TeacherEvaluation.Domain.DomainEntities.Enums;
 namespace TeacherEvaluation.Application.Pages.TaughtSubjects
 {
     [Authorize(Roles = "Administrator")]
-    public class CreateModel : PageModel
+    public class CreateModel : TaughtSubjectBaseModel
     {
-        private readonly IMediator mediator;
-
-        [BindProperty]
-        [EnumDataType(typeof(TaughtSubjectType))]
-        public TaughtSubjectType Type { get; set; }
-
-        [BindProperty]
-        [Required(ErrorMessage = "Teacher is required")]
-        public Guid TeacherId { get; set; }
-
-        [BindProperty]
-        [Required(ErrorMessage = "Subject is required")]
-        public Guid SubjectId { get; set; }
-
-        [BindProperty]
-        [EnumDataType(typeof(Department))]
-        public Department Department { get; set; }
-
-        [BindProperty]
-        [EnumDataType(typeof(StudyProgramme))]
-        public StudyProgramme StudyProgramme { get; set; }
-
-        [BindProperty]
-        public int Year { get; set; }
-
-        [BindProperty]
-        public int Semester { get; set; }
-
         public List<SelectListItem> Subjects { get; set; }
 
-        public CreateModel(IMediator mediator)
+        public CreateModel(IMediator mediator) : base(mediator)
         {
-            this.mediator = mediator;
         }
 
         public async Task<IActionResult> OnGet()
@@ -93,16 +62,16 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ModelState.IsValid)
+            if (ModelIsValid())
             {
                 AssignSubjectCommand command = new AssignSubjectCommand
                 {
-                    TeacherId = TeacherId,
-                    SubjectId = SubjectId,
-                    Type = Type,
-                    StudyProgramme = StudyProgramme,
-                    Year = Year,
-                    Semester = Semester
+                    TeacherId = (Guid)TeacherId,
+                    SubjectId = (Guid)SubjectId,
+                    Type = (TaughtSubjectType)Type,
+                    StudyProgramme = (StudyProgramme)StudyProgramme,
+                    Year = (int)Year,
+                    Semester = (int)Semester
                 };
                 try
                 {
@@ -116,6 +85,11 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
                 return RedirectToPage("../TaughtSubjects/Index");
             }
             return Page();
+        }
+
+        private bool ModelIsValid()
+        {
+            return (TeacherId != null && SubjectId != null && Type != null && StudyProgramme != null && Year != null && Semester != null);
         }
     }
 }
