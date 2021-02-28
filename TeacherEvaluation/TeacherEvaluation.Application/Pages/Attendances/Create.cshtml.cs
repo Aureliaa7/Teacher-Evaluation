@@ -67,28 +67,6 @@ namespace TeacherEvaluation.Application.Pages.Attendances
             return Page();
         }
 
-        public IActionResult OnGetReturnTaughtSubjectTypes(string subjectId)
-        {
-            Guid currentTeacherId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            GetSubjectsForTeacherCommand command = new GetSubjectsForTeacherCommand { UserId = currentTeacherId };
-            var allTaughtSubjects = mediator.Send(command).Result;
-            var taughtSubjects = allTaughtSubjects.Where(x => x.Subject.Id == new Guid(subjectId));
-            return new JsonResult(taughtSubjects);
-        }
-
-        public IActionResult OnGetReturnEnrolledStudents(string subjectId, string type)
-        {
-            Guid currentTeacherId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            GetEnrolledStudentsCommand command = new GetEnrolledStudentsCommand
-            {
-                UserId = currentTeacherId,
-                SubjectId = new Guid(subjectId),
-                Type = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type)
-            };
-            var students = mediator.Send(command).Result;
-            return new JsonResult(students);
-        }
-
         public async Task<IActionResult> OnPostAsync()
         {
             if (ModelState.IsValid)

@@ -37,14 +37,7 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
             return Page();
         }
 
-        public IActionResult OnGetReturnTeachersByDepartment(string department)
-        {
-            GetTeachersByDepartmentCommand command = new GetTeachersByDepartmentCommand { Department = (Department)Enum.Parse(typeof(Department), department) };
-            var teachers = mediator.Send(command).Result;
-            return new JsonResult(teachers);
-        }
-
-        public IActionResult OnGetUpdateInfoField(string teacherId, string subjectId, string type)
+        public IActionResult OnGetUpdateSubjectAssignmentInfoField(string teacherId, string subjectId, string type)
         {
             AssignedSubjectVerificationCommand command = new AssignedSubjectVerificationCommand
             {

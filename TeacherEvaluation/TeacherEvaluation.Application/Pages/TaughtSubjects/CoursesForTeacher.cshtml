@@ -5,12 +5,11 @@
     Layout = "~/Pages/Shared/_TeacherLayout.cshtml";
 }
 
+<h4 class="row align-input-center add-top-margin">Courses</h4>
+<hr />
+
+<partial name="_TaughtSubjectPartial" model="Model" />
+
 @section scripts{
     <script src="~/js/dataTable.js"></script>
 }
-
-<h4 class="row align-input-center add-top-margin">Courses</h4>
-<hr/>
-
-<partial name="_TaughtSubjectPartial" model="Model"/>
-

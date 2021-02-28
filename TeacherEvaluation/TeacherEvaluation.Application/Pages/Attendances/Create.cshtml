@@ -1,14 +1,9 @@
-﻿@page
+﻿@page "{handler?}"
 @model TeacherEvaluation.Application.Pages.Attendances.CreateModel
 
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Pages/Shared/_TeacherLayout.cshtml";
-}
-
-@section scripts{
-    <partial name="_ValidationScriptsPartial" />
-    <script src="~/js/addAttendance.js"></script>
 }
 
 <h4 class="row align-input-center add-top-margin">Add Attendance</h4>
@@ -42,7 +37,7 @@
             </div>
             <div class="col-md-5">
                 <label asp-for="DateTime" class="control-label">Date</label>
-                <input asp-for="DateTime" class="form-control" data-provide="datepicker" data-date-autoclose="true" data-date-format="yyyy-mm-dd" />
+                <input asp-for="DateTime" class="form-control" data-provide="datepicker" data-date-autoclose="true" data-date-format="mm-dd-yyyy" />
                 <span asp-validation-for="DateTime" class="text-danger"></span>
             </div>
         </div>
@@ -52,3 +47,9 @@
         </div>
     </form>
 </div>
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/taughtSubjects.js"></script>
+    <script src="~/js/enrollments.js"></script>
+}

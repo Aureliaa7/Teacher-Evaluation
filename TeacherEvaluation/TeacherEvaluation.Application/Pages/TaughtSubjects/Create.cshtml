@@ -6,10 +6,6 @@
     Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
 
-@section scripts{
-    <partial name="_ValidationScriptsPartial" />
-    <script src="~/js/assignSubjectToTeacher.js"></script>
-}
 
 <h4 class="row align-input-center add-top-margin">Assign Subject to Teacher</h4>
 <hr />
@@ -27,7 +23,7 @@
             </div>
             <div class="col-md-6">
                 <label asp-for="TeacherId" class="control-label">Teacher Name</label><br />
-                <select id="teacher-field" asp-for="TeacherId" class="form-control" onchange="get_info()">
+                <select id="teacher-field" asp-for="TeacherId" class="form-control" onchange="subject_assignment_is_possible()">
                     <option>Select teacher</option>
                 </select>
                 <span asp-validation-for="TeacherId" class="text-danger" />
@@ -36,7 +32,7 @@
         <div class="row my-row">
             <div class="col-md-6">
                 <label asp-for="SubjectId" class="control-label">Subject</label><br />
-                <select id="subject-field" asp-for="SubjectId" asp-items="@Model.Subjects" class="form-control" onchange="get_info()">
+                <select id="subject-field" asp-for="SubjectId" asp-items="@Model.Subjects" class="form-control" onchange="subject_assignment_is_possible()">
                     <option>Select subject</option>
                 </select>
                 <span asp-validation-for="SubjectId" class="text-danger" />
@@ -44,7 +40,7 @@
             <div class="col-md-6">
                 <label asp-for="Type">Subject Type</label><br />
                 <select id="type-field" asp-for="Type" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Enums.TaughtSubjectType>()"
-                        class="form-control" onchange="get_info()">
+                        class="form-control" onchange="subject_assignment_is_possible()">
                     <option selected disabled hidden>Please select</option>
                 </select>
                 <span asp-validation-for="Type" class="text-danger" />
@@ -87,4 +83,9 @@
     </form>
 </div>
 
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/subjectAssignment.js"></script>
+    <script src="~/js/teachers.js"></script>
+}
 

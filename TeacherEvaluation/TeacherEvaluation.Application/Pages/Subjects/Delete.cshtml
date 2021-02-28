@@ -23,9 +23,13 @@
             @Html.DisplayFor(model => model.NumberOfCredits)
         </dd>
     </dl>
-    
+
     <form method="post">
         <input type="hidden" asp-for="SubjectId" />
-        <input type="submit" value="Delete" class="btn btn-danger form-control" /> 
+        <input type="submit" value="Delete" class="btn btn-danger form-control" />
     </form>
+    <div>
+        <br />
+        <h5><a asp-page="./Index">Back</a></h5>
+    </div>
 </div>

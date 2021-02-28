@@ -5,12 +5,12 @@
     Layout = "~/Pages/Shared/_DeanLayout.cshtml";
 }
 
-@section scripts{
-    <partial name="_ValidationScriptsPartial" />
-}
 
 <h4 class="row align-input-center add-top-margin">Create evaluation form with text answers</h4>
 <hr />
 
 <partial name="_FormPartial" model="Model.Questions" />
 
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

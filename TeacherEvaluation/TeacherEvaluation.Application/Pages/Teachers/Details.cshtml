@@ -9,28 +9,11 @@
 <h4 class="row align-input-center add-top-margin">Teacher Details</h4>
 <hr />
 <div class="jumbotron jumbotron-details">
-    <dl class="row">
-        <dt class="col-sm-4">
-            @Html.DisplayNameFor(model => model.PIN)
-        </dt>
-        <dd class="col-sm-8">
-            @Html.DisplayFor(model => model.PIN)
-        </dd>
-        <dt class="col-sm-4">
-            @Html.DisplayNameFor(model => model.Degree)
-        </dt>
-        <dd class="col-sm-8">
-            @Html.DisplayFor(model => model.Degree)
-        </dd>
-        <dt class="col-sm-4">
-            @Html.DisplayNameFor(model => model.Department)
-        </dt>
-        <dd class="col-sm-8">
-            @Html.DisplayFor(model => model.Department)
-        </dd>
-    </dl>
+    <partial name="_TeacherDetailsPartial" model="Model" />
+
     <div>
-        <a asp-page="./Edit" asp-route-id="@Model.TeacherId">Edit</a>
+        <br />
+        <h5><a asp-page="./Index">Back</a></h5>
     </div>
 </div>
 

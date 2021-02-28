@@ -1,14 +1,10 @@
 ﻿@page
-@model TeacherEvaluation.Application.Pages.Register.TeacherModel
+@model TeacherEvaluation.Application.Pages.Teachers.CreateModel
 @{
     ViewData["Title"] = "Teacher";
     Layout = "_AdminLayout";
 }
 
-@section scripts{
-    <partial name="_ValidationScriptsPartial" />
-    <script src="~/js/passwordValidation.js"></script>
-}
 
 <h4 class="row align-input-center add-top-margin">Register Teacher</h4>
 <hr />
@@ -71,3 +67,9 @@
         </div>
     </form>
 </div>
+
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/passwordValidation.js"></script>
+}

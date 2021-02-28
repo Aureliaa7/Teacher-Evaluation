@@ -2,16 +2,17 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations;
+using TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
 
-namespace TeacherEvaluation.Application.Pages.Register
+namespace TeacherEvaluation.Application.Pages.Students
 {
     [Authorize(Roles = "Administrator")]
-    public class TeacherModel : PageModel
+    public class CreateModel : PageModel
     {
         private readonly IMediator mediator;
 
@@ -20,16 +21,6 @@ namespace TeacherEvaluation.Application.Pages.Register
         [RegularExpression(pattern: "[1-9]([0-9]{12}$)", ErrorMessage = "Invalid text")]
         [MaxLength(13)]
         public string PIN { get; set; }
-
-        [BindProperty]
-        [Required(ErrorMessage = "Degree is required")]
-        [RegularExpression(pattern: "[a-zA-Z\\s]+", ErrorMessage = "Invalid text")]
-        [MinLength(2)]
-        public string Degree { get; set; }
-
-        [BindProperty]
-        [EnumDataType(typeof(Department))]
-        public Department Department { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "First name is required")]
@@ -60,15 +51,40 @@ namespace TeacherEvaluation.Application.Pages.Register
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        [BindProperty]
+        [Required(ErrorMessage = "Study year is required")]
+        [Range(1, 4, ErrorMessage = "Study year must be between 1 and 4")]
+        public int? StudyYear { get; set; } = null;
+
+        [BindProperty]
+        [EnumDataType(typeof(StudyProgramme))]
+        [Required(ErrorMessage = "Study programme is required")]
+        public StudyProgramme StudyProgramme { get; set; }
+
+        [BindProperty]
+        [Required(ErrorMessage = "Study domain is required")]
+        public Guid StudyDomainId { get; set; }
+
+        [BindProperty]
+        [Display(Name = "Study domain")]
+        [Required(ErrorMessage = "Specialization is required")]
+        public Guid SpecializationId { get; set; }
+
+        [BindProperty]
+        [Required(ErrorMessage = "Group is required")]
+        [RegularExpression(pattern: "^[a-zA-Z1-4\\.1-4a-zA-Z]+$", ErrorMessage = "Invalid text")]
+        public string Group { get; set; }
+
         public List<string> ErrorMessages { get; set; }
 
-        public TeacherModel(IMediator mediator)
+        public CreateModel(IMediator mediator)
         {
             this.mediator = mediator;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -81,20 +97,21 @@ namespace TeacherEvaluation.Application.Pages.Register
                         values: new { id = "((userId))", token = "((token))" },
                         protocol: Request.Scheme);
 
-                TeacherRegistrationCommand command = new TeacherRegistrationCommand
+                StudentRegistrationCommand command = new StudentRegistrationCommand
                 {
                     FirstName = FirstName,
                     LastName = LastName,
-                    Department = Department,
-                    Degree = Degree,
                     Email = Email,
                     FathersInitial = FathersInitial,
                     Password = Password,
                     PIN = PIN,
+                    Group = Group,
+                    SpecializationId = SpecializationId,
+                    StudyYear = (int)StudyYear,
                     ConfirmationUrlTemplate = confirmationUrlTemplate
                 };
                 await mediator.Send(command);
-                return RedirectToPage("../Teachers/Index");
+                return RedirectToPage("../Students/Index");
             }
             return Page();
         }

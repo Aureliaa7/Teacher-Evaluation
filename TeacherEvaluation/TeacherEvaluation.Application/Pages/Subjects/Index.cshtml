@@ -6,12 +6,9 @@
     Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
 
-@section scripts{
-    <script src="~/js/dataTable.js"></script>
-}
 
 <h4 class="row align-input-center add-top-margin">Subjects</h4>
-<hr/>
+<hr />
 <div class="add-margin-bottom">
     <table id="subjects-index" class="table table-dark table-striped table-bordered set-max-width">
         <thead>
@@ -44,3 +41,7 @@
         </tbody>
     </table>
 </div>
+
+@section scripts{
+    <script src="~/js/dataTable.js"></script>
+}

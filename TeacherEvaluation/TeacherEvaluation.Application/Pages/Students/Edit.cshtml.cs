@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities;
-using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.Students
 {
@@ -49,17 +46,6 @@ namespace TeacherEvaluation.Application.Pages.Students
                 return RedirectToPage("../Errors/404");
             }
             return Page();
-        }
-
-        public IActionResult OnGetReturnStudyProgrammes()
-        {
-            var studyProgrammes = new SelectList(Enum.GetValues(typeof(StudyProgramme)).OfType<Enum>()
-                                                                                       .Select(x => new SelectListItem
-                                                                                       {
-                                                                                           Text = Enum.GetName(typeof(StudyProgramme), x),
-                                                                                           Value = (Convert.ToInt32(x)).ToString()
-                                                                                       }), "Value", "Text");
-            return new JsonResult(studyProgrammes);
         }
 
         public async Task<IActionResult> OnPostAsync()

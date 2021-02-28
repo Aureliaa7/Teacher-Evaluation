@@ -6,10 +6,6 @@
     Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
 
-@section scripts{
-    <partial name="_ValidationScriptsPartial" />
-    <script src="~/js/dataTable.js"></script>
-}
 
 <h4 class="row align-input-center add-top-margin">View Teachers by Department</h4>
 <hr />
@@ -81,4 +77,9 @@
     </div>
     <br />
     <br />
+}
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/dataTable.js"></script>
 }

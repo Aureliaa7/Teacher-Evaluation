@@ -6,11 +6,12 @@
     Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
 
+
+<h4 class="row align-input-center add-top-margin">Students</h4>
+<hr />
+
+<partial name="_StudentsPartial" model="Model" />
+
 @section scripts{
     <script src="~/js/dataTable.js"></script>
 }
-
-<h4 class="row align-input-center add-top-margin">Students</h4>
-<hr/>
-
-<partial name="_StudentsPartial" model="Model" />

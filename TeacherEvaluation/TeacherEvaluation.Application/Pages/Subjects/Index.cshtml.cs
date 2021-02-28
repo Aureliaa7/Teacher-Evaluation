@@ -1,10 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations;
+using TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Commands.Subjects.CrudOperations;
+using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities;
+using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.Subjects
 {
@@ -25,6 +31,26 @@ namespace TeacherEvaluation.Application.Pages.Subjects
         {
             GetAllSubjectsCommand command = new GetAllSubjectsCommand();
             Subjects = await mediator.Send(command);
+        }
+
+        public IActionResult OnGetReturnSubjectsByStudent(string studentId)
+        {
+            GetUserIdForStudentCommand getUserIdCommand = new GetUserIdForStudentCommand { StudentId = new Guid(studentId) };
+            try
+            {
+                Guid userIdStudent = mediator.Send(getUserIdCommand).Result;
+                GetSubjectsForEnrollmentsCommand getSubjectsCommand = new GetSubjectsForEnrollmentsCommand
+                {
+                    UserId = userIdStudent,
+                    EnrollmentState = EnrollmentState.InProgress
+                };
+                var subjects = mediator.Send(getSubjectsCommand).Result;
+                return new JsonResult(subjects);
+            }
+            catch (ItemNotFoundException e)
+            {
+                return new JsonResult(e.Message);
+            }
         }
     }
 }

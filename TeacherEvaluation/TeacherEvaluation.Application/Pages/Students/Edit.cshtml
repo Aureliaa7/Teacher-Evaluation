@@ -7,10 +7,6 @@
     Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
 
-@section scripts{
-    <partial name="_ValidationScriptsPartial" />
-    <script src="~/js/registerOrEditStudent.js"></script>
-}
 
 <h4 class="row align-input-center add-top-margin">Edit Student Details</h4>
 <hr />
@@ -87,11 +83,21 @@
                 <span asp-validation-for="Group"></span>
             </div>
             <div class="col-md-4">
-                <br/>
+                <br />
                 <input type="submit" value="Save" class="btn btn-dark form-control" />
             </div>
         </div>
     </form>
+    <div>
+        <br />
+        <h5><a asp-page="./Index">Back</a></h5>
+    </div>
 </div>
 
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/studyDomains.js"></script>
+    <script src="~/js/specializations.js"></script>
+    <script src="~/js/studyProgrammes.js"></script>
+}
 

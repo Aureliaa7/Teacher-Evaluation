@@ -7,9 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations;
-using TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
 
@@ -72,42 +70,6 @@ namespace TeacherEvaluation.Application.Pages.Grades
         public IActionResult OnGetAsync()
         {
             return Page();
-        }
-
-        public IActionResult OnGetReturnSubjects(string studentId)
-        {
-            GetUserIdForStudentCommand getUserIdCommand = new GetUserIdForStudentCommand { StudentId = new Guid(studentId) };
-            try
-            {
-                Guid userIdStudent = mediator.Send(getUserIdCommand).Result;
-                GetSubjectsForEnrollmentsCommand getSubjectsCommand = new GetSubjectsForEnrollmentsCommand
-                {
-                    UserId = userIdStudent,
-                    EnrollmentState = EnrollmentState.InProgress
-                };
-                var subjects = mediator.Send(getSubjectsCommand).Result;
-                return new JsonResult(subjects);
-            }
-            catch (ItemNotFoundException e)
-            {
-                return new JsonResult(e.Message);
-            }
-        }
-
-        public IActionResult OnGetCheckEnrollment(string studentId, string subjectId, string type)
-        {
-            EnrollmentExistsCommand command = new EnrollmentExistsCommand
-            {
-                StudentId = new Guid(studentId),
-                SubjectId = new Guid(subjectId),
-                Type = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type)
-            };
-            bool enrollmentExists = mediator.Send(command).Result;
-            if (enrollmentExists)
-            {
-                return new JsonResult("The enrollment exists");
-            }
-            return new JsonResult("The enrollment does not exist");
         }
 
         public async Task<IActionResult> OnPostAsync()

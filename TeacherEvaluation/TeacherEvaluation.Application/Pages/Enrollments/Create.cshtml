@@ -6,12 +6,6 @@
     Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
 
-@section scripts{
-    <partial name="_ValidationScriptsPartial" />
-    <script src="~/js/enrollStudent.js"></script>
-    <script src="~/js/registerOrEditStudent.js"></script>
-}
-
 <h4 class="row align-input-center add-top-margin">Enroll Student</h4>
 <hr />
 <div class="jumbotron enrollment-jumbotron">
@@ -58,7 +52,8 @@
             </div>
             <div class="col-md-4">
                 <label asp-for="SubjectId" class="control-label">Subject</label><br />
-                <select id="subject-id-field" asp-for="SubjectId" asp-items="@Model.Subjects" class="form-control" oninput="get_teachers()">
+                <select id="subject-id-field" asp-for="SubjectId" asp-items="@Model.Subjects" class="form-control" oninput="get_teachers_by_subject_and_type()"
+                        onhange="update_enrollment_info()">
                     <option>Select subject</option>
                 </select>
                 <span asp-validation-for="SubjectId" class="text-danger" />
@@ -69,14 +64,15 @@
             <div class="col-md-4">
                 <label asp-for="Type">Taught Subject Type</label><br />
                 <select id="type-id-field" asp-for="Type" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Enums.TaughtSubjectType>()"
-                        class="form-control" onclick="get_teachers()">
+                        class="form-control" onclick="get_teachers_by_subject_and_type()">
                     <option selected disabled hidden>Please select</option>
                 </select>
                 <span asp-validation-for="Type" class="text-danger" />
             </div>
             <div class="col-md-4">
                 <label asp-for="TeacherId" class="control-label">Teacher Name</label><br />
-                <select id="teacher-id-field" asp-for="TeacherId" class="form-control" onclick="check_enrollment_availability()"  onchange="update_data()">
+                <select id="teacher-id-field" asp-for="TeacherId" class="form-control" onclick="check_enrollment_existence_by_student_subject_teacher_type()"
+                        onchange="update_enrollment_info()">
                 </select>
                 <span asp-validation-for="TeacherId" class="text-danger" />
             </div>
@@ -94,6 +90,13 @@
     </form>
 </div>
 
-
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/enrollments.js"></script>
+    <script src="~/js/studyDomains.js"></script>
+    <script src="~/js/specializations.js"></script>
+    <script src="~/js/students.js"></script>
+    <script src="~/js/teachers.js"></script>
+}
 
 

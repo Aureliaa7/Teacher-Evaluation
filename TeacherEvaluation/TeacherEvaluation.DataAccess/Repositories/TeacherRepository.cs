@@ -33,15 +33,12 @@ namespace TeacherEvaluation.DataAccess.Repositories
               .FirstAsync();
         }
 
-        //TODO la fel ca la student
         public async Task Delete(Guid id)
         {
             var teacherToBeDeleted = await GetTeacher(id);
             var userToBeDeleted = teacherToBeDeleted.User;
             Context.Set<Teacher>().Remove(teacherToBeDeleted);
             Context.Set<ApplicationUser>().Remove(userToBeDeleted);
-
-            //await Context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Teacher>> GetAllWithRelatedEntities()

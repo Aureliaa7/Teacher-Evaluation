@@ -6,9 +6,6 @@
     Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
 
-@section scripts{
-    <partial name="_ValidationScriptsPartial" />
-}
 
 <h4 class="row align-input-center add-top-margin">Edit Subject</h4>
 <hr />
@@ -36,6 +33,12 @@
             </div>
         </div>
     </form>
+    <div>
+        <br />
+        <h5><a asp-page="./Index">Back</a></h5>
+    </div>
 </div>
 
-
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

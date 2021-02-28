@@ -6,13 +6,6 @@
     Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
 
-@section scripts{
-    <partial name="_ValidationScriptsPartial" />
-    <script src="~/js/addGrade.js"></script>
-    <script src="~/js/registerOrEditStudent.js"></script>
-    <script src="~/js/enrollStudent.js"></script>
-}
-
 <h4 class="row align-input-center add-top-margin">Add Grade</h4>
 <hr />
 <div class="jumbotron grade-jumbotron">
@@ -52,7 +45,7 @@
             </div>
             <div class="col-md-4">
                 <label asp-for="StudentId" class="control-label">Student Name</label><br />
-                <select id="student" asp-for="StudentId" class="form-control" onclick="get_subjects()">
+                <select id="student" asp-for="StudentId" class="form-control" onclick="get_subjects_by_student()">
                     <option>Select student</option>
                 </select>
                 <span asp-validation-for="StudentId" class="text-danger" />
@@ -70,7 +63,7 @@
             <div class="col-md-4">
                 <label asp-for="Type">Taught Subject Type</label><br />
                 <select id="type" asp-for="Type" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Enums.TaughtSubjectType>()"
-                        class="form-control" onclick="enrollment_exists()">
+                        class="form-control" onclick="check_enrollment_existence_by_subject_and_student()">
                     <option selected disabled hidden>Please select</option>
                 </select>
                 <span asp-validation-for="Type" class="text-danger" />
@@ -89,11 +82,18 @@
 
         <div class="row my-row">
             <div class="col-md-4">
-                <br/>
+                <br />
                 <input id="grade-button" type="submit" value="Save" class="btn btn-dark form-control" />
             </div>
         </div>
     </form>
 </div>
 
-
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/studyDomains.js"></script>
+    <script src="~/js/specializations.js"></script>
+    <script src="~/js/enrollments.js"></script>
+    <script src="~/js/subjects.js"></script>
+    <script src="~/js/students.js"></script>
+}

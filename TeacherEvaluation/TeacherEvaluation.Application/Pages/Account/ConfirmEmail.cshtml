@@ -5,13 +5,6 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-@section scripts{
-    <script src="~/js/redirectCountdown.js"></script>
-    <script>
-        countdownTimer();
-    </script>
-}
-
 <div class="email-confirmation">
     <h2>@ViewData["Title"]</h2>
     <div class="p-110">
@@ -33,4 +26,9 @@
     }
 </div>
 
-
+@section scripts{
+    <script src="~/js/redirectCountdown.js"></script>
+    <script>
+        countdownTimer();
+    </script>
+}

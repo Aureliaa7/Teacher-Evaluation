@@ -5,12 +5,6 @@
     Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
 
-@section scripts{
-    <partial name="_ValidationScriptsPartial" />
-    <script src="~/js/dataTable.js"></script>
-    <script src="~/js/registerOrEditStudent.js"></script>
-}
-
 <h4 class="row align-input-center add-top-margin">Search Students by Criteria</h4>
 <hr />
 
@@ -63,4 +57,12 @@
     <partial name="_StudentsPartial" model="Model" />
     <br />
     <br />
+}
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/dataTable.js"></script>
+    <script src="~/js/studyDomains.js"></script>
+    <script src="~/js/specializations.js"></script>
+    <script src="~/js/students.js"></script>
 }

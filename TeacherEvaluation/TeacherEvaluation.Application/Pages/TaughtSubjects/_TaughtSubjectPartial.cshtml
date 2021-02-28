@@ -1,10 +1,10 @@
 ﻿@model TeacherEvaluation.Application.Pages.TaughtSubjects.TaughtSubjectBaseModel
 
 <div class="add-margin-bottom">
- 
-    <table id="taught-subjects-index" class="table table-dark table-striped table-bordered set-max-width">
-        @if (Model.TaughtSubjects.Any())
-        {
+
+    @if (Model.TaughtSubjects.Any())
+    {
+        <table id="taught-subjects-index" class="table table-dark table-striped table-bordered set-max-width">
             <thead>
                 <tr>
                     <th>
@@ -71,6 +71,10 @@
                     </tr>
                 }
             </tbody>
-        }
-    </table>
-</div>
+        </table>
+    }
+    else
+    {
+        <h5 class="align-text-center">No data is available</h5>
+    }
+    </div>
