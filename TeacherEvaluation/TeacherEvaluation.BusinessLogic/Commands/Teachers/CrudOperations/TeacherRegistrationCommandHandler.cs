@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using TeacherEvaluation.BusinessLogic.PasswordGenerator;
 using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.Identity;
@@ -27,6 +28,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
         public async Task<List<string>> Handle(TeacherRegistrationCommand request, CancellationToken cancellationToken)
         {
             List<string> errorMessages = new List<string>();
+            string randomPassword = RandomPasswordGenerator.GeneratePassword(10);
+
             ApplicationUser newApplicationUser = new ApplicationUser
             {
                 FirstName = request.FirstName,
@@ -37,7 +40,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
                 PIN = request.PIN
             };
 
-            var result = await userManager.CreateAsync(newApplicationUser, request.Password);
+            var result = await userManager.CreateAsync(newApplicationUser, randomPassword);
 
             if (result.Succeeded)
             {
@@ -58,7 +61,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
                 await unitOfWork.TeacherRepository.Add(teacher);
                 await unitOfWork.SaveChangesAsync();
 
-                Notification notification = EmailSending.ConfigureAccountCreationMessage(confirmationUrl, newApplicationUser, request.Password);
+                Notification notification = EmailSending.ConfigureAccountCreationMessage(confirmationUrl, newApplicationUser, randomPassword);
                 emailService.Send(notification);
 
                 errorMessages = null;

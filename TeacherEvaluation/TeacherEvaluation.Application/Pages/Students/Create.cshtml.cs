@@ -46,12 +46,6 @@ namespace TeacherEvaluation.Application.Pages.Students
         public string Email { get; set; }
 
         [BindProperty]
-        [Required(ErrorMessage = "Password is required")]
-        [RegularExpression(pattern: "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", ErrorMessage = "Invalid password")]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
-        [BindProperty]
         [Required(ErrorMessage = "Study year is required")]
         [Range(1, 4, ErrorMessage = "Study year must be between 1 and 4")]
         public int? StudyYear { get; set; } = null;
@@ -103,7 +97,6 @@ namespace TeacherEvaluation.Application.Pages.Students
                     LastName = LastName,
                     Email = Email,
                     FathersInitial = FathersInitial,
-                    Password = Password,
                     PIN = PIN,
                     Group = Group,
                     SpecializationId = SpecializationId,
