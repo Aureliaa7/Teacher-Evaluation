@@ -12,7 +12,7 @@ namespace TeacherEvaluation.BusinessLogic.PasswordGenerator
             string charSet = "abcdefghijklmnopqursuvwxyz" +
                              "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
                              "123456789" +
-                              @"!@£$%^&*()#€";
+                              @"!@$%^&*()#";
 
             for (int contor = 0; contor < passwordSize; contor++)
             {

@@ -19,6 +19,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWith
         public async Task<bool> Handle(FormCanBeSubmittedCommand request, CancellationToken cancellationToken)
         {
             bool userExists = await unitOfWork.UserRepository.Exists(x => x.Id == request.UserIdForStudent);
+            bool formCanBeSubmitted = false;
+
             if (userExists)
             {
                 bool subjectExists = await unitOfWork.SubjectRepository.Exists(x => x.Id == request.SubjectId);
@@ -42,10 +44,10 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWith
                         bool minNumberOfAttendances = (attendances.Count() >= form.MinNumberOfAttendances) ? true : false;
                         if (!formSubmittedForEnrollment && minNumberOfAttendances)
                         {
-                            return true;
+                            formCanBeSubmitted = true;
                         }
                     }
-                    return false;
+                    return formCanBeSubmitted;
                 }
             }
             throw new ItemNotFoundException("The item was not found...");

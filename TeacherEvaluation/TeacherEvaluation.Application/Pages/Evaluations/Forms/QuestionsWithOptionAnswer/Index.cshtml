@@ -22,9 +22,6 @@
                     End Date
                 </th>
                 <th>
-                    Semester 
-                </th>
-                <th>
                     Number of attendances
                 </th>
                 <th></th>
@@ -41,13 +38,10 @@
                         @item.EndDate
                     </td>
                     <td>
-                       Va urma
-                    </td>
-                    <td>
                         @item.MinNumberOfAttendances
                     </td>
                     <td>
-                        <a asp-page="./Details" asp-route-id="@item.Id">View Questions</a>|
+                        @*<a asp-page="./Details" asp-route-id="@item.Id">View Questions</a>|*@
                         <a asp-page="/Evaluations/Forms/Edit" asp-route-id="@item.Id">Edit</a>
                     </td>
                 </tr>

@@ -30,7 +30,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
         public async Task<List<string>> Handle(StudentRegistrationCommand request, CancellationToken cancellationToken)
         {
             List<string> errorMessages = new List<string>();
-            string randomPassword = RandomPasswordGenerator.GeneratePassword(10);
+            string randomPassword = RandomPasswordGenerator.GeneratePassword(15);
 
             ApplicationUser newApplicationUser = new ApplicationUser
             {

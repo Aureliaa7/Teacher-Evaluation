@@ -4,3 +4,44 @@
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_DeanLayout.cshtml";
 }
+
+
+<h4 class="row align-input-center add-top-margin">Forms with answer option</h4>
+<div class="add-margin-bottom">
+    <table id="forms-index" class="table table-dark table-striped table-bordered set-max-width">
+        <thead>
+            <tr>
+                <th>
+                    Start Date
+                </th>
+                <th>
+                    End Date
+                </th>
+                <th>
+                    Number of attendances
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Forms)
+            {
+                <tr>
+                    <td>
+                        @item.StartDate
+                    </td>
+                    <td>
+                        @item.EndDate
+                    </td>
+                    <td>
+                        @item.MinNumberOfAttendances
+                    </td>
+                    <td>
+                        @*<a asp-page="./Details" asp-route-id="@item.Id">View Questions</a>|*@
+                        <a asp-page="/Evaluations/Forms/Edit" asp-route-id="@item.Id">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
