@@ -33,9 +33,6 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
                 TeacherName = taughtSubject.Teacher.User.FirstName + " " + taughtSubject.Teacher.User.LastName;
                 SubjectTitle = taughtSubject.Subject.Name;
                 Type = taughtSubject.Type;
-                Year = taughtSubject.StudyYear;
-                Semester = taughtSubject.Semester;
-                StudyProgramme = taughtSubject.StudyProgramme;
             }
             catch (ItemNotFoundException)
             {

@@ -18,7 +18,7 @@ namespace TeacherEvaluation.DataAccess.UnitOfWork
         private ITeacherRepository teacherRepository;
         private ITaughtSubjectRepository taughtSubjectRepository;
         private IRepository<ApplicationUser> userRepository;
-        private IRepository<Subject> subjectRepository;
+        private ISubjectRepository subjectRepository;
         private IStudyDomainRepository studyDomainRepository;
         private IRepository<Grade> gradeRepository;
         private IAnswerToQuestionWithOptionRepository answerToQuestionWithOptionRepository;
@@ -123,13 +123,13 @@ namespace TeacherEvaluation.DataAccess.UnitOfWork
             }
         }
 
-        public IRepository<Subject> SubjectRepository
+        public ISubjectRepository SubjectRepository
         {
             get
             {
                 if (subjectRepository == null)
                 {
-                    subjectRepository = new Repository<Subject>(dbContext);
+                    subjectRepository = new SubjectRepository(dbContext);
                 }
                 return subjectRepository;
             }

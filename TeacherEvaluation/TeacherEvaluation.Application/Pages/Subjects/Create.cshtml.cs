@@ -20,17 +20,24 @@ namespace TeacherEvaluation.Application.Pages.Subjects
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ModelState.IsValid)
+            if (ModelIsValid())
             {
                 AddSubjectCommand command = new AddSubjectCommand
                 {
                     Name = SubjectName,
-                    NumberOfCredits = (int)NumberOfCredits
+                    NumberOfCredits = (int)NumberOfCredits,
+                    StudyYear = (int) StudyYear,
+                    SpecializationId = SpecializationId
                 };
                 await mediator.Send(command);
                 return RedirectToPage("../Subjects/Index");
             }
             return Page();
+        }
+
+        private bool ModelIsValid()
+        {
+            return (SubjectName != null && NumberOfCredits != null && StudyYear != null && SpecializationId != null);
         }
     }
 }

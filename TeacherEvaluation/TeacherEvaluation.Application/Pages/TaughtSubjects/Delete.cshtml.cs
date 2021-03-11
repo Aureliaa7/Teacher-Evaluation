@@ -33,9 +33,6 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
                 TeacherName = taughtSubjectToBeDeleted.Teacher.User.FirstName + " " + taughtSubjectToBeDeleted.Teacher.User.LastName;
                 SubjectTitle = taughtSubjectToBeDeleted.Subject.Name;
                 Type = taughtSubjectToBeDeleted.Type;
-                Year = taughtSubjectToBeDeleted.StudyYear;
-                Semester = taughtSubjectToBeDeleted.Semester;
-                StudyProgramme = taughtSubjectToBeDeleted.StudyProgramme;
             }
             catch (ItemNotFoundException)
             {

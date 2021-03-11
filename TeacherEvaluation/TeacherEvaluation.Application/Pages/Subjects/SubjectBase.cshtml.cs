@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.ComponentModel.DataAnnotations;
+using TeacherEvaluation.Domain.DomainEntities;
+using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.Subjects
 {
@@ -26,5 +28,27 @@ namespace TeacherEvaluation.Application.Pages.Subjects
         [Required(ErrorMessage = "Number of credits is required")]
         [Range(1, 5, ErrorMessage = "Number of credits must be between 1 and 5")]
         public int? NumberOfCredits { get; set; }
+
+        [BindProperty]
+        [Display(Name = "Study year")]
+        [Required(ErrorMessage = "Study year is required")]
+        [Range(1, 5, ErrorMessage = "Study year must be between 1 and 4")]
+        public int? StudyYear { get; set; }
+
+        [BindProperty]
+        [EnumDataType(typeof(StudyProgramme))]
+        [Required(ErrorMessage = "Study programme is required")]
+        public StudyProgramme StudyProgramme { get; set; }
+
+        [BindProperty]
+        [Required(ErrorMessage = "Study domain is required")]
+        public Guid StudyDomainId { get; set; }
+
+        [BindProperty]
+        [Display(Name = "Study domain")]
+        [Required(ErrorMessage = "Specialization is required")]
+        public Guid SpecializationId { get; set; }
+
+        public Specialization Specialization { get; set; }
     }
 }

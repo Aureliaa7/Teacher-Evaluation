@@ -19,24 +19,48 @@
                 <th>
                     Number Of Credits
                 </th>
+                <th>
+                    Study Year
+                </th>
+                <th>
+                    Study Programme
+                </th>
+                <th>
+                    Study Domain
+                </th>
+                <th>
+                    Specialization
+                </th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model.Subjects)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NumberOfCredits)
-                    </td>
-                    <td>
-                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfCredits)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StudyYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Specialization.StudyDomain.StudyProgramme)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Specialization.StudyDomain.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Specialization.Name)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>

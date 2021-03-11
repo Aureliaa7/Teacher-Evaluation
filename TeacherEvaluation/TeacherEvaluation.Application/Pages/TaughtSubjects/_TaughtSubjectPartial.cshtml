@@ -16,15 +16,6 @@
                     <th>
                         Teacher
                     </th>
-                    <th>
-                        Study Programme
-                    </th>
-                    <th>
-                        Study Year
-                    </th>
-                    <th>
-                        Semester
-                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -40,15 +31,6 @@
                         @Html.DisplayFor(modelItem => item.Subject.NumberOfCredits)
                     </td>
                     <td>@teacherName</td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StudyProgramme)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StudyYear)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Semester)
-                    </td>
                     @if (Model.CurrentRole.IsTeacher)
                     {
                         <td>

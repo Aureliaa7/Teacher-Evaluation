@@ -21,11 +21,22 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Subjects.CrudOperations
             bool subjectExists = await unitOfWork.SubjectRepository.Exists(x => x.Id == request.Id);
             if (subjectExists)
             {
-                Subject subjectToBeUpdated = await unitOfWork.SubjectRepository.Get(request.Id);
-                subjectToBeUpdated.Name = request.Name;
-                subjectToBeUpdated.NumberOfCredits = request.NumberOfCredits;
-                unitOfWork.SubjectRepository.Update(subjectToBeUpdated);
-                await unitOfWork.SaveChangesAsync();
+                bool specializationExists = await unitOfWork.SpecializationRepository.Exists(x => x.Id == request.SpecializationId);
+                if (specializationExists)
+                {
+                    var specialization = await unitOfWork.SpecializationRepository.GetSpecialization(request.SpecializationId);
+                    Subject subjectToBeUpdated = await unitOfWork.SubjectRepository.Get(request.Id);
+                    subjectToBeUpdated.Name = request.Name;
+                    subjectToBeUpdated.NumberOfCredits = request.NumberOfCredits;
+                    subjectToBeUpdated.StudyYear = request.StudyYear;
+                    subjectToBeUpdated.Specialization = specialization;
+                    unitOfWork.SubjectRepository.Update(subjectToBeUpdated);
+                    await unitOfWork.SaveChangesAsync();
+                }
+                else
+                {
+                    throw new ItemNotFoundException("The specialization was not found...");
+                }
             }
             else
             {

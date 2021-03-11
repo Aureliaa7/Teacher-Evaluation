@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TeacherEvaluation.DataAccess.Data;
 
 namespace TeacherEvaluation.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210311151414_ModifiedSubjectsAndTaughtSubjectsTables")]
+    partial class ModifiedSubjectsAndTaughtSubjectsTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -343,12 +345,20 @@ namespace TeacherEvaluation.DataAccess.Migrations
                     b.Property<Guid?>("SpecializationId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("StudyDomainId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("StudyProgramme")
+                        .HasColumnType("int");
+
                     b.Property<int>("StudyYear")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("SpecializationId");
+
+                    b.HasIndex("StudyDomainId");
 
                     b.ToTable("Subjects");
                 });
@@ -623,6 +633,10 @@ namespace TeacherEvaluation.DataAccess.Migrations
                     b.HasOne("TeacherEvaluation.Domain.DomainEntities.Specialization", "Specialization")
                         .WithMany()
                         .HasForeignKey("SpecializationId");
+
+                    b.HasOne("TeacherEvaluation.Domain.DomainEntities.StudyDomain", "StudyDomain")
+                        .WithMany()
+                        .HasForeignKey("StudyDomainId");
                 });
 
             modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.TaughtSubject", b =>

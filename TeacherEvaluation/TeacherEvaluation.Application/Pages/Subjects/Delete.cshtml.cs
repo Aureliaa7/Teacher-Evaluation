@@ -35,6 +35,8 @@ namespace TeacherEvaluation.Application.Pages.Subjects
                 Subject subjectToBeDeleted = await mediator.Send(command);
                 SubjectName = subjectToBeDeleted.Name;
                 NumberOfCredits = subjectToBeDeleted.NumberOfCredits;
+                StudyYear = subjectToBeDeleted.StudyYear;
+                Specialization = subjectToBeDeleted.Specialization;
             }catch(ItemNotFoundException)
             {
                 return RedirectToPage("../Errors/404");

@@ -15,7 +15,7 @@ namespace TeacherEvaluation.DataAccess.UnitOfWork
         ITeacherRepository TeacherRepository { get; }
         ITaughtSubjectRepository TaughtSubjectRepository { get; }
         IRepository<ApplicationUser> UserRepository { get; }
-        IRepository<Subject> SubjectRepository { get; }
+        ISubjectRepository SubjectRepository { get; }
         IStudyDomainRepository StudyDomainRepository { get; }
         IRepository<Grade> GradeRepository { get; }
         IAnswerToQuestionWithOptionRepository AnswerToQuestionWithOptionRepository { get; }

@@ -7,5 +7,7 @@ namespace TeacherEvaluation.Domain.DomainEntities
         public Guid Id { get; set; }
         public string Name { get; set; }
         public int NumberOfCredits { get; set; }
+        public int StudyYear { get; set; }
+        public Specialization Specialization { get; set; }
     }
 }
