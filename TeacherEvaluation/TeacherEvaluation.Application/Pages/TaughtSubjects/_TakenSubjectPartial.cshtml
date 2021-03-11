@@ -1,0 +1,65 @@
+﻿@model TeacherEvaluation.Application.Pages.TaughtSubjects.TakenSubjectModel
+
+<div class="add-margin-bottom">
+
+    @if (Model.TakenSubjects.Any())
+    {
+        <table id="taught-subjects-index" class="table table-dark table-striped table-bordered set-max-width">
+            <thead>
+                <tr>
+                    <th>
+                        Subject Title
+                    </th>
+                    <th>
+                        Number of Credits
+                    </th>
+                    <th>
+                        Teacher
+                    </th>
+                    <th>
+                        Study Programme
+                    </th>
+                    <th>
+                        Study Year
+                    </th>
+                    <th>
+                        Semester
+                    </th>
+                    <th>Number of Attendances</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.TakenSubjects)
+                {
+                    var teacherName = item.TaughtSubject.Teacher.User.LastName + " " + item.TaughtSubject.Teacher.User.FathersInitial +
+                        " " + item.TaughtSubject.Teacher.User.FirstName;
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TaughtSubject.Subject.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TaughtSubject.Subject.NumberOfCredits)
+                        </td>
+                        <td>@teacherName</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TaughtSubject.StudyProgramme)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TaughtSubject.StudyYear)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TaughtSubject.Semester)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumberOfAttendances)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h5 class="align-text-center">No data is available</h5>
+    }
+</div>

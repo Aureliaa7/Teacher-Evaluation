@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
 
-namespace TeacherEvaluation.BusinessLogic.Commands.Attendances.CrudOperations
+namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
 {
     public class GetEnrolledStudentsCommand : IRequest<IEnumerable<Student>>
     {

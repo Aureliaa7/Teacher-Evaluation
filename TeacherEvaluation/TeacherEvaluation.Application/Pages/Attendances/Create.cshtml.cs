@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TeacherEvaluation.BusinessLogic.Commands.Attendances.CrudOperations;
+using TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
@@ -37,9 +38,9 @@ namespace TeacherEvaluation.Application.Pages.Attendances
         public TaughtSubjectType Type { get; set; }
 
         [BindProperty]
-        [Required(ErrorMessage = "Date is required")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
-        public DateTime DateTime { get; set; }
+        [Required(ErrorMessage = "Number of attendances is required")]
+        [Range(1, 14, ErrorMessage = "The number must be between 1 and 14")]
+        public int? NumberOfAttendances { get; set; } = null;
 
         public CreateModel(IMediator mediator)
         {
@@ -56,7 +57,6 @@ namespace TeacherEvaluation.Application.Pages.Attendances
             {
                 subjects.Add(taughtSubjects.OrderBy(x => x.Subject.Name).First().Subject);
 
-
                 Subjects = subjects.Select(x =>
                                                 new SelectListItem
                                                 {
@@ -71,10 +71,10 @@ namespace TeacherEvaluation.Application.Pages.Attendances
         {
             if (ModelState.IsValid)
             {
-                AddAttendanceCommand command = new AddAttendanceCommand
+                UpdateNoAttendancesCommand command = new UpdateNoAttendancesCommand
                 {
                     Type = Type,
-                    DateTime = DateTime,
+                    NumberOfAttendances = (int)NumberOfAttendances,
                     StudentId = StudentId,
                     SubjectId = SubjectId,
                     UserId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier))

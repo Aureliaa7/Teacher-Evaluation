@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using TeacherEvaluation.BusinessLogic.Commands.Attendances.CrudOperations;
+using TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations;
 using TeacherEvaluation.Domain.DomainEntities.Enums;

@@ -6,7 +6,7 @@
     Layout = "~/Pages/Shared/_TeacherLayout.cshtml";
 }
 
-<h4 class="row align-input-center add-top-margin">Add Attendance</h4>
+<h4 class="row align-input-center add-top-margin">Add Attendances</h4>
 <hr />
 <div class="jumbotron attendance-jumbotron">
     <form method="post">
@@ -36,9 +36,9 @@
                 <span asp-validation-for="StudentId" class="text-danger" />
             </div>
             <div class="col-md-5">
-                <label asp-for="DateTime" class="control-label">Date</label>
-                <input asp-for="DateTime" class="form-control" data-provide="datepicker" data-date-autoclose="true" data-date-format="mm-dd-yyyy" />
-                <span asp-validation-for="DateTime" class="text-danger"></span>
+                <label asp-for="NumberOfAttendances" class="control-label">Number of Attendances</label>
+                <input asp-for="NumberOfAttendances" class="form-control" />
+                <span asp-validation-for="NumberOfAttendances" class="text-danger"></span>
             </div>
         </div>
         <div class="row my-row">

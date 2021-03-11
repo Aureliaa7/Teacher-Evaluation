@@ -7,7 +7,6 @@ namespace TeacherEvaluation.DataAccess.UnitOfWork
 {
     public interface IUnitOfWork
     {
-        IAttendanceRepository AttendanceRepository { get; }
         IEnrollmentRepository EnrollmentRepository { get; }
         IFormRepository FormRepository { get; }
         IQuestionRepository QuestionRepository { get; }

@@ -7,7 +7,7 @@ using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
 
-namespace TeacherEvaluation.BusinessLogic.Commands.Attendances.CrudOperations
+namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
 {
     public class GetSubjectsForTeacherCommandHandler : IRequestHandler<GetSubjectsForTeacherCommand, IEnumerable<TaughtSubject>>
     {

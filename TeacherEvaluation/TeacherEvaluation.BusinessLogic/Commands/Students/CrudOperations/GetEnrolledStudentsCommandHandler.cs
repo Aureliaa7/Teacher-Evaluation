@@ -7,7 +7,7 @@ using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
 
-namespace TeacherEvaluation.BusinessLogic.Commands.Attendances.CrudOperations
+namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
 {
     public class GetEnrolledStudentsCommandHandler : IRequestHandler<GetEnrolledStudentsCommand, IEnumerable<Student>>
     {
@@ -32,13 +32,15 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Attendances.CrudOperations
                                                                                      x.Teacher.Id == teacher.Id && 
                                                                                      x.Type == request.Type);
 
-                var taughtSubject = (await unitOfWork.TaughtSubjectRepository.GetAllWithRelatedEntities())
-                                    .Where(x => x.Subject.Id == request.SubjectId && x.Teacher.Id == teacher.Id && x.Type == request.Type)
-                                    .First();
-                
                 if(taughtSubjectExists)
                 {
-                    var enrollments = await unitOfWork.EnrollmentRepository.GetEnrollmentsForTaughtSubject(taughtSubject.Id);
+                    var taughtSubject = (await unitOfWork.TaughtSubjectRepository.GetAllWithRelatedEntities())
+                                    .Where(x => x.Subject.Id == request.SubjectId && x.Teacher.Id == teacher.Id && x.Type == request.Type)
+                                    .First();
+
+                    var enrollments = (await unitOfWork.EnrollmentRepository.GetEnrollmentsForTaughtSubject(taughtSubject.Id))
+                                      .Where(x => x.State == Domain.DomainEntities.Enums.EnrollmentState.InProgress &&
+                                       x.NumberOfAttendances == 0);
                     return enrollments.Select(x => x.Student).ToList();
                 }
                 else

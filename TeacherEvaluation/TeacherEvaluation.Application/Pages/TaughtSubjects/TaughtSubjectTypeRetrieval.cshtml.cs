@@ -4,7 +4,7 @@ using System.Security.Claims;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using TeacherEvaluation.BusinessLogic.Commands.Attendances.CrudOperations;
+using TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations;
 
 namespace TeacherEvaluation.Application.Pages.TaughtSubjects
 {

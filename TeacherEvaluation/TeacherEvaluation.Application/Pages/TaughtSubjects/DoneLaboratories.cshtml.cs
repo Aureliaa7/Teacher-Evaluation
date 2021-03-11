@@ -6,13 +6,12 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
-using TeacherEvaluation.BusinessLogic.ViewModels;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.TaughtSubjects
 {
     [Authorize(Roles = "Student")]
-    public class DoneLaboratoriesModel : TaughtSubjectBaseModel
+    public class DoneLaboratoriesModel : TakenSubjectModel
     {
         public DoneLaboratoriesModel(IMediator mediator) : base(mediator)
         {
@@ -25,8 +24,7 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
                 UserId = currentUserId, EnrollmentState = EnrollmentState.Done };
             try
             {
-                TaughtSubjects = await mediator.Send(command);
-                CurrentRole.IsStudent = true;
+                TakenSubjects = await mediator.Send(command);
             }
             catch (ItemNotFoundException)
             {
