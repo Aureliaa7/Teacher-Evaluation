@@ -69,6 +69,12 @@ namespace TeacherEvaluation.Application.Pages.Students
         [RegularExpression(pattern: "^[a-zA-Z1-4\\.1-4a-zA-Z]+$", ErrorMessage = "Invalid text")]
         public string Group { get; set; }
 
+        [BindProperty]
+        [Required(ErrorMessage = "Password is required")]
+        [RegularExpression(pattern: "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", ErrorMessage = "Invalid password")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
         public List<string> ErrorMessages { get; set; }
 
         public CreateModel(IMediator mediator)
@@ -101,7 +107,8 @@ namespace TeacherEvaluation.Application.Pages.Students
                     Group = Group,
                     SpecializationId = SpecializationId,
                     StudyYear = (int)StudyYear,
-                    ConfirmationUrlTemplate = confirmationUrlTemplate
+                    ConfirmationUrlTemplate = confirmationUrlTemplate,
+                    Password = Password
                 };
                 await mediator.Send(command);
                 return RedirectToPage("../Students/Index");

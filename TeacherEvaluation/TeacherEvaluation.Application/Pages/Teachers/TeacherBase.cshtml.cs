@@ -31,18 +31,21 @@ namespace TeacherEvaluation.Application.Pages.Teachers
         [BindProperty]
         [Required(ErrorMessage = "First name is required")]
         [RegularExpression(pattern: "[a-zA-Z\\s]+", ErrorMessage = "Invalid text")]
+        [Display(Name = "First name")]
         [MinLength(3)]
         public string FirstName { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "Last name is required")]
         [RegularExpression(pattern: "[a-zA-Z\\s]+", ErrorMessage = "Invalid text")]
+        [Display(Name = "Last name")]
         [MinLength(3)]
         public string LastName { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "Father's initial is required")]
         [RegularExpression(pattern: "^[a-zA-Z-]+(.)+$", ErrorMessage = "Invalid text")]
+        [Display(Name = "Father's initial")]
         [MaxLength(2)]
         public string FathersInitial { get; set; }
 
