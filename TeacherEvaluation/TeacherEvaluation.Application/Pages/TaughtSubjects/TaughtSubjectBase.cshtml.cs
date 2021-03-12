@@ -46,22 +46,6 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
         [Required(ErrorMessage = "Department is required")]
         public Department? Department { get; set; }
 
-        [BindProperty]
-        [EnumDataType(typeof(StudyProgramme))]
-        [Display(Name = "Study Programme")]
-        [Required(ErrorMessage = "Study programme is required")]
-        public StudyProgramme? StudyProgramme { get; set; }
-
-        [BindProperty]
-        [Required(ErrorMessage = "Year is required")]
-        [Range(1, 4, ErrorMessage = "The year must be between 1 and 4")]
-        public int? Year { get; set; } = null;
-
-        [BindProperty]
-        [Required(ErrorMessage = "Semester is required")]
-        [Range(1, 2, ErrorMessage = "The semester must be 1 or 2")]
-        public int? Semester { get; set; } = null;
-
         public TaughtSubjectBaseModel(IMediator mediator)
         {
             this.mediator = mediator;

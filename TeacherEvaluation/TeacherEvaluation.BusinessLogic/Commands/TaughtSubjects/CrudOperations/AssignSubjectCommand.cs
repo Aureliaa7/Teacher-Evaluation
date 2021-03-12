@@ -9,8 +9,5 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
         public Guid TeacherId { get; set; }
         public Guid SubjectId { get; set; }
         public TaughtSubjectType Type { get; set; }
-        public StudyProgramme StudyProgramme { get; set; }
-        public int Year { get; set; }
-        public int Semester { get; set; }
     }
 }

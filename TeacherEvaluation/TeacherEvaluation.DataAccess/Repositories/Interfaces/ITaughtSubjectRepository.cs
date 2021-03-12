@@ -11,7 +11,8 @@ namespace TeacherEvaluation.DataAccess.Repositories.Interfaces
         Task<TaughtSubject> GetTaughtSubject(Guid id);
         Task<IEnumerable<TaughtSubject>> GetAllWithRelatedEntities();
         Task<TaughtSubject> GetTaughtSubject(Guid teacherId, Guid subjectId, TaughtSubjectType type);
-        Task<IEnumerable<TaughtSubject>> GetTaughtSubjectsByCriteria(Department department, TaughtSubjectType taughtSubjectType);
-        Task<IEnumerable<TaughtSubject>> GetByTeacherAndType(Guid teacherId, TaughtSubjectType type);
+        Task<IEnumerable<TaughtSubject>> GetTaughtSubjectsByDepartmentAndType(Department department, TaughtSubjectType taughtSubjectType);
+        Task<IEnumerable<TaughtSubject>> GetTaughtSubjectsByTeacherIdAndType(Guid teacherId, TaughtSubjectType type);
+        Task<IEnumerable<TaughtSubject>> GetTaughtSubjectsBySubjectIdAndType(Guid subjectId, TaughtSubjectType type);
     }
 }

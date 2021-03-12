@@ -38,12 +38,12 @@ namespace TeacherEvaluation.Application.Pages.Teachers
             return new JsonResult(teachers);
         }
 
-        public IActionResult OnGetReturnTeachersBySubjectAndType(string subjectId, string type)
+        public IActionResult OnGetReturnTeachersForLaboratoryBySubject(string subjectId)
         {
             GetTeachersForSubjectCommand command = new GetTeachersForSubjectCommand
             {
                 SubjectId = new Guid(subjectId),
-                Type = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type)
+                Type = TaughtSubjectType.Laboratory
             };
             IEnumerable<Teacher> teachers = new List<Teacher>();
             teachers = mediator.Send(command).Result;

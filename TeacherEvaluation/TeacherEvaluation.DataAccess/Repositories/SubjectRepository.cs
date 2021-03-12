@@ -24,6 +24,16 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<Subject>> GetSubjectsByCriteria(Guid specializationId, int studyYear)
+        {
+            return await Context.Set<Subject>()
+                .Where(x => x.StudyYear == studyYear && x.Specialization.Id == specializationId)
+                .Include(x => x.Specialization)
+                    .ThenInclude(x => x.StudyDomain)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
         public async Task<Subject> GetWithRelatedEntities(Guid id)
         {
             return await Context.Set<Subject>()

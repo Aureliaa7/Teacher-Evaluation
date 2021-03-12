@@ -28,8 +28,12 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
                 var takenSubjectsVm = enrollments.Where(x => x.TaughtSubject.Type == request.SubjectType && x.State == request.EnrollmentState)
                                                 .Select(x => new TakenSubjectVm
                                                 {
-                                                    TaughtSubject = x.TaughtSubject,
-                                                    NumberOfAttendances = x.NumberOfAttendances
+                                                    SubjectTitle = x.TaughtSubject.Subject.Name,
+                                                    NumberOfAttendances = x.NumberOfAttendances,
+                                                    NumberOfCredits = x.TaughtSubject.Subject.NumberOfCredits,
+                                                    TeacherName = x.TaughtSubject.Teacher.User.LastName + " " +
+                                                    x.TaughtSubject.Teacher.User.FathersInitial + " " +
+                                                    x.TaughtSubject.Teacher.User.FirstName
                                                 });
                 
                 return takenSubjectsVm;

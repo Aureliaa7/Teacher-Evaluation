@@ -60,10 +60,7 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
                 {
                     TeacherId = (Guid)TeacherId,
                     SubjectId = (Guid)SubjectId,
-                    Type = (TaughtSubjectType)Type,
-                    StudyProgramme = (StudyProgramme)StudyProgramme,
-                    Year = (int)Year,
-                    Semester = (int)Semester
+                    Type = (TaughtSubjectType)Type
                 };
                 try
                 {
@@ -81,7 +78,7 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
 
         private bool ModelIsValid()
         {
-            return (TeacherId != null && SubjectId != null && Type != null && StudyProgramme != null && Year != null && Semester != null);
+            return (TeacherId != null && SubjectId != null && Type != null);
         }
     }
 }
