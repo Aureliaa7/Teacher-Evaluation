@@ -8,6 +8,7 @@ using TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
+using TeacherEvaluation.BusinessLogic.Exceptions;
 
 namespace TeacherEvaluation.Application.Pages.Enrollments
 {
@@ -26,48 +27,72 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
 
         public IActionResult OnGetReturnEnrolledStudents(string subjectId, string type)
         {
-            Guid currentTeacherId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            GetEnrolledStudentsCommand command = new GetEnrolledStudentsCommand
+            if (!string.IsNullOrEmpty(subjectId) && !string.IsNullOrEmpty(type))
             {
-                UserId = currentTeacherId,
-                SubjectId = new Guid(subjectId),
-                Type = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type)
-            };
-            var students = mediator.Send(command).Result;
-            return new JsonResult(students);
+                try
+                {
+                    Guid currentTeacherId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                    GetEnrolledStudentsCommand command = new GetEnrolledStudentsCommand
+                    {
+                        UserId = currentTeacherId,
+                        SubjectId = new Guid(subjectId),
+                        Type = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type)
+                    };
+                    var students = mediator.Send(command).Result;
+                    return new JsonResult(students);
+                }
+                catch (ItemNotFoundException) { }
+            }
+            return new JsonResult("");
         }
 
         public IActionResult OnGetCheckEnrollmentExistenceBySubjectStudent(string studentId, string subjectId, string type)
         {
-            EnrollmentExistsCommand command = new EnrollmentExistsCommand
+            if (!string.IsNullOrEmpty(studentId) && !string.IsNullOrEmpty(subjectId) && !string.IsNullOrEmpty(type))
             {
-                StudentId = new Guid(studentId),
-                SubjectId = new Guid(subjectId),
-                Type = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type)
-            };
-            bool enrollmentExists = mediator.Send(command).Result;
-            if (enrollmentExists)
-            {
-                return new JsonResult("The enrollment exists");
+                try
+                {
+                    EnrollmentExistsCommand command = new EnrollmentExistsCommand
+                    {
+                        StudentId = new Guid(studentId),
+                        SubjectId = new Guid(subjectId),
+                        Type = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type)
+                    };
+                    bool enrollmentExists = mediator.Send(command).Result;
+                    if (enrollmentExists)
+                    {
+                        return new JsonResult("The enrollment exists");
+                    }
+                    return new JsonResult("The enrollment does not exist");
+                }
+                catch (ItemNotFoundException) { }
             }
-            return new JsonResult("The enrollment does not exist");
+            return new JsonResult("");
         }
 
         public IActionResult OnGetCheckEnrollmentExistenceByStudentSubjectTeacherType(string studentId, string subjectId, string teacherId, string type)
         {
-            CheckEnrollmentAvailabilityCommand command = new CheckEnrollmentAvailabilityCommand
+            if(!string.IsNullOrEmpty(studentId) && !string.IsNullOrEmpty(subjectId) && !string.IsNullOrEmpty(teacherId) && !string.IsNullOrEmpty(type))
             {
-                TeacherId = new Guid(teacherId),
-                StudentId = new Guid(studentId),
-                SubjectId = new Guid(subjectId),
-                Type = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type)
-            };
-            bool enrollmentIsAvailable = mediator.Send(command).Result;
-            if (enrollmentIsAvailable)
-            {
-                return new JsonResult("This enrollment is available");
+                try
+                {
+                    CheckEnrollmentAvailabilityCommand command = new CheckEnrollmentAvailabilityCommand
+                    {
+                        TeacherId = new Guid(teacherId),
+                        StudentId = new Guid(studentId),
+                        SubjectId = new Guid(subjectId),
+                        Type = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type)
+                    };
+                    bool enrollmentIsAvailable = mediator.Send(command).Result;
+                    if (enrollmentIsAvailable)
+                    {
+                        return new JsonResult("This enrollment is available");
+                    }
+                    return new JsonResult("The enrollment is not available");
+                }
+                catch (ItemNotFoundException) { }
             }
-            return new JsonResult("The enrollment is not available");
+            return new JsonResult("");
         }
     }
 }

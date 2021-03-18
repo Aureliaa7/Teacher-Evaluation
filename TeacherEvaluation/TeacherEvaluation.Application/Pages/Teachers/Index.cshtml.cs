@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations;
+using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
 
@@ -33,21 +34,36 @@ namespace TeacherEvaluation.Application.Pages.Teachers
 
         public IActionResult OnGetReturnTeachersByDepartment(string department)
         {
-            GetTeachersByDepartmentCommand command = new GetTeachersByDepartmentCommand { Department = (Department)Enum.Parse(typeof(Department), department) };
-            var teachers = mediator.Send(command).Result;
-            return new JsonResult(teachers);
+            if (!string.IsNullOrEmpty(department))
+            {
+                try
+                {
+                    GetTeachersByDepartmentCommand command = new GetTeachersByDepartmentCommand { Department = (Department)Enum.Parse(typeof(Department), department) };
+                    var teachers = mediator.Send(command).Result;
+                    return new JsonResult(teachers);
+                }
+                catch (ItemNotFoundException) { }
+            }
+            return new JsonResult("");
         }
 
-        public IActionResult OnGetReturnTeachersForLaboratoryBySubject(string subjectId)
+        public IActionResult OnGetReturnTeachersBySubjectAndType(string subjectId, string type)
         {
-            GetTeachersForSubjectCommand command = new GetTeachersForSubjectCommand
+            if (!string.IsNullOrEmpty(subjectId) && !string.IsNullOrEmpty(type))
             {
-                SubjectId = new Guid(subjectId),
-                Type = TaughtSubjectType.Laboratory
-            };
-            IEnumerable<Teacher> teachers = new List<Teacher>();
-            teachers = mediator.Send(command).Result;
-            return new JsonResult(teachers);
+                try
+                {
+                    GetTeachersForSubjectCommand getTeachersCommand = new GetTeachersForSubjectCommand
+                    {
+                        SubjectId = new Guid(subjectId),
+                        Type = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type)
+                    };
+                    var teachers = mediator.Send(getTeachersCommand).Result;
+                    return new JsonResult(teachers);
+                }
+                catch (ItemNotFoundException) { }
+            }
+            return new JsonResult("");
         }
     }
 }

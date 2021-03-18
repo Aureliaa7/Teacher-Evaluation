@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations;
+using TeacherEvaluation.BusinessLogic.Exceptions;
 
 namespace TeacherEvaluation.Application.Pages.TaughtSubjects
 {
@@ -19,11 +20,19 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
 
         public IActionResult OnGet(string subjectId)
         {
-            Guid currentTeacherId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            GetSubjectsForTeacherCommand command = new GetSubjectsForTeacherCommand { UserId = currentTeacherId };
-            var allTaughtSubjects = mediator.Send(command).Result;
-            var taughtSubjects = allTaughtSubjects.Where(x => x.Subject.Id == new Guid(subjectId));
-            return new JsonResult(taughtSubjects);
+            if (!string.IsNullOrEmpty(subjectId))
+            {
+                try
+                {
+                    Guid currentTeacherId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                    GetSubjectsForTeacherCommand command = new GetSubjectsForTeacherCommand { UserId = currentTeacherId };
+                    var allTaughtSubjects = mediator.Send(command).Result;
+                    var taughtSubjects = allTaughtSubjects.Where(x => x.Subject.Id == new Guid(subjectId));
+                    return new JsonResult(taughtSubjects);
+                }
+                catch (ItemNotFoundException) { }
+            }
+            return new JsonResult("");
         }
     }
 }

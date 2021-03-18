@@ -38,18 +38,26 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
 
         public IActionResult OnGetUpdateSubjectAssignmentInfoField(string teacherId, string subjectId, string type)
         {
-            AssignedSubjectVerificationCommand command = new AssignedSubjectVerificationCommand
+            if (!string.IsNullOrEmpty(teacherId) && !string.IsNullOrEmpty(subjectId) && !string.IsNullOrEmpty(type))
             {
-                TeacherId = new Guid(teacherId),
-                SubjectId = new Guid(subjectId),
-                Type = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type)
-            };
-            bool assignmentExists = mediator.Send(command).Result;
-            if(assignmentExists)
-            {
-                return new JsonResult("This assignment already exists");
+                try
+                {
+                    AssignedSubjectVerificationCommand command = new AssignedSubjectVerificationCommand
+                    {
+                        TeacherId = new Guid(teacherId),
+                        SubjectId = new Guid(subjectId),
+                        Type = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type)
+                    };
+                    bool assignmentExists = mediator.Send(command).Result;
+                    if (assignmentExists)
+                    {
+                        return new JsonResult("This assignment already exists");
+                    }
+                    return new JsonResult("This assignment is available");
+                }
+                catch (ItemNotFoundException) { }
             }
-            return new JsonResult("This assignment is available");
+            return new JsonResult("");
         }
 
         public async Task<IActionResult> OnPostAsync()

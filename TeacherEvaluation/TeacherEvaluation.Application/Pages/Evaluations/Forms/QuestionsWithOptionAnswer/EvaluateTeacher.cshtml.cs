@@ -110,55 +110,57 @@ namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOpt
 
         public IActionResult OnGetReturnTeacher(string subjectId, string type)
         {
-            Guid userIdStudent = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            Guid subjectIdGuid = new Guid(subjectId);
-            TaughtSubjectType taughtSubjectType = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type);
-            GetTeacherByCriteriaCommand command = new GetTeacherByCriteriaCommand
+            if (!string.IsNullOrEmpty(subjectId) && !string.IsNullOrEmpty(type))
             {
-                SubjectId = subjectIdGuid,
-                UserIdForStudent = userIdStudent,
-                EnrollmentState = form.EnrollmentState,
-                SubjectType = taughtSubjectType
-            };
-            try
-            {
-                var teacher = mediator.Send(command).Result;
-                return new JsonResult(teacher);
+                Guid userIdStudent = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                Guid subjectIdGuid = new Guid(subjectId);
+                TaughtSubjectType taughtSubjectType = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type);
+                GetTeacherByCriteriaCommand command = new GetTeacherByCriteriaCommand
+                {
+                    SubjectId = subjectIdGuid,
+                    UserIdForStudent = userIdStudent,
+                    EnrollmentState = form.EnrollmentState,
+                    SubjectType = taughtSubjectType
+                };
+                try
+                {
+                    var teacher = mediator.Send(command).Result;
+                    return new JsonResult(teacher);
+                }
+                catch (ItemNotFoundException) { }
             }
-            catch (ItemNotFoundException e)
-            {
-                return new JsonResult(e.Message);
-            }
+            return new JsonResult("");
         }
 
         public IActionResult OnGetEnableOrDisableSubmitBtn(string subjectId, string type)
         {
-            Guid userIdStudent = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            Guid subjectIdGuid = new Guid(subjectId);
-            TaughtSubjectType taughtSubjectType = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type);
-            FormCanBeSubmittedCommand formCanBeSubmittedCommand = new FormCanBeSubmittedCommand
+            if (!string.IsNullOrEmpty(subjectId) && !string.IsNullOrEmpty(type))
             {
-                SubjectId = subjectIdGuid,
-                UserIdForStudent = userIdStudent,
-                EnrollmentState = form.EnrollmentState,
-                SubjectType = taughtSubjectType,
-                FormId = form.Id
-            };
-
-            try
-            {
-                var btnEnabled = mediator.Send(formCanBeSubmittedCommand).Result;
-
-                if (btnEnabled)
+                Guid userIdStudent = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                Guid subjectIdGuid = new Guid(subjectId);
+                TaughtSubjectType taughtSubjectType = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type);
+                FormCanBeSubmittedCommand formCanBeSubmittedCommand = new FormCanBeSubmittedCommand
                 {
-                    return new JsonResult("enable");
+                    SubjectId = subjectIdGuid,
+                    UserIdForStudent = userIdStudent,
+                    EnrollmentState = form.EnrollmentState,
+                    SubjectType = taughtSubjectType,
+                    FormId = form.Id
+                };
+
+                try
+                {
+                    var btnEnabled = mediator.Send(formCanBeSubmittedCommand).Result;
+
+                    if (btnEnabled)
+                    {
+                        return new JsonResult("enable");
+                    }
+                    return new JsonResult("disable");
                 }
-                return new JsonResult("disable");
+                catch (ItemNotFoundException) { }
             }
-            catch (ItemNotFoundException e)
-            {
-                return new JsonResult(e.Message);
-            }
+            return new JsonResult("");
         }
 
         public async Task<IActionResult> OnPostAsync()
