@@ -40,8 +40,10 @@
                     else if (Model.CurrentRole.IsAdmin)
                     {
                         <td>
-                            <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                            <div class="row">
+                                <a class="nav-link white-link" asp-page="./Details" asp-route-id="@item.Id"><i class="fa fa-info-circle"></i></a> 
+                                <a class="nav-link white-link" asp-page="./Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>
+                            </div>
                         </td>
                     }
                 </tr>
