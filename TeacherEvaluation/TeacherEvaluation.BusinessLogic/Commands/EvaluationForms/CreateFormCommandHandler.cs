@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+
 using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
 
@@ -19,9 +20,13 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
         {
             Form form = new Form
             {
-                Type = request.FormType 
+                StartDate = request.StartDate,
+                EndDate = request.EndDate,
+                EnrollmentState = request.EnrollmentState,
+                MinNumberOfAttendances = request.MinNumberOfAttendances
             };
             await unitOfWork.FormRepository.Add(form);
+
             foreach (var question in request.Questions)
             {
                 Question newQuestion = new Question
@@ -30,8 +35,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
                     Form = form
                 };
                 await unitOfWork.QuestionRepository.Add(newQuestion);
-                await unitOfWork.SaveChangesAsync();
             }
+            await unitOfWork.SaveChangesAsync();
         }
     }
 }

@@ -1,0 +1,49 @@
+﻿@model TeacherEvaluation.Application.Pages.TaughtSubjects.TakenSubjectModel
+
+<div class="add-margin-bottom">
+
+    @if (Model.TakenSubjects.Any())
+    {
+        <table id="taught-subjects-index" class="table table-dark table-striped table-bordered set-max-width">
+            <thead>
+                <tr>
+                    <th>
+                        Subject Title
+                    </th>
+                    <th>
+                        Teacher
+                    </th>
+                    <th>
+                        Number of Credits
+                    </th>
+                    <th>
+                        Number of Attendances
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.TakenSubjects)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SubjectTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TeacherName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumberOfCredits)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumberOfAttendances)
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h5 class="align-text-center">No data is available</h5>
+    }
+</div>

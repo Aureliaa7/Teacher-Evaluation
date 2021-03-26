@@ -16,7 +16,6 @@ namespace TeacherEvaluation.DataAccess.Data
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<TaughtSubject> TaughtSubjects { get; set; }
         public DbSet<Grade> Grades { get; set; }
-        public DbSet<Attendance> Attendances { get; set; }
         public DbSet<StudyDomain> StudyDomains { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
         public DbSet<Question> Questions { get; set; }

@@ -35,22 +35,42 @@ namespace TeacherEvaluation.Application.Pages.Subjects
 
         public IActionResult OnGetReturnSubjectsByStudent(string studentId)
         {
-            GetUserIdForStudentCommand getUserIdCommand = new GetUserIdForStudentCommand { StudentId = new Guid(studentId) };
-            try
+            if (!string.IsNullOrEmpty(studentId))
             {
-                Guid userIdStudent = mediator.Send(getUserIdCommand).Result;
-                GetSubjectsForEnrollmentsCommand getSubjectsCommand = new GetSubjectsForEnrollmentsCommand
+                GetUserIdForStudentCommand getUserIdCommand = new GetUserIdForStudentCommand { StudentId = new Guid(studentId) };
+                try
                 {
-                    UserId = userIdStudent,
-                    EnrollmentState = EnrollmentState.InProgress
-                };
-                var subjects = mediator.Send(getSubjectsCommand).Result;
-                return new JsonResult(subjects);
+                    Guid userIdStudent = mediator.Send(getUserIdCommand).Result;
+                    GetSubjectsForEnrollmentsCommand getSubjectsCommand = new GetSubjectsForEnrollmentsCommand
+                    {
+                        UserId = userIdStudent,
+                        EnrollmentState = EnrollmentState.InProgress
+                    };
+                    var subjects = mediator.Send(getSubjectsCommand).Result;
+                    return new JsonResult(subjects);
+                }
+                catch (ItemNotFoundException) { }
             }
-            catch (ItemNotFoundException e)
+            return new JsonResult("");
+        }
+
+        public IActionResult OnGetReturnSubjectsBySpecializationAndStudyYear(string specializationId, string studyYear)
+        {
+            if (!string.IsNullOrEmpty(specializationId) && !string.IsNullOrEmpty(studyYear))
             {
-                return new JsonResult(e.Message);
+                try
+                {
+                    GetSubjectsBySpecializationIdAndStudyYearCommand getSubjectsCommand = new GetSubjectsBySpecializationIdAndStudyYearCommand
+                    {
+                        SpecializationId = new Guid(specializationId),
+                        StudyYear = Int32.Parse(studyYear)
+                    };
+                    var subjects = mediator.Send(getSubjectsCommand).Result;
+                    return new JsonResult(subjects);
+                }
+                catch (ItemNotFoundException) { }
             }
+            return new JsonResult("");
         }
     }
 }

@@ -22,6 +22,30 @@
         <dd class="col-sm-8">
             @Html.DisplayFor(model => model.NumberOfCredits)
         </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.StudyYear)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.StudyYear)
+        </dd>
+        <dt class="col-sm-4">
+            Study programme
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Specialization.StudyDomain.StudyProgramme)
+        </dd>
+        <dt class="col-sm-4">
+            Study domain
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Specialization.StudyDomain.Name)
+        </dd>
+        <dt class="col-sm-4">
+            Specialization
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Specialization.Name)
+        </dd>
     </dl>
 
     <form method="post">

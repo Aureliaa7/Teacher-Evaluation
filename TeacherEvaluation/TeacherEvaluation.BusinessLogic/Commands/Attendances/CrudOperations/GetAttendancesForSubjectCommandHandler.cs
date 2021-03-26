@@ -1,15 +1,13 @@
 ﻿using MediatR;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.DataAccess.UnitOfWork;
-using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.Attendances.CrudOperations
 {
-    public class GetAttendancesForSubjectCommandHandler : IRequestHandler<GetAttendancesForSubjectCommand, IEnumerable<Attendance>>
+    public class GetAttendancesForSubjectCommandHandler : IRequestHandler<GetAttendancesForSubjectCommand, int>
     {
         private readonly IUnitOfWork unitOfWork;
 
@@ -18,7 +16,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Attendances.CrudOperations
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<Attendance>> Handle(GetAttendancesForSubjectCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(GetAttendancesForSubjectCommand request, CancellationToken cancellationToken)
         {
             bool taughtSubjectExists = await unitOfWork.TaughtSubjectRepository.Exists(x => x.Id == request.TaughtSubjectId);
             bool userExists = await unitOfWork.UserRepository.Exists(x => x.Id == request.UserId);
@@ -29,7 +27,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Attendances.CrudOperations
 
                 var enrollments = await unitOfWork.EnrollmentRepository.GetEnrollmentsForTaughtSubject(request.TaughtSubjectId);
                 var enrollment = enrollments.Where(x => x.Student.Id == student.Id).First();
-                return await unitOfWork.AttendanceRepository.GetAttendancesWithRelatedEntities(enrollment.Id);
+                return enrollment.NumberOfAttendances;
             }
             throw new ItemNotFoundException("The subject or the user was not found...");
         }

@@ -46,7 +46,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
               .FirstAsync();
         }
 
-        public async Task<IEnumerable<TaughtSubject>> GetTaughtSubjectsByCriteria(Department department, TaughtSubjectType taughtSubjectType)
+        public async Task<IEnumerable<TaughtSubject>> GetTaughtSubjectsByDepartmentAndType(Department department, TaughtSubjectType taughtSubjectType)
         {
             return await Context.Set<TaughtSubject>()
                 .Where(x => x.Teacher.Department == department && x.Type == taughtSubjectType)
@@ -56,10 +56,20 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<TaughtSubject>> GetByTeacherAndType(Guid teacherId, TaughtSubjectType type)
+        public async Task<IEnumerable<TaughtSubject>> GetTaughtSubjectsByTeacherIdAndType(Guid teacherId, TaughtSubjectType type)
         {
             return await Context.Set<TaughtSubject>()
                .Where(x => x.Teacher.Id == teacherId && x.Type == type)
+               .Include(entity => entity.Teacher)
+                   .ThenInclude(teacher => teacher.User)
+               .Include(entity => entity.Subject)
+               .ToListAsync();
+        }
+
+        public async Task<IEnumerable<TaughtSubject>> GetTaughtSubjectsBySubjectIdAndType(Guid subjectId, TaughtSubjectType type)
+        {
+            return await Context.Set<TaughtSubject>()
+               .Where(x => x.Subject.Id == subjectId && x.Type == type)
                .Include(entity => entity.Teacher)
                    .ThenInclude(teacher => teacher.User)
                .Include(entity => entity.Subject)

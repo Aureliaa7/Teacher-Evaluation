@@ -6,7 +6,6 @@
     Layout = "~/Pages/Shared/_AdminLayout.cshtml";
 }
 
-
 <h4 class="row align-input-center add-top-margin">Assign Subject to Teacher</h4>
 <hr />
 <div class="jumbotron taught-subject-jumbotron">
@@ -49,32 +48,9 @@
 
         <div class="row my-row">
             <div class="col-md-6">
-                <label asp-for="StudyProgramme" class="control-label">Study Programme</label><br />
-                <select asp-for="StudyProgramme" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Enums.StudyProgramme>()"
-                        class="form-control">
-                    <option selected disabled hidden>Please select</option>
-                </select>
-                <span asp-validation-for="StudyProgramme" class="text-danger" />
-            </div>
-            <div class="col-md-6">
-                <label asp-for="Year">Year</label><br />
-                <input class="form-control" asp-for="Year" />
-                <span asp-validation-for="Year" class="text-danger" />
-            </div>
-        </div>
-
-        <div class="row my-row">
-            <div class="col-md-6">
-                <label asp-for="Semester" class="control-label">Semester</label>
-                <input class="form-control" asp-for="Semester" />
-            </div>
-            <div class="col-md-6">
                 <label class="control-label">Info</label>
                 <input id="info-field" class="form-control" disabled />
             </div>
-        </div>
-
-        <div class="row my-row">
             <div class="col-md-6">
                 <br />
                 <input id="submit-button" type="submit" value="Assign" class="btn btn-dark form-control" />

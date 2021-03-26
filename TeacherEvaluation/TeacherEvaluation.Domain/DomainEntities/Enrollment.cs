@@ -10,5 +10,6 @@ namespace TeacherEvaluation.Domain.DomainEntities
         public TaughtSubject TaughtSubject { get; set; }
         public Grade Grade { get; set; }
         public EnrollmentState State { get; set; }
+        public int NumberOfAttendances { get; set; }
     }
 }

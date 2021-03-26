@@ -1,0 +1,88 @@
+﻿@page
+@model TeacherEvaluation.Application.Pages.EvaluationForms.EvaluateTeacherModel
+@{
+    ViewData["Title"] = "Evaluate " +
+                "Teacher";
+    Layout = "~/Pages/Shared/_StudentLayout.cshtml";
+}
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/fillFormWithAnswerOption.js"></script>
+}
+
+<h4 class="row align-input-center add-top-margin">Evaluate your teachers</h4>
+<hr />
+<div class="jumbotron evaluation-jumbotron">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row my-row">
+            <div class="col-md-4">
+                <label asp-for="SubjectId" class="control-label">Subject</label>
+                <select id="subject-field" asp-for="SubjectId" asp-items="@Model.Subjects" class="form-control"
+                        onchange="disable_or_enable_btn()">
+                </select>
+                <span asp-validation-for="SubjectId" class="text-danger" />
+            </div>
+
+            <div class="col-md-4">
+                <label asp-for="Type">Taught Subject Type</label>
+                <select id="type-field" asp-for="Type" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Enums.TaughtSubjectType>()"
+                        class="form-control" onchange="disable_or_enable_btn()">
+                    <option selected>Please select</option>
+                </select>
+                <span asp-validation-for="Type" class="text-danger" />
+            </div>
+
+            <div class="col-md-4">
+                <label class="control-label">Teacher</label>
+                <input id="teacher-field" class="form-control" disabled />
+            </div>
+        </div>
+
+        @for (var contor = 0; contor < 10; contor += 2)
+        {
+            <div class="row my-row">
+                <div class="col-md-5">
+                    <label>Question @(contor+1)</label>
+                    <textarea id="question" asp-for="Questions.ElementAt(contor).Text" class="form-control non-resizable"
+                              rows="3" cols="50" readonly></textarea>
+                    <select asp-for="@Model.Answers[contor]" asp-items="@Model.AnswerOptions"
+                            class="form-control">
+                    </select>
+                </div>
+                <div class="col-md-5">
+                    <label>Question @(contor+2)</label>
+                    <textarea id="question" asp-for="Questions.ElementAt(contor+1).Text" class="form-control non-resizable"
+                              rows="3" cols="50" readonly></textarea>
+                    <select asp-for="@Model.Answers[contor+1]" asp-items="@Model.AnswerOptions"
+                            class="form-control">
+                    </select>
+                </div>
+            </div>
+        }
+        <div class="row my-row">
+            <input type="submit" value="Submit" class="btn btn-dark form-control" id="submit-form-btn" />
+        </div>
+    </form>
+</div>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="myModal" style="align-self:center; margin-top:130px;">
+    <div class="modal-sm modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Change input data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>You can't evaluate the selected teacher. You either have evaluated this teacher or you are't enrolled...</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,12 +1,15 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using TeacherEvaluation.BusinessLogic.PasswordGenerator;
+using TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations;
+using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
+using TeacherEvaluation.Domain.DomainEntities.Enums;
 using TeacherEvaluation.Domain.Identity;
 using TeacherEvaluation.EmailSender.NotificationModel;
 using TeacherEvaluation.EmailSender.NotificationService;
@@ -18,19 +21,20 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
         private readonly IUnitOfWork unitOfWork;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly INotificationService emailService;
+        private readonly IMediator mediator;
 
         public StudentRegistrationCommandHandler(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, 
-            INotificationService emailService)
+            INotificationService emailService, IMediator mediator)
         {
             this.unitOfWork = unitOfWork;
             this.userManager = userManager;
             this.emailService = emailService;
+            this.mediator = mediator;
         }
 
         public async Task<List<string>> Handle(StudentRegistrationCommand request, CancellationToken cancellationToken)
         {
             List<string> errorMessages = new List<string>();
-            string randomPassword = RandomPasswordGenerator.GeneratePassword(15);
 
             ApplicationUser newApplicationUser = new ApplicationUser
             {
@@ -42,7 +46,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
                 PIN = request.PIN
             };
 
-            var result = await userManager.CreateAsync(newApplicationUser, randomPassword);
+            var result = await userManager.CreateAsync(newApplicationUser, request.Password);
 
             if (result.Succeeded)
             {
@@ -68,8 +72,10 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
                     };
                     await unitOfWork.StudentRepository.Add(student);
                     await unitOfWork.SaveChangesAsync();
+                    await EnrollStudentToCourses(student.Id, request.SpecializationId, request.StudyYear);
+                    await unitOfWork.SaveChangesAsync();
 
-                    Notification notification = EmailSending.ConfigureAccountCreationMessage(confirmationUrl, newApplicationUser, randomPassword);
+                    Notification notification = EmailSending.ConfigureAccountCreationMessage(confirmationUrl, newApplicationUser, request.Password);
                     emailService.Send(notification);
 
                     errorMessages = null;
@@ -87,6 +93,34 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
                 }
             }
             return errorMessages;
+        }
+
+
+        private async Task EnrollStudentToCourses(Guid studentId, Guid specializationId, int studyYear)
+        {
+            var subjects = await unitOfWork.SubjectRepository.GetSubjectsByCriteria(specializationId, studyYear);
+            foreach(var subject in subjects)
+            {
+                var taughtSubjects = await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsBySubjectIdAndType(subject.Id, TaughtSubjectType.Course);
+                foreach(var taughtSubject in taughtSubjects)
+                {
+                    EnrollStudentCommand command = new EnrollStudentCommand
+                    {
+                        TeacherId = taughtSubject.Teacher.Id,
+                        SubjectId = subject.Id,
+                        StudentId = studentId,
+                        Type = TaughtSubjectType.Course
+                    };
+                    try
+                    {
+                        await mediator.Send(command);
+                    }
+                    catch (ItemNotFoundException)
+                    {
+                        throw;
+                    }
+                }
+            }   
         }
     }
 }

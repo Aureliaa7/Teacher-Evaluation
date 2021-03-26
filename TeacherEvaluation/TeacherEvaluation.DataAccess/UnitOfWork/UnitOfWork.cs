@@ -10,7 +10,6 @@ namespace TeacherEvaluation.DataAccess.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext dbContext;
-        private IAttendanceRepository attendanceRepository;
         private IEnrollmentRepository enrollmentRepository;
         private IFormRepository formRepository;
         private IQuestionRepository questionRepository;
@@ -19,7 +18,7 @@ namespace TeacherEvaluation.DataAccess.UnitOfWork
         private ITeacherRepository teacherRepository;
         private ITaughtSubjectRepository taughtSubjectRepository;
         private IRepository<ApplicationUser> userRepository;
-        private IRepository<Subject> subjectRepository;
+        private ISubjectRepository subjectRepository;
         private IStudyDomainRepository studyDomainRepository;
         private IRepository<Grade> gradeRepository;
         private IAnswerToQuestionWithOptionRepository answerToQuestionWithOptionRepository;
@@ -27,18 +26,6 @@ namespace TeacherEvaluation.DataAccess.UnitOfWork
         public UnitOfWork(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
-        }
-
-        public IAttendanceRepository AttendanceRepository
-        {
-            get
-            {
-                if (attendanceRepository == null)
-                {
-                    attendanceRepository = new AttendanceRepository(dbContext);
-                }
-                return attendanceRepository;
-            }
         }
 
         public IEnrollmentRepository EnrollmentRepository
@@ -136,13 +123,13 @@ namespace TeacherEvaluation.DataAccess.UnitOfWork
             }
         }
 
-        public IRepository<Subject> SubjectRepository
+        public ISubjectRepository SubjectRepository
         {
             get
             {
                 if (subjectRepository == null)
                 {
-                    subjectRepository = new Repository<Subject>(dbContext);
+                    subjectRepository = new SubjectRepository(dbContext);
                 }
                 return subjectRepository;
             }

@@ -54,6 +54,12 @@ namespace TeacherEvaluation.Application.Pages.Teachers
         [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }
 
+        [BindProperty]
+        [Required(ErrorMessage = "Password is required")]
+        [RegularExpression(pattern: "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", ErrorMessage = "Invalid password")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
         public List<string> ErrorMessages { get; set; }
 
         public CreateModel(IMediator mediator)
@@ -84,7 +90,8 @@ namespace TeacherEvaluation.Application.Pages.Teachers
                     Email = Email,
                     FathersInitial = FathersInitial,
                     PIN = PIN,
-                    ConfirmationUrlTemplate = confirmationUrlTemplate
+                    ConfirmationUrlTemplate = confirmationUrlTemplate,
+                    Password = Password
                 };
                 await mediator.Send(command);
                 return RedirectToPage("../Teachers/Index");

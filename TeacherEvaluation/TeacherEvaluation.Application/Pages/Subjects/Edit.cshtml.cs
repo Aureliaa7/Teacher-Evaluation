@@ -35,6 +35,8 @@ namespace TeacherEvaluation.Application.Pages.Subjects
                 Subject subject = await mediator.Send(command);
                 SubjectName = subject.Name;
                 NumberOfCredits = subject.NumberOfCredits;
+                StudyYear = subject.StudyYear;
+                Specialization = subject.Specialization;
             }
             catch(ItemNotFoundException)
             {
@@ -53,7 +55,9 @@ namespace TeacherEvaluation.Application.Pages.Subjects
                     {
                         Id = SubjectId,
                         Name = SubjectName,
-                        NumberOfCredits = (int)NumberOfCredits
+                        NumberOfCredits = (int)NumberOfCredits,
+                        StudyYear = (int)StudyYear,
+                        SpecializationId = SpecializationId
                     };
                     await mediator.Send(command);
                     return RedirectToPage("../Subjects/Index");

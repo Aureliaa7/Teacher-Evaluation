@@ -29,10 +29,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
                 {
                     Teacher = teacher,
                     Subject = subject,
-                    Type = request.Type,
-                    StudyProgramme = request.StudyProgramme,
-                    StudyYear = request.Year,
-                    Semester = request.Semester
+                    Type = request.Type
                 };
 
                 await unitOfWork.TaughtSubjectRepository.Add(taughtSubject);

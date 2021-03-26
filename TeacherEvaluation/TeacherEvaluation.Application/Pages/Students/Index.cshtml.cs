@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations;
+using TeacherEvaluation.BusinessLogic.Exceptions;
 
 namespace TeacherEvaluation.Application.Pages.Students
 {
@@ -23,13 +24,21 @@ namespace TeacherEvaluation.Application.Pages.Students
 
         public IActionResult OnGetReturnStudents(string specializationId, string studyYear)
         {
-            GetStudentsBySpecializationIdAndYearCommand command = new GetStudentsBySpecializationIdAndYearCommand
+            if (!string.IsNullOrEmpty(specializationId) && !string.IsNullOrEmpty(studyYear))
             {
-                SpecializationId = new Guid(specializationId),
-                StudyYear = int.Parse(studyYear)
-            };
-            var students = mediator.Send(command).Result;
-            return new JsonResult(students);
+                try
+                {
+                    GetStudentsBySpecializationIdAndYearCommand command = new GetStudentsBySpecializationIdAndYearCommand
+                    {
+                        SpecializationId = new Guid(specializationId),
+                        StudyYear = int.Parse(studyYear)
+                    };
+                    var students = mediator.Send(command).Result;
+                    return new JsonResult(students);
+                }
+                catch(ItemNotFoundException) { }
+            }
+            return new JsonResult("");
         }
     }
 }

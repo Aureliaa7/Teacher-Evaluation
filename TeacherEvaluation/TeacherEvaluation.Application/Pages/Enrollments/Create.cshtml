@@ -15,7 +15,7 @@
             <div class="col-md-4">
                 <label asp-for="StudyProgramme">Study programme</label><br />
                 <select id="study-programme" asp-for="StudyProgramme" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Enums.StudyProgramme>()"
-                        class="form-control" onclick="get_domains()">
+                        class="form-control" onchange="get_domains()">
                     <option selected="selected" value="">Please select</option>
                 </select>
                 <span asp-validation-for="StudyProgramme" class="text-danger" />
@@ -45,14 +45,14 @@
             </div>
             <div class="col-md-4">
                 <label asp-for="StudentId" class="control-label">Student Name</label><br />
-                <select id="student" asp-for="StudentId" class="form-control">
+                <select id="student" asp-for="StudentId" class="form-control" onclick="get_subjects_by_specialization_and_study_year()">
                     <option>Select student</option>
                 </select>
                 <span asp-validation-for="StudentId" class="text-danger" />
             </div>
             <div class="col-md-4">
                 <label asp-for="SubjectId" class="control-label">Subject</label><br />
-                <select id="subject-id-field" asp-for="SubjectId" asp-items="@Model.Subjects" class="form-control" oninput="get_teachers_by_subject_and_type()"
+                <select id="subject-id-field" asp-for="SubjectId" class="form-control"
                         onhange="update_enrollment_info()">
                     <option>Select subject</option>
                 </select>
@@ -97,6 +97,7 @@
     <script src="~/js/specializations.js"></script>
     <script src="~/js/students.js"></script>
     <script src="~/js/teachers.js"></script>
+    <script src="~/js/subjects.js"></script>
 }
 
 

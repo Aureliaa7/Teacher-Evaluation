@@ -168,28 +168,6 @@ namespace TeacherEvaluation.DataAccess.Migrations
                     b.ToTable("AnswerToQuestionWithTexts");
                 });
 
-            modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.Attendance", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("EnrollmentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EnrollmentId");
-
-                    b.ToTable("Attendances");
-                });
-
             modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.Enrollment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -198,6 +176,9 @@ namespace TeacherEvaluation.DataAccess.Migrations
 
                     b.Property<Guid?>("GradeId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("NumberOfAttendances")
+                        .HasColumnType("int");
 
                     b.Property<int>("State")
                         .HasColumnType("int");
@@ -236,9 +217,6 @@ namespace TeacherEvaluation.DataAccess.Migrations
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -359,7 +337,15 @@ namespace TeacherEvaluation.DataAccess.Migrations
                     b.Property<int>("NumberOfCredits")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("SpecializationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("StudyYear")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("SpecializationId");
 
                     b.ToTable("Subjects");
                 });
@@ -369,15 +355,6 @@ namespace TeacherEvaluation.DataAccess.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Semester")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StudyProgramme")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StudyYear")
-                        .HasColumnType("int");
 
                     b.Property<Guid?>("SubjectId")
                         .HasColumnType("uniqueidentifier");
@@ -598,13 +575,6 @@ namespace TeacherEvaluation.DataAccess.Migrations
                         .HasForeignKey("QuestionId");
                 });
 
-            modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.Attendance", b =>
-                {
-                    b.HasOne("TeacherEvaluation.Domain.DomainEntities.Enrollment", "Enrollment")
-                        .WithMany()
-                        .HasForeignKey("EnrollmentId");
-                });
-
             modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.Enrollment", b =>
                 {
                     b.HasOne("TeacherEvaluation.Domain.DomainEntities.Grade", "Grade")
@@ -643,6 +613,13 @@ namespace TeacherEvaluation.DataAccess.Migrations
                     b.HasOne("TeacherEvaluation.Domain.Identity.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.Subject", b =>
+                {
+                    b.HasOne("TeacherEvaluation.Domain.DomainEntities.Specialization", "Specialization")
+                        .WithMany()
+                        .HasForeignKey("SpecializationId");
                 });
 
             modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.TaughtSubject", b =>

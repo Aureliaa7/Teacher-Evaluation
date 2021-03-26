@@ -16,15 +16,6 @@
                     <th>
                         Teacher
                     </th>
-                    <th>
-                        Study Programme
-                    </th>
-                    <th>
-                        Study Year
-                    </th>
-                    <th>
-                        Semester
-                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -32,43 +23,28 @@
                 @foreach (var item in Model.TaughtSubjects)
                 {
                     var teacherName = item.Teacher.User.LastName + " " + item.Teacher.User.FathersInitial + " " + item.Teacher.User.FirstName;
-                    <tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject.NumberOfCredits)
+                    </td>
+                    <td>@teacherName</td>
+                    @if (Model.CurrentRole.IsTeacher)
+                    {
                         <td>
-                            @Html.DisplayFor(modelItem => item.Subject.Name)
+                            <a asp-page="../Students/EnrolledStudents" asp-route-id="@item.Id">Students</a>
                         </td>
+                    }
+                    else if (Model.CurrentRole.IsAdmin)
+                    {
                         <td>
-                            @Html.DisplayFor(modelItem => item.Subject.NumberOfCredits)
+                            <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
                         </td>
-                        <td>@teacherName</td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.StudyProgramme)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.StudyYear)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Semester)
-                        </td>
-                        @if (Model.CurrentRole.IsTeacher)
-                        {
-                            <td>
-                                <a asp-page="../Students/EnrolledStudents" asp-route-id="@item.Id">Students</a>
-                            </td>
-                        }
-                        else if (Model.CurrentRole.IsStudent)
-                        {
-                            <td>
-                                <a asp-page="/Attendances/AttendancesForSubject" asp-route-id="@item.Id">Attendances</a>
-                            </td>
-                        }
-                        else if (Model.CurrentRole.IsAdmin)
-                        {
-                            <td>
-                                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                            </td>
-                        }
-                    </tr>
+                    }
+                </tr>
                 }
             </tbody>
         </table>

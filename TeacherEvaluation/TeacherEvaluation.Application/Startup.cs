@@ -72,7 +72,8 @@ namespace TeacherEvaluation.Application
             app.UseRouting();
 
             DatabaseSeeding.AddRoles(roleManager);
-            DatabaseSeeding.AddDeanAndAdministrator(userManager);
+            DatabaseSeeding.AddDean(userManager);
+            DatabaseSeeding.AddAdministrator(userManager);
             DatabaseSeeding.AddStudyDomainsAndSpecializations(context);
 
             app.UseAuthentication();

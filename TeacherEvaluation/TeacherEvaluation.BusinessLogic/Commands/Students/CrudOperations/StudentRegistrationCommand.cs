@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using System;
 using System.Collections.Generic;
+using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
 {
@@ -15,5 +16,6 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
         public string FathersInitial { get; set; }
         public string Email { get; set; }
         public string ConfirmationUrlTemplate { get; set; }
+        public string Password { get; set; }
     }
 }
