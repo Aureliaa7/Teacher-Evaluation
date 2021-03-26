@@ -222,3 +222,7 @@ input::-webkit-inner-spin-button {
     margin-left: 20%;
     background-color: #e3dee0;
 }
+
+.white-link {
+    color: white;
+}

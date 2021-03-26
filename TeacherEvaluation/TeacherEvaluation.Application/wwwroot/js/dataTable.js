@@ -28,7 +28,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $('#subjects-index').DataTable({
-        'columnDefs': [{ 'orderable': false, 'targets': 2 }]
+        'columnDefs': [{ 'orderable': false, 'targets': 6 }]
     });
 });
 
