@@ -2,11 +2,11 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using TeacherEvaluation.BusinessLogic.Commands.EvaluationForms;
 using TeacherEvaluation.Domain.DomainEntities;
-using TeacherEvaluation.Domain.DomainEntities.Enums;
 
-namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithTextAnswer
+namespace TeacherEvaluation.Application.Pages.EvaluationForms
 {
     public class IndexModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithTex
 
         public async Task OnGetAsync()
         {
-            GetFormsByTypeCommand command = new GetFormsByTypeCommand { Type = FormType.Text };
+            GetEvaluationFormsCommand command = new GetEvaluationFormsCommand();
             Forms = await mediator.Send(command);
         }
     }

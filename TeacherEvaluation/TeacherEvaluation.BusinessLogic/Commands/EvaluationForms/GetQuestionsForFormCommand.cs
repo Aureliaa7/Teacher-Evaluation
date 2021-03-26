@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using TeacherEvaluation.Domain.DomainEntities;
 
-namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWithOptionAnswer
+namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
 {
     public class GetQuestionsForFormCommand : IRequest<IEnumerable<Question>>
     {

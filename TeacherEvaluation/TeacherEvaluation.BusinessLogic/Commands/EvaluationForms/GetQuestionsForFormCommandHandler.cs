@@ -6,7 +6,7 @@ using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
 
-namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWithOptionAnswer
+namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
 {
     public class GetQuestionsForFormCommandHandler : IRequestHandler<GetQuestionsForFormCommand, IEnumerable<Question>>
     {

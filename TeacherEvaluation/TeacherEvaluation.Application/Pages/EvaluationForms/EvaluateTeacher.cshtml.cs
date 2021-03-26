@@ -9,14 +9,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using TeacherEvaluation.Application.Pages.Evaluations.Forms;
 using TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations;
-using TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWithOptionAnswer;
+using TeacherEvaluation.BusinessLogic.Commands.EvaluationForms;
 using TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
 
-namespace TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithOptionAnswer
+namespace TeacherEvaluation.Application.Pages.EvaluationForms
 {
     [Authorize(Roles = "Student")]
     public class EvaluateTeacherModel : PageModel

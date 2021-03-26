@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.DataAccess.UnitOfWork;
 
-namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWithOptionAnswer
+namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
 {
     public class FormCanBeSubmittedCommandHandler : IRequestHandler<FormCanBeSubmittedCommand, bool>
     {
@@ -16,6 +16,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms.QuestionsWith
             this.unitOfWork = unitOfWork;
         }
 
+
+        //TODO refactor this one
         public async Task<bool> Handle(FormCanBeSubmittedCommand request, CancellationToken cancellationToken)
         {
             bool userExists = await unitOfWork.UserRepository.Exists(x => x.Id == request.UserIdForStudent);

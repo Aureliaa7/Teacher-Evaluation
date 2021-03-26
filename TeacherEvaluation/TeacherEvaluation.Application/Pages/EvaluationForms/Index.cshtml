@@ -1,10 +1,14 @@
 ﻿@page
-@model TeacherEvaluation.Application.Pages.Evaluations.Forms.QuestionsWithTextAnswer.IndexModel
+@model TeacherEvaluation.Application.Pages.EvaluationForms.IndexModel
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Forms";
     Layout = "~/Pages/Shared/_DeanLayout.cshtml";
 }
 
+@section scripts{
+    <script src="~/js/dataTable.js"></script>
+}
 
 <h4 class="row align-input-center add-top-margin">Forms with answer option</h4>
 <div class="add-margin-bottom">
@@ -37,11 +41,12 @@
                         @item.MinNumberOfAttendances
                     </td>
                     <td>
-                        @*<a asp-page="./Details" asp-route-id="@item.Id">View Questions</a>|*@
-                        <a asp-page="/Evaluations/Forms/Edit" asp-route-id="@item.Id">Edit</a>
+                        <a asp-page="" asp-route-id="@item.Id">View Questions</a>|
+                        <a asp-page="" asp-route-id="@item.Id">View responses</a> 
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
