@@ -19,6 +19,7 @@ namespace TeacherEvaluation.DataAccess.UnitOfWork
         IStudyDomainRepository StudyDomainRepository { get; }
         IRepository<Grade> GradeRepository { get; }
         IAnswerToQuestionWithOptionRepository AnswerToQuestionWithOptionRepository { get; }
+        IAnswerToQuestionWithTextRepository AnswerToQuestionWithTextRepository { get; }
 
         Task<int> SaveChangesAsync();
     }

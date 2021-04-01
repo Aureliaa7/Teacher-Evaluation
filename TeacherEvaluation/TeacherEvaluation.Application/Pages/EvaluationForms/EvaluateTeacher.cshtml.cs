@@ -9,7 +9,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+
 using TeacherEvaluation.Application.Pages.Evaluations.Forms;
+using TeacherEvaluation.BusinessLogic;
 using TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Commands.EvaluationForms;
 using TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations;
@@ -47,22 +49,27 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
         [EnumDataType(typeof(AnswerOption))]
         public List<AnswerOption> Answers { get; set; }
 
+        [BindProperty]
+        [Required]
+        public List<string> TextAnswers { get; set; }
+
+        [BindProperty]
+        public int NumberOfQuestions { get; set; } = Constants.TotalNumberOfQuestions - Constants.NumberOfQuestionsWithTextAnswer;
+
+        [BindProperty]
+        public int TotalNumberOfQuestions { get; set; } = Constants.TotalNumberOfQuestions;
+
         public EvaluateTeacherModel(IMediator mediator)
         {
             this.mediator = mediator;
             Questions = new List<Question>();
             formIsAvailable = true;
-            AnswerOptions = Enum.GetValues(typeof(AnswerOption))
-               .Cast<AnswerOption>()
-               .Select(x =>
-               {
-                   string displayText = AnswerOptionConvertor.ToDisplayString(x);
-                   return new SelectListItem(displayText, x.ToString());
-               })
-               .ToList();
+            AnswerOptions = GetAnswerOptions();
 
             try
             {
+                // why is this logic here? shouldn't it be inside OnGet? 
+                // TODO move this inside OnGet()
                 GetEvaluationFormCommand command = new GetEvaluationFormCommand();
                 form = mediator.Send(command).Result;
                 GetQuestionsForFormCommand getQuestionsCommand = new GetQuestionsForFormCommand { FormId = form.Id };
@@ -72,6 +79,19 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
             {
                 formIsAvailable = false;
             }
+        }
+
+        //TODO extract this into a command
+        public List<SelectListItem> GetAnswerOptions()
+        {
+            return Enum.GetValues(typeof(AnswerOption))
+               .Cast<AnswerOption>()
+               .Select(x =>
+               {
+                   string displayText = AnswerOptionConvertor.ToDisplayString(x);
+                   return new SelectListItem(displayText, x.ToString());
+               })
+               .ToList();
         }
 
         public async Task<IActionResult> OnGet()
@@ -175,7 +195,8 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
                 Responses = Answers,
                 SubjectId = SubjectId,
                 SubjectType = Type,
-                UserIdForStudent = userIdStudent
+                UserIdForStudent = userIdStudent,
+                FreeFormAnswers = TextAnswers
             };
             try
             {
@@ -183,13 +204,13 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
             }
             catch (ArgumentOutOfRangeException)
             {
-                return RedirectToPage("/Evaluations/Forms/QuestionsWithOptionAnswer/EvaluateTeacher");
+                return RedirectToPage("/EvaluationForms/EvaluateTeacher");
             }
             catch (ItemNotFoundException)
             {
                 return RedirectToPage("/Errors/404");
             }
-            return RedirectToPage("/Evaluations/Forms/QuestionsWithOptionAnswer/EvaluateTeacher");
+            return RedirectToPage("/EvaluationForms/EvaluateTeacher");
         }
     }
 }
