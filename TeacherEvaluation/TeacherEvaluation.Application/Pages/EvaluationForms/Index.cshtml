@@ -42,7 +42,7 @@
                     </td>
                     <td>
                         <a asp-page="" asp-route-id="@item.Id">View Questions</a>|
-                        <a asp-page="" asp-route-id="@item.Id">View responses</a> 
+                        <a asp-page="ViewResponses" asp-route-formId="@item.Id">View responses</a>
                     </td>
                 </tr>
             }

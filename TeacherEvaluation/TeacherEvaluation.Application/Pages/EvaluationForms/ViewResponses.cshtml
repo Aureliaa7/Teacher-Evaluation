@@ -1,0 +1,50 @@
+﻿@page  "{handler?}"
+
+@model TeacherEvaluation.Application.Pages.EvaluationForms.ViewResponsesModel
+
+@{
+    ViewData["Title"] = "Responses";
+    Layout = "~/Pages/Shared/_DeanLayout.cshtml";
+}
+
+@section scripts{
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="~/js/charts.js"></script>
+}
+
+<div class="col-md-4">
+    <h3>formid: "@Model.FormId"</h3>
+    @{ var formId = @Model.FormId;}
+    <label asp-for="TeacherId" class="control-label">Subject</label>
+    <select id="teacher-field" asp-for="TeacherId" asp-items="@Model.Teachers" class="form-control"
+            onchange="get_responses('@Model.FormId')">
+    </select>
+</div>
+
+@*<div>
+        @{  var marginTop = 20; }
+        @{ for (var contor = 1; contor < 11; contor++)
+            {
+                var marginTopPx = marginTop + "px";
+                var chartId = "question" + contor;
+                <div id="@chartId" style="width: 420px; height: 420px; margin-top: @marginTopPx"></div>
+                marginTop += 120;
+            }
+        }
+    </div>*@
+
+
+<div class="row">
+    <div id="question1" style="width: 420px; height: 420px;
+        visibility: visible !important;"></div>
+    <div id="question2" style="width: 420px; height: 420px;"></div>
+    <div id="question3" style="width: 420px; height: 420px;"></div>
+</div>
+
+<div id="question4" style="width: 420px; height: 420px;"></div>
+<div id="question5" style="width: 420px; height: 420px;"></div>
+<div id="question6" style="width: 420px; height: 420px;"></div>
+<div id="question7" style="width: 420px; height: 420px;"></div>
+<div id="question8" style="width: 420px; height: 420px;"></div>
+<div id="question9" style="width: 420px; height: 420px;"></div>
+<div id="question10" style="width: 420px; height: 420px;"></div>
