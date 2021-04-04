@@ -18,44 +18,47 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
 
         [BindProperty]
         [Required(ErrorMessage = "Student is required")]
+        [Display(Name = "Student")]
         public Guid? StudentId { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "Subject is required")]
+        [Display(Name = "Subject")]
         public Guid? SubjectId { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "Teacher is required")]
+        [Display(Name = "Teacher")]
         public Guid? TeacherId { get; set; }
 
         [BindProperty]
-        [Display(Name = "Student")]
+        [Display(Name = "Student name")]
         public string StudentName { get; set; }
 
         [BindProperty]
-        [Display(Name = "Teacher")]
+        [Display(Name = "Teacher name")]
         public string TeacherName { get; set; }
 
         [BindProperty]
-        [Display(Name = "Subject")]
+        [Display(Name = "Subject title")]
         public string SubjectTitle { get; set; }
 
         [BindProperty]
         public TaughtSubjectType? Type { get; set; }
 
         [BindProperty]
-        [Display(Name = "Study Year")]
+        [Display(Name = "Study year")]
         [Required(ErrorMessage = "Study year is required")]
         [Range(1, 4, ErrorMessage = "The study year must be between 1 and 4")]
         public int? StudyYear { get; set; } = null;
 
         [BindProperty]
-        [Display(Name = "Study Programme")]
+        [Display(Name = "Study programme")]
         [Required(ErrorMessage = "Study programme is required")]
         public StudyProgramme? StudyProgramme { get; set; }
 
         [BindProperty]
-        [Display(Name = "Study Domain")]
+        [Display(Name = "Study domain")]
         [Required(ErrorMessage = "Study domain is required")]
         public string StudyDomain { get; set; }
 
@@ -69,12 +72,12 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
 
         [BindProperty]
         [Required(ErrorMessage = "Study domain is required")]
+        [Display(Name = "Study domain")]
         public Guid? StudyDomainId { get; set; }
 
         [BindProperty]
-        [Display(Name = "Study domain")]
         [Required(ErrorMessage = "Specialization is required")]
-        
+        [Display(Name = "Specialization")]
         public Guid? SpecializationId { get; set; }
 
         public IEnumerable<Enrollment> Enrollments { get; set; }

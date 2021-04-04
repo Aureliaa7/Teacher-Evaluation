@@ -13,7 +13,7 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row my-row">
             <div class="col-md-4">
-                <label asp-for="StudyProgramme">Study Programme</label><br />
+                <label asp-for="StudyProgramme"></label><br />
                 <select id="study-programme" asp-for="StudyProgramme" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Enums.StudyProgramme>()"
                         class="form-control" onclick="get_domains()">
                     <option value="0">Please select</option>
@@ -21,14 +21,14 @@
                 <span asp-validation-for="StudyProgramme" class="text-danger" />
             </div>
             <div class="col-md-4">
-                <label asp-for="StudyDomainId" class="control-label">Study Domain</label><br />
+                <label asp-for="StudyDomainId" class="control-label"></label><br />
                 <select id="domain" asp-for="StudyDomainId" class="form-control" onclick="get_specializations()">
                     <option>Select study domain</option>
                 </select>
                 <span asp-validation-for="StudyDomainId" class="text-danger" />
             </div>
             <div class="col-md-4">
-                <label asp-for="SpecializationId" class="control-label">Specialization</label><br />
+                <label asp-for="SpecializationId" class="control-label"></label><br />
                 <select id="specialization" asp-for="SpecializationId" class="form-control"
                         onchange="get_students_by_specialization_and_study_year()">
                     <option>Select specialization</option>
@@ -44,14 +44,14 @@
                 <span asp-validation-for="StudyYear" class="text-danger"></span>
             </div>
             <div class="col-md-4">
-                <label asp-for="StudentId" class="control-label">Student Name</label><br />
+                <label asp-for="StudentId" class="control-label"></label><br />
                 <select id="student" asp-for="StudentId" class="form-control" onclick="get_subjects_by_student()">
                     <option>Select student</option>
                 </select>
                 <span asp-validation-for="StudentId" class="text-danger" />
             </div>
             <div class="col-md-4">
-                <label asp-for="SubjectId" class="control-label">Subject</label><br />
+                <label asp-for="SubjectId" class="control-label"></label><br />
                 <select id="subject" asp-for="SubjectId" class="form-control">
                     <option>Select subject</option>
                 </select>
@@ -61,7 +61,7 @@
 
         <div class="row my-row">
             <div class="col-md-4">
-                <label asp-for="Type">Taught Subject Type</label><br />
+                <label asp-for="Type"></label><br />
                 <select id="type" asp-for="Type" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Enums.TaughtSubjectType>()"
                         class="form-control" onclick="check_enrollment_existence_by_subject_and_student()">
                     <option selected disabled hidden>Please select</option>

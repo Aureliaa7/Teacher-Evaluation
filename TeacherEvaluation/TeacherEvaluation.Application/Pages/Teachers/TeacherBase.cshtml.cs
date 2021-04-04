@@ -17,6 +17,7 @@ namespace TeacherEvaluation.Application.Pages.Teachers
         }
 
         [BindProperty]
+        [Display(Name = "Teacher")]
         public Guid TeacherId { get; set; }
 
         [BindProperty]
@@ -44,7 +45,7 @@ namespace TeacherEvaluation.Application.Pages.Teachers
 
         [BindProperty]
         [Required(ErrorMessage = "Father's initial is required")]
-        [RegularExpression(pattern: "^[a-zA-Z-]+(.)+$", ErrorMessage = "Invalid text")]
+        [RegularExpression(pattern: "^[a-zA-Z-]+$", ErrorMessage = "Invalid text")]
         [Display(Name = "Father's initial")]
         [MaxLength(2)]
         public string FathersInitial { get; set; }

@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
+using System.Linq;
 using TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
@@ -26,7 +27,7 @@ namespace TeacherEvaluation.Application.Pages.StudyDomains
                     StudyProgramme programme = (StudyProgramme)Enum.Parse(typeof(StudyProgramme), studyProgramme);
                     GetStudyDomainsByProgrammeCommand command = new GetStudyDomainsByProgrammeCommand { StudyProgramme = programme };
                     var domains = mediator.Send(command).Result;
-                    return new JsonResult(domains);
+                    return new JsonResult(domains.OrderBy(x => x.Name));
                 }
                 catch (ItemNotFoundException) { }
             }

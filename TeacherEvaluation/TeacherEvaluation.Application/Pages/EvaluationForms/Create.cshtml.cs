@@ -27,6 +27,7 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
 
         [BindProperty]
         [EnumDataType(typeof(EnrollmentState))]
+        [Display(Name = "For enrollment state")]
         public EnrollmentState EnrollmentState { get; set; }
 
         public IEnumerable<SelectListItem> EnrollmentStates = new List<SelectListItem>();
@@ -34,16 +35,19 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
         [BindProperty]
         [Required(ErrorMessage = "The minimum number of attendances is required")]
         [Range(1, 14, ErrorMessage = "The number of attendances must be between 1 and 14")]
+        [Display(Name = "Min number of attendances")]
         public int? NumberOfAttendances { get; set; } = null;
 
         [BindProperty]
         [Required(ErrorMessage = "The start date is required")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        [Display(Name = "Start date")]
         public DateTime StartDate { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "The end date is required")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        [Display(Name = "End date")]
         public DateTime EndDate { get; set; }
 
 
