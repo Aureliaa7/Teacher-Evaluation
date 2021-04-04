@@ -25,6 +25,9 @@ namespace TeacherEvaluation.DataAccess.Repositories
         {
             return await Context.Set<AnswerToQuestionWithOption>()
                 .Where(x => x.Question.Id == id)
+                .Include(x => x.Enrollment)
+                    .ThenInclude(x => x.TaughtSubject)
+                        .ThenInclude(x => x.Teacher)
                 .ToListAsync();
         }
     }

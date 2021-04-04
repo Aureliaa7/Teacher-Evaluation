@@ -16,6 +16,9 @@
                     <th>
                         Teacher
                     </th>
+                    <th>
+                        Type
+                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -31,6 +34,9 @@
                         @Html.DisplayFor(modelItem => item.Subject.NumberOfCredits)
                     </td>
                     <td>@teacherName</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
                     @if (Model.CurrentRole.IsTeacher)
                     {
                         <td>
@@ -41,7 +47,7 @@
                     {
                         <td>
                             <div class="row">
-                                <a class="nav-link white-link" asp-page="./Details" asp-route-id="@item.Id"><i class="fa fa-info-circle"></i></a> 
+                                <a class="nav-link white-link" asp-page="./Details" asp-route-id="@item.Id"><i class="fa fa-info-circle"></i></a>
                                 <a class="nav-link white-link" asp-page="./Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>
                             </div>
                         </td>

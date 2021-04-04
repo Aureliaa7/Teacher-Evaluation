@@ -12,39 +12,25 @@
     <script src="~/js/charts.js"></script>
 }
 
+<h3 class="row align-input-center" style="margin-top: 70px;">Select the teacher</h3>
+<hr/>
 <div class="col-md-4">
-    <h3>formid: "@Model.FormId"</h3>
     @{ var formId = @Model.FormId;}
-    <label asp-for="TeacherId" class="control-label">Subject</label>
     <select id="teacher-field" asp-for="TeacherId" asp-items="@Model.Teachers" class="form-control"
             onchange="get_responses('@Model.FormId')">
+        <option selected disabled hidden>Please select</option>
     </select>
 </div>
 
-@*<div>
-        @{  var marginTop = 20; }
-        @{ for (var contor = 1; contor < 11; contor++)
-            {
-                var marginTopPx = marginTop + "px";
-                var chartId = "question" + contor;
-                <div id="@chartId" style="width: 420px; height: 420px; margin-top: @marginTopPx"></div>
-                marginTop += 120;
-            }
-        }
-    </div>*@
-
-
-<div class="row">
-    <div id="question1" style="width: 420px; height: 420px;
-        visibility: visible !important;"></div>
-    <div id="question2" style="width: 420px; height: 420px;"></div>
-    <div id="question3" style="width: 420px; height: 420px;"></div>
+<div id="charts" style="margin-top: 50px;">
+    @for (var contor = 1; contor < 11; contor += 2)
+    {
+        var chartId1 = "question" + contor;
+        var chartId2 = "question" + (contor + 1);
+        var rowId = "row" + contor;
+        <div class="row" id="@rowId">
+            <div id="@chartId1"></div>
+            <div id="@chartId2"></div>
+        </div>
+    }
 </div>
-
-<div id="question4" style="width: 420px; height: 420px;"></div>
-<div id="question5" style="width: 420px; height: 420px;"></div>
-<div id="question6" style="width: 420px; height: 420px;"></div>
-<div id="question7" style="width: 420px; height: 420px;"></div>
-<div id="question8" style="width: 420px; height: 420px;"></div>
-<div id="question9" style="width: 420px; height: 420px;"></div>
-<div id="question10" style="width: 420px; height: 420px;"></div>
