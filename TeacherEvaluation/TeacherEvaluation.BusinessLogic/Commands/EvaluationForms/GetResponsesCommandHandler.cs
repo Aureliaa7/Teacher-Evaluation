@@ -40,23 +40,23 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
                     int noStronglyAgreeAnswers = (responses.Where(r => r.Equals(AnswerOption.StronglyAgree))).Count();
 
                     IDictionary<string, int> answersOptionAndNumberOfAnswers = new Dictionary<string, int>();
-                    if(noStronglyDisagreeAnswers > 0)
+                    if (noStronglyDisagreeAnswers > 0)
                     {
                         answersOptionAndNumberOfAnswers.Add("Strongly Disagree", noStronglyDisagreeAnswers);
                     }
-                    if(noDisagreeAnswers > 0)
+                    if (noDisagreeAnswers > 0)
                     {
                         answersOptionAndNumberOfAnswers.Add("Disagree", noDisagreeAnswers);
                     }
-                    if(noNeutralAnswers > 0)
+                    if (noNeutralAnswers > 0)
                     {
                         answersOptionAndNumberOfAnswers.Add("Neutral", noNeutralAnswers);
                     }
-                    if(noAgreeAnswers > 0)
+                    if (noAgreeAnswers > 0)
                     {
                         answersOptionAndNumberOfAnswers.Add("Agree", noAgreeAnswers);
                     }
-                    if(noStronglyAgreeAnswers > 0)
+                    if (noStronglyAgreeAnswers > 0)
                     {
                         answersOptionAndNumberOfAnswers.Add("Strongly Agree", noStronglyAgreeAnswers);
                     }

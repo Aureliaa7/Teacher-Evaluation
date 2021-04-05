@@ -8,5 +8,6 @@ namespace TeacherEvaluation.DataAccess.Repositories.Interfaces
     public interface IAnswerToQuestionWithTextRepository : IRepository<AnswerToQuestionWithText>
     {
         Task<IEnumerable<AnswerToQuestionWithText>> GetByEnrollmentAndFormId(Guid enrollmentId, Guid formId);
+        Task<IEnumerable<AnswerToQuestionWithText>> GetByQuestionId(Guid id);
     }
 }

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TeacherEvaluation.BusinessLogic.Commands.EvaluationForms;
+using TeacherEvaluation.BusinessLogic.Commands.TagClouds;
 using TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 
@@ -57,6 +58,15 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
             };
 
             var questionsAndResponses = mediator.Send(command).Result;
+
+            //to be deleted
+            TagCloudCommand tagCloudCommand = new TagCloudCommand
+            {
+                FormId = new Guid(formId),
+                TeacherId = new Guid(teacherId)
+            };
+            var tagClouds = mediator.Send(tagCloudCommand).Result;
+            //
             return new JsonResult(questionsAndResponses);
         }
     }
