@@ -33,12 +33,10 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TagClouds
                 
                 for (int contor = 0; contor < Constants.NumberOfQuestionsWithTextAnswer; contor++)
                 {
-
-                    //todo fix the problem from here; responses should not be empty
                     var responses = (await unitOfWork.AnswerToQuestionWithTextRepository.GetByQuestionId(questions.ElementAt(contor).Id))
                                      .Where(r => r.Enrollment.TaughtSubject.Teacher.Id == request.TeacherId);
 
-                    var selectedResponses = responses.Select(x => x.Answer);
+                    var selectedResponses = responses.Select(x => x.FreeFormAnswer);
                     freeFormTexts.AddRange(selectedResponses);
                 }
 

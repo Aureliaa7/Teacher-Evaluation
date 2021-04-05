@@ -20,18 +20,21 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
 
         public async Task<IDictionary<string, IDictionary<string, int>>> Handle(GetResponsesCommand request, CancellationToken cancellationToken)
         {
-            IDictionary<string, IDictionary<string, int>> questionsWithResponses = new Dictionary<string, IDictionary<string, int>>();
-
             bool formExists = await unitOfWork.FormRepository.Exists(f => f.Id == request.FormId);
             bool teacherExists = await unitOfWork.TeacherRepository.Exists(t => t.Id == request.TeacherId);
             if (formExists && teacherExists)
             {
-                var questions = (await unitOfWork.QuestionRepository.GetQuestionsWithRelatedEntities(request.FormId)).ToList();
-                for (int contor = 0; contor < Constants.NumberOfQuestionsWithAnswerOption; contor++)
+                IDictionary<string, IDictionary<string, int>> questionsWithResponses = new Dictionary<string, IDictionary<string, int>>();
+                var questions = (await unitOfWork.QuestionRepository.GetQuestionsWithRelatedEntities(request.FormId))
+                                .Where(q => !q.HasFreeFormAnswer)
+                                .ToList();
+
+                foreach(var question in questions)
                 {
-                    var responses = (await unitOfWork.AnswerToQuestionWithOptionRepository.GetByQuestionId(questions.ElementAt(contor).Id))
+                    var responses = (await unitOfWork.AnswerToQuestionWithOptionRepository.GetByQuestionId(question.Id))
                                      .Where(r => r.Enrollment.TaughtSubject.Teacher.Id == request.TeacherId)
-                                     .Select(x => x.Answer);
+                                     .Select(x => x.Answer)
+                                     .ToList();
 
                     int noStronglyDisagreeAnswers = (responses.Where(r => r.Equals(AnswerOption.StronglyDisagree))).Count();
                     int noDisagreeAnswers = (responses.Where(r => r.Equals(AnswerOption.Disagree))).Count();
@@ -60,7 +63,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
                     {
                         answersOptionAndNumberOfAnswers.Add("Strongly Agree", noStronglyAgreeAnswers);
                     }
-                    questionsWithResponses.Add(questions.ElementAt(contor).Text, answersOptionAndNumberOfAnswers);
+                    questionsWithResponses.Add(question.Text, answersOptionAndNumberOfAnswers);
                 }
 
                 return questionsWithResponses;

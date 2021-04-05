@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,35 +33,34 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
                     var enrollment = await unitOfWork.EnrollmentRepository.GetEnrollmentBySubjectStateTypeAndStudent(
                         request.SubjectId, request.EnrollmentState, request.SubjectType, student.Id);
 
-                    var freeFormQuestions = request.Questions.Skip(request.Questions.Count() - Constants.NumberOfQuestionsWithAnswerOption)
-                                                              .Take(Constants.NumberOfQuestionsWithTextAnswer);
-                    var questionsWithAnswerOption = request.Questions.Take(Constants.NumberOfQuestionsWithAnswerOption);
+                    var freeFormQuestions = request.Questions.Where(q => q.HasFreeFormAnswer);
+                    var questionsWithAnswerOption = request.Questions.Where(q => !q.HasFreeFormAnswer);
 
-                    // save the answers for the questions with answer options
                     int contor = 0;
-                    try
+                    foreach (var question in questionsWithAnswerOption)
                     {
-                        foreach (var question in questionsWithAnswerOption) 
-                        { 
-                            var response = new AnswerToQuestionWithOption { Answer = request.Responses[contor++], Enrollment = enrollment, Question = question };
-                            await unitOfWork.AnswerToQuestionWithOptionRepository.Add(response);
-                        }
-                        await unitOfWork.SaveChangesAsync();
-                    }
-                    catch (ArgumentOutOfRangeException) { throw; }
-
-                    // save the answers for the question with free form answers
-                    contor = 0;
-                    try
-                    {
-                        foreach (var question in freeFormQuestions)
+                        var response = new AnswerToQuestionWithOption
                         {
-                            var response = new AnswerToQuestionWithText { Answer = request.FreeFormAnswers[contor++], Enrollment = enrollment, Question = question };
-                            await unitOfWork.AnswerToQuestionWithTextRepository.Add(response);
-                        }
-                        await unitOfWork.SaveChangesAsync();
+                            Answer = request.Responses[contor++],
+                            Enrollment = enrollment,
+                            Question = question
+                        };
+                        await unitOfWork.AnswerToQuestionWithOptionRepository.Add(response);
                     }
-                    catch (ArgumentOutOfRangeException) { throw; }
+ 
+                    contor = 0;
+                    foreach (var question in freeFormQuestions)
+                    {
+                        var response = new AnswerToQuestionWithText
+                        {
+                            FreeFormAnswer = request.FreeFormAnswers[contor++],
+                            Enrollment = enrollment,
+                            Question = question,
+                            IsFreeForm = true
+                        };
+                        await unitOfWork.AnswerToQuestionWithTextRepository.Add(response);
+                    }
+                    await unitOfWork.SaveChangesAsync();
                 }
                 else
                 {
