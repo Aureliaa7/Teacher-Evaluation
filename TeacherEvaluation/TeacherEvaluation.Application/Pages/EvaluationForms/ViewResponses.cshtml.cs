@@ -58,16 +58,18 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
             };
 
             var questionsAndResponses = mediator.Send(command).Result;
+            return new JsonResult(questionsAndResponses);
+        }
 
-            //to be deleted
+        public JsonResult OnGetReturnTagCloud(string teacherId, string formId)
+        {
             TagCloudCommand tagCloudCommand = new TagCloudCommand
             {
                 FormId = new Guid(formId),
                 TeacherId = new Guid(teacherId)
             };
             var tagClouds = mediator.Send(tagCloudCommand).Result;
-            //
-            return new JsonResult(questionsAndResponses);
+            return new JsonResult(tagClouds);
         }
     }
 }

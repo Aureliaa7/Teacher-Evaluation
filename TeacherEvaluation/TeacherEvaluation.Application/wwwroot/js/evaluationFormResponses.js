@@ -3,10 +3,17 @@
         teacherId: $("#teacher-field").val(),
         formId: formID
     };
+
     console.log(search_details);
 
+    create_charts(search_details);
+    create_tag_cloud(search_details);
+}
+
+
+function create_charts(search_details) {
     // remove the old charts
-    removeChartsDivs();
+    remove_charts_divs();
 
     $.ajax({
         type: "GET",
@@ -53,7 +60,7 @@
                         }
                     }
 
-                    createNewDivs();
+                    create_new_divs();
                     if (drawCharts == "true") {
                         // draw the charts
                         for (var contor = 0; contor < 10; contor++) {
@@ -75,14 +82,14 @@
     });
 }
 
-function removeChartsDivs() {
+function remove_charts_divs() {
     for (var contor = 1; contor < 11; contor+=2) {
         var chartDivRow = document.getElementById("row" + contor);
         chartDivRow.remove();
     }
 }
 
-function createNewDivs() {
+function create_new_divs() {
     for (var contor = 1; contor < 11; contor+=2) {
         var divRowElement = document.createElement('div');
         divRowElement.className = "row";
@@ -98,4 +105,63 @@ function createNewDivs() {
         var mainElement = document.getElementById('mainElementDeanLayout');
         mainElement.appendChild(divRowElement);
     }
+}
+
+function create_tag_cloud(search_details) {
+    var tagDiv = document.getElementById("tag-cloud-div");
+    tagDiv.remove();
+
+    $.ajax({
+        type: "GET",
+        data: search_details,
+        dataType: 'json',
+        contextType: 'application/json',
+        url: "/EvaluationForms/ViewResponses?handler=ReturnTagCloud",
+
+        success: function (result) {
+            var tagDiv = document.createElement("div");
+            tagDiv.id = "tag-cloud-div";
+            tagDiv.className = "tag-cloud";
+            tagDiv.style.marginBottom= "170px;"
+
+            if (result.length > 0) {
+                var h2 = document.createElement("h2");
+                h2.textContent = "Relevant words";
+                h2.style.color = "#6468ed";
+                h2.style.fontFamily = "Brush Script MT";
+                tagDiv.appendChild(h2);
+               // tagDiv.style.backgroundImage = "url('../images/clouds3.jpg')";
+                //tagDiv.style.backgroundSize = "1000px 1000px";
+            }
+            for (var i = 0; i < result.length; i++) {
+                if (i % 5 == 0) {
+                    var br = document.createElement("br");
+                    tagDiv.appendChild(br);
+                }
+                var tag = result[i];
+                console.log("result: ", result);
+                console.log("tag: ", tag);
+                var spanElement = document.createElement("span");
+                console.log("category: ", tag.category);
+                spanElement.className = "tag kind-".concat(tag.category);
+                spanElement.textContent = tag.text;
+                console.log("text: ", tag.text);
+                tagDiv.appendChild(spanElement);
+            }
+            var mainElement = document.getElementById('mainElementDeanLayout');
+            mainElement.appendChild(tagDiv);
+
+            var animatedProperties = {
+                paddingLeft: '50px',
+                paddingTop: '75px',
+                paddingBottom: '125px',
+                paddingRight: '150px',
+                opacity: 1
+            };
+            $('.tag-cloud').animate(animatedProperties, 500);
+        },
+        error: function () {
+            console.log("Error while creating the tag cloud!");
+        }
+    });
 }

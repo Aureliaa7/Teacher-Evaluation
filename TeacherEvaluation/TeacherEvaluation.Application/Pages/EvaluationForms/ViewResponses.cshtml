@@ -9,11 +9,11 @@
 
 @section scripts{
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="~/js/charts.js"></script>
+    <script src="~/js/evaluationFormResponses.js"></script>
 }
 
 <h3 class="row align-input-center" style="margin-top: 70px;">Select the teacher</h3>
-<hr/>
+<hr />
 <div class="col-md-4">
     @{ var formId = @Model.FormId;}
     <select id="teacher-field" asp-for="TeacherId" asp-items="@Model.Teachers" class="form-control"
@@ -34,3 +34,5 @@
         </div>
     }
 </div>
+
+<div id="tag-cloud-div"></div>
