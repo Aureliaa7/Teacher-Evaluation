@@ -30,4 +30,8 @@
     <ProjectReference Include="..\TeacherEvaluation.EmailSender\TeacherEvaluation.EmailSender.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Responses\" />
+  </ItemGroup>
+
 </Project>

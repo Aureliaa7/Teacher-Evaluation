@@ -51,7 +51,7 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
 
         public JsonResult OnGetRetrieveResponses(string teacherId, string formId)
         {
-            GetResponsesCommand command = new GetResponsesCommand 
+            ChartsDataCommand command = new ChartsDataCommand 
             {
                 FormId = new Guid(formId), 
                 TeacherId = new Guid(teacherId) 

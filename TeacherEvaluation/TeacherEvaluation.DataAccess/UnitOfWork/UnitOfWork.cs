@@ -23,6 +23,7 @@ namespace TeacherEvaluation.DataAccess.UnitOfWork
         private IRepository<Grade> gradeRepository;
         private IAnswerToQuestionWithOptionRepository answerToQuestionWithOptionRepository;
         private IAnswerToQuestionWithTextRepository answerToQuestionWithTextRepository;
+        private IAnswerRepository answerRepository;
 
         public UnitOfWork(ApplicationDbContext dbContext)
         {
@@ -184,6 +185,17 @@ namespace TeacherEvaluation.DataAccess.UnitOfWork
             }
         }
 
+        public IAnswerRepository AnswerRepository
+        {
+            get
+            {
+                if (answerRepository == null)
+                {
+                    answerRepository = new AnswerRepository(dbContext);
+                }
+                return answerRepository;
+            }
+        }
         public async Task<int> SaveChangesAsync()
         {
             return await dbContext.SaveChangesAsync();

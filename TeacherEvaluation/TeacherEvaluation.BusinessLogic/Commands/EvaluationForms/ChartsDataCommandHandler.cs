@@ -9,16 +9,16 @@ using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
 {
-    public class GetResponsesCommandHandler : IRequestHandler<GetResponsesCommand, IDictionary<string, IDictionary<string, int>>>
+    public class ChartsDataCommandHandler : IRequestHandler<ChartsDataCommand, IDictionary<string, IDictionary<string, int>>>
     {
         private readonly IUnitOfWork unitOfWork;
 
-        public GetResponsesCommandHandler(IUnitOfWork unitOfWork)
+        public ChartsDataCommandHandler(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<IDictionary<string, IDictionary<string, int>>> Handle(GetResponsesCommand request, CancellationToken cancellationToken)
+        public async Task<IDictionary<string, IDictionary<string, int>>> Handle(ChartsDataCommand request, CancellationToken cancellationToken)
         {
             bool formExists = await unitOfWork.FormRepository.Exists(f => f.Id == request.FormId);
             bool teacherExists = await unitOfWork.TeacherRepository.Exists(t => t.Id == request.TeacherId);

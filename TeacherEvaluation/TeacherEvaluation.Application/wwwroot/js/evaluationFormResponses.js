@@ -20,7 +20,7 @@ function create_charts(search_details) {
         data: search_details,
         dataType: 'json',
         contextType: 'application/json',
-        url: "/EvaluationForms/ViewResponses?handler=RetrieveResponses",
+        url: "/EvaluationForms/ViewCharts?handler=RetrieveResponses",
 
         success: function (result) {
             google.charts.load('current', {
@@ -116,7 +116,7 @@ function create_tag_cloud(search_details) {
         data: search_details,
         dataType: 'json',
         contextType: 'application/json',
-        url: "/EvaluationForms/ViewResponses?handler=ReturnTagCloud",
+        url: "/EvaluationForms/ViewCharts?handler=ReturnTagCloud",
 
         success: function (result) {
             var tagDiv = document.createElement("div");
