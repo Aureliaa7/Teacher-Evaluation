@@ -20,5 +20,15 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .Where(x => x.Enrollment.Id == enrollmentId && x.Question.Form.Id == formId)
                 .ToListAsync();
         }
+
+        public async Task<IEnumerable<AnswerToQuestionWithOption>> GetByQuestionId(Guid id)
+        {
+            return await Context.Set<AnswerToQuestionWithOption>()
+                .Where(x => x.Question.Id == id)
+                .Include(x => x.Enrollment)
+                    .ThenInclude(x => x.TaughtSubject)
+                        .ThenInclude(x => x.Teacher)
+                .ToListAsync();
+        }
     }
 }

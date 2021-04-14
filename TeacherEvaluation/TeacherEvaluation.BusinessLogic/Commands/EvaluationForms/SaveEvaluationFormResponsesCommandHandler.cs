@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
@@ -32,19 +32,35 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
                 {
                     var enrollment = await unitOfWork.EnrollmentRepository.GetEnrollmentBySubjectStateTypeAndStudent(
                         request.SubjectId, request.EnrollmentState, request.SubjectType, student.Id);
-    
+
+                    var freeFormQuestions = request.Questions.Where(q => q.HasFreeFormAnswer);
+                    var questionsWithAnswerOption = request.Questions.Where(q => !q.HasFreeFormAnswer);
+
                     int contor = 0;
-                    foreach(var question in request.Questions)
+                    foreach (var question in questionsWithAnswerOption)
                     {
-                        try
+                        var response = new AnswerToQuestionWithOption
                         {
-                            var response = new AnswerToQuestionWithOption { Answer = request.Responses[contor++], Enrollment = enrollment, Question = question };
-                            await unitOfWork.AnswerToQuestionWithOptionRepository.Add(response);
-                            unitOfWork.QuestionRepository.Update(question);
-                            await unitOfWork.SaveChangesAsync();
-                        }
-                        catch (ArgumentOutOfRangeException) { throw; }
+                            Answer = request.Responses[contor++],
+                            Enrollment = enrollment,
+                            Question = question
+                        };
+                        await unitOfWork.AnswerToQuestionWithOptionRepository.Add(response);
                     }
+ 
+                    contor = 0;
+                    foreach (var question in freeFormQuestions)
+                    {
+                        var response = new AnswerToQuestionWithText
+                        {
+                            FreeFormAnswer = request.FreeFormAnswers[contor++],
+                            Enrollment = enrollment,
+                            Question = question,
+                            IsFreeForm = true
+                        };
+                        await unitOfWork.AnswerToQuestionWithTextRepository.Add(response);
+                    }
+                    await unitOfWork.SaveChangesAsync();
                 }
                 else
                 {

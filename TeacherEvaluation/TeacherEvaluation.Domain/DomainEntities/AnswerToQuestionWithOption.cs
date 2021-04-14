@@ -1,13 +1,9 @@
-﻿using System;
-using TeacherEvaluation.Domain.DomainEntities.Enums;
+﻿using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Domain.DomainEntities
 {
-    public class AnswerToQuestionWithOption
+    public class AnswerToQuestionWithOption : AnswerToQuestion
     {
-        public Guid Id { get; set; }
-        public Enrollment Enrollment { get; set; }
         public AnswerOption Answer { get; set; }
-        public Question Question { get; set; }
     }
 }

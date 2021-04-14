@@ -13,7 +13,7 @@
 
         <div class="row my-row">
             <div class="col-md-4">
-                <label asp-for="EnrollmentState">For enrollment status</label><br />
+                <label asp-for="EnrollmentState"></label><br />
                 <select asp-for="EnrollmentState" asp-items="@Model.EnrollmentStates"
                         class="form-control">
                     <option selected disabled hidden>Please select</option>
@@ -21,19 +21,19 @@
                 <span asp-validation-for="EnrollmentState" class="text-danger" />
             </div>
             <div class="col-md-4">
-                <label asp-for="NumberOfAttendances">Min number of attendances</label><br />
+                <label asp-for="NumberOfAttendances"></label><br />
                 <input asp-for="NumberOfAttendances" class="form-control">
                 <span asp-validation-for="NumberOfAttendances"></span>
             </div>
         </div>
         <div class="row my-row">
             <div class="col-md-4">
-                <label asp-for="StartDate">Start date</label><br />
+                <label asp-for="StartDate"></label><br />
                 <input asp-for="StartDate" class="form-control">
                 <span asp-validation-for="StartDate"></span>
             </div>
             <div class="col-md-4">
-                <label asp-for="EndDate">End date</label><br />
+                <label asp-for="EndDate"></label><br />
                 <input asp-for="EndDate" class="form-control">
                 <span asp-validation-for="EndDate"></span>
             </div>

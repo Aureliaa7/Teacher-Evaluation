@@ -7,5 +7,6 @@ namespace TeacherEvaluation.Domain.DomainEntities
         public Guid Id { get; set; }
         public string Text { get; set; }
         public Form Form { get; set; }
+        public bool HasFreeFormAnswer { get; set; }
     }
 }

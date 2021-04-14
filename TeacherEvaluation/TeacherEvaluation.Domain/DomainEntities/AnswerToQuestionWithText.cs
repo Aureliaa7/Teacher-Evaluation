@@ -1,12 +1,7 @@
-﻿using System;
-
-namespace TeacherEvaluation.Domain.DomainEntities
+﻿namespace TeacherEvaluation.Domain.DomainEntities
 {
-    public class AnswerToQuestionWithText
+    public class AnswerToQuestionWithText : AnswerToQuestion
     {
-        public Guid Id { get; set; }
-        public Enrollment Enrollment { get; set; }
-        public string Answer { get; set; }
-        public Question Question { get; set; }
+        public string FreeFormAnswer { get; set; }
     }
 }

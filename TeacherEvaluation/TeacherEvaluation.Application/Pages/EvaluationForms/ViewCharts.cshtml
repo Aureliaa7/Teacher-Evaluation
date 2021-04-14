@@ -1,0 +1,38 @@
+﻿@page  "{handler?}"
+
+@model TeacherEvaluation.Application.Pages.EvaluationForms.ViewResponsesModel
+
+@{
+    ViewData["Title"] = "Responses";
+    Layout = "~/Pages/Shared/_DeanLayout.cshtml";
+}
+
+@section scripts{
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="~/js/evaluationFormResponses.js"></script>
+}
+
+<h3 class="row align-input-center" style="margin-top: 70px;">Select the teacher</h3>
+<hr />
+<div class="col-md-4">
+    @{ var formId = @Model.FormId;}
+    <select id="teacher-field" asp-for="TeacherId" asp-items="@Model.Teachers" class="form-control"
+            onchange="get_responses('@Model.FormId')">
+        <option selected disabled hidden>Please select</option>
+    </select>
+</div>
+
+<div id="charts" style="margin-top: 50px;">
+    @for (var contor = 1; contor < 11; contor += 2)
+    {
+        var chartId1 = "question" + contor;
+        var chartId2 = "question" + (contor + 1);
+        var rowId = "row" + contor;
+        <div class="row" id="@rowId">
+            <div id="@chartId1"></div>
+            <div id="@chartId2"></div>
+        </div>
+    }
+</div>
+
+<div id="tag-cloud-div"></div>

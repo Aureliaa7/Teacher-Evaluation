@@ -20,6 +20,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="Sparc.TagCloud" Version="0.0.1" />
     <PackageReference Include="SweetAlert" Version="1.0.0" />
   </ItemGroup>
 
@@ -27,6 +28,10 @@
     <ProjectReference Include="..\TeacherEvaluation.BusinessLogic\TeacherEvaluation.BusinessLogic.csproj" />
     <ProjectReference Include="..\TeacherEvaluation.DataAccess\TeacherEvaluation.DataAccess.csproj" />
     <ProjectReference Include="..\TeacherEvaluation.EmailSender\TeacherEvaluation.EmailSender.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\Responses\" />
   </ItemGroup>
 
 </Project>

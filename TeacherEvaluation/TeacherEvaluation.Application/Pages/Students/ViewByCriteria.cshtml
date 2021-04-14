@@ -13,7 +13,7 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row my-row">
             <div class="col-md-4">
-                <label asp-for="StudyProgramme">Study programme</label><br />
+                <label asp-for="StudyProgramme"></label><br />
                 <select id="study-programme" asp-for="StudyProgramme" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Enums.StudyProgramme>()"
                         class="form-control" onclick="get_domains()">
                     <option selected="selected" value="">Please select</option>
@@ -21,7 +21,7 @@
                 <span asp-validation-for="StudyProgramme" class="text-danger" />
             </div>
             <div class="col-md-4">
-                <label asp-for="StudyDomainId" class="control-label">Study domain</label><br />
+                <label asp-for="StudyDomainId" class="control-label"></label><br />
                 <select id="domain" asp-for="StudyDomainId" class="form-control" onclick="get_specializations()">
                     <option>Select study domain</option>
                 </select>
@@ -31,14 +31,14 @@
 
         <div class="row my-row">
             <div class="col-md-4">
-                <label asp-for="SpecializationId" class="control-label">Specialization</label><br />
+                <label asp-for="SpecializationId" class="control-label"></label><br />
                 <select id="specialization" asp-for="SpecializationId" class="form-control">
                     <option>Select specialization</option>
                 </select>
                 <span asp-validation-for="SpecializationId" class="text-danger" />
             </div>
             <div class="col-md-4">
-                <label asp-for="StudyYear" class="control-label">Study year</label>
+                <label asp-for="StudyYear" class="control-label"></label>
                 <input asp-for="StudyYear" class="form-control" onchange="get_students_by_specialization_and_study_year()" />
                 <span asp-validation-for="StudyYear" class="text-danger"></span>
             </div>

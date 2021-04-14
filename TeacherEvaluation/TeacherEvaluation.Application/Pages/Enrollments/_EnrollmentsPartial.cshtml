@@ -17,13 +17,13 @@
                     Student
                 </th>
                 <th>
-                    Study Year
+                    Study year
                 </th>
                 <th>
-                    Study Programme
+                    Study programme
                 </th>
                 <th>
-                    Study Domain
+                    Study domain
                 </th>
                 <th>
                     Specialization
@@ -75,7 +75,7 @@
                         @Html.DisplayFor(modelItem => item.Student.Group)
                     </td>
                     <td>
-                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                        <a class="nav-link white-link" asp-page="./Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>
                     </td>
                 </tr>
             }

@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
+using System.Linq;
 using TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 
@@ -24,7 +25,7 @@ namespace TeacherEvaluation.Application.Pages.Specializations
                 {
                     GetSpecializationsByDomainCommand command = new GetSpecializationsByDomainCommand { StudyDomainId = new Guid(studyDomainId) };
                     var specializations = mediator.Send(command).Result;
-                    return new JsonResult(specializations);
+                    return new JsonResult(specializations.OrderBy(x => x.Name));
                 }
                 catch(ItemNotFoundException) { }
             }

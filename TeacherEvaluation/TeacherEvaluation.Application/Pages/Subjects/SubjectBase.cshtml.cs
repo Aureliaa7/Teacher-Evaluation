@@ -38,14 +38,16 @@ namespace TeacherEvaluation.Application.Pages.Subjects
         [BindProperty]
         [EnumDataType(typeof(StudyProgramme))]
         [Required(ErrorMessage = "Study programme is required")]
+        [Display(Name = "Study programme")]
         public StudyProgramme StudyProgramme { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "Study domain is required")]
+        [Display(Name = "Study domain")]
         public Guid StudyDomainId { get; set; }
 
         [BindProperty]
-        [Display(Name = "Study domain")]
+        [Display(Name = "Specialization")]
         [Required(ErrorMessage = "Specialization is required")]
         public Guid SpecializationId { get; set; }
 

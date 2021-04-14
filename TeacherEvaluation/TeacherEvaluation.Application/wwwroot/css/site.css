@@ -222,3 +222,13 @@ input::-webkit-inner-spin-button {
     margin-left: 20%;
     background-color: #e3dee0;
 }
+
+.white-link {
+    color: white;
+}
+
+.option-dropdown-size {
+    margin-left: 0px;
+    margin-top: 5px;
+    width: 205px;
+}

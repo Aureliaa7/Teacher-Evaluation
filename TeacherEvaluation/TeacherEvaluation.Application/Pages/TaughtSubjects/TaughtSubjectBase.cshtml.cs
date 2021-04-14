@@ -18,6 +18,7 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
         public CurrentRole CurrentRole { get; set; }
 
         [BindProperty]
+        [Display(Name = "Taught subject")]
         public Guid TaughtSubjectId { get; set; }
 
         [BindProperty]
@@ -31,14 +32,17 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
         [BindProperty]
         [EnumDataType(typeof(TaughtSubjectType))]
         [Required(ErrorMessage = "Type is required")]
+        [Display(Name = "Taught subject type")]
         public TaughtSubjectType? Type { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "Teacher is required")]
+        [Display(Name = "Teacher")]
         public Guid? TeacherId { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "Subject is required")]
+        [Display(Name = "Subject")]
         public Guid? SubjectId { get; set; }
 
         [BindProperty]

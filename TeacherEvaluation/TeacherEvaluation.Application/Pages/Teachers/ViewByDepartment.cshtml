@@ -40,7 +40,7 @@
             <thead>
                 <tr>
                     <th>
-                        Teacher Name
+                        Teacher name
                     </th>
                     <th>
                         Degree
@@ -66,9 +66,11 @@
                             @Html.DisplayFor(modelItem => item.Department)
                         </td>
                         <td>
-                            <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                            <div class="row">
+                                <a class="nav-link white-link" asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a> 
+                                <a class="nav-link white-link" asp-page="./Details" asp-route-id="@item.Id"><i class="fa fa-info-circle"></i></a> 
+                                <a class="nav-link white-link" asp-page="./Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>
+                            </div>
                         </td>
                     </tr>
                 }

@@ -27,19 +27,23 @@ namespace TeacherEvaluation.Application.Pages.Attendances
 
         [BindProperty]
         [Required(ErrorMessage = "Student is required")]
+        [Display(Name = "Student")]
         public Guid StudentId { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "Subject is required")]
+        [Display(Name = "Subject")]
         public Guid SubjectId { get; set; }
 
         [BindProperty]
         [EnumDataType(typeof(TaughtSubjectType))]
+        [Display(Name = "Taught subject type")]
         public TaughtSubjectType Type { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "Number of attendances is required")]
         [Range(1, 14, ErrorMessage = "The number must be between 1 and 14")]
+        [Display(Name = "Number of attendances")]
         public int? NumberOfAttendances { get; set; } = null;
 
         public CreateModel(IMediator mediator)

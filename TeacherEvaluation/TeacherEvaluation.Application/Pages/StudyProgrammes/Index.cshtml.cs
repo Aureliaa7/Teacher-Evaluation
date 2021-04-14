@@ -25,7 +25,7 @@ namespace TeacherEvaluation.Application.Pages.StudyProgrammes
                                                                                          Text = Enum.GetName(typeof(StudyProgramme), x),
                                                                                          Value = (Convert.ToInt32(x)).ToString()
                                                                                      }), "Value", "Text");
-            return new JsonResult(studyProgrammes);
+            return new JsonResult(studyProgrammes.OrderBy(x => x.Text));
         }
     }
 }

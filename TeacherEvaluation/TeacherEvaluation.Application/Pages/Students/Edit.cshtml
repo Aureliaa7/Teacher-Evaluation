@@ -17,17 +17,17 @@
         <input type="hidden" asp-for="StudentId" />
         <div class="row my-row">
             <div class="col-md-4">
-                <label asp-for="FirstName">First name</label><br />
+                <label asp-for="FirstName"></label><br />
                 <input asp-for="FirstName" class="form-control">
                 <span asp-validation-for="FirstName"></span>
             </div>
             <div class="col-md-4">
-                <label asp-for="LastName">Last name</label><br />
+                <label asp-for="LastName"></label><br />
                 <input asp-for="LastName" class="form-control">
                 <span asp-validation-for="LastName"></span>
             </div>
             <div class="col-md-4">
-                <label asp-for="FathersInitial">Father's initial</label><br />
+                <label asp-for="FathersInitial"></label><br />
                 <input asp-for="FathersInitial" class="form-control">
                 <span asp-validation-for="FathersInitial"></span>
             </div>
@@ -40,12 +40,12 @@
                 <span asp-validation-for="PIN"></span>
             </div>
             <div class="col-md-4">
-                <label asp-for="StudyYear">Study year</label><br />
+                <label asp-for="StudyYear"></label><br />
                 <input asp-for="StudyYear" class="form-control">
                 <span asp-validation-for="StudyYear"></span>
             </div>
             <div class="col-md-4">
-                <label asp-for="StudyProgramme">Study programme</label><br />
+                <label asp-for="StudyProgramme"></label><br />
                 <select id="study-programme" asp-for="StudyProgramme"
                         class="form-control" onchange="get_domains()" onclick="get_study_programmes()">
                     <option>@Model.Specialization.StudyDomain.StudyProgramme</option>
@@ -56,14 +56,14 @@
 
         <div class="row my-row">
             <div class="col-md-4">
-                <label asp-for="StudyDomainId" class="control-label">Study domain</label><br />
+                <label asp-for="StudyDomainId" class="control-label"></label><br />
                 <select id="domain" asp-for="StudyDomainId" class="form-control" onclick="get_specializations()">
                     <option>@Model.Specialization.StudyDomain.Name</option>
                 </select>
                 <span asp-validation-for="StudyDomainId" class="text-danger" />
             </div>
             <div class="col-md-4">
-                <label asp-for="SpecializationId" class="control-label">Specialization</label><br />
+                <label asp-for="SpecializationId" class="control-label"></label><br />
                 <select id="specialization" asp-for="SpecializationId" class="form-control">
                     <option>@Model.Specialization.Name</option>
                 </select>

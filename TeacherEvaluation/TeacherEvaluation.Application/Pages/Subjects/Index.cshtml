@@ -14,19 +14,19 @@
         <thead>
             <tr>
                 <th>
-                    Subject Title
+                    Title
                 </th>
                 <th>
-                    Number Of Credits
+                    Credits
                 </th>
                 <th>
-                    Study Year
+                    Study year
                 </th>
                 <th>
-                    Study Programme
+                    Study programme
                 </th>
                 <th>
-                    Study Domain
+                    Study domain
                 </th>
                 <th>
                     Specialization
@@ -57,8 +57,10 @@
                     @Html.DisplayFor(modelItem => item.Specialization.Name)
                 </td>
                 <td>
-                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    <div class="row">
+                        <a class="nav-link white-link" asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a> 
+                        <a class="nav-link white-link" asp-page="./Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>
+                    </div>
                 </td>
             </tr>
             }

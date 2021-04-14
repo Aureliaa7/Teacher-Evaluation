@@ -120,42 +120,22 @@ namespace TeacherEvaluation.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.AnswerToQuestionWithOption", b =>
+            modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.AnswerToQuestion", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Answer")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("EnrollmentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("QuestionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EnrollmentId");
-
-                    b.HasIndex("QuestionId");
-
-                    b.ToTable("AnswerToQuestionWithOptions");
-                });
-
-            modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.AnswerToQuestionWithText", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Answer")
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("EnrollmentId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsFreeForm")
+                        .HasColumnType("bit");
+
                     b.Property<Guid?>("QuestionId")
                         .HasColumnType("uniqueidentifier");
 
@@ -165,7 +145,9 @@ namespace TeacherEvaluation.DataAccess.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("AnswerToQuestionWithTexts");
+                    b.ToTable("AnswerToQuestions");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("AnswerToQuestion");
                 });
 
             modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.Enrollment", b =>
@@ -251,6 +233,9 @@ namespace TeacherEvaluation.DataAccess.Migrations
 
                     b.Property<Guid?>("FormId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("HasFreeFormAnswer")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
@@ -502,6 +487,26 @@ namespace TeacherEvaluation.DataAccess.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.AnswerToQuestionWithOption", b =>
+                {
+                    b.HasBaseType("TeacherEvaluation.Domain.DomainEntities.AnswerToQuestion");
+
+                    b.Property<int>("Answer")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("AnswerToQuestionWithOption");
+                });
+
+            modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.AnswerToQuestionWithText", b =>
+                {
+                    b.HasBaseType("TeacherEvaluation.Domain.DomainEntities.AnswerToQuestion");
+
+                    b.Property<string>("FreeFormAnswer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("AnswerToQuestionWithText");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("TeacherEvaluation.Domain.Identity.ApplicationRole", null)
@@ -553,18 +558,7 @@ namespace TeacherEvaluation.DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.AnswerToQuestionWithOption", b =>
-                {
-                    b.HasOne("TeacherEvaluation.Domain.DomainEntities.Enrollment", "Enrollment")
-                        .WithMany()
-                        .HasForeignKey("EnrollmentId");
-
-                    b.HasOne("TeacherEvaluation.Domain.DomainEntities.Question", "Question")
-                        .WithMany()
-                        .HasForeignKey("QuestionId");
-                });
-
-            modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.AnswerToQuestionWithText", b =>
+            modelBuilder.Entity("TeacherEvaluation.Domain.DomainEntities.AnswerToQuestion", b =>
                 {
                     b.HasOne("TeacherEvaluation.Domain.DomainEntities.Enrollment", "Enrollment")
                         .WithMany()

@@ -10,7 +10,7 @@
     $.ajax({
         type: "GET",
         data: search_details,
-        url: "/Evaluations/Forms/QuestionsWithOptionAnswer/EvaluateTeacher?handler=ReturnTeacher",
+        url: "/EvaluationForms/EvaluateTeacher?handler=ReturnTeacher",
 
         success: function (result) {
             console.log(result);
@@ -36,7 +36,7 @@ function disable_or_enable_btn() {
     $.ajax({
         type: "GET",
         data: search_details,
-        url: "/Evaluations/Forms/QuestionsWithOptionAnswer/EvaluateTeacher?handler=EnableOrDisableSubmitBtn",
+        url: "/EvaluationForms/EvaluateTeacher?handler=EnableOrDisableSubmitBtn",
 
         success: function (result) {
             console.log(result);

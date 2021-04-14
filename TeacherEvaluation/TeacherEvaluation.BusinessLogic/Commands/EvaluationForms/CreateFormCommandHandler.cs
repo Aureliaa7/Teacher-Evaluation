@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -27,16 +29,25 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
             };
             await unitOfWork.FormRepository.Add(form);
 
-            foreach (var question in request.Questions)
+            var freeFormQuestions = request.Questions.TakeLast(Constants.NumberOfQuestionsWithTextAnswer);
+            await SaveQuestions(freeFormQuestions, true, form);
+            var questionsWithAnswerOption = request.Questions.Take(Constants.NumberOfQuestionsWithAnswerOption);
+            await SaveQuestions(questionsWithAnswerOption, false, form);
+            await unitOfWork.SaveChangesAsync();
+        }
+
+        private async Task SaveQuestions(IEnumerable<string> questions, bool haveTextAnswer, Form form)
+        {
+            foreach (var question in questions)
             {
                 Question newQuestion = new Question
                 {
                     Text = question,
-                    Form = form
+                    Form = form,
+                    HasFreeFormAnswer = haveTextAnswer
                 };
                 await unitOfWork.QuestionRepository.Add(newQuestion);
             }
-            await unitOfWork.SaveChangesAsync();
         }
     }
 }

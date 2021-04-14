@@ -10,16 +10,16 @@
     <script src="~/js/dataTable.js"></script>
 }
 
-<h4 class="row align-input-center add-top-margin">Forms with answer option</h4>
+<h4 class="row align-input-center add-top-margin">Evaluation Forms</h4>
 <div class="add-margin-bottom">
     <table id="forms-index" class="table table-dark table-striped table-bordered set-max-width">
         <thead>
             <tr>
                 <th>
-                    Start Date
+                    Start date
                 </th>
                 <th>
-                    End Date
+                    End date
                 </th>
                 <th>
                     Number of attendances
@@ -41,8 +41,9 @@
                         @item.MinNumberOfAttendances
                     </td>
                     <td>
-                        <a asp-page="" asp-route-id="@item.Id">View Questions</a>|
-                        <a asp-page="" asp-route-id="@item.Id">View responses</a> 
+                        <a asp-page="ViewQuestions" asp-route-id="@item.Id">Questions</a>|
+                        <a asp-page="ViewResponses" asp-route-id="@item.Id">Responses</a>|
+                        <a asp-page="ViewCharts" asp-route-formId="@item.Id">Charts</a>
                     </td>
                 </tr>
             }

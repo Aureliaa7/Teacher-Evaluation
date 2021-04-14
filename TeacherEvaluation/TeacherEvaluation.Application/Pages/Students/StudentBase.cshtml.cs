@@ -15,6 +15,7 @@ namespace TeacherEvaluation.Application.Pages.Students
         protected readonly IMediator mediator;
 
         [BindProperty]
+        [Display(Name = "Student")]
         public Guid? StudentId { get; set; }
 
         [BindProperty]
@@ -30,36 +31,43 @@ namespace TeacherEvaluation.Application.Pages.Students
         [Required(ErrorMessage = "First name is required")]
         [RegularExpression(pattern: "[a-zA-Z\\s]+", ErrorMessage = "Invalid text")]
         [MinLength(3)]
+        [Display(Name = "First name")]
         public string FirstName { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "Last name is required")]
         [RegularExpression(pattern: "[a-zA-Z\\s]+", ErrorMessage = "Invalid text")]
         [MinLength(3)]
+        [Display(Name = "Last name")]
         public string LastName { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "Father's initial is required")]
-        [RegularExpression(pattern: "^[a-zA-Z-]+(.)+$", ErrorMessage = "Invalid text")]
+        [RegularExpression(pattern: "^[a-zA-Z-]+$", ErrorMessage = "Invalid text")]
         [MaxLength(2)]
+        [Display(Name = "Father's initial")]
         public string FathersInitial { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "Study year is required")]
         [Range(1, 4, ErrorMessage = "Study year must be between 1 and 4")]
+        [Display(Name = "Study year")]
         public int? StudyYear { get; set; } = null;
 
         [BindProperty]
         [EnumDataType(typeof(StudyProgramme))]
         [Required(ErrorMessage = "Study programme is required")]
+        [Display(Name = "Study programme")]
         public StudyProgramme? StudyProgramme { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "Study domain is required")]
+        [Display(Name = "Study domain")]
         public Guid? StudyDomainId { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "Specialization is required")]
+        [Display(Name = "Specialization")]
         public Guid? SpecializationId { get; set; }
 
         [BindProperty]

@@ -13,14 +13,14 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row my-row">
             <div class="col-md-5">
-                <label asp-for="SubjectId" class="control-label">Subject Title</label><br />
+                <label asp-for="SubjectId" class="control-label"></label><br />
                 <select id="subject" asp-for="SubjectId" asp-items="@Model.Subjects" class="form-control" onchange="get_taught_subject_types_by_subject()">
                     <option>Select subject</option>
                 </select>
                 <span asp-validation-for="SubjectId" class="text-danger" />
             </div>
             <div class="col-md-5">
-                <label asp-for="Type">Taught Subject Type</label><br />
+                <label asp-for="Type"></label><br />
                 <select id="type" asp-for="Type" class="form-control" onclick="get_enrolled_students()">
                     <option>Please select</option>
                 </select>
@@ -29,14 +29,14 @@
         </div>
         <div class="row my-row">
             <div class="col-md-5">
-                <label asp-for="StudentId" class="control-label">Student</label><br />
+                <label asp-for="StudentId" class="control-label"></label><br />
                 <select id="student" asp-for="StudentId" class="form-control">
                     <option>Select student</option>
                 </select>
                 <span asp-validation-for="StudentId" class="text-danger" />
             </div>
             <div class="col-md-5">
-                <label asp-for="NumberOfAttendances" class="control-label">Number of Attendances</label>
+                <label asp-for="NumberOfAttendances" class="control-label"></label>
                 <input asp-for="NumberOfAttendances" class="form-control" />
                 <span asp-validation-for="NumberOfAttendances" class="text-danger"></span>
             </div>

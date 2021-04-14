@@ -18,12 +18,14 @@ namespace TeacherEvaluation.Application.Pages.Account
         [BindProperty]
         [Required(ErrorMessage = "Current password is required")]
         [DataType(DataType.Password)]
+        [Display(Name = "Current password")]
         public string CurrentPassword { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "New password is required")]
         [RegularExpression(pattern: "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", ErrorMessage = "Invalid password")]
         [DataType(DataType.Password)]
+        [Display(Name = "New password")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
