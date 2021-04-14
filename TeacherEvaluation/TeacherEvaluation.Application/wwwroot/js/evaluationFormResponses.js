@@ -94,6 +94,7 @@ function create_new_divs() {
         var divRowElement = document.createElement('div');
         divRowElement.className = "row";
         divRowElement.id = "row" + contor;
+        divRowElement.style.marginLeft = "300px;"
         var div1 = document.createElement('div');
         div1.id = "question" + contor;
         divRowElement.appendChild(div1);

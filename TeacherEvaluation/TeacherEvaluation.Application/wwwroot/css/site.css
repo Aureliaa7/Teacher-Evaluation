@@ -226,3 +226,9 @@ input::-webkit-inner-spin-button {
 .white-link {
     color: white;
 }
+
+.option-dropdown-size {
+    margin-left: 0px;
+    margin-top: 5px;
+    width: 205px;
+}
