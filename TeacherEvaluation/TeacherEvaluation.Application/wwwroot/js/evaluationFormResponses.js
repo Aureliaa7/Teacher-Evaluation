@@ -52,6 +52,7 @@ function create_charts(search_details) {
                             options[contor1] = {
                                 title: question,
                                 is3D: true,
+                                backgroundColor: { fill: "#e9e9e9" } 
                             };
                             divIds[contor1] = "question" + (contor1 + 1);
 
@@ -123,16 +124,15 @@ function create_tag_cloud(search_details) {
             var tagDiv = document.createElement("div");
             tagDiv.id = "tag-cloud-div";
             tagDiv.className = "tag-cloud";
-            tagDiv.style.marginBottom= "170px;"
+            tagDiv.style.marginBottom = "170px;"
+            tagDiv.style.backgroundColor = "#e9e9e9";
 
             if (result.length > 0) {
                 var h2 = document.createElement("h2");
-                h2.textContent = "Relevant words";
+                h2.textContent = "Word cloud";
                 h2.style.color = "#6468ed";
                 h2.style.fontFamily = "Brush Script MT";
                 tagDiv.appendChild(h2);
-               // tagDiv.style.backgroundImage = "url('../images/clouds3.jpg')";
-                //tagDiv.style.backgroundSize = "1000px 1000px";
             }
             for (var i = 0; i < result.length; i++) {
                 if (i % 5 == 0) {

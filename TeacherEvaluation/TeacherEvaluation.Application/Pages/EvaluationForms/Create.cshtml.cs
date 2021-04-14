@@ -1,16 +1,12 @@
 using System;
 using MediatR;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 
 using TeacherEvaluation.BusinessLogic;
-using TeacherEvaluation.Application.Convertors;
-using TeacherEvaluation.Domain.DomainEntities.Enums;
 using TeacherEvaluation.BusinessLogic.Commands.EvaluationForms;
 
 namespace TeacherEvaluation.Application.Pages.EvaluationForms
@@ -20,17 +16,16 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
         private readonly IMediator mediator;
 
         [BindProperty]
-        public List<string> Questions { get; set; }
+        public List<string> LikertQuestions { get; set; }
 
         [BindProperty]
-        public int NumberOfQuestions { get; set; } = Constants.TotalNumberOfQuestions;
+        public List<string> FreeFormQuestions { get; set; }
 
         [BindProperty]
-        [EnumDataType(typeof(EnrollmentState))]
-        [Display(Name = "For enrollment state")]
-        public EnrollmentState EnrollmentState { get; set; }
+        public int NoFreeFormQuestions { get; set; } = Constants.NumberOfQuestionsWithTextAnswer;
 
-        public IEnumerable<SelectListItem> EnrollmentStates = new List<SelectListItem>();
+        [BindProperty]
+        public int NoLikertQuestions { get; set; } = Constants.NumberOfQuestionsWithAnswerOption;
 
         [BindProperty]
         [Required(ErrorMessage = "The minimum number of attendances is required")]
@@ -54,21 +49,6 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
         public CreateModel(IMediator mediator)
         {
             this.mediator = mediator;
-            EnrollmentStates = GetEnrollmentStates();
-        }
-
-        private IEnumerable<SelectListItem> GetEnrollmentStates()
-        {
-            var enrollmentStates = Enum.GetValues(typeof(EnrollmentState))
-              .Cast<EnrollmentState>()
-              .Select(x =>
-              {
-                  string displayText = EnrollmentStateConvertor.ToDisplayString(x);
-                  return new SelectListItem(displayText, x.ToString());
-              })
-              .ToList();
-
-            return enrollmentStates;
         }
 
         public void OnGet()
@@ -79,11 +59,12 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
         {
             if (ModelState.IsValid)
             {
+                LikertQuestions.AddRange(FreeFormQuestions);
+
                 CreateFormCommand command = new CreateFormCommand
                 {
-                    Questions = Questions,
+                    Questions = LikertQuestions,
                     MinNumberOfAttendances = (int)NumberOfAttendances,
-                    EnrollmentState = EnrollmentState,
                     StartDate = StartDate,
                     EndDate = EndDate
 

@@ -41,9 +41,9 @@
                         @item.MinNumberOfAttendances
                     </td>
                     <td>
-                        <a asp-page="ViewQuestions" asp-route-id="@item.Id">Questions</a>|
                         <a asp-page="ViewResponses" asp-route-id="@item.Id">Responses</a>|
-                        <a asp-page="ViewCharts" asp-route-formId="@item.Id">Charts</a>
+                        <a asp-page="ViewCharts" asp-route-formId="@item.Id">Charts</a>|
+                        <a asp-page="ViewQuestions" asp-route-id="@item.Id">Ranking</a>
                     </td>
                 </tr>
             }

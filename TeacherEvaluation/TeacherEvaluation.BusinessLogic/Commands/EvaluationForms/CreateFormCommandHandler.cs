@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
+using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
 {
@@ -24,7 +25,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
             {
                 StartDate = request.StartDate,
                 EndDate = request.EndDate,
-                EnrollmentState = request.EnrollmentState,
+                EnrollmentState = EnrollmentState.InProgress,
                 MinNumberOfAttendances = request.MinNumberOfAttendances
             };
             await unitOfWork.FormRepository.Add(form);

@@ -51,6 +51,7 @@
                 <div class="col-md-5">
                     <select asp-for="@Model.Answers[contor]" asp-items="@Model.AnswerOptions"
                             class="form-control option-dropdown-size">
+                        <option selected="selected" value="">Please select</option>
                     </select>
                 </div>
             </div>
@@ -62,18 +63,18 @@
         <div class="col-md-8" style="margin-left: 150px;
         margin-top: 40px;">
             <label>Question @(contor1+1)</label>
-            <textarea id="question" asp-for="Questions.ElementAt(contor1).Text" class="form-control non-resizable"
+            <textarea id="question" asp-for="Questions.ElementAt(contor1).Text" class="form-control resizable"
                       rows="3" cols="120" readonly></textarea>
             <textarea asp-for="@Model.TextAnswers[contor2]" class="form-control non-resizable" required
-                      rows="3" cols="150"></textarea>
+                      rows="5" cols="150"></textarea>
         </div>
 
         <div class="col-md-8" style="margin-left: 150px; margin-top: 40px;">
             <label>Question @(contor1+2)</label>
-            <textarea id="question" asp-for="Questions.ElementAt(contor1+1).Text" class="form-control non-resizable"
+            <textarea id="question" asp-for="Questions.ElementAt(contor1+1).Text" class="form-control resizable"
                       rows="3" cols="150" readonly></textarea>
             <textarea asp-for="@Model.TextAnswers[contor2+1]" class="form-control non-resizable" required
-                      rows="3" cols="150"></textarea>
+                      rows="5" cols="150"></textarea>
         </div>
         <div class="row my-row">
             <input type="submit" value="Submit" class="btn btn-dark form-control" id="submit-form-btn" />

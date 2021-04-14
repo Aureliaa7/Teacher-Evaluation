@@ -232,3 +232,7 @@ input::-webkit-inner-spin-button {
     margin-top: 5px;
     width: 205px;
 }
+
+.margin-left-85 {
+    margin-left: 85px;
+}
