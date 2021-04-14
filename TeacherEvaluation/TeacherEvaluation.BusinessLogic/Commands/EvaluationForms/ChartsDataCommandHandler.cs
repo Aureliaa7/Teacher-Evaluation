@@ -43,26 +43,12 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
                     int noStronglyAgreeAnswers = (responses.Where(r => r.Equals(AnswerOption.StronglyAgree))).Count();
 
                     IDictionary<string, int> answersOptionAndNumberOfAnswers = new Dictionary<string, int>();
-                    if (noStronglyDisagreeAnswers > 0)
-                    {
-                        answersOptionAndNumberOfAnswers.Add("Strongly Disagree", noStronglyDisagreeAnswers);
-                    }
-                    if (noDisagreeAnswers > 0)
-                    {
-                        answersOptionAndNumberOfAnswers.Add("Disagree", noDisagreeAnswers);
-                    }
-                    if (noNeutralAnswers > 0)
-                    {
-                        answersOptionAndNumberOfAnswers.Add("Neutral", noNeutralAnswers);
-                    }
-                    if (noAgreeAnswers > 0)
-                    {
-                        answersOptionAndNumberOfAnswers.Add("Agree", noAgreeAnswers);
-                    }
-                    if (noStronglyAgreeAnswers > 0)
-                    {
-                        answersOptionAndNumberOfAnswers.Add("Strongly Agree", noStronglyAgreeAnswers);
-                    }
+
+                    answersOptionAndNumberOfAnswers.Add("Strongly Disagree", noStronglyDisagreeAnswers);
+                    answersOptionAndNumberOfAnswers.Add("Disagree", noDisagreeAnswers);
+                    answersOptionAndNumberOfAnswers.Add("Neutral", noNeutralAnswers);
+                    answersOptionAndNumberOfAnswers.Add("Agree", noAgreeAnswers);
+                    answersOptionAndNumberOfAnswers.Add("Strongly Agree", noStronglyAgreeAnswers);
                     questionsWithResponses.Add(question.Text, answersOptionAndNumberOfAnswers);
                 }
 

@@ -36,11 +36,12 @@ function create_charts(search_details) {
                         data[contor1] = new google.visualization.DataTable();
                         data[contor1].addColumn('string', 'question');
                         data[contor1].addColumn('number', 'number of answers');
-                        data[contor1].addRows(10);
+                        data[contor1].addRows(5);
 
                         var contor2 = 0;
                         var optionAnswersWithNoAnswers = result[question];
                         console.log("count: ", Object.keys(optionAnswersWithNoAnswers).length);
+                        console.log("optionAnswersWithNoAnswers", Object.keys(optionAnswersWithNoAnswers));
                         if (Object.keys(optionAnswersWithNoAnswers).length > 0) {
                             for (var optionAnswer in optionAnswersWithNoAnswers) {
                                 var numberOfAnswers = optionAnswersWithNoAnswers[optionAnswer];
@@ -52,7 +53,8 @@ function create_charts(search_details) {
                             options[contor1] = {
                                 title: question,
                                 is3D: true,
-                                backgroundColor: { fill: "#e9e9e9" } 
+                                backgroundColor: { fill: "#e9e9e9" },
+                                sliceVisibilityThreshold: 0,
                             };
                             divIds[contor1] = "question" + (contor1 + 1);
 
