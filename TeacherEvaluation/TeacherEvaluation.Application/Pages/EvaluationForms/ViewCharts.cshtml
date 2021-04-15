@@ -10,16 +10,26 @@
 @section scripts{
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="~/js/evaluationFormResponses.js"></script>
+    <script src="~/js/taughtSubjects.js"></script>
 }
 
-<h3 class="row align-input-center" style="margin-top: 70px;">Select the teacher</h3>
+<h3 class="row align-input-center" style="margin-top: 70px;">Select the teacher and the subject</h3>
 <hr />
-<div class="col-md-4">
-    @{ var formId = @Model.FormId;}
-    <select id="teacher-field" asp-for="TeacherId" asp-items="@Model.Teachers" class="form-control"
-            onchange="get_responses('@Model.FormId')">
-        <option selected disabled hidden>Please select</option>
-    </select>
+<div class="row my-row">
+    <div class="col-md-4">
+        @{ var formId = @Model.FormId;}
+        <select id="teacher-field" asp-for="TeacherId" asp-items="@Model.Teachers" class="form-control"
+                onchange="get_taught_subjects_by_teacher_id()">
+            <option selected disabled hidden>Please select</option>
+        </select>
+    </div>
+
+    <div class="col-md-4">
+        <select id="selected-subject-field" asp-for="SelectedSubjectId" class="form-control"
+                onchange="get_responses('@Model.FormId')">
+            <option selected disabled hidden>Please select</option>
+        </select>
+    </div>
 </div>
 
 <div id="charts" style="margin-top: 50px;">

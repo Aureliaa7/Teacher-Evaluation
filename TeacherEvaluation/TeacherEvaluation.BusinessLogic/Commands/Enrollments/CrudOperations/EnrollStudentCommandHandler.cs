@@ -25,7 +25,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations
 
             if (teacherExists && subjectExists && studentExists)
             {
-                TaughtSubject taughtSubject = await unitOfWork.TaughtSubjectRepository.GetTaughtSubject(request.TeacherId, request.SubjectId, request.Type);
+                TaughtSubject taughtSubject = await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectAsync(request.TeacherId, request.SubjectId, request.Type);
                 Student student = await unitOfWork.StudentRepository.GetStudent(request.StudentId);
                 Grade grade = new Grade
                 {

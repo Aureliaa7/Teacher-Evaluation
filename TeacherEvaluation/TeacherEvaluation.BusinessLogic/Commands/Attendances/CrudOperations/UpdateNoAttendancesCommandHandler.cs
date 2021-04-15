@@ -29,7 +29,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Attendances.CrudOperations
 
                 if (taughtSubjectExists)
                 {
-                    var taughtSubject = (await unitOfWork.TaughtSubjectRepository.GetAllWithRelatedEntities())
+                    var taughtSubject = (await unitOfWork.TaughtSubjectRepository.GetAllWithRelatedEntitiesAsync())
                                         .Where(x => x.Subject.Id == request.SubjectId && x.Teacher.Id == teacher.Id && x.Type == request.Type)
                                         .First();
 

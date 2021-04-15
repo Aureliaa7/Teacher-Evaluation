@@ -8,5 +8,6 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
     {
         public Guid FormId { get; set; }
         public Guid TeacherId { get; set; }
+        public string TaughtSubjectId { get; set; }
     }
 }

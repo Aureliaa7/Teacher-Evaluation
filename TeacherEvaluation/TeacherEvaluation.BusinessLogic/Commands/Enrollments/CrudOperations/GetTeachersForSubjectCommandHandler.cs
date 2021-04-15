@@ -19,7 +19,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations
 
         public async Task<IEnumerable<Teacher>> Handle(GetTeachersForSubjectCommand request, CancellationToken cancellationToken)
         {
-            var allTeachers = await unitOfWork.TaughtSubjectRepository.GetAllWithRelatedEntities();
+            var allTeachers = await unitOfWork.TaughtSubjectRepository.GetAllWithRelatedEntitiesAsync();
             return allTeachers.Where(x => x.Subject.Id == request.SubjectId && x.Type == request.Type).Select(x => x.Teacher).ToList();
         }
     }

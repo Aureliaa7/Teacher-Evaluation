@@ -1,10 +1,12 @@
 ﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.DataAccess.UnitOfWork;
+using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
@@ -24,37 +26,74 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
             bool teacherExists = await unitOfWork.TeacherRepository.Exists(t => t.Id == request.TeacherId);
             if (formExists && teacherExists)
             {
-                IDictionary<string, IDictionary<string, int>> questionsWithResponses = new Dictionary<string, IDictionary<string, int>>();
                 var questions = (await unitOfWork.QuestionRepository.GetQuestionsWithRelatedEntities(request.FormId))
-                                .Where(q => !q.HasFreeFormAnswer)
-                                .ToList();
+                         .Where(q => !q.HasFreeFormAnswer)
+                         .ToList();
 
-                foreach(var question in questions)
+                if (request.TaughtSubjectId.Equals("All"))
                 {
-                    var responses = (await unitOfWork.AnswerToQuestionWithOptionRepository.GetByQuestionId(question.Id))
-                                     .Where(r => r.Enrollment.TaughtSubject.Teacher.Id == request.TeacherId)
-                                     .Select(x => x.Answer)
-                                     .ToList();
-
-                    int noStronglyDisagreeAnswers = (responses.Where(r => r.Equals(AnswerOption.StronglyDisagree))).Count();
-                    int noDisagreeAnswers = (responses.Where(r => r.Equals(AnswerOption.Disagree))).Count();
-                    int noNeutralAnswers = (responses.Where(r => r.Equals(AnswerOption.Neutral))).Count();
-                    int noAgreeAnswers = (responses.Where(r => r.Equals(AnswerOption.Agree))).Count();
-                    int noStronglyAgreeAnswers = (responses.Where(r => r.Equals(AnswerOption.StronglyAgree))).Count();
-
-                    IDictionary<string, int> answersOptionAndNumberOfAnswers = new Dictionary<string, int>();
-
-                    answersOptionAndNumberOfAnswers.Add("Strongly Disagree", noStronglyDisagreeAnswers);
-                    answersOptionAndNumberOfAnswers.Add("Disagree", noDisagreeAnswers);
-                    answersOptionAndNumberOfAnswers.Add("Neutral", noNeutralAnswers);
-                    answersOptionAndNumberOfAnswers.Add("Agree", noAgreeAnswers);
-                    answersOptionAndNumberOfAnswers.Add("Strongly Agree", noStronglyAgreeAnswers);
-                    questionsWithResponses.Add(question.Text, answersOptionAndNumberOfAnswers);
+                    return await GetChartsDataOverall(request.TeacherId, questions);
                 }
-
-                return questionsWithResponses;
+                else if(await unitOfWork.TaughtSubjectRepository.Exists(ts => ts.Id == new Guid(request.TaughtSubjectId)))
+                {
+                    return await GetChartsDataForTaughtSubject(request.TeacherId, new Guid(request.TaughtSubjectId), questions);
+                }
             }
             throw new ItemNotFoundException("Not found");
+        }
+
+        private async Task<IDictionary<string, IDictionary<string, int>>> GetChartsDataOverall(Guid teacherId, List<Question> questions)
+        {
+            IDictionary<string, IDictionary<string, int>> questionsWithResponses = new Dictionary<string, IDictionary<string, int>>();
+
+            foreach (var question in questions)
+            {
+                var responses = (await unitOfWork.AnswerToQuestionWithOptionRepository.GetByQuestionId(question.Id))
+                                 .Where(r => r.Enrollment.TaughtSubject.Teacher.Id == teacherId)
+                                 .Select(x => x.Answer)
+                                 .ToList();
+
+                questionsWithResponses.Add(question.Text, GetAnswersOptionAndNumberOfAnswers(responses));
+            }
+
+            return questionsWithResponses;
+        }
+
+        private async Task<IDictionary<string, IDictionary<string, int>>> GetChartsDataForTaughtSubject(Guid teacherId, Guid taughtSubjectId, List<Question> questions)
+        {
+            IDictionary<string, IDictionary<string, int>> questionsWithResponses = new Dictionary<string, IDictionary<string, int>>();
+
+            foreach (var question in questions)
+            {
+                var responses = (await unitOfWork.AnswerToQuestionWithOptionRepository.GetByQuestionId(question.Id))
+                                 .Where(r => r.Enrollment.TaughtSubject.Teacher.Id == teacherId &&
+                                        r.Enrollment.TaughtSubject.Id == taughtSubjectId)
+                                 .Select(x => x.Answer)
+                                 .ToList();
+
+                questionsWithResponses.Add(question.Text, GetAnswersOptionAndNumberOfAnswers(responses));
+            }
+
+            return questionsWithResponses;
+        }
+
+        private IDictionary<string, int> GetAnswersOptionAndNumberOfAnswers(List<AnswerOption> responses)
+        {
+            int noStronglyDisagreeAnswers = (responses.Where(r => r.Equals(AnswerOption.StronglyDisagree))).Count();
+            int noDisagreeAnswers = (responses.Where(r => r.Equals(AnswerOption.Disagree))).Count();
+            int noNeutralAnswers = (responses.Where(r => r.Equals(AnswerOption.Neutral))).Count();
+            int noAgreeAnswers = (responses.Where(r => r.Equals(AnswerOption.Agree))).Count();
+            int noStronglyAgreeAnswers = (responses.Where(r => r.Equals(AnswerOption.StronglyAgree))).Count();
+
+            IDictionary<string, int> answersOptionAndNumberOfAnswers = new Dictionary<string, int>();
+
+            answersOptionAndNumberOfAnswers.Add("Strongly Disagree", noStronglyDisagreeAnswers);
+            answersOptionAndNumberOfAnswers.Add("Disagree", noDisagreeAnswers);
+            answersOptionAndNumberOfAnswers.Add("Neutral", noNeutralAnswers);
+            answersOptionAndNumberOfAnswers.Add("Agree", noAgreeAnswers);
+            answersOptionAndNumberOfAnswers.Add("Strongly Agree", noStronglyAgreeAnswers);
+
+            return answersOptionAndNumberOfAnswers;
         }
     }
 }

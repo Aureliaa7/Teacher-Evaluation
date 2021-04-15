@@ -21,7 +21,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
             bool taughtSubjectExists = await unitOfWork.TaughtSubjectRepository.Exists(x => x.Id == request.Id);
             if (taughtSubjectExists)
             {
-                return await unitOfWork.TaughtSubjectRepository.GetTaughtSubject(request.Id);
+                return await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectAsync(request.Id);
             }
             throw new ItemNotFoundException("The item was not found...");
         }

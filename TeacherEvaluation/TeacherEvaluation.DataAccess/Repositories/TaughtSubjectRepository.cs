@@ -7,6 +7,7 @@ using TeacherEvaluation.DataAccess.Data;
 using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.DataAccess.Repositories.Interfaces;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
+using System.Linq.Expressions;
 
 namespace TeacherEvaluation.DataAccess.Repositories
 {
@@ -16,7 +17,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
         {
         }
 
-        public async Task<TaughtSubject> GetTaughtSubject(Guid id)
+        public async Task<TaughtSubject> GetTaughtSubjectAsync(Guid id)
         {
             return await Context.Set<TaughtSubject>()
                 .Where(x => x.Id == id)
@@ -26,7 +27,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .FirstAsync();
         }
 
-        public async Task<IEnumerable<TaughtSubject>> GetAllWithRelatedEntities()
+        public async Task<IEnumerable<TaughtSubject>> GetAllWithRelatedEntitiesAsync()
         {
             return await Context.Set<TaughtSubject>()
                 .Include(entity => entity.Teacher)
@@ -36,7 +37,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .ToListAsync();
         }
 
-        public async Task<TaughtSubject> GetTaughtSubject(Guid teacherId, Guid subjectId, TaughtSubjectType type)
+        public async Task<TaughtSubject> GetTaughtSubjectAsync(Guid teacherId, Guid subjectId, TaughtSubjectType type)
         {
             return await Context.Set<TaughtSubject>()
               .Where(x => x.Teacher.Id == teacherId && x.Subject.Id == subjectId && x.Type == type)
@@ -46,34 +47,15 @@ namespace TeacherEvaluation.DataAccess.Repositories
               .FirstAsync();
         }
 
-        public async Task<IEnumerable<TaughtSubject>> GetTaughtSubjectsByDepartmentAndType(Department department, TaughtSubjectType taughtSubjectType)
+        public async Task<IEnumerable<TaughtSubject>> GetTaughtSubjectsByCriteria(Expression<Func<TaughtSubject, bool>> predicate)
         {
             return await Context.Set<TaughtSubject>()
-                .Where(x => x.Teacher.Department == department && x.Type == taughtSubjectType)
+                .Where(predicate)
                 .Include(entity => entity.Teacher)
-                    .ThenInclude(teacher => teacher.User)
+                   .ThenInclude(teacher => teacher.User)
                 .Include(entity => entity.Subject)
+                .AsNoTracking()
                 .ToListAsync();
-        }
-
-        public async Task<IEnumerable<TaughtSubject>> GetTaughtSubjectsByTeacherIdAndType(Guid teacherId, TaughtSubjectType type)
-        {
-            return await Context.Set<TaughtSubject>()
-               .Where(x => x.Teacher.Id == teacherId && x.Type == type)
-               .Include(entity => entity.Teacher)
-                   .ThenInclude(teacher => teacher.User)
-               .Include(entity => entity.Subject)
-               .ToListAsync();
-        }
-
-        public async Task<IEnumerable<TaughtSubject>> GetTaughtSubjectsBySubjectIdAndType(Guid subjectId, TaughtSubjectType type)
-        {
-            return await Context.Set<TaughtSubject>()
-               .Where(x => x.Subject.Id == subjectId && x.Type == type)
-               .Include(entity => entity.Teacher)
-                   .ThenInclude(teacher => teacher.User)
-               .Include(entity => entity.Subject)
-               .ToListAsync();
         }
     }
 }

@@ -23,6 +23,9 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
         public Guid FormId { get; set; }
 
         [BindProperty]
+        public string SelectedSubjectId { get; set; }
+
+        [BindProperty]
         public List<SelectListItem> Teachers { get; set; } = new List<SelectListItem>();
 
         public ViewResponsesModel(IMediator mediator)
@@ -49,16 +52,23 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
             catch (ItemNotFoundException) { }
         }
 
-        public JsonResult OnGetRetrieveResponses(string teacherId, string formId)
+        public JsonResult OnGetRetrieveResponses(string teacherId, string formId, string taughtSubjectId)
         {
-            ChartsDataCommand command = new ChartsDataCommand 
+            if (!string.IsNullOrEmpty(teacherId) && 
+                !string.IsNullOrEmpty(formId) && 
+                !string.IsNullOrEmpty(taughtSubjectId))
             {
-                FormId = new Guid(formId), 
-                TeacherId = new Guid(teacherId) 
-            };
+                ChartsDataCommand command = new ChartsDataCommand
+                {
+                    FormId = new Guid(formId),
+                    TeacherId = new Guid(teacherId),
+                    TaughtSubjectId = taughtSubjectId
+                };
 
-            var questionsAndResponses = mediator.Send(command).Result;
-            return new JsonResult(questionsAndResponses);
+                var questionsAndResponses = mediator.Send(command).Result;
+                return new JsonResult(questionsAndResponses);
+            }
+            return new JsonResult("");
         }
 
         public JsonResult OnGetReturnTagCloud(string teacherId, string formId)

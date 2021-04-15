@@ -25,7 +25,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
             if(userExists && teacherExists)
             {
                 var teacher = (await unitOfWork.TeacherRepository.GetAllWithRelatedEntities()).Where(x => x.User.Id == request.UserId).First();
-                var taughtSubjects = await unitOfWork.TaughtSubjectRepository.GetAllWithRelatedEntities();
+                var taughtSubjects = await unitOfWork.TaughtSubjectRepository.GetAllWithRelatedEntitiesAsync();
                 return taughtSubjects.Where(x => x.Teacher.Id == teacher.Id);
             }
             throw new ItemNotFoundException("The teacher was not found...");

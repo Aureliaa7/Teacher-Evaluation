@@ -1,13 +1,17 @@
 ﻿function get_responses(formID) {
     var search_details = {
         teacherId: $("#teacher-field").val(),
-        formId: formID
+        formId: formID,
+        taughtSubjectId: $("#selected-subject-field").val()
     };
 
     console.log(search_details);
 
     create_charts(search_details);
-    create_tag_cloud(search_details);
+
+    setTimeout(function () {
+        create_tag_cloud(search_details);
+    }, 20000); 
 }
 
 

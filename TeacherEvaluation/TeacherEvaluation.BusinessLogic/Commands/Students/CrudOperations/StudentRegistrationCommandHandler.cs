@@ -95,14 +95,14 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
             return errorMessages;
         }
 
-
         private async Task EnrollStudentToCourses(Guid studentId, Guid specializationId, int studyYear)
         {
             var subjects = await unitOfWork.SubjectRepository.GetSubjectsByCriteria(specializationId, studyYear);
             foreach(var subject in subjects)
             {
-                var taughtSubjects = await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsBySubjectIdAndType(subject.Id, TaughtSubjectType.Course);
-                foreach(var taughtSubject in taughtSubjects)
+                var taughtSubjects = await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsByCriteria(ts => ts.Subject.Id == subject.Id &&
+                                                                                                          ts.Type == TaughtSubjectType.Course);
+                foreach (var taughtSubject in taughtSubjects)
                 {
                     EnrollStudentCommand command = new EnrollStudentCommand
                     {
