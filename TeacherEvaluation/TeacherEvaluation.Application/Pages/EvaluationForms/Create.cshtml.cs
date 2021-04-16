@@ -22,10 +22,10 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
         public List<string> FreeFormQuestions { get; set; }
 
         [BindProperty]
-        public int NoFreeFormQuestions { get; set; } = Constants.NumberOfQuestionsWithTextAnswer;
+        public int NoFreeFormQuestions { get; set; } = Constants.NumberOfFreeFormQuestions;
 
         [BindProperty]
-        public int NoLikertQuestions { get; set; } = Constants.NumberOfQuestionsWithAnswerOption;
+        public int NoLikertQuestions { get; set; } = Constants.NumberOfLikertQuestions;
 
         [BindProperty]
         [Required(ErrorMessage = "The minimum number of attendances is required")]

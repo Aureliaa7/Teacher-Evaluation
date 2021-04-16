@@ -1,4 +1,4 @@
-﻿function get_responses(formID) {
+﻿function get_responses(formID, layoutID) {
     var search_details = {
         teacherId: $("#teacher-field").val(),
         formId: formID,
@@ -7,15 +7,15 @@
 
     console.log(search_details);
 
-    create_charts(search_details);
+    create_charts(search_details, layoutID);
 
     setTimeout(function () {
-        create_tag_cloud(search_details);
+        create_tag_cloud(search_details, layoutID);
     }, 20000); 
 }
 
 
-function create_charts(search_details) {
+function create_charts(search_details, layoutId) {
     // remove the old charts
     remove_charts_divs();
 
@@ -24,7 +24,7 @@ function create_charts(search_details) {
         data: search_details,
         dataType: 'json',
         contextType: 'application/json',
-        url: "/EvaluationForms/ViewCharts?handler=RetrieveResponses",
+        url: "/EvaluationForms/ViewChartsBase?handler=RetrieveResponses",
 
         success: function (result) {
             google.charts.load('current', {
@@ -67,7 +67,7 @@ function create_charts(search_details) {
                         }
                     }
 
-                    create_new_divs();
+                    create_new_divs(layoutId);
                     if (drawCharts == "true") {
                         // draw the charts
                         for (var contor = 0; contor < 10; contor++) {
@@ -92,11 +92,13 @@ function create_charts(search_details) {
 function remove_charts_divs() {
     for (var contor = 1; contor < 11; contor+=2) {
         var chartDivRow = document.getElementById("row" + contor);
-        chartDivRow.remove();
+        if (chartDivRow != null) {
+            chartDivRow.remove();
+        }
     }
 }
 
-function create_new_divs() {
+function create_new_divs(layoutId) {
     for (var contor = 1; contor < 11; contor+=2) {
         var divRowElement = document.createElement('div');
         divRowElement.className = "row";
@@ -110,21 +112,23 @@ function create_new_divs() {
         div2.id = "question" + (contor+1);
         divRowElement.appendChild(div2);
 
-        var mainElement = document.getElementById('mainElementDeanLayout');
+        var mainElement = document.getElementById(layoutId);
         mainElement.appendChild(divRowElement);
     }
 }
 
-function create_tag_cloud(search_details) {
+function create_tag_cloud(search_details, layoutId) {
     var tagDiv = document.getElementById("tag-cloud-div");
-    tagDiv.remove();
+    if (tagDiv != null) {
+        tagDiv.remove();
+    }
 
     $.ajax({
         type: "GET",
         data: search_details,
         dataType: 'json',
         contextType: 'application/json',
-        url: "/EvaluationForms/ViewCharts?handler=ReturnTagCloud",
+        url: "/EvaluationForms/ViewChartsBase?handler=ReturnTagCloud",
 
         success: function (result) {
             var tagDiv = document.createElement("div");
@@ -155,7 +159,7 @@ function create_tag_cloud(search_details) {
                 console.log("text: ", tag.text);
                 tagDiv.appendChild(spanElement);
             }
-            var mainElement = document.getElementById('mainElementDeanLayout');
+            var mainElement = document.getElementById(layoutId);
             mainElement.appendChild(tagDiv);
 
             var animatedProperties = {
@@ -171,4 +175,10 @@ function create_tag_cloud(search_details) {
             console.log("Error while creating the tag cloud!");
         }
     });
+}
+
+function update() {
+    remove_charts_divs();
+    $("#selected-subject-field").val("default");
+    get_taught_subjects_by_teacher_id();
 }

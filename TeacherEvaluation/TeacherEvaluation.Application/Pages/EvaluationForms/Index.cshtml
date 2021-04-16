@@ -3,7 +3,14 @@
 
 @{
     ViewData["Title"] = "Forms";
-    Layout = "~/Pages/Shared/_DeanLayout.cshtml";
+    if (User.IsInRole("Dean"))
+    {
+        Layout = "~/Pages/Shared/_DeanLayout.cshtml";
+    }
+    else if (User.IsInRole("Teacher"))
+    {
+        Layout = "~/Pages/Shared/_TeacherLayout.cshtml";
+    }
 }
 
 @section scripts{
@@ -41,9 +48,17 @@
                         @item.MinNumberOfAttendances
                     </td>
                     <td>
-                        <a asp-page="ViewResponses" asp-route-id="@item.Id">Responses</a>|
-                        <a asp-page="ViewCharts" asp-route-formId="@item.Id">Charts</a>|
-                        <a asp-page="ViewQuestions" asp-route-id="@item.Id">Ranking</a>
+                        @if (User.IsInRole("Dean"))
+                        {
+                            <a asp-page="ViewResponses" asp-route-id="@item.Id">Responses</a><span>|</span>
+                            <a asp-page="ViewChartsDean" asp-route-formId="@item.Id">Charts </a><span>|</span>
+                            <a asp-page="ViewQuestions" asp-route-id="@item.Id">Ranking </a>
+                        }
+                        else if (User.IsInRole("Teacher"))
+                        {
+                            <a asp-page="ViewResponses" asp-route-id="@item.Id">Responses</a><span>|</span>
+                            <a asp-page="ViewChartsTeacher" asp-route-formId="@item.Id">Charts </a>
+                        }
                     </td>
                 </tr>
             }

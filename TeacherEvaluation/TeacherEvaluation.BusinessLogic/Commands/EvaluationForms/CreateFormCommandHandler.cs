@@ -30,9 +30,9 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
             };
             await unitOfWork.FormRepository.Add(form);
 
-            var freeFormQuestions = request.Questions.TakeLast(Constants.NumberOfQuestionsWithTextAnswer);
+            var freeFormQuestions = request.Questions.TakeLast(Constants.NumberOfFreeFormQuestions);
             await SaveQuestions(freeFormQuestions, true, form);
-            var questionsWithAnswerOption = request.Questions.Take(Constants.NumberOfQuestionsWithAnswerOption);
+            var questionsWithAnswerOption = request.Questions.Take(Constants.NumberOfLikertQuestions);
             await SaveQuestions(questionsWithAnswerOption, false, form);
             await unitOfWork.SaveChangesAsync();
         }

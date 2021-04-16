@@ -16,6 +16,7 @@ using TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Commands.EvaluationForms;
 using TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
+using TeacherEvaluation.BusinessLogic.ViewModels;
 using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
 
@@ -28,7 +29,7 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
         private Form form;
         private bool formIsAvailable;
 
-        public IEnumerable<Question> Questions { get; set; }
+        public QuestionsVm Questions { get; set; }
         public List<SelectListItem> Subjects { get; set; }
 
         [BindProperty]
@@ -54,22 +55,19 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
         public List<string> TextAnswers { get; set; }
 
         [BindProperty]
-        public int NumberOfQuestions { get; set; } = Constants.TotalNumberOfQuestions - Constants.NumberOfQuestionsWithTextAnswer;
+        public int NumberOfLikertQuestions { get; set; } = Constants.NumberOfLikertQuestions;
 
         [BindProperty]
-        public int TotalNumberOfQuestions { get; set; } = Constants.TotalNumberOfQuestions;
+        public int NumberOfFreeFormQuestions { get; set; } = Constants.NumberOfFreeFormQuestions;
 
         public EvaluateTeacherModel(IMediator mediator)
         {
             this.mediator = mediator;
-            Questions = new List<Question>();
             formIsAvailable = true;
             AnswerOptions = GetAnswerOptions();
 
             try
             {
-                // why is this logic here? shouldn't it be inside OnGet? 
-                // TODO move this inside OnGet()
                 GetEvaluationFormCommand command = new GetEvaluationFormCommand();
                 form = mediator.Send(command).Result;
                 GetQuestionsForFormCommand getQuestionsCommand = new GetQuestionsForFormCommand { FormId = form.Id };
@@ -81,8 +79,7 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
             }
         }
 
-        //TODO extract this into a command
-        public List<SelectListItem> GetAnswerOptions()
+        private List<SelectListItem> GetAnswerOptions()
         {
             return Enum.GetValues(typeof(AnswerOption))
                .Cast<AnswerOption>()
@@ -164,7 +161,6 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
                 {
                     SubjectId = subjectIdGuid,
                     UserIdForStudent = userIdStudent,
-                    EnrollmentState = form.EnrollmentState,
                     SubjectType = taughtSubjectType,
                     FormId = form.Id
                 };

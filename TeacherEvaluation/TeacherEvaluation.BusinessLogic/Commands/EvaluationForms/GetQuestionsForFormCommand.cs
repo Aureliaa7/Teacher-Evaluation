@@ -1,11 +1,10 @@
 ﻿using MediatR;
 using System;
-using System.Collections.Generic;
-using TeacherEvaluation.Domain.DomainEntities;
+using TeacherEvaluation.BusinessLogic.ViewModels;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
 {
-    public class GetQuestionsForFormCommand : IRequest<IEnumerable<Question>>
+    public class GetQuestionsForFormCommand : IRequest<QuestionsVm>
     {
         public Guid FormId { get; set; }
     }

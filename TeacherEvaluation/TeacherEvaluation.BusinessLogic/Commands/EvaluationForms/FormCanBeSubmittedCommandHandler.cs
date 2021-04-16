@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.DataAccess.UnitOfWork;
+using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
 {
@@ -16,8 +17,6 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
             this.unitOfWork = unitOfWork;
         }
 
-
-        //TODO refactor this one
         public async Task<bool> Handle(FormCanBeSubmittedCommand request, CancellationToken cancellationToken)
         {
             bool userExists = await unitOfWork.UserRepository.Exists(x => x.Id == request.UserIdForStudent);
@@ -32,14 +31,14 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
                     var form = await unitOfWork.FormRepository.Get(request.FormId);
                     var student = await unitOfWork.StudentRepository.GetByUserId(request.UserIdForStudent);
                     var enrollmentExists = await unitOfWork.EnrollmentRepository.Exists(x => x.TaughtSubject.Subject.Id == request.SubjectId &&
-                                                                                  x.State == request.EnrollmentState && 
+                                                                                  x.State == EnrollmentState.InProgress && 
                                                                                   x.TaughtSubject.Type == request.SubjectType && 
                                                                                   x.Student.Id == student.Id);
 
                     if (enrollmentExists)
                     {
                         var enrollment = await unitOfWork.EnrollmentRepository.GetEnrollmentBySubjectStateTypeAndStudent(
-                            request.SubjectId, request.EnrollmentState, request.SubjectType, student.Id);
+                            request.SubjectId, EnrollmentState.InProgress, request.SubjectType, student.Id);
 
                         var answersForForm = await unitOfWork.AnswerToQuestionWithOptionRepository.GetByEnrollmentAndFormId(enrollment.Id, request.FormId);
                         var formSubmittedForEnrollment = answersForForm.Any();

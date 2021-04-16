@@ -10,6 +10,5 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
         public Guid UserIdForStudent { get; set; }
         public Guid FormId { get; set; }
         public TaughtSubjectType SubjectType { get; set; }
-        public EnrollmentState EnrollmentState { get; set; }
     }
 }

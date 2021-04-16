@@ -33,11 +33,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
                     var enrollment = await unitOfWork.EnrollmentRepository.GetEnrollmentBySubjectStateTypeAndStudent(
                         request.SubjectId, request.EnrollmentState, request.SubjectType, student.Id);
 
-                    var freeFormQuestions = request.Questions.Where(q => q.HasFreeFormAnswer);
-                    var questionsWithAnswerOption = request.Questions.Where(q => !q.HasFreeFormAnswer);
-
                     int contor = 0;
-                    foreach (var question in questionsWithAnswerOption)
+                    foreach (var question in request.Questions.LikertQuestions)
                     {
                         var response = new AnswerToQuestionWithOption
                         {
@@ -49,7 +46,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
                     }
  
                     contor = 0;
-                    foreach (var question in freeFormQuestions)
+                    foreach (var question in request.Questions.FreeFormQuestions)
                     {
                         var response = new AnswerToQuestionWithText
                         {

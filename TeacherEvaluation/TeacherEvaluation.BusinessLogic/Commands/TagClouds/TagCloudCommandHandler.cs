@@ -26,12 +26,12 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TagClouds
             if (formExists && teacherExists)
             {
                 var questions = (await unitOfWork.QuestionRepository.GetQuestionsWithRelatedEntities(request.FormId))
-                                .TakeLast(Constants.NumberOfQuestionsWithTextAnswer)                                                
+                                .TakeLast(Constants.NumberOfFreeFormQuestions)                                                
                                 .ToList();
                 
                 var freeFormTexts = new List<string>();
                 
-                for (int contor = 0; contor < Constants.NumberOfQuestionsWithTextAnswer; contor++)
+                for (int contor = 0; contor < Constants.NumberOfFreeFormQuestions; contor++)
                 {
                     var responses = (await unitOfWork.AnswerToQuestionWithTextRepository.GetByQuestionId(questions.ElementAt(contor).Id))
                                      .Where(r => r.Enrollment.TaughtSubject.Teacher.Id == request.TeacherId);

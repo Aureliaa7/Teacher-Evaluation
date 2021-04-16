@@ -1,0 +1,14 @@
+﻿<div id="charts" style="margin-top: 50px;">
+    @for (var contor = 1; contor < 11; contor += 2)
+    {
+        var chartId1 = "question" + contor;
+        var chartId2 = "question" + (contor + 1);
+        var rowId = "row" + contor;
+        <div class="row" id="@rowId">
+            <div id="@chartId1"></div>
+            <div id="@chartId2"></div>
+        </div>
+    }
+</div>
+
+<div id="tag-cloud-div"></div>
