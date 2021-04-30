@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 
-namespace TeacherEvaluation.Application.Pages.EvaluationForms
+namespace TeacherEvaluation.Application.Pages.Charts
 {
     [Authorize(Roles = "Teacher")]
     public class ViewChartsTeacherModel : ViewChartsBaseModel

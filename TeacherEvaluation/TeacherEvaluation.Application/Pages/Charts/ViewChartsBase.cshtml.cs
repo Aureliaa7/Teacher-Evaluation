@@ -5,7 +5,7 @@ using System;
 using TeacherEvaluation.BusinessLogic.Commands.EvaluationForms;
 using TeacherEvaluation.BusinessLogic.Commands.TagClouds;
 
-namespace TeacherEvaluation.Application.Pages.EvaluationForms
+namespace TeacherEvaluation.Application.Pages.Charts
 {
     public class ViewChartsBaseModel : PageModel
     {

@@ -51,13 +51,13 @@
                         @if (User.IsInRole("Dean"))
                         {
                             <a asp-page="ViewResponses" asp-route-id="@item.Id">Responses</a><span>|</span>
-                            <a asp-page="ViewChartsDean" asp-route-formId="@item.Id">Charts </a><span>|</span>
+                            <a asp-page="../Charts/ViewChartsAsDean" asp-route-formId="@item.Id">Charts </a><span>|</span>
                             <a asp-page="ViewQuestions" asp-route-id="@item.Id">Ranking </a>
                         }
                         else if (User.IsInRole("Teacher"))
                         {
                             <a asp-page="ViewResponses" asp-route-id="@item.Id">Responses</a><span>|</span>
-                            <a asp-page="ViewChartsTeacher" asp-route-formId="@item.Id">Charts </a>
+                            <a asp-page="../Charts/ViewChartsAsTeacher" asp-route-formId="@item.Id">Charts </a>
                         }
                     </td>
                 </tr>

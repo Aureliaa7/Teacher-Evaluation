@@ -8,7 +8,7 @@ using System.Linq;
 using TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 
-namespace TeacherEvaluation.Application.Pages.EvaluationForms
+namespace TeacherEvaluation.Application.Pages.Charts
 {
     [Authorize(Roles = "Dean")]
     public class ViewChartsDeanModel : ViewChartsBaseModel
