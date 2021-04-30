@@ -1,8 +1,8 @@
 ﻿using TeacherEvaluation.Domain.DomainEntities.Enums;
 
-namespace TeacherEvaluation.Application.Pages.Evaluations.Forms
+namespace TeacherEvaluation.BusinessLogic.Convertors
 {
-    internal static class AnswerOptionConvertor
+    public static class AnswerOptionConvertor
     {
         public static string ToDisplayString(AnswerOption answer)
         {

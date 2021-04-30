@@ -1,0 +1,31 @@
+﻿@page  "{handler?}"
+
+@model TeacherEvaluation.Application.Pages.AllResponses.Responses.ViewAsDeanModel
+
+@{
+    ViewData["Title"] = "Charts & Word Cloud";
+    Layout = "~/Pages/Shared/_DeanLayout.cshtml";
+}
+
+@section scripts{
+    <script src="~/js/responses.js"></script>
+    <script src="~/js/taughtSubjects.js"></script>
+}
+
+<h3 class="row align-input-center" style="margin-top: 70px;">Select the teacher and the subject</h3>
+<hr />
+<div class="row my-row">
+    <div class="col-md-4">
+        <select id="teacher-field" asp-for="TeacherId" asp-items="@Model.Teachers" class="form-control"
+                onchange="update()">
+            <option selected disabled hidden>Please select</option>
+        </select>
+    </div>
+
+    <div class="col-md-4">
+        <select id="selected-subject-field" asp-for="SelectedSubjectId" class="form-control"
+                onchange="get_responses('@Model.FormId', 'mainElementDeanLayout')">
+            <option selected disabled hidden>Please select</option>
+        </select>
+    </div>
+</div>

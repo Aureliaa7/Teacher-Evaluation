@@ -24,7 +24,7 @@ function create_charts(search_details, layoutId) {
         data: search_details,
         dataType: 'json',
         contextType: 'application/json',
-        url: "/Charts/ViewChartsBase?handler=RetrieveResponses",
+        url: "/AllResponses/Charts/ViewChartsBase?handler=RetrieveResponses",
 
         success: function (result) {
             google.charts.load('current', {
@@ -128,7 +128,7 @@ function create_tag_cloud(search_details, layoutId) {
         data: search_details,
         dataType: 'json',
         contextType: 'application/json',
-        url: "/Charts/ViewChartsBase?handler=ReturnTagCloud",
+        url: "/AllResponses/Charts/ViewChartsBase?handler=ReturnTagCloud",
 
         success: function (result) {
             var tagDiv = document.createElement("div");

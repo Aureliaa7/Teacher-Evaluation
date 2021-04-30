@@ -37,6 +37,8 @@ function get_taught_subjects_by_teacher_id() {
         teacherId: $("#teacher-field").val()
     };
 
+    console.log(search_details);
+
     $.ajax({
         type: "GET",
         data: search_details,

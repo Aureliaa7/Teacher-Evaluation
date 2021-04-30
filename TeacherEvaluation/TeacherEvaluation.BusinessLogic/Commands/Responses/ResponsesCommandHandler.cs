@@ -1,13 +1,16 @@
 ﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.DataAccess.UnitOfWork;
+using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.Responses
 {
-    public class ResponsesCommandHandler : IRequestHandler<ResponsesCommand, IEnumerable<IDictionary<string, string>>>
+    public class ResponsesCommandHandler : IRequestHandler<ResponsesCommand, IDictionary<string, Guid>>
     {
         private readonly IUnitOfWork unitOfWork;
 
@@ -16,26 +19,56 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Responses
             this.unitOfWork = unitOfWork;
         }
 
-
-        //TODO maybe I can reuse some code from ChartsDataCommandHandler
-        public async Task<IEnumerable<IDictionary<string, string>>> Handle(ResponsesCommand request, CancellationToken cancellationToken)
+        public async Task<IDictionary<string, Guid>> Handle(ResponsesCommand request, CancellationToken cancellationToken)
         {
-            // 1. take the questions based on form id
-            var questions = await unitOfWork.QuestionRepository.GetQuestionsWithRelatedEntities(request.FormId);
-            var questionsIds = questions.Select(q => q.Id);
+            bool formExists = await unitOfWork.FormRepository.Exists(f => f.Id == request.FormId);
+            bool teacherExists = await unitOfWork.TeacherRepository.Exists(t => t.Id == request.TeacherId);
+            if (formExists && teacherExists)
+            {
+                var responses = await unitOfWork.AnswerRepository.GetByFormIdAsync(request.FormId);
+                if (request.TaughtSubjectId.Equals("All"))
+                {
+                    return GetResponsesOverall(request.TeacherId, responses);
+                }
+                else if (await unitOfWork.TaughtSubjectRepository.Exists(ts => ts.Id == new Guid(request.TaughtSubjectId)))
+                {
+                    return GetResponsesForTaughtSubject(new Guid(request.TaughtSubjectId), responses);
+                }
+            }
+            throw new ItemNotFoundException("Not found");
+        }
 
-            // get all the responses based on the form id
-            var responses = await unitOfWork.AnswerRepository.GetByFormIdAsync(request.FormId);
-            var enrollmentIds = responses.Select(r => r.Enrollment.Id).Distinct();
+        private IDictionary<string, Guid> GetResponsesOverall(Guid teacherId, IEnumerable<AnswerToQuestion> responses)
+        {
+            var filteredResponses = responses.Where(r => r.Enrollment.TaughtSubject.Teacher.Id == teacherId);
+            var enrollmentIds = filteredResponses.Select(r => r.Enrollment.Id).Distinct();
 
-            // based on questionsIds, get the answers
-            //var answers = await unitOfWork.AnswerRepository.
+            IDictionary<string, Guid> enrollmentIdsInfo = new Dictionary<string, Guid>();
+            int iterator = 1;
+            foreach (var enrollmentId in enrollmentIds)
+            {
+                enrollmentIdsInfo.Add(string.Concat("Response ", iterator.ToString()), enrollmentId);
+                iterator++;
+            }
 
-            // 2. based on the questions previously retrieved and based on the teacher id, take the enrollment ids 
-            // 3.
+            return enrollmentIdsInfo;
+        }
 
+        private IDictionary<string, Guid> GetResponsesForTaughtSubject(Guid taughtSubjectId, IEnumerable<AnswerToQuestion> responses)
+        {
+            IDictionary<string, Guid> enrollmentIdsInfo = new Dictionary<string, Guid>();
 
-            throw new System.NotImplementedException();
+            var filteredResponses = responses.Where(r => r.Enrollment.TaughtSubject.Id == taughtSubjectId);
+            var enrollmentIds = filteredResponses.Select(r => r.Enrollment.Id).Distinct();
+
+            int iterator = 1;
+            foreach (var enrollmentId in enrollmentIds)
+            {
+                enrollmentIdsInfo.Add(string.Concat("Response ", iterator.ToString()), enrollmentId);
+                iterator++;
+            }
+
+            return enrollmentIdsInfo;
         }
     }
 }

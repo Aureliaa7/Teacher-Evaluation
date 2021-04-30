@@ -8,15 +8,15 @@ using System.Linq;
 using TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 
-namespace TeacherEvaluation.Application.Pages.Charts
+namespace TeacherEvaluation.Application.Pages.AllResponses.Charts
 {
     [Authorize(Roles = "Dean")]
-    public class ViewChartsDeanModel : ViewChartsBaseModel
+    public class ViewAsDeanModel : ViewChartsBaseModel
     {
         [BindProperty]
         public List<SelectListItem> Teachers { get; set; } = new List<SelectListItem>();
 
-        public ViewChartsDeanModel(IMediator mediator) : base(mediator)
+        public ViewAsDeanModel(IMediator mediator) : base(mediator)
         {
         }
 

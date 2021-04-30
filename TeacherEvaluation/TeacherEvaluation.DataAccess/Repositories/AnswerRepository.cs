@@ -18,7 +18,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
         public async Task<IEnumerable<AnswerToQuestion>> GetByFormIdAsync(Guid id)
         {
             return await Context.Set<AnswerToQuestion>()
-                .Where(a => a.Question.Id == id)
+                .Where(a => a.Question.Form.Id == id)
                 .Include(a => a.Question)
                 .Include(a => a.Enrollment)
                     .ThenInclude(e => e.Student)

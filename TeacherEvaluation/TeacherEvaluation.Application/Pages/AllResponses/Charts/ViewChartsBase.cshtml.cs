@@ -1,28 +1,15 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using TeacherEvaluation.BusinessLogic.Commands.EvaluationForms;
 using TeacherEvaluation.BusinessLogic.Commands.TagClouds;
 
-namespace TeacherEvaluation.Application.Pages.Charts
+namespace TeacherEvaluation.Application.Pages.AllResponses.Charts
 {
-    public class ViewChartsBaseModel : PageModel
+    public class ViewChartsBaseModel : ResponseSearchDataModel
     {
-        protected readonly IMediator mediator;
-
-        [BindProperty]
-        public Guid TeacherId { get; set; }
-
-        [BindProperty]
-        public Guid FormId { get; set; }
-
-        [BindProperty]
-        public string SelectedSubjectId { get; set; }
-
-        public ViewChartsBaseModel(IMediator mediator)
+        public ViewChartsBaseModel(IMediator mediator) : base(mediator)
         {
-            this.mediator = mediator;
         }
 
         public JsonResult OnGetRetrieveResponses(string teacherId, string formId, string taughtSubjectId)

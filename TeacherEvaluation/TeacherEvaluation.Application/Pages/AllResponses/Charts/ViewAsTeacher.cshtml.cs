@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 
-namespace TeacherEvaluation.Application.Pages.Charts
+namespace TeacherEvaluation.Application.Pages.AllResponses.Charts
 {
     [Authorize(Roles = "Teacher")]
-    public class ViewChartsTeacherModel : ViewChartsBaseModel
+    public class ViewAsTeacherModel : ViewChartsBaseModel
     {
-        public ViewChartsTeacherModel(IMediator mediator) : base(mediator)
+        public ViewAsTeacherModel(IMediator mediator) : base(mediator)
         {
         }
 

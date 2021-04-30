@@ -1,5 +1,5 @@
 ﻿@page "{handler?}"
-@model TeacherEvaluation.Application.Pages.Charts.ViewChartsTeacherModel
+@model TeacherEvaluation.Application.Pages.AllResponses.Charts.ViewAsTeacherModel
 
 @{
     ViewData["Title"] = "Charts & Word Cloud";
@@ -8,7 +8,7 @@
 
 @section scripts{
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="~/js/evaluationFormResponses.js"></script>
+    <script src="~/js/chartsAndTagCloud.js"></script>
     <script src="~/js/taughtSubjects.js"></script>
     <script>
         $(document).ready(function () {

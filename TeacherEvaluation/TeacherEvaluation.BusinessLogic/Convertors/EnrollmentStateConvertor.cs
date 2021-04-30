@@ -1,8 +1,8 @@
 ﻿using TeacherEvaluation.Domain.DomainEntities.Enums;
 
-namespace TeacherEvaluation.Application.Convertors
+namespace TeacherEvaluation.BusinessLogic.Convertors
 {
-    internal static class EnrollmentStateConvertor
+    public static class EnrollmentStateConvertor
     {
         public static string ToDisplayString(EnrollmentState state)
         {
