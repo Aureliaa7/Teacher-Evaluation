@@ -5,12 +5,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
+using TeacherEvaluation.BusinessLogic.ViewModels;
 using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.Responses
 {
-    public class ResponsesCommandHandler : IRequestHandler<ResponsesCommand, IDictionary<string, Guid>>
+    public class ResponsesCommandHandler : IRequestHandler<ResponsesCommand, IDictionary<string, ResponseVm>>
     {
         private readonly IUnitOfWork unitOfWork;
 
@@ -19,7 +20,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Responses
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<IDictionary<string, Guid>> Handle(ResponsesCommand request, CancellationToken cancellationToken)
+        public async Task<IDictionary<string, ResponseVm>> Handle(ResponsesCommand request, CancellationToken cancellationToken)
         {
             bool formExists = await unitOfWork.FormRepository.Exists(f => f.Id == request.FormId);
             bool teacherExists = await unitOfWork.TeacherRepository.Exists(t => t.Id == request.TeacherId);
@@ -28,47 +29,41 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Responses
                 var responses = await unitOfWork.AnswerRepository.GetByFormIdAsync(request.FormId);
                 if (request.TaughtSubjectId.Equals("All"))
                 {
-                    return GetResponsesOverall(request.TeacherId, responses);
+                    var filteredResponses = responses.Where(r => r.Enrollment.TaughtSubject.Teacher.Id == request.TeacherId);
+                    var responsesInfo = GetResponsesInfo(filteredResponses);
+
+                    return responsesInfo;
                 }
                 else if (await unitOfWork.TaughtSubjectRepository.Exists(ts => ts.Id == new Guid(request.TaughtSubjectId)))
                 {
-                    return GetResponsesForTaughtSubject(new Guid(request.TaughtSubjectId), responses);
+                    var filteredResponses = responses.Where(r => r.Enrollment.TaughtSubject.Id == new Guid(request.TaughtSubjectId));
+                    var responsesInfo = GetResponsesInfo(filteredResponses);
+                    return responsesInfo;
                 }
             }
             throw new ItemNotFoundException("Not found");
         }
 
-        private IDictionary<string, Guid> GetResponsesOverall(Guid teacherId, IEnumerable<AnswerToQuestion> responses)
+        private IDictionary<string, ResponseVm> GetResponsesInfo(IEnumerable<AnswerToQuestion> responses)
         {
-            var filteredResponses = responses.Where(r => r.Enrollment.TaughtSubject.Teacher.Id == teacherId);
-            var enrollmentIds = filteredResponses.Select(r => r.Enrollment.Id).Distinct();
-
-            IDictionary<string, Guid> enrollmentIdsInfo = new Dictionary<string, Guid>();
+            var enrollmentIds = responses.Select(r => r.Enrollment.Id).Distinct();
+            IDictionary<string, ResponseVm> responsesInfo = new Dictionary<string, ResponseVm>();
             int iterator = 1;
             foreach (var enrollmentId in enrollmentIds)
             {
-                enrollmentIdsInfo.Add(string.Concat("Response ", iterator.ToString()), enrollmentId);
+                var response = responses.FirstOrDefault(r => r.Enrollment.Id == enrollmentId);
+                int noAttendances = response.Enrollment.NumberOfAttendances;
+                int grade = response.Enrollment.Grade.Value ?? 0;
+                var responseVm = new ResponseVm
+                {
+                    EnrollmentId = enrollmentId,
+                    NoAttendances = noAttendances,
+                    Grade = grade
+                };
+                responsesInfo.Add(string.Concat("Response ", iterator.ToString()), responseVm);
                 iterator++;
             }
-
-            return enrollmentIdsInfo;
-        }
-
-        private IDictionary<string, Guid> GetResponsesForTaughtSubject(Guid taughtSubjectId, IEnumerable<AnswerToQuestion> responses)
-        {
-            IDictionary<string, Guid> enrollmentIdsInfo = new Dictionary<string, Guid>();
-
-            var filteredResponses = responses.Where(r => r.Enrollment.TaughtSubject.Id == taughtSubjectId);
-            var enrollmentIds = filteredResponses.Select(r => r.Enrollment.Id).Distinct();
-
-            int iterator = 1;
-            foreach (var enrollmentId in enrollmentIds)
-            {
-                enrollmentIdsInfo.Add(string.Concat("Response ", iterator.ToString()), enrollmentId);
-                iterator++;
-            }
-
-            return enrollmentIdsInfo;
+            return responsesInfo;
         }
     }
 }

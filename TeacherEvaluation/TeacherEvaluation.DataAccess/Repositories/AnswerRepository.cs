@@ -23,6 +23,8 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .Include(a => a.Enrollment)
                     .ThenInclude(e => e.Student)
                 .Include(a => a.Enrollment)
+                    .ThenInclude(e => e.Grade)
+                .Include(a => a.Enrollment)
                     .ThenInclude(e => e.TaughtSubject)
                         .ThenInclude(ts => ts.Teacher)
                 .ToListAsync();

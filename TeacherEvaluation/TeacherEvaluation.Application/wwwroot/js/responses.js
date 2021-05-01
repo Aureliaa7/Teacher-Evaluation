@@ -41,9 +41,17 @@ function create_table(search_details, layoutId) {
                 var thead = document.createElement("thead");
                 var tr = document.createElement("tr");
                 var th1 = document.createElement("th");
+                th1.innerHTML = "Response";
                 var th2 = document.createElement("th");
+                th2.innerHTML = "View";
+                var th3 = document.createElement("th");
+                th3.innerHTML = "No. Attendances";
+                var th4 = document.createElement("th");
+                th4.innerHTML = "Grade";
                 tr.appendChild(th1);
                 tr.appendChild(th2);
+                tr.appendChild(th3);
+                tr.appendChild(th4);
                 thead.appendChild(tr);
                 tableElement.appendChild(thead);
 
@@ -57,14 +65,23 @@ function create_table(search_details, layoutId) {
 
                     var newTd2 = document.createElement("td");
                     var anchor = document.createElement("a");
-                    var href = "./OneResponse?enrollmentId=" + value + "&formId=" + search_details.formId;
+                    var href = "./OneResponse?enrollmentId=" + value.enrollmentId + "&formId=" + search_details.formId;
                     anchor.href = href;
-                    anchor.setAttribute("asp-route-enrollmentId", value);
+                    anchor.setAttribute("asp-route-enrollmentId", value.enrollmentId);
                     anchor.setAttribute("asp-route-formId", search_details.formId);
                     anchor.text = "View";
                     newTd2.appendChild(anchor);
+
+                    var newTd3 = document.createElement("td");
+                    newTd3.innerHTML = get_attendances_interval();
+
+                    var newTd4 = document.createElement("td");
+                    newTd4.innerHTML = get_grade_interval(value.grade);
+                    
                     newTr.appendChild(newTd1);
                     newTr.appendChild(newTd2);
+                    newTr.appendChild(newTd3);
+                    newTr.appendChild(newTd4);
                     tbody.appendChild(newTr);
                 });
 
@@ -92,4 +109,26 @@ function remove_table() {
     if (oldTable != null) {
         oldTable.remove();
     }
+}
+
+
+//how do i know the total number of attendances for each subject?
+// maybe when adding a new subject, the admin should also provide the total number of attendances
+// because for instance, some laboratories are held once at every 2 weeks
+//TODO this approach needs validation. Until then return a dummy string
+function get_attendances_interval() {
+    return "dummy";
+}
+
+function get_grade_interval(grade) {
+    if (grade == 5 || grade == 6) {
+        return "5-6";
+    }
+    else if (grade == 7 || grade == 8) {
+        return "7-8";
+    }
+    else if (grade == 9 || grade == 10) {
+        return "9-10";
+    }
+    return "<5";
 }

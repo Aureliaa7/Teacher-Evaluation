@@ -29,10 +29,10 @@ namespace TeacherEvaluation.Application.Pages.AllResponses.Responses
                 var teachers = mediator.Send(getTeachersCommand).Result;
 
                 Teachers = teachers.Select(x => new SelectListItem
-                                                {
-                                                    Value = x.Id.ToString(),
-                                                    Text = x.User.FirstName + " " + x.User.LastName
-                                                }).ToList();
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.User.FirstName + " " + x.User.LastName
+                }).ToList();
             }
             catch (ItemNotFoundException) { }
         }
