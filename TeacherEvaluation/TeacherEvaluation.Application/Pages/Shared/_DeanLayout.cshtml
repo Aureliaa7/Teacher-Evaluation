@@ -37,9 +37,9 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" asp-page="../Account/ChangePassword">Change password</a>
+                    <a class="dropdown-item" asp-page="/Account/ChangePassword">Change password</a>
                     <div class="dropdown-divider"></div>
-                    <form class="form-inline dropdown-item" method="post" asp-page="../Account/Logout">
+                    <form class="form-inline dropdown-item" method="post" asp-page="/Account/Logout">
                         <button type="submit" class="nav-link btn text-dark" style="align-self:center;">Log out</button>
                     </form>
                 </div>
@@ -66,8 +66,8 @@
                         </a>
                         <div class="collapse" id="collapseEvaluationForms" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" asp-page="../EvaluationForms/Create">Create</a>
-                                <a class="nav-link" asp-page="../EvaluationForms/Index">View all</a>
+                                <a class="nav-link" asp-page="/EvaluationForms/Create">Create</a>
+                                <a class="nav-link" asp-page="/EvaluationForms/Index">View all</a>
                             </nav>
                         </div>
                     </div>

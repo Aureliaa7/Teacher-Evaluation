@@ -10,8 +10,7 @@ using TeacherEvaluation.BusinessLogic.Exceptions;
 
 namespace TeacherEvaluation.Application.Pages.AllResponses.Responses
 {
- /*   [Authorize(Roles = "Dean")]
-    [Authorize(Roles = "Teacher")]*/
+    [Authorize(Roles = "Dean, Teacher")]
     public class OneResponseModel : PageModel
     {
         private readonly IMediator mediator;

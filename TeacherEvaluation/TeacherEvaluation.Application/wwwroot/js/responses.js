@@ -9,6 +9,14 @@
     create_table(search_details, layoutID);
 }
 
+function update_subjects_drop_down() {
+    var subjectsDropDown = document.getElementById("selected-subject-field");
+    var selectedValue = subjectsDropDown.options[subjectsDropDown.selectedIndex].value;
+    if (selectedValue == "Please select") {
+        get_taught_subjects_by_teacher_id();
+    }
+}
+
 function create_table(search_details, layoutId) {
     remove_table();
 

@@ -28,9 +28,7 @@ namespace TeacherEvaluation.Application.Pages.AllResponses.Responses
                 GetAllTeachersCommand getTeachersCommand = new GetAllTeachersCommand();
                 var teachers = mediator.Send(getTeachersCommand).Result;
 
-
-                Teachers = teachers.Select(x =>
-                                                new SelectListItem
+                Teachers = teachers.Select(x => new SelectListItem
                                                 {
                                                     Value = x.Id.ToString(),
                                                     Text = x.User.FirstName + " " + x.User.LastName

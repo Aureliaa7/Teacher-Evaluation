@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Convertors;
+using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.DataAccess.UnitOfWork;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.Responses
@@ -40,7 +41,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Responses
                 return questionsAndResponses;
             }
 
-            throw new System.NotImplementedException();
+            throw new ItemNotFoundException("Not found");
         }
     }
 }

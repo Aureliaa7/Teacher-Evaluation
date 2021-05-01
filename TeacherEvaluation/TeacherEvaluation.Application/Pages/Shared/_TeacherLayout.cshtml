@@ -37,9 +37,9 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" asp-page="../Account/ChangePassword">Change password</a>
+                    <a class="dropdown-item" asp-page="/Account/ChangePassword">Change password</a>
                     <div class="dropdown-divider"></div>
-                    <form class="form-inline dropdown-item" method="post" asp-page="../Account/Logout">
+                    <form class="form-inline dropdown-item" method="post" asp-page="/Account/Logout">
                         <button type="submit" class="nav-link btn text-dark" style="align-self:center;">Log out</button>
                     </form>
                 </div>
@@ -53,7 +53,7 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">Home</div>
-                        <a class="nav-link" asp-page="../Dashboards/Teacher">
+                        <a class="nav-link" asp-page="/Dashboards/Teacher">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
@@ -66,8 +66,8 @@
                         </a>
                         <div class="collapse" id="collapseSubjects" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" asp-page="../TaughtSubjects/CoursesForTeacher">Courses</a>
-                                <a class="nav-link" asp-page="../TaughtSubjects/LaboratoriesForTeacher">Laboratories</a>
+                                <a class="nav-link" asp-page="/TaughtSubjects/CoursesForTeacher">Courses</a>
+                                <a class="nav-link" asp-page="/TaughtSubjects/LaboratoriesForTeacher">Laboratories</a>
                             </nav>
                         </div>
 
@@ -79,7 +79,7 @@
                         </a>
                         <div class="collapse" id="collapseEvaluations" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" asp-page="../EvaluationForms/Index">View all</a>
+                                <a class="nav-link" asp-page="/EvaluationForms/Index">View all</a>
                             </nav>
                         </div>
 
@@ -91,7 +91,7 @@
                         </a>
                         <div class="collapse" id="collapseAttendances" aria-labelledby="headingThree" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" asp-page="../Attendances/Create">Add attendance</a>
+                                <a class="nav-link" asp-page="/Attendances/Create">Add attendance</a>
                             </nav>
                         </div>
 

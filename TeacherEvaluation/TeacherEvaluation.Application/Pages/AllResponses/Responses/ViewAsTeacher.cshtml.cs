@@ -1,6 +1,7 @@
 using MediatR;
 using System;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 
@@ -12,7 +13,7 @@ namespace TeacherEvaluation.Application.Pages.AllResponses.Responses
         {
         }
 
-        public async void OnGet(Guid formId)
+        public async Task OnGetAsync(Guid formId)
         {
             FormId = formId;
             GetTeacherIdByUserIdCommand getTeacherIdCommand = new GetTeacherIdByUserIdCommand

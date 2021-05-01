@@ -31,7 +31,7 @@ namespace TeacherEvaluation.Application
             services.AddRazorPages();
             services.AddDbContext<ApplicationDbContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-               b => b.MigrationsAssembly($"TeacherEvaluation.DataAccess")), ServiceLifetime.Transient);
+               b => b.MigrationsAssembly($"TeacherEvaluation.DataAccess")));
 
             services.AddIdentity<ApplicationUser, ApplicationRole>(config => config.SignIn.RequireConfirmedEmail = true)
               .AddEntityFrameworkStores<ApplicationDbContext>()

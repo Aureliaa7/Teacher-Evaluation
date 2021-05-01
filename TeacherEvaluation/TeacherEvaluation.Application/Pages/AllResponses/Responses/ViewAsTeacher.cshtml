@@ -2,28 +2,22 @@
 @model TeacherEvaluation.Application.Pages.AllResponses.Responses.ViewAsTeacherModel
 
 @{
-    ViewData["Title"] = "Charts & Word Cloud";
+    ViewData["Title"] = "Responses";
     Layout = "~/Pages/Shared/_TeacherLayout.cshtml";
 }
 
 @section scripts{
     <script src="~/js/responses.js"></script>
     <script src="~/js/taughtSubjects.js"></script>
-    <script>
-        $(document).ready(function () {
-            get_taught_subjects_by_teacher_id();
-        });
-    </script>
 }
 
 <h3 class="row align-input-center" style="margin-top: 70px;">Select the subject</h3>
 <hr />
-<input id="teacher-field" type="hidden" asp-for="TeacherId" />
-<p>@Model.TeacherId</p>
+<input id="teacher-field" type="hidden" asp-for="TeacherId"/>
 
 <div class="col-md-4">
     <select id="selected-subject-field" asp-for="SelectedSubjectId" class="form-control"
-            onchange="get_responses('@Model.FormId', 'mainElementTeacherLayout')">
+            onchange="get_responses('@Model.FormId', 'mainElementTeacherLayout')" onclick="update_subjects_drop_down()">
         <option selected disabled hidden>Please select</option>
     </select>
 </div>
