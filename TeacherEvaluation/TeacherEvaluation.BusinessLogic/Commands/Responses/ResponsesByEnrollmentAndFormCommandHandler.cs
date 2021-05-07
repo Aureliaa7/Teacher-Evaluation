@@ -26,7 +26,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Responses
                 var freeFormResponses = await unitOfWork.AnswerToQuestionWithTextRepository
                     .GetByEnrollmentAndFormId(request.EnrollmentId, request.FormId);
                 var responsesForLikertQuestions = await unitOfWork.AnswerToQuestionWithOptionRepository
-                    .GetByEnrollmentAndFormId(request.EnrollmentId, request.FormId);
+                    .GetByEnrollmentAndFormIdAsync(request.EnrollmentId, request.FormId);
 
                 var questionsAndResponses = new Dictionary<string, string>();
                 foreach(var response in freeFormResponses)

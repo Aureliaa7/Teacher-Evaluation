@@ -34,6 +34,11 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
                 {
                     return await GetChartsDataOverall(request.TeacherId, questions);
                 }
+                // "Please select" is selected
+                else if (request.TaughtSubjectId.Equals("default"))
+                {
+                    return new Dictionary<string, IDictionary<string, int>>();
+                }
                 else if(await unitOfWork.TaughtSubjectRepository.Exists(ts => ts.Id == new Guid(request.TaughtSubjectId)))
                 {
                     return await GetChartsDataForTaughtSubject(request.TeacherId, new Guid(request.TaughtSubjectId), questions);
@@ -48,7 +53,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
 
             foreach (var question in questions)
             {
-                var responses = (await unitOfWork.AnswerToQuestionWithOptionRepository.GetByQuestionId(question.Id))
+                var responses = (await unitOfWork.AnswerToQuestionWithOptionRepository.GetByQuestionIdAsync(question.Id))
                                  .Where(r => r.Enrollment.TaughtSubject.Teacher.Id == teacherId)
                                  .Select(x => x.Answer)
                                  .ToList();
@@ -65,7 +70,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
 
             foreach (var question in questions)
             {
-                var responses = (await unitOfWork.AnswerToQuestionWithOptionRepository.GetByQuestionId(question.Id))
+                var responses = (await unitOfWork.AnswerToQuestionWithOptionRepository.GetByQuestionIdAsync(question.Id))
                                  .Where(r => r.Enrollment.TaughtSubject.Teacher.Id == teacherId &&
                                         r.Enrollment.TaughtSubject.Id == taughtSubjectId)
                                  .Select(x => x.Answer)

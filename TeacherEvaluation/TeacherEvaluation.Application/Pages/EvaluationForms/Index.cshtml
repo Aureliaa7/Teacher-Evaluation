@@ -52,7 +52,7 @@
                         {
                             <a asp-page="../AllResponses/Responses/ViewAsDean" asp-route-formId="@item.Id">Responses</a><span>|</span>
                             <a asp-page="../AllResponses/Charts/ViewAsDean" asp-route-formId="@item.Id">Charts </a><span>|</span>
-                            <a asp-page="ViewQuestions" asp-route-id="@item.Id">Ranking </a>
+                            <a asp-page="../Ranking/View" asp-route-formId="@item.Id">Ranking </a>
                         }
                         else if (User.IsInRole("Teacher"))
                         {

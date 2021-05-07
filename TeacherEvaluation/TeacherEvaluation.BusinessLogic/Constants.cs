@@ -5,5 +5,6 @@
         public const int NumberOfLikertQuestions = 10;
         public const int NumberOfFreeFormQuestions = 2;
         public const int TotalNumberOfQuestions = NumberOfLikertQuestions + NumberOfFreeFormQuestions;
+        public const int NumberOfTopTeachers = 3;
     }
 }

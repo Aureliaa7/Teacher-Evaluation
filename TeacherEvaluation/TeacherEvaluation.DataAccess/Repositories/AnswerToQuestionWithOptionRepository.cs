@@ -14,7 +14,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
         public AnswerToQuestionWithOptionRepository(ApplicationDbContext context) : base(context)
         {}
 
-        public async Task<IEnumerable<AnswerToQuestionWithOption>> GetByEnrollmentAndFormId(Guid enrollmentId, Guid formId)
+        public async Task<IEnumerable<AnswerToQuestionWithOption>> GetByEnrollmentAndFormIdAsync(Guid enrollmentId, Guid formId)
         {
             return await Context.Set<AnswerToQuestionWithOption>()
                 .Where(x => x.Enrollment.Id == enrollmentId && x.Question.Form.Id == formId)
@@ -22,7 +22,15 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<AnswerToQuestionWithOption>> GetByQuestionId(Guid id)
+        public async Task<IEnumerable<AnswerToQuestionWithOption>> GetByQuestionIdAndTeacherIdAsync(Guid questionId, Guid teacherId)
+        {
+            return await Context.Set<AnswerToQuestionWithOption>()
+                .Where(x => x.Question.Id == questionId && 
+                x.Enrollment.TaughtSubject.Teacher.Id == teacherId)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<AnswerToQuestionWithOption>> GetByQuestionIdAsync(Guid id)
         {
             return await Context.Set<AnswerToQuestionWithOption>()
                 .Where(x => x.Question.Id == id)

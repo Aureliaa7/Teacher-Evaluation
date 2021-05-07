@@ -1,0 +1,29 @@
+﻿@page "{handler?}"
+@model TeacherEvaluation.Application.Pages.Ranking.ViewModel
+@{
+    ViewData["Title"] = "Ranking";
+    Layout = "~/Pages/Shared/_DeanLayout.cshtml";
+}
+
+@section scripts{
+
+    <script src="~/js/ranking.js"></script>
+}
+
+<h3 class="row align-input-center" style="margin-top: 70px;">Select the teacher and the subject</h3>
+<hr />
+<div class="row my-row">
+    <div class="col-md-4">
+        <select id="question-field" asp-for="QuestionId" asp-items="@Model.LikertQuestions" class="form-control">
+            <option selected disabled hidden>Please select</option>
+        </select>
+    </div>
+
+    <div class="col-md-4">
+        <select id="ranking-type-field" class="form-control"
+                asp-items="Html.GetEnumSelectList<TeacherEvaluation.BusinessLogic.Enums.RankingType>()"
+                onchange="get_top_teachers()">
+            <option selected disabled hidden>Please select</option>
+        </select>
+    </div>
+</div>
