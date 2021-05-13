@@ -36,7 +36,7 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
         [EnumDataType(typeof(TaughtSubjectType))]
         public TaughtSubjectType Type { get; set; }
 
-        public List<SelectListItem> AnswerOptions = new List<SelectListItem>();
+        public IDictionary<string, AnswerOption> AnswerOptions = new Dictionary<string, AnswerOption>();
 
         [BindProperty]
         [Required(ErrorMessage = "Subject is required")]
@@ -79,16 +79,16 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
             }
         }
 
-        private List<SelectListItem> GetAnswerOptions()
+        private IDictionary<string, AnswerOption> GetAnswerOptions()
         {
-            return Enum.GetValues(typeof(AnswerOption))
-               .Cast<AnswerOption>()
-               .Select(x =>
-               {
-                   string displayText = AnswerOptionConvertor.ToDisplayString(x);
-                   return new SelectListItem(displayText, x.ToString());
-               })
-               .ToList();
+            var answerOptions = new Dictionary<string, AnswerOption>();
+            var options = Enum.GetValues(typeof(AnswerOption));
+            foreach(var option in options)
+            {
+                answerOptions.Add(AnswerOptionConvertor.ToDisplayString((AnswerOption)option), (AnswerOption)option);
+            }
+
+            return answerOptions;
         }
 
         public async Task<IActionResult> OnGet()
