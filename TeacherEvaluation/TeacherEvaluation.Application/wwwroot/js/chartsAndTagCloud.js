@@ -6,9 +6,12 @@
     };
 
     console.log(search_details);
-
+    remove_tag_cloud();
     create_charts(search_details, layoutID);
-    create_tag_cloud(search_details, layoutID);
+
+    setTimeout(function () {
+        create_tag_cloud(search_details, layoutID);
+    }, 4000); 
 }
 
 
@@ -115,10 +118,6 @@ function create_new_divs(layoutId) {
 }
 
 function create_tag_cloud(search_details, layoutId) {
-    var tagDiv = document.getElementById("tag-cloud-div");
-    if (tagDiv != null) {
-        tagDiv.remove();
-    }
 
     $.ajax({
         type: "GET",
@@ -174,8 +173,16 @@ function create_tag_cloud(search_details, layoutId) {
     });
 }
 
+function remove_tag_cloud() {
+    var tagDiv = document.getElementById("tag-cloud-div");
+    if (tagDiv != null) {
+        tagDiv.remove();
+    }
+}
+
 function update() {
     remove_charts_divs();
+    remove_tag_cloud();
     $("#selected-subject-field").val("default");
     get_taught_subjects_by_teacher_id();
 }
