@@ -8,10 +8,7 @@
     console.log(search_details);
 
     create_charts(search_details, layoutID);
-
-    setTimeout(function () {
-        create_tag_cloud(search_details, layoutID);
-    }, 20000); 
+    create_tag_cloud(search_details, layoutID);
 }
 
 
@@ -128,7 +125,7 @@ function create_tag_cloud(search_details, layoutId) {
         data: search_details,
         dataType: 'json',
         contextType: 'application/json',
-        url: "/AllResponses/Charts/ViewChartsBase?handler=ReturnTagCloud",
+        url: "/AllResponses/Charts/ViewChartsBase?handler=RetrieveTagCloud",
 
         success: function (result) {
             var tagDiv = document.createElement("div");
