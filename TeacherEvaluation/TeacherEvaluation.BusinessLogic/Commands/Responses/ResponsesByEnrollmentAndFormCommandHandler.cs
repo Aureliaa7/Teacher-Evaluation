@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using TeacherEvaluation.BusinessLogic.Convertors;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.DataAccess.UnitOfWork;
 
@@ -35,7 +34,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Responses
                 }
                 foreach(var response in responsesForLikertQuestions)
                 {
-                    questionsAndResponses.Add(response.Question.Text, AnswerOptionConvertor.ToDisplayString(response.Answer));
+                    questionsAndResponses.Add(response.Question.Text, response.Score.ToString());
                 }
                 return questionsAndResponses;
             }

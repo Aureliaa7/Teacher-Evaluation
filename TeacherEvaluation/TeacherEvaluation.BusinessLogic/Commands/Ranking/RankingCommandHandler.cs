@@ -43,7 +43,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Ranking
             {
                 var responses = await unitOfWork.AnswerToQuestionWithOptionRepository
                     .GetByQuestionIdAndTeacherIdAsync(questionId, teacher.Id);
-                long score = responses.Sum(r => (long)r.Answer);
+                long score = responses.Sum(r => (long)r.Score); 
                 result.Add(teacher.Id, score);
             }
             var orderedTeachers = (result.OrderByDescending(r => r.Value)).ToList();

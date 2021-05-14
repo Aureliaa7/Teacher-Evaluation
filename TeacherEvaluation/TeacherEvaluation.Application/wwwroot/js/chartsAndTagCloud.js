@@ -40,7 +40,7 @@ function create_charts(search_details, layoutId) {
                         data[contor1] = new google.visualization.DataTable();
                         data[contor1].addColumn('string', 'question');
                         data[contor1].addColumn('number', 'number of answers');
-                        data[contor1].addRows(5);
+                        data[contor1].addRows(10);
 
                         var contor2 = 0;
                         var optionAnswersWithNoAnswers = result[question];

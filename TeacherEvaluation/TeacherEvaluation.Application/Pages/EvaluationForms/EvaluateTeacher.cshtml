@@ -51,7 +51,7 @@
                 @foreach (var option in Model.AnswerOptions)
                 {
                     <div class="add-margin-left-45">
-                        <input type="radio" asp-for="@Model.Answers[contor]" value="@option.Value" />@option.Key<br />
+                        <input type="radio" asp-for="@Model.Scores[contor]" value="@option.Value" />@option.Key<br />
                     </div>
                 }
             </div>

@@ -9,12 +9,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-
 using TeacherEvaluation.BusinessLogic;
 using TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Commands.EvaluationForms;
 using TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations;
-using TeacherEvaluation.BusinessLogic.Convertors;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.BusinessLogic.ViewModels;
 using TeacherEvaluation.Domain.DomainEntities;
@@ -36,7 +34,7 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
         [EnumDataType(typeof(TaughtSubjectType))]
         public TaughtSubjectType Type { get; set; }
 
-        public IDictionary<string, AnswerOption> AnswerOptions = new Dictionary<string, AnswerOption>();
+        public IDictionary<string, int> AnswerOptions = new Dictionary<string, int>();
 
         [BindProperty]
         [Required(ErrorMessage = "Subject is required")]
@@ -47,8 +45,7 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
 
         [BindProperty]
         [Required(ErrorMessage = "Answer is required")]
-        [EnumDataType(typeof(AnswerOption))]
-        public List<AnswerOption> Answers { get; set; }
+        public List<int> Scores { get; set; }
 
         [BindProperty]
         [Required]
@@ -79,13 +76,12 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
             }
         }
 
-        private IDictionary<string, AnswerOption> GetAnswerOptions()
+        private IDictionary<string, int> GetAnswerOptions()
         {
-            var answerOptions = new Dictionary<string, AnswerOption>();
-            var options = Enum.GetValues(typeof(AnswerOption));
-            foreach(var option in options)
+            var answerOptions = new Dictionary<string, int>();
+            for(int i = 1; i < 11; i++)
             {
-                answerOptions.Add(AnswerOptionConvertor.ToDisplayString((AnswerOption)option), (AnswerOption)option);
+                answerOptions.Add(i.ToString(), i);
             }
 
             return answerOptions;
@@ -188,7 +184,7 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
                 EnrollmentState = form.EnrollmentState,
                 FormId = form.Id,
                 Questions = Questions,
-                Responses = Answers,
+                Scores = Scores,
                 SubjectId = SubjectId,
                 SubjectType = Type,
                 UserIdForStudent = userIdStudent,

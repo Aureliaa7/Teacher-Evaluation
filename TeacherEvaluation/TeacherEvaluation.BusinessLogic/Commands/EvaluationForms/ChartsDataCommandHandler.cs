@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
-using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
 {
@@ -39,7 +38,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
                 {
                     return new Dictionary<string, IDictionary<string, int>>();
                 }
-                else if(await unitOfWork.TaughtSubjectRepository.Exists(ts => ts.Id == new Guid(request.TaughtSubjectId)))
+                else if (await unitOfWork.TaughtSubjectRepository.Exists(ts => ts.Id == new Guid(request.TaughtSubjectId)))
                 {
                     return await GetChartsDataForTaughtSubject(request.TeacherId, new Guid(request.TaughtSubjectId), questions);
                 }
@@ -55,7 +54,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
             {
                 var responses = (await unitOfWork.AnswerToQuestionWithOptionRepository.GetByQuestionIdAsync(question.Id))
                                  .Where(r => r.Enrollment.TaughtSubject.Teacher.Id == teacherId)
-                                 .Select(x => x.Answer)
+                                 .Select(x => x.Score)
                                  .ToList();
 
                 questionsWithResponses.Add(question.Text, GetAnswersOptionAndNumberOfAnswers(responses));
@@ -70,33 +69,26 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
 
             foreach (var question in questions)
             {
-                var responses = (await unitOfWork.AnswerToQuestionWithOptionRepository.GetByQuestionIdAsync(question.Id))
+                var scores = (await unitOfWork.AnswerToQuestionWithOptionRepository.GetByQuestionIdAsync(question.Id))
                                  .Where(r => r.Enrollment.TaughtSubject.Teacher.Id == teacherId &&
                                         r.Enrollment.TaughtSubject.Id == taughtSubjectId)
-                                 .Select(x => x.Answer)
+                                 .Select(x => x.Score)
                                  .ToList();
 
-                questionsWithResponses.Add(question.Text, GetAnswersOptionAndNumberOfAnswers(responses));
+                questionsWithResponses.Add(question.Text, GetAnswersOptionAndNumberOfAnswers(scores));
             }
 
             return questionsWithResponses;
         }
 
-        private IDictionary<string, int> GetAnswersOptionAndNumberOfAnswers(List<AnswerOption> responses)
+        private IDictionary<string, int> GetAnswersOptionAndNumberOfAnswers(List<int> scores)
         {
-            int noStronglyDisagreeAnswers = (responses.Where(r => r.Equals(AnswerOption.StronglyDisagree))).Count();
-            int noDisagreeAnswers = (responses.Where(r => r.Equals(AnswerOption.Disagree))).Count();
-            int noNeutralAnswers = (responses.Where(r => r.Equals(AnswerOption.Neutral))).Count();
-            int noAgreeAnswers = (responses.Where(r => r.Equals(AnswerOption.Agree))).Count();
-            int noStronglyAgreeAnswers = (responses.Where(r => r.Equals(AnswerOption.StronglyAgree))).Count();
-
             IDictionary<string, int> answersOptionAndNumberOfAnswers = new Dictionary<string, int>();
 
-            answersOptionAndNumberOfAnswers.Add("Strongly Disagree", noStronglyDisagreeAnswers);
-            answersOptionAndNumberOfAnswers.Add("Disagree", noDisagreeAnswers);
-            answersOptionAndNumberOfAnswers.Add("Neutral", noNeutralAnswers);
-            answersOptionAndNumberOfAnswers.Add("Agree", noAgreeAnswers);
-            answersOptionAndNumberOfAnswers.Add("Strongly Agree", noStronglyAgreeAnswers);
+            for (int i = 1; i < 11; i++)
+            {
+                answersOptionAndNumberOfAnswers.Add(i.ToString(), (scores.Where(r => r == i)).Count());
+            }
 
             return answersOptionAndNumberOfAnswers;
         }

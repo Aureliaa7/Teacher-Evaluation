@@ -4,6 +4,6 @@ namespace TeacherEvaluation.Domain.DomainEntities
 {
     public class AnswerToQuestionWithOption : AnswerToQuestion
     {
-        public AnswerOption Answer { get; set; }
+        public int Score { get; set; }
     }
 }

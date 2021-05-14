@@ -22,7 +22,7 @@ namespace TeacherEvaluation.DataAccess.Data
         public DbSet<AnswerToQuestionWithOption> AnswerToQuestionWithOptions { get; set; }
         public DbSet<Form> Forms { get; set; }
         public DbSet<AnswerToQuestionWithText> AnswerToQuestionWithTexts { get; set; }
-        public DbSet<AnswerToQuestion> AnswerToQuestions { get; set; }
+        public DbSet<AnswerToQuestion> Answers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

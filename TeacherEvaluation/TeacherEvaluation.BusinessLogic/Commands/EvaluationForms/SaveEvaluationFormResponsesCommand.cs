@@ -9,7 +9,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
     public class SaveEvaluationFormResponsesCommand : IRequest
     {
         public QuestionsVm Questions { get; set; }
-        public List<AnswerOption> Responses { get; set; }
+        public List<int> Scores { get; set; }
         public Guid FormId { get; set; }
         public Guid SubjectId { get; set; }
         public Guid UserIdForStudent { get; set; }

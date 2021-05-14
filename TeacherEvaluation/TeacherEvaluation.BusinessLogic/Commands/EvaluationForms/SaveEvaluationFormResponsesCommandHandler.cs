@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
@@ -38,7 +37,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
                     {
                         var response = new AnswerToQuestionWithOption
                         {
-                            Answer = request.Responses[contor++],
+                            Score = request.Scores[contor++],
                             Enrollment = enrollment,
                             Question = question
                         };
