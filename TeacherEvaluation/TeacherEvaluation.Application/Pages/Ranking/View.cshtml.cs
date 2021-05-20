@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,7 +46,7 @@ namespace TeacherEvaluation.Application.Pages.Ranking
 
         public JsonResult OnGetReturnTopTeachers(string questionId, string rankingType)
         {
-           IDictionary<string, long> teachersData = new Dictionary<string, long>();
+            IDictionary<string, long> teachersData = new Dictionary<string, long>();
             if (!string.IsNullOrEmpty(questionId) && !string.IsNullOrEmpty(rankingType))
             {
                 RankingType type = (RankingType)Enum.Parse(typeof(RankingType), rankingType, true);

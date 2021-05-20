@@ -6,16 +6,17 @@
 }
 
 @section scripts{
-
     <script src="~/js/ranking.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 }
 
-<h3 class="row align-input-center" style="margin-top: 70px;">Select the teacher and the subject</h3>
+<h3 class="row align-input-center" style="margin-top: 70px;">Top teachers</h3>
 <hr />
 <div class="row my-row">
     <div class="col-md-4">
-        <select id="question-field" asp-for="QuestionId" asp-items="@Model.LikertQuestions" class="form-control">
-            <option selected disabled hidden>Please select</option>
+        <select id="question-field" asp-for="QuestionId" asp-items="@Model.LikertQuestions" class="form-control"
+                onchange="reset()">
+            <option selected disabled hidden>Please select the question</option>
         </select>
     </div>
 
@@ -23,7 +24,7 @@
         <select id="ranking-type-field" class="form-control"
                 asp-items="Html.GetEnumSelectList<TeacherEvaluation.BusinessLogic.Enums.RankingType>()"
                 onchange="get_top_teachers()">
-            <option selected disabled hidden>Please select</option>
+            <option selected disabled hidden>Please select the taught subject type</option>
         </select>
     </div>
 </div>

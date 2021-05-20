@@ -14,7 +14,6 @@
     }, 4000); 
 }
 
-
 function create_charts(search_details, layoutId) {
     // remove the old charts
     remove_charts_divs();
