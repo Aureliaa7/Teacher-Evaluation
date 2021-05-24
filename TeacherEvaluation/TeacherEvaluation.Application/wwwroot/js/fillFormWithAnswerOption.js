@@ -1,7 +1,4 @@
 ﻿function get_teacher() {
-    var subject_id = { id: $("#subject-field").val() };
-    var subject_type = { id: $("#type-field") };
-
     var search_details = {
         subjectId: $("#subject-field").val(),
         type: $("#type-field").val(),
@@ -25,9 +22,6 @@
 }
 
 function disable_or_enable_btn() {
-    var subject_id = { id: $("#subject-field").val() };
-    var subject_type = { id: $("#type-field") };
-
     var search_details = {
         subjectId: $("#subject-field").val(),
         type: $("#type-field").val(),

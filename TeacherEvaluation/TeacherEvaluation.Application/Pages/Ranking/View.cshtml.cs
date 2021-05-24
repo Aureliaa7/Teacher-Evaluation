@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Commands.Questions;
 using TeacherEvaluation.BusinessLogic.Commands.Ranking;
@@ -66,8 +67,7 @@ namespace TeacherEvaluation.Application.Pages.Ranking
             IDictionary<string, long> teachersDetails = new Dictionary<string, long>();
             foreach(var teacher in topTeachers)
             {
-                var teacherInfo = string.Concat(teacher.Key.Name, " ", teacher.Key.Department, " ",
-                    teacher.Key.Degree);
+                var teacherInfo = JsonSerializer.Serialize(teacher.Key);  // teachers details must be serialized, otherwise an error will occur
                 teachersDetails.Add(teacherInfo, teacher.Value);
             }
             return teachersDetails;

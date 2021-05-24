@@ -1,8 +1,7 @@
 ﻿@page
 @model TeacherEvaluation.Application.Pages.EvaluationForms.EvaluateTeacherModel
 @{
-    ViewData["Title"] = "Evaluate " +
-                "Teacher";
+    ViewData["Title"] = "Evaluate Teacher";
     Layout = "~/Pages/Shared/_StudentLayout.cshtml";
 }
 
@@ -29,7 +28,7 @@
                 <label asp-for="Type">Taught Subject Type</label>
                 <select id="type-field" asp-for="Type" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Enums.TaughtSubjectType>()"
                         class="form-control" onchange="disable_or_enable_btn()">
-                    <option selected>Please select</option>
+                    <option selected disabled hidden>Please select</option>
                 </select>
                 <span asp-validation-for="Type" class="text-danger" />
             </div>
@@ -51,7 +50,7 @@
                 @foreach (var option in Model.AnswerOptions)
                 {
                     <div class="add-margin-left-45">
-                        <input type="radio" asp-for="@Model.Scores[contor]" value="@option.Value" />@option.Key<br />
+                        <input class="dim-radio-button" required type="radio" asp-for="@Model.Scores[contor]" value="@option.Value" />@option.Key<br />
                     </div>
                 }
             </div>

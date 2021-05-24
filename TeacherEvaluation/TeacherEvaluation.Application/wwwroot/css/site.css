@@ -240,3 +240,10 @@ input::-webkit-inner-spin-button {
 .add-margin-left-45 {
     margin-left: 45px;
 }
+
+.dim-radio-button {
+    width: 17px;
+    height: 17px;
+    margin-top: 5px;
+    margin-right: 10px;
+}

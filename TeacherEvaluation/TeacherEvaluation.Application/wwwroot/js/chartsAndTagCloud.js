@@ -11,7 +11,7 @@
 
     setTimeout(function () {
         create_tag_cloud(search_details, layoutID);
-    }, 4000); 
+    }, 3000); 
 }
 
 function create_charts(search_details, layoutId) {
@@ -31,7 +31,7 @@ function create_charts(search_details, layoutId) {
                     var data = [];
                     var options = [];
                     var divIds = [];
-                    var drawCharts = "false";
+                    var drawCharts = false;
 
                     // prepare the data for charts
                     var contor1 = 0;
@@ -43,13 +43,13 @@ function create_charts(search_details, layoutId) {
 
                         var contor2 = 0;
                         var optionAnswersWithNoAnswers = result[question];
-                        console.log("count: ", Object.keys(optionAnswersWithNoAnswers).length);
-                        console.log("optionAnswersWithNoAnswers", Object.keys(optionAnswersWithNoAnswers));
                         if (Object.keys(optionAnswersWithNoAnswers).length > 0) {
                             for (var optionAnswer in optionAnswersWithNoAnswers) {
                                 var numberOfAnswers = optionAnswersWithNoAnswers[optionAnswer];
                                 data[contor1].setCell(contor2, 0, optionAnswer);
                                 data[contor1].setCell(contor2, 1, numberOfAnswers);
+                                // display #answers in legend
+                                data[contor1].setFormattedValue(contor2, 0, optionAnswer + '(' + numberOfAnswers + ' answers)');
                                 contor2++;
                             }
 
@@ -57,21 +57,21 @@ function create_charts(search_details, layoutId) {
                                 title: question,
                                 is3D: true,
                                 backgroundColor: { fill: "#e9e9e9" },
-                                sliceVisibilityThreshold: 0,
+                                sliceVisibilityThreshold: 0
                             };
                             divIds[contor1] = "question" + (contor1 + 1);
 
                             contor1++;
-                            drawCharts = "true";
+                            drawCharts = true;
                         }
                     }
 
                     create_new_divs(layoutId);
-                    if (drawCharts == "true") {
+                    if (drawCharts) {
                         // draw the charts
                         for (var contor = 0; contor < 10; contor++) {
                             var div = document.getElementById(divIds[contor]);
-                            div.setAttribute("style", "width: 420px; height: 420px;");
+                            div.setAttribute("style", "width: 505px; height: 420px;");
                             var chart = new google.visualization.PieChart(div);
                             chart.draw(data[contor], options[contor]);
                         }
@@ -90,9 +90,13 @@ function create_charts(search_details, layoutId) {
 
 function remove_charts_divs() {
     for (var contor = 1; contor < 11; contor+=2) {
-        var chartDivRow = document.getElementById("row" + contor);
-        if (chartDivRow != null) {
-            chartDivRow.remove();
+        var chartDivRow1 = document.getElementById("row" + contor);
+        if (chartDivRow1 != null) {
+            chartDivRow1.remove();
+        }
+        var chartDivRow2 = document.getElementById("row" + (contor + 1));
+        if (chartDivRow2 != null) {
+            chartDivRow2.remove();
         }
     }
 }
@@ -102,7 +106,6 @@ function create_new_divs(layoutId) {
         var divRowElement = document.createElement('div');
         divRowElement.className = "row";
         divRowElement.id = "row" + contor;
-        divRowElement.style.marginLeft = "300px;"
         var div1 = document.createElement('div');
         div1.id = "question" + contor;
         divRowElement.appendChild(div1);

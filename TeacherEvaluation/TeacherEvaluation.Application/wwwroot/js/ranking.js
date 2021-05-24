@@ -37,23 +37,40 @@ function remove_column_chart() {
     }
 }
 
+class TeacherVm {
+    constructor(name, department, degree) {
+        this.name = name;
+        this.department = department;
+        this.degree = degree;
+    }
+}
+
+// used to deserialize the teachers details 
+TeacherVm.fromJson = function (jsonData) {
+    var data = JSON.parse(jsonData); 
+    return new TeacherVm(data.Name, data.Department, data.Degree);
+};
+
 function draw_column_chart(result) {
     google.charts.load('current', {
         callback: function () {
-            debugger;
-
             // prepare the data for charts
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'teacherVm');
             data.addColumn('number', 'score');
+            data.addColumn({ type: 'string', role: 'tooltip' });
             data.addRows(Object.keys(result).length);
             var contor1 = 0;
             var max = 0;
+
             for (var key in result) {
-                data.setCell(contor1, 0, key);
+                var teacherVm = TeacherVm.fromJson(key);
+                data.setCell(contor1, 0, teacherVm.name);
                 var score = result[key];
                 max = score > max ? score : max;
                 data.setCell(contor1, 1, score);
+                var teacherDetails = "Department: " + teacherVm.department + ", Degree: " + teacherVm.degree;
+                data.setCell(contor1, 2, teacherDetails);
                 contor1++;
             }
 
@@ -61,9 +78,9 @@ function draw_column_chart(result) {
             view.setColumns([0, 1,
                 {
                     calc: "stringify",
-                    sourceColumn: 1,
+                    sourceColumn: 2,
                     type: "string",
-                    role: "annotation"
+                    role: "tooltip"
                 }]);
 
             var options = {
