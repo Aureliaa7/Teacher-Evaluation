@@ -17,7 +17,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
         { 
         }
 
-        public async Task<Student> GetStudent(Guid id)
+        public async Task<Student> GetStudentAsync(Guid id)
         {
             return await Context.Set<Student>()
                 .Where(x => x.Id == id)
@@ -27,9 +27,9 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .FirstAsync();
         }
 
-        public async Task Delete(Guid id)
+        public async Task DeleteAsync(Guid id)
         { 
-            var studentToBeDeleted = await GetStudent(id);
+            var studentToBeDeleted = await GetStudentAsync(id);
             var userToBeDeleted = studentToBeDeleted.User;
             var enrollments = Context.Set<Enrollment>().Where(x => x.Student.Id == id);
             var grades = enrollments.Select(x => x.Grade);
@@ -39,7 +39,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
             Context.Set<ApplicationUser>().Remove(userToBeDeleted);
         }
 
-        public async Task<IEnumerable<Student>> GetAllWithRelatedEntities()
+        public async Task<IEnumerable<Student>> GetAllWithRelatedEntitiesAsync()
         {
             return await Context.Set<Student>()
                 .Include(x => x.User)
@@ -49,7 +49,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .ToListAsync();
         }
 
-        public async Task<Student> GetByUserId(Guid id)
+        public async Task<Student> GetByUserIdAsync(Guid id)
         {
             return await Context.Set<Student>()
                 .Where(x => x.User.Id == id)
@@ -59,7 +59,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .FirstAsync();
         }
 
-        public async Task<IEnumerable<Student>> GetByCriteriaWithRelatedEntities(StudyProgramme studyProgramme, 
+        public async Task<IEnumerable<Student>> GetByCriteriaWithRelatedEntitiesAsync(StudyProgramme studyProgramme, 
             Guid studyDomainId, Guid specializationId, int studyYear)
         {
             return await Context.Set<Student>()

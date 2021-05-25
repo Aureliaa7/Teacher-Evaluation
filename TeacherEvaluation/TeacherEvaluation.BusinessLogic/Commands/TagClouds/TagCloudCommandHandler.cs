@@ -23,8 +23,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TagClouds
 
         public async Task<IEnumerable<TagCloudTag>> Handle(TagCloudCommand request, CancellationToken cancellationToken)
         {
-            bool formExists = await unitOfWork.FormRepository.Exists(f => f.Id == request.FormId);
-            bool teacherExists = await unitOfWork.TeacherRepository.Exists(t => t.Id == request.TeacherId);
+            bool formExists = await unitOfWork.FormRepository.ExistsAsync(f => f.Id == request.FormId);
+            bool teacherExists = await unitOfWork.TeacherRepository.ExistsAsync(t => t.Id == request.TeacherId);
             IEnumerable<TagCloudTag> tags = new List<TagCloudTag>();
 
             if (formExists && teacherExists)

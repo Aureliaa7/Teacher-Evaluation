@@ -1,0 +1,29 @@
+﻿@page
+@model TeacherEvaluation.Application.Pages.Dashboards.TeacherModel
+
+@{
+    ViewData["Title"] = "My Profile";
+    Layout = "_TeacherLayout";
+}
+
+<div class="jumbotron account-details-jumbotron">
+    <h4 class="row align-input-center">My profile</h4>
+    <hr />
+    <div class="add-margin-left-145">
+        <partial name="_UserDetailsPartial" model="Model" />
+        <dl class="row align-input-center" style="margin-top: -15px;">
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Department)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Department)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Degree)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Degree)
+            </dd>
+        </dl>
+    </div>
+</div>

@@ -18,11 +18,11 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Attendances.CrudOperations
 
         public async Task<int> Handle(GetAttendancesForSubjectCommand request, CancellationToken cancellationToken)
         {
-            bool taughtSubjectExists = await unitOfWork.TaughtSubjectRepository.Exists(x => x.Id == request.TaughtSubjectId);
-            bool userExists = await unitOfWork.UserRepository.Exists(x => x.Id == request.UserId);
+            bool taughtSubjectExists = await unitOfWork.TaughtSubjectRepository.ExistsAsync(x => x.Id == request.TaughtSubjectId);
+            bool userExists = await unitOfWork.UserRepository.ExistsAsync(x => x.Id == request.UserId);
             if (taughtSubjectExists && userExists)
             {
-                var students = await unitOfWork.StudentRepository.GetAllWithRelatedEntities();
+                var students = await unitOfWork.StudentRepository.GetAllWithRelatedEntitiesAsync();
                 var student = students.Where(x => x.User.Id == request.UserId).First();
 
                 var enrollments = await unitOfWork.EnrollmentRepository.GetEnrollmentsForTaughtSubject(request.TaughtSubjectId);

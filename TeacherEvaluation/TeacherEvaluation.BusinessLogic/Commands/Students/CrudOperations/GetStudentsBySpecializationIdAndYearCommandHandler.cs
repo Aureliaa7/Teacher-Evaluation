@@ -20,10 +20,10 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
 
         public async Task<IEnumerable<Student>> Handle(GetStudentsBySpecializationIdAndYearCommand request, CancellationToken cancellationToken)
         {
-            bool specializationExists = await unitOfWork.SpecializationRepository.Exists(x => x.Id == request.SpecializationId);
+            bool specializationExists = await unitOfWork.SpecializationRepository.ExistsAsync(x => x.Id == request.SpecializationId);
             if(specializationExists)
             {
-                var students = await unitOfWork.StudentRepository.GetAllWithRelatedEntities();
+                var students = await unitOfWork.StudentRepository.GetAllWithRelatedEntitiesAsync();
                 return students.Where(x => x.Specialization.Id == request.SpecializationId && 
                                            x.StudyYear == request.StudyYear);
             }

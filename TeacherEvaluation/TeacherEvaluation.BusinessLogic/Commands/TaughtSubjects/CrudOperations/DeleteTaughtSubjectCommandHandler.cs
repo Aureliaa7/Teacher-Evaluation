@@ -17,10 +17,10 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
 
         protected override async Task Handle(DeleteTaughtSubjectCommand request, CancellationToken cancellationToken)
         {
-            bool taughtSubjectExists = await unitOfWork.TaughtSubjectRepository.Exists(x => x.Id == request.Id);
+            bool taughtSubjectExists = await unitOfWork.TaughtSubjectRepository.ExistsAsync(x => x.Id == request.Id);
             if (taughtSubjectExists)
             {
-                await unitOfWork.TaughtSubjectRepository.Remove(request.Id);
+                await unitOfWork.TaughtSubjectRepository.RemoveAsync(request.Id);
                 await unitOfWork.SaveChangesAsync();
             }
             else

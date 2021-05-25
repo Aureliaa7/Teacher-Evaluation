@@ -56,7 +56,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
                     Department = request.Department,
                     User = newApplicationUser
                 };
-                await unitOfWork.TeacherRepository.Add(teacher);
+                await unitOfWork.TeacherRepository.AddAsync(teacher);
                 await unitOfWork.SaveChangesAsync();
 
                 Notification notification = EmailSending.ConfigureAccountCreationMessage(confirmationUrl, newApplicationUser, request.Password);

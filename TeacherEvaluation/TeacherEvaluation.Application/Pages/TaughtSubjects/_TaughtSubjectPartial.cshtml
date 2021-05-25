@@ -26,33 +26,33 @@
                 @foreach (var item in Model.TaughtSubjects)
                 {
                     var teacherName = item.Teacher.User.LastName + " " + item.Teacher.User.FathersInitial + " " + item.Teacher.User.FirstName;
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Subject.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Subject.NumberOfCredits)
-                    </td>
-                    <td>@teacherName</td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Type)
-                    </td>
-                    @if (Model.CurrentRole.IsTeacher)
-                    {
+                    <tr>
                         <td>
-                            <a asp-page="../Students/EnrolledStudents" asp-route-id="@item.Id">Students</a>
+                            @Html.DisplayFor(modelItem => item.Subject.Name)
                         </td>
-                    }
-                    else if (Model.CurrentRole.IsAdmin)
-                    {
                         <td>
-                            <div class="row">
-                                <a class="nav-link white-link" asp-page="./Details" asp-route-id="@item.Id"><i class="fa fa-info-circle"></i></a>
-                                <a class="nav-link white-link" asp-page="./Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>
-                            </div>
+                            @Html.DisplayFor(modelItem => item.Subject.NumberOfCredits)
                         </td>
-                    }
-                </tr>
+                        <td>@teacherName</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        @if (Model.CurrentRole.IsTeacher)
+                        {
+                            <td>
+                                <a asp-page="../Students/EnrolledStudents" asp-route-id="@item.Id">Students</a>
+                            </td>
+                        }
+                        else if (Model.CurrentRole.IsAdmin)
+                        {
+                            <td>
+                                <div class="row">
+                                    <a class="nav-link white-link" asp-page="./Details" asp-route-id="@item.Id"><i class="fa fa-info-circle"></i></a>
+                                    <a class="nav-link white-link" asp-page="./Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>
+                                </div>
+                            </td>
+                        }
+                    </tr>
                 }
             </tbody>
         </table>
@@ -61,4 +61,4 @@
     {
         <h5 class="align-text-center">No data is available</h5>
     }
-    </div>
+</div>

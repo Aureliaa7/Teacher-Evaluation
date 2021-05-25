@@ -19,7 +19,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
 
         public async Task<IEnumerable<Form>> Handle(GetEvaluationFormsCommand request, CancellationToken cancellationToken)
         {
-            return await unitOfWork.FormRepository.GetAll();
+            return await unitOfWork.FormRepository.GetAllAsync();
         }
     }
 }

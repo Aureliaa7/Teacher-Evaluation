@@ -20,7 +20,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.StudentsForTaughtSub
 
         public async Task<IEnumerable<Student>> Handle(GetStudentsForSubjectCommand request, CancellationToken cancellationToken)
         {
-            bool taughtSubjectExists = await unitOfWork.TaughtSubjectRepository.Exists(x => x.Id == request.TaughtSubjectId);
+            bool taughtSubjectExists = await unitOfWork.TaughtSubjectRepository.ExistsAsync(x => x.Id == request.TaughtSubjectId);
             if (taughtSubjectExists)
             {
                 var enrollments = await unitOfWork.EnrollmentRepository.GetEnrollmentsForTaughtSubject(request.TaughtSubjectId);

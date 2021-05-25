@@ -20,7 +20,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
 
         public async Task<IEnumerable<Specialization>> Handle(GetSpecializationsByDomainCommand request, CancellationToken cancellationToken)
         {
-            bool domainExists = await unitOfWork.StudyDomainRepository.Exists(x => x.Id == request.StudyDomainId);
+            bool domainExists = await unitOfWork.StudyDomainRepository.ExistsAsync(x => x.Id == request.StudyDomainId);
             if(domainExists)
             {
                 var allSpecializations = await unitOfWork.SpecializationRepository.GetAllWithRelatedEntities();

@@ -21,8 +21,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
 
         public async Task<IDictionary<string, IDictionary<string, int>>> Handle(ChartsDataCommand request, CancellationToken cancellationToken)
         {
-            bool formExists = await unitOfWork.FormRepository.Exists(f => f.Id == request.FormId);
-            bool teacherExists = await unitOfWork.TeacherRepository.Exists(t => t.Id == request.TeacherId);
+            bool formExists = await unitOfWork.FormRepository.ExistsAsync(f => f.Id == request.FormId);
+            bool teacherExists = await unitOfWork.TeacherRepository.ExistsAsync(t => t.Id == request.TeacherId);
             if (formExists && teacherExists)
             {
                 var questions = (await unitOfWork.QuestionRepository.GetQuestionsWithRelatedEntities(request.FormId))
@@ -38,7 +38,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
                 {
                     return new Dictionary<string, IDictionary<string, int>>();
                 }
-                else if (await unitOfWork.TaughtSubjectRepository.Exists(ts => ts.Id == new Guid(request.TaughtSubjectId)))
+                else if (await unitOfWork.TaughtSubjectRepository.ExistsAsync(ts => ts.Id == new Guid(request.TaughtSubjectId)))
                 {
                     return await GetChartsDataForTaughtSubject(request.TeacherId, new Guid(request.TaughtSubjectId), questions);
                 }

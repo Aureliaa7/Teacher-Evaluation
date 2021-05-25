@@ -19,7 +19,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Subjects.CrudOperations
 
         public async Task<IEnumerable<Subject>> Handle(GetSubjectsBySpecializationIdAndStudyYearCommand request, CancellationToken cancellationToken)
         {
-            bool specializationExists = await unitOfWork.SpecializationRepository.Exists(x => x.Id == request.SpecializationId);
+            bool specializationExists = await unitOfWork.SpecializationRepository.ExistsAsync(x => x.Id == request.SpecializationId);
             if (specializationExists)
             {
                 var subjects = await unitOfWork.SubjectRepository.GetSubjectsByCriteria(request.SpecializationId, request.StudyYear);

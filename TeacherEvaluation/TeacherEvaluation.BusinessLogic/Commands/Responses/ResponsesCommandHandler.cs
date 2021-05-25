@@ -22,8 +22,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Responses
 
         public async Task<IDictionary<string, ResponseVm>> Handle(ResponsesCommand request, CancellationToken cancellationToken)
         {
-            bool formExists = await unitOfWork.FormRepository.Exists(f => f.Id == request.FormId);
-            bool teacherExists = await unitOfWork.TeacherRepository.Exists(t => t.Id == request.TeacherId);
+            bool formExists = await unitOfWork.FormRepository.ExistsAsync(f => f.Id == request.FormId);
+            bool teacherExists = await unitOfWork.TeacherRepository.ExistsAsync(t => t.Id == request.TeacherId);
             if (formExists && teacherExists)
             {
                 var responses = await unitOfWork.AnswerRepository.GetByFormIdAsync(request.FormId);
@@ -34,7 +34,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Responses
 
                     return responsesInfo;
                 }
-                else if (await unitOfWork.TaughtSubjectRepository.Exists(ts => ts.Id == new Guid(request.TaughtSubjectId)))
+                else if (await unitOfWork.TaughtSubjectRepository.ExistsAsync(ts => ts.Id == new Guid(request.TaughtSubjectId)))
                 {
                     var filteredResponses = responses.Where(r => r.Enrollment.TaughtSubject.Id == new Guid(request.TaughtSubjectId));
                     var responsesInfo = GetResponsesInfo(filteredResponses);

@@ -20,7 +20,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Questions
 
         public async Task<IEnumerable<Question>> Handle(LikertQuestionsCommand request, CancellationToken cancellationToken)
         {
-            bool formExists = await unitOfWork.FormRepository.Exists(f => f.Id == request.FormId);
+            bool formExists = await unitOfWork.FormRepository.ExistsAsync(f => f.Id == request.FormId);
             if (formExists)
             {
                 var likertQuestions = (await unitOfWork.QuestionRepository.GetQuestionsWithRelatedEntities(request.FormId))

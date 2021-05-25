@@ -20,8 +20,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations
 
         public async Task<IEnumerable<Enrollment>> Handle(GetEnrollmentsByCriteriaCommand request, CancellationToken cancellationToken)
         {
-            bool studyDomainExists = await unitOfWork.StudyDomainRepository.Exists(x => x.Id == request.StudyDomainId);
-            bool specializationExists = await unitOfWork.SpecializationRepository.Exists(x => x.Id == request.SpecializationId);
+            bool studyDomainExists = await unitOfWork.StudyDomainRepository.ExistsAsync(x => x.Id == request.StudyDomainId);
+            bool specializationExists = await unitOfWork.SpecializationRepository.ExistsAsync(x => x.Id == request.SpecializationId);
             if(studyDomainExists && specializationExists)
             {
                 var allEnrollments = await unitOfWork.EnrollmentRepository.GetAllWithRelatedEntities();

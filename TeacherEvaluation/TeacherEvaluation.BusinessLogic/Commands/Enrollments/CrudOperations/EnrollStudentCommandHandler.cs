@@ -19,14 +19,14 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations
 
         protected override async Task Handle(EnrollStudentCommand request, CancellationToken cancellationToken)
         {
-            bool teacherExists = await unitOfWork.TaughtSubjectRepository.Exists(x => x.Teacher.Id == request.TeacherId);
-            bool subjectExists = await unitOfWork.TaughtSubjectRepository.Exists(x => x.Subject.Id == request.SubjectId);
-            bool studentExists = await unitOfWork.StudentRepository.Exists(x => x.Id == request.StudentId);
+            bool teacherExists = await unitOfWork.TaughtSubjectRepository.ExistsAsync(x => x.Teacher.Id == request.TeacherId);
+            bool subjectExists = await unitOfWork.TaughtSubjectRepository.ExistsAsync(x => x.Subject.Id == request.SubjectId);
+            bool studentExists = await unitOfWork.StudentRepository.ExistsAsync(x => x.Id == request.StudentId);
 
             if (teacherExists && subjectExists && studentExists)
             {
                 TaughtSubject taughtSubject = await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectAsync(request.TeacherId, request.SubjectId, request.Type);
-                Student student = await unitOfWork.StudentRepository.GetStudent(request.StudentId);
+                Student student = await unitOfWork.StudentRepository.GetStudentAsync(request.StudentId);
                 Grade grade = new Grade
                 {
                     Value = null,
@@ -42,7 +42,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations
                     State = EnrollmentState.InProgress,
                     NumberOfAttendances = 0
                 };
-                await unitOfWork.EnrollmentRepository.Add(newEnrollment);
+                await unitOfWork.EnrollmentRepository.AddAsync(newEnrollment);
                 await unitOfWork.SaveChangesAsync();
             }
             else

@@ -28,7 +28,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
                 EnrollmentState = EnrollmentState.InProgress,
                 MinNumberOfAttendances = request.MinNumberOfAttendances
             };
-            await unitOfWork.FormRepository.Add(form);
+            await unitOfWork.FormRepository.AddAsync(form);
 
             var freeFormQuestions = request.Questions.TakeLast(Constants.NumberOfFreeFormQuestions);
             await SaveQuestions(freeFormQuestions, true, form);
@@ -47,7 +47,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
                     Form = form,
                     HasFreeFormAnswer = haveTextAnswer
                 };
-                await unitOfWork.QuestionRepository.Add(newQuestion);
+                await unitOfWork.QuestionRepository.AddAsync(newQuestion);
             }
         }
     }

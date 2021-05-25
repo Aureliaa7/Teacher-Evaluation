@@ -17,7 +17,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
         {
         }
 
-        public async Task<Teacher> GetTeacher(Guid id)
+        public async Task<Teacher> GetTeacherAsync(Guid id)
         {
             return await Context.Set<Teacher>()
               .Where(x => x.Id == id)
@@ -25,7 +25,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
               .FirstAsync();
         }
 
-        public async Task<Teacher> GetByUserId(Guid userId)
+        public async Task<Teacher> GetByUserIdAsync(Guid userId)
         {
             return await Context.Set<Teacher>()
               .Where(x => x.User.Id == userId)
@@ -33,15 +33,15 @@ namespace TeacherEvaluation.DataAccess.Repositories
               .FirstAsync();
         }
 
-        public async Task Delete(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
-            var teacherToBeDeleted = await GetTeacher(id);
+            var teacherToBeDeleted = await GetTeacherAsync(id);
             var userToBeDeleted = teacherToBeDeleted.User;
             Context.Set<Teacher>().Remove(teacherToBeDeleted);
             Context.Set<ApplicationUser>().Remove(userToBeDeleted);
         }
 
-        public async Task<IEnumerable<Teacher>> GetAllWithRelatedEntities()
+        public async Task<IEnumerable<Teacher>> GetAllWithRelatedEntitiesAsync()
         {
             return await Context.Set<Teacher>()
                 .Include(x => x.User)
@@ -49,7 +49,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Teacher>> GetByDepartment(Department department)
+        public async Task<IEnumerable<Teacher>> GetByDepartmentAsync(Department department)
         {
             return await Context.Set<Teacher>()
                 .Where(x => x.Department == department)

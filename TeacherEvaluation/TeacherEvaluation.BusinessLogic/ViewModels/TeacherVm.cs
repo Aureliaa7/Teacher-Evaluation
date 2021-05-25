@@ -1,6 +1,4 @@
-﻿using TeacherEvaluation.Domain.DomainEntities.Enums;
-
-namespace TeacherEvaluation.BusinessLogic.ViewModels
+﻿namespace TeacherEvaluation.BusinessLogic.ViewModels
 {
     public class TeacherVm
     {

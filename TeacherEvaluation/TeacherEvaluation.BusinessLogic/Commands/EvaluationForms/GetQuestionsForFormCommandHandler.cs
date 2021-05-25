@@ -21,7 +21,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
 
         public async Task<QuestionsVm> Handle(GetQuestionsForFormCommand request, CancellationToken cancellationToken)
         {
-            bool formExists = await unitOfWork.FormRepository.Exists(x => x.Id == request.FormId);
+            bool formExists = await unitOfWork.FormRepository.ExistsAsync(x => x.Id == request.FormId);
             if (formExists)
             {
                 var questions = await unitOfWork.QuestionRepository.GetQuestionsWithRelatedEntities(request.FormId);

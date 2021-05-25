@@ -16,7 +16,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
 
         public async Task<bool> Handle(AssignedSubjectVerificationCommand request, CancellationToken cancellationToken)
         {
-            return await unitOfWork.TaughtSubjectRepository.Exists(x => x.Teacher.Id == request.TeacherId &&
+            return await unitOfWork.TaughtSubjectRepository.ExistsAsync(x => x.Teacher.Id == request.TeacherId &&
                                                              x.Subject.Id == request.SubjectId &&
                                                              x.Type == request.Type);
         }

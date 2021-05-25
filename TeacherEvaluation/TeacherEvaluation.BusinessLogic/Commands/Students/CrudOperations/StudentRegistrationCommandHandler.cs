@@ -58,7 +58,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
 
                 await userManager.AddToRoleAsync(newApplicationUser, "Student");
 
-                bool specializationExists = await unitOfWork.SpecializationRepository.Exists(x => x.Id == request.SpecializationId);
+                bool specializationExists = await unitOfWork.SpecializationRepository.ExistsAsync(x => x.Id == request.SpecializationId);
                 if (specializationExists)
                 {
                     var specialization = await unitOfWork.SpecializationRepository.GetSpecialization(request.SpecializationId);
@@ -70,7 +70,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
                         StudyYear = request.StudyYear,
                         User = newApplicationUser
                     };
-                    await unitOfWork.StudentRepository.Add(student);
+                    await unitOfWork.StudentRepository.AddAsync(student);
                     await unitOfWork.SaveChangesAsync();
                     await EnrollStudentToCourses(student.Id, request.SpecializationId, request.StudyYear);
                     await unitOfWork.SaveChangesAsync();

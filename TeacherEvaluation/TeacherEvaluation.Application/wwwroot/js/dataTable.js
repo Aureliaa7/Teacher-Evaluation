@@ -20,11 +20,11 @@ $(document).ready(function () {
     });
 });
 
-$(document).ready(function () {
+/*$(document).ready(function () {
     $('#taught-subjects-index').DataTable({
         'columnDefs': [{ 'orderable': false, 'targets': 6 }]
     });
-});
+});*/
 
 $(document).ready(function () {
     $('#subjects-index').DataTable({

@@ -17,11 +17,11 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations
 
         public async Task<bool> Handle(EnrollmentExistsCommand request, CancellationToken cancellationToken)
         {
-            bool studentExists = await unitOfWork.StudentRepository.Exists(x => x.Id == request.StudentId);
-            bool subjectExists = await unitOfWork.SubjectRepository.Exists(x => x.Id == request.SubjectId);
+            bool studentExists = await unitOfWork.StudentRepository.ExistsAsync(x => x.Id == request.StudentId);
+            bool subjectExists = await unitOfWork.SubjectRepository.ExistsAsync(x => x.Id == request.SubjectId);
             if (studentExists && subjectExists)
             {
-                return await unitOfWork.EnrollmentRepository.Exists(x => x.TaughtSubject.Subject.Id == request.SubjectId &&
+                return await unitOfWork.EnrollmentRepository.ExistsAsync(x => x.TaughtSubject.Subject.Id == request.SubjectId &&
                                                     x.Student.Id == request.StudentId && 
                                                     x.TaughtSubject.Type == request.Type);
             }

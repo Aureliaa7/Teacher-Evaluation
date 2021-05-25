@@ -18,12 +18,12 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
 
         protected override async Task Handle(SaveEvaluationFormResponsesCommand request, CancellationToken cancellationToken)
         {
-            bool formExists = await unitOfWork.FormRepository.Exists(x => x.Id == request.FormId);
-            bool userExists = await unitOfWork.UserRepository.Exists(x => x.Id == request.UserIdForStudent);
+            bool formExists = await unitOfWork.FormRepository.ExistsAsync(x => x.Id == request.FormId);
+            bool userExists = await unitOfWork.UserRepository.ExistsAsync(x => x.Id == request.UserIdForStudent);
             if (formExists && userExists)
             {
-                var student = await unitOfWork.StudentRepository.GetByUserId(request.UserIdForStudent);
-                var enrollmentExists = await unitOfWork.EnrollmentRepository.Exists(x => x.TaughtSubject.Subject.Id == request.SubjectId &&
+                var student = await unitOfWork.StudentRepository.GetByUserIdAsync(request.UserIdForStudent);
+                var enrollmentExists = await unitOfWork.EnrollmentRepository.ExistsAsync(x => x.TaughtSubject.Subject.Id == request.SubjectId &&
                                                                               x.State == request.EnrollmentState &&
                                                                               x.TaughtSubject.Type == request.SubjectType &&
                                                                               x.Student.Id == student.Id);
@@ -41,7 +41,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
                             Enrollment = enrollment,
                             Question = question
                         };
-                        await unitOfWork.AnswerToQuestionWithOptionRepository.Add(response);
+                        await unitOfWork.AnswerToQuestionWithOptionRepository.AddAsync(response);
                     }
  
                     contor = 0;
@@ -54,7 +54,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
                             Question = question,
                             IsFreeForm = true
                         };
-                        await unitOfWork.AnswerToQuestionWithTextRepository.Add(response);
+                        await unitOfWork.AnswerToQuestionWithTextRepository.AddAsync(response);
                     }
                     await unitOfWork.SaveChangesAsync();
                 }

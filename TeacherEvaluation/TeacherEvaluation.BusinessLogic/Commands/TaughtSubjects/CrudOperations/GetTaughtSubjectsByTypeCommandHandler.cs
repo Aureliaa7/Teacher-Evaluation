@@ -19,10 +19,10 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
 
         public async Task<IEnumerable<TaughtSubject>> Handle(GetTaughtSubjectsByTypeCommand request, CancellationToken cancellationToken)
         {
-            bool userExists = await unitOfWork.UserRepository.Exists(x => x.Id == request.UserId);
+            bool userExists = await unitOfWork.UserRepository.ExistsAsync(x => x.Id == request.UserId);
             if (userExists)
             {
-                var teacher = await unitOfWork.TeacherRepository.GetByUserId(request.UserId);
+                var teacher = await unitOfWork.TeacherRepository.GetByUserIdAsync(request.UserId);
                 return await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsByCriteria(ts => ts.Teacher.Id == teacher.Id &&
                                                                                             ts.Type == request.Type);
             }

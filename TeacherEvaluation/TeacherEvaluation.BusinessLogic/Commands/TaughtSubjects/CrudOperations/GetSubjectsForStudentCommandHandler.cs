@@ -20,10 +20,10 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
 
         public async Task<IEnumerable<TakenSubjectVm>> Handle(GetSubjectsForStudentCommand request, CancellationToken cancellationToken)
         {
-            bool userExists = await unitOfWork.UserRepository.Exists(x => x.Id == request.UserId);
+            bool userExists = await unitOfWork.UserRepository.ExistsAsync(x => x.Id == request.UserId);
             if(userExists)
             {
-                var student = await unitOfWork.StudentRepository.GetByUserId(request.UserId);
+                var student = await unitOfWork.StudentRepository.GetByUserIdAsync(request.UserId);
                 var enrollments = await unitOfWork.EnrollmentRepository.GetForStudent(student.Id);
                 var takenSubjectsVm = enrollments.Where(x => x.TaughtSubject.Type == request.SubjectType && x.State == request.EnrollmentState)
                                                 .Select(x => new TakenSubjectVm

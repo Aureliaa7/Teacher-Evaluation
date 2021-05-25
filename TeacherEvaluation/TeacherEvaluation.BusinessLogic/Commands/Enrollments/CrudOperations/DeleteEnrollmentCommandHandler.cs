@@ -17,10 +17,10 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations
 
         protected override async Task Handle(DeleteEnrollmentCommand request, CancellationToken cancellationToken)
         {
-            bool enrollmentExists = await unitOfWork.EnrollmentRepository.Exists(x => x.Id == request.Id);
+            bool enrollmentExists = await unitOfWork.EnrollmentRepository.ExistsAsync(x => x.Id == request.Id);
             if (enrollmentExists)
             {
-                await unitOfWork.EnrollmentRepository.Remove(request.Id);
+                await unitOfWork.EnrollmentRepository.RemoveAsync(request.Id);
                 await unitOfWork.SaveChangesAsync();
             }
             else

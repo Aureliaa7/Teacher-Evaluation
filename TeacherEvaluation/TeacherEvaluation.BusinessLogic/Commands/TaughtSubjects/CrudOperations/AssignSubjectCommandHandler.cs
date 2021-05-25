@@ -18,13 +18,13 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
 
         protected override async Task Handle(AssignSubjectCommand request, CancellationToken cancellationToken)
         {
-            bool teacherExists = await unitOfWork.TeacherRepository.Exists(x => x.Id == request.TeacherId);
-            bool subjectExists = await unitOfWork.SubjectRepository.Exists(x => x.Id == request.SubjectId);
+            bool teacherExists = await unitOfWork.TeacherRepository.ExistsAsync(x => x.Id == request.TeacherId);
+            bool subjectExists = await unitOfWork.SubjectRepository.ExistsAsync(x => x.Id == request.SubjectId);
 
             if (teacherExists && subjectExists)
             {
-                Subject subject = await unitOfWork.SubjectRepository.Get(request.SubjectId);
-                Teacher teacher = await unitOfWork.TeacherRepository.GetTeacher(request.TeacherId);
+                Subject subject = await unitOfWork.SubjectRepository.GetAsync(request.SubjectId);
+                Teacher teacher = await unitOfWork.TeacherRepository.GetTeacherAsync(request.TeacherId);
                 TaughtSubject taughtSubject = new TaughtSubject
                 {
                     Teacher = teacher,
@@ -32,7 +32,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
                     Type = request.Type
                 };
 
-                await unitOfWork.TaughtSubjectRepository.Add(taughtSubject);
+                await unitOfWork.TaughtSubjectRepository.AddAsync(taughtSubject);
                 await unitOfWork.SaveChangesAsync();
             }
             else

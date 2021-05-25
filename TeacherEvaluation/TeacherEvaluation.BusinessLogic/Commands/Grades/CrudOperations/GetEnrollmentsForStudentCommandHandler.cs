@@ -19,7 +19,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations
 
         public async Task<IEnumerable<Enrollment>> Handle(GetEnrollmentsForStudentCommand request, CancellationToken cancellationToken)
         {
-            bool studentExists = await unitOfWork.StudentRepository.Exists(x => x.Id == request.Id);
+            bool studentExists = await unitOfWork.StudentRepository.ExistsAsync(x => x.Id == request.Id);
             if (studentExists)
             {
                 return await unitOfWork.EnrollmentRepository.GetForStudent(request.Id);

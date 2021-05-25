@@ -18,14 +18,14 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Subjects.CrudOperations
 
         protected override async Task Handle(UpdateSubjectCommand request, CancellationToken cancellationToken)
         {
-            bool subjectExists = await unitOfWork.SubjectRepository.Exists(x => x.Id == request.Id);
+            bool subjectExists = await unitOfWork.SubjectRepository.ExistsAsync(x => x.Id == request.Id);
             if (subjectExists)
             {
-                bool specializationExists = await unitOfWork.SpecializationRepository.Exists(x => x.Id == request.SpecializationId);
+                bool specializationExists = await unitOfWork.SpecializationRepository.ExistsAsync(x => x.Id == request.SpecializationId);
                 if (specializationExists)
                 {
                     var specialization = await unitOfWork.SpecializationRepository.GetSpecialization(request.SpecializationId);
-                    Subject subjectToBeUpdated = await unitOfWork.SubjectRepository.Get(request.Id);
+                    Subject subjectToBeUpdated = await unitOfWork.SubjectRepository.GetAsync(request.Id);
                     subjectToBeUpdated.Name = request.Name;
                     subjectToBeUpdated.NumberOfCredits = request.NumberOfCredits;
                     subjectToBeUpdated.StudyYear = request.StudyYear;

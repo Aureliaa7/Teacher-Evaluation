@@ -17,10 +17,10 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
 
         protected override async Task Handle(DeleteTeacherCommand request, CancellationToken cancellationToken)
         {
-            bool teacherExists = await unitOfWork.TeacherRepository.Exists(x => x.Id == request.Id);
+            bool teacherExists = await unitOfWork.TeacherRepository.ExistsAsync(x => x.Id == request.Id);
             if (teacherExists)
             {
-                await unitOfWork.TeacherRepository.Delete(request.Id);
+                await unitOfWork.TeacherRepository.DeleteAsync(request.Id);
                 await unitOfWork.SaveChangesAsync();
             }
             else

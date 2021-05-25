@@ -19,11 +19,11 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
 
         public async Task<IEnumerable<Student>> Handle(GetStudentsByCriteriaCommand request, CancellationToken cancellationToken)
         {
-            bool studyDomainExists = await unitOfWork.StudyDomainRepository.Exists(x => x.Id == request.StudyDomainId);
-            bool specializationExists = await unitOfWork.SpecializationRepository.Exists(x => x.Id == request.SpecializationId);
+            bool studyDomainExists = await unitOfWork.StudyDomainRepository.ExistsAsync(x => x.Id == request.StudyDomainId);
+            bool specializationExists = await unitOfWork.SpecializationRepository.ExistsAsync(x => x.Id == request.SpecializationId);
             if(studyDomainExists && specializationExists)
             {
-                return await unitOfWork.StudentRepository.GetByCriteriaWithRelatedEntities(request.StudyProgramme, 
+                return await unitOfWork.StudentRepository.GetByCriteriaWithRelatedEntitiesAsync(request.StudyProgramme, 
                     request.StudyDomainId, request.SpecializationId, request.StudyYear);
             }
             throw new ItemNotFoundException("The study domain or the specialization was not found...");

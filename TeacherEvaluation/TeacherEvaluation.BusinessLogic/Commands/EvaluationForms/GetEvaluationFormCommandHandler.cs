@@ -20,7 +20,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
         public async Task<Form> Handle(GetEvaluationFormCommand request, CancellationToken cancellationToken)
         {
             var currentDate = DateTime.Now;
-            bool availableForm = await unitOfWork.FormRepository.Exists(x => x.StartDate <= currentDate && x.EndDate > currentDate);
+            bool availableForm = await unitOfWork.FormRepository.ExistsAsync(x => x.StartDate <= currentDate && x.EndDate > currentDate);
             if (availableForm)
             {
                 return await unitOfWork.FormRepository.GetByDate(currentDate);

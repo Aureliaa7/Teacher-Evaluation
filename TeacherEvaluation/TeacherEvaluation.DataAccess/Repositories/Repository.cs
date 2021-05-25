@@ -18,30 +18,30 @@ namespace TeacherEvaluation.DataAccess.Repositories
             Context = context;
         }
 
-        public async Task<T> Add(T entity)
+        public async Task<T> AddAsync(T entity)
         {
             await Context.Set<T>().AddAsync(entity);
             return entity;
         }
 
-        public async Task<IEnumerable<T>> AddRange(IEnumerable<T> entities)
+        public async Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities)
         {
             await Context.Set<T>().AddRangeAsync(entities);
             return entities;
         }
 
-        public async Task<T> Get(Guid id)
+        public async Task<T> GetAsync(Guid id)
         {
             var searched = await Context.Set<T>().FindAsync(id);
             return searched;
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await Context.Set<T>().AsNoTracking().ToListAsync();
         }
 
-        public async Task<T> Remove(Guid id)
+        public async Task<T> RemoveAsync(Guid id)
         {
             var entityToBeDeleted = await Context.Set<T>().FindAsync(id);
             if (entityToBeDeleted == null)
@@ -58,7 +58,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
             return entity;
         }
 
-        public Task<bool> Exists(Expression<Func<T, bool>> predicate)
+        public Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate)
         {
             var exists = Context.Set<T>().Where(predicate);
             return Task.FromResult(exists.Any());

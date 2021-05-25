@@ -1,0 +1,47 @@
+﻿@page
+@model TeacherEvaluation.Application.Pages.Dashboards.StudentModel
+
+@{
+    ViewData["Title"] = "My Profile";
+    Layout = "_StudentLayout";
+}
+
+<div class="jumbotron account-details-jumbotron">
+    <h4 class="row align-input-center">My profile</h4>
+    <hr />
+    <div class="add-margin-left-145">
+        <partial name="_UserDetailsPartial" model="Model" />
+        <dl class="row align-input-center" style="margin-top: -15px;">
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.StudyProgramme)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.StudyProgramme)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.StudyDomain)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.StudyDomain)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Specialization)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Specialization)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.StudyYear)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.StudyYear)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Group)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Group)
+            </dd>
+        </dl>
+    </div>
+</div>

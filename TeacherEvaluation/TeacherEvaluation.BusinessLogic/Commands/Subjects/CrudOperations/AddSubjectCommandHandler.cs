@@ -18,7 +18,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Subjects.CrudOperations
 
         protected override async Task Handle(AddSubjectCommand request, CancellationToken cancellationToken)
         {
-            bool specializationExists = await unitOfWork.SpecializationRepository.Exists(x => x.Id == request.SpecializationId);
+            bool specializationExists = await unitOfWork.SpecializationRepository.ExistsAsync(x => x.Id == request.SpecializationId);
             if (specializationExists) {
                 var specialization = await unitOfWork.SpecializationRepository.GetSpecialization(request.SpecializationId);
                 Subject newSubject = new Subject
@@ -28,7 +28,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Subjects.CrudOperations
                     Specialization = specialization,
                     StudyYear = request.StudyYear
                 };
-                await unitOfWork.SubjectRepository.Add(newSubject);
+                await unitOfWork.SubjectRepository.AddAsync(newSubject);
                 await unitOfWork.SaveChangesAsync();
             }
             else

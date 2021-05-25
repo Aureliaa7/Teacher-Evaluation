@@ -21,8 +21,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations
 
         protected async override Task Handle(UpdateGradeCommand request, CancellationToken cancellationToken)
         {
-            bool studentExists = await unitOfWork.StudentRepository.Exists(x => x.Id == request.StudentId);
-            bool subjectExists = await unitOfWork.SubjectRepository.Exists(x => x.Id == request.SubjectId);
+            bool studentExists = await unitOfWork.StudentRepository.ExistsAsync(x => x.Id == request.StudentId);
+            bool subjectExists = await unitOfWork.SubjectRepository.ExistsAsync(x => x.Id == request.SubjectId);
             if (studentExists && subjectExists)
             {
                 IEnumerable<Enrollment> enrollments = await unitOfWork.EnrollmentRepository.GetForStudent(request.StudentId);

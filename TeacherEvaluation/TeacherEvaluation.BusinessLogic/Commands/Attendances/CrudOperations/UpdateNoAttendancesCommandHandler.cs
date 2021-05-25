@@ -18,14 +18,14 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Attendances.CrudOperations
 
         protected override async Task Handle(UpdateNoAttendancesCommand request, CancellationToken cancellationToken)
         {
-            bool userExists = await unitOfWork.UserRepository.Exists(x => x.Id == request.UserId);
+            bool userExists = await unitOfWork.UserRepository.ExistsAsync(x => x.Id == request.UserId);
 
             if (userExists)
             {
-                var teacher = (await unitOfWork.TeacherRepository.GetAllWithRelatedEntities())
+                var teacher = (await unitOfWork.TeacherRepository.GetAllWithRelatedEntitiesAsync())
                               .Where(x => x.User.Id == request.UserId)
                               .First();
-                bool taughtSubjectExists = await unitOfWork.TaughtSubjectRepository.Exists(x => x.Subject.Id == request.SubjectId && x.Teacher.Id == teacher.Id);
+                bool taughtSubjectExists = await unitOfWork.TaughtSubjectRepository.ExistsAsync(x => x.Subject.Id == request.SubjectId && x.Teacher.Id == teacher.Id);
 
                 if (taughtSubjectExists)
                 {

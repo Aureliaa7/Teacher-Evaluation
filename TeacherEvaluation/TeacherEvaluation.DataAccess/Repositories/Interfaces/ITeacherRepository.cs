@@ -8,10 +8,10 @@ namespace TeacherEvaluation.DataAccess.Repositories.Interfaces
 {
     public interface ITeacherRepository : IRepository<Teacher>
     {
-        Task<Teacher> GetTeacher(Guid id);
-        Task Delete(Guid id);
-        Task<IEnumerable<Teacher>> GetAllWithRelatedEntities();
-        Task<IEnumerable<Teacher>> GetByDepartment(Department department);
-        Task<Teacher> GetByUserId(Guid userId);
+        Task<Teacher> GetTeacherAsync(Guid id);
+        Task DeleteAsync(Guid id);
+        Task<IEnumerable<Teacher>> GetAllWithRelatedEntitiesAsync();
+        Task<IEnumerable<Teacher>> GetByDepartmentAsync(Department department);
+        Task<Teacher> GetByUserIdAsync(Guid userId);
     }
 }

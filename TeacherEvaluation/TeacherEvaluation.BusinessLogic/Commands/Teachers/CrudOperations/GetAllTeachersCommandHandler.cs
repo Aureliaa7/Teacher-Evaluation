@@ -18,7 +18,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
 
         public async Task<IEnumerable<Teacher>> Handle(GetAllTeachersCommand request, CancellationToken cancellationToken)
         {
-            return await unitOfWork.TeacherRepository.GetAllWithRelatedEntities();
+            return await unitOfWork.TeacherRepository.GetAllWithRelatedEntitiesAsync();
         }
     }
 }

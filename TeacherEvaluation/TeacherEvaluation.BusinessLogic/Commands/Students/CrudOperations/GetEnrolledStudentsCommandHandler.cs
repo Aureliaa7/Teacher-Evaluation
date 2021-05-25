@@ -20,15 +20,15 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
 
         public async Task<IEnumerable<Student>> Handle(GetEnrolledStudentsCommand request, CancellationToken cancellationToken)
         {
-            bool userExists = await unitOfWork.UserRepository.Exists(x => x.Id == request.UserId);
-            bool subjectExists = await unitOfWork.SubjectRepository.Exists(x => x.Id == request.SubjectId);
+            bool userExists = await unitOfWork.UserRepository.ExistsAsync(x => x.Id == request.UserId);
+            bool subjectExists = await unitOfWork.SubjectRepository.ExistsAsync(x => x.Id == request.SubjectId);
             if(userExists && subjectExists)
             {
-                var teacher = (await unitOfWork.TeacherRepository.GetAllWithRelatedEntities())
+                var teacher = (await unitOfWork.TeacherRepository.GetAllWithRelatedEntitiesAsync())
                               .Where(x => x.User.Id == request.UserId)
                               .First();
 
-                bool taughtSubjectExists = await unitOfWork.TaughtSubjectRepository.Exists(x => x.Subject.Id == request.SubjectId && 
+                bool taughtSubjectExists = await unitOfWork.TaughtSubjectRepository.ExistsAsync(x => x.Subject.Id == request.SubjectId && 
                                                                                      x.Teacher.Id == teacher.Id && 
                                                                                      x.Type == request.Type);
 

@@ -18,10 +18,10 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
 
         protected override async Task Handle(UpdateTeacherCommand request, CancellationToken cancellationToken)
         {
-            bool teacherExists = await unitOfWork.TeacherRepository.Exists(x => x.Id == request.Id);
+            bool teacherExists = await unitOfWork.TeacherRepository.ExistsAsync(x => x.Id == request.Id);
             if (teacherExists)
             {
-                Teacher teacherToBeUpdated = await unitOfWork.TeacherRepository.GetTeacher(request.Id);
+                Teacher teacherToBeUpdated = await unitOfWork.TeacherRepository.GetTeacherAsync(request.Id);
                 teacherToBeUpdated.User.PIN = request.PIN;
                 teacherToBeUpdated.Degree = request.Degree;
                 teacherToBeUpdated.Department = request.Department;

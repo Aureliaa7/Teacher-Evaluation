@@ -1,0 +1,15 @@
+﻿@page
+@model TeacherEvaluation.Application.Pages.Dashboards.AdministratorModel
+
+@{
+    ViewData["Title"] = "My Profile";
+    Layout = "_AdminLayout";
+}
+
+<div class="jumbotron account-details-jumbotron">
+    <h4 class="row align-input-center">My profile</h4>
+    <hr />
+    <div class="add-margin-left-145">
+        <partial name="_UserDetailsPartial" model="Model" />
+    </div>
+</div>

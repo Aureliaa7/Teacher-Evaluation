@@ -19,18 +19,18 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
 
         public async Task<bool> Handle(FormCanBeSubmittedCommand request, CancellationToken cancellationToken)
         {
-            bool userExists = await unitOfWork.UserRepository.Exists(x => x.Id == request.UserIdForStudent);
+            bool userExists = await unitOfWork.UserRepository.ExistsAsync(x => x.Id == request.UserIdForStudent);
             bool formCanBeSubmitted = false;
 
             if (userExists)
             {
-                bool subjectExists = await unitOfWork.SubjectRepository.Exists(x => x.Id == request.SubjectId);
-                bool formExists = await unitOfWork.FormRepository.Exists(x => x.Id == request.FormId);
+                bool subjectExists = await unitOfWork.SubjectRepository.ExistsAsync(x => x.Id == request.SubjectId);
+                bool formExists = await unitOfWork.FormRepository.ExistsAsync(x => x.Id == request.FormId);
                 if (subjectExists && formExists)
                 {
-                    var form = await unitOfWork.FormRepository.Get(request.FormId);
-                    var student = await unitOfWork.StudentRepository.GetByUserId(request.UserIdForStudent);
-                    var enrollmentExists = await unitOfWork.EnrollmentRepository.Exists(x => x.TaughtSubject.Subject.Id == request.SubjectId &&
+                    var form = await unitOfWork.FormRepository.GetAsync(request.FormId);
+                    var student = await unitOfWork.StudentRepository.GetByUserIdAsync(request.UserIdForStudent);
+                    var enrollmentExists = await unitOfWork.EnrollmentRepository.ExistsAsync(x => x.TaughtSubject.Subject.Id == request.SubjectId &&
                                                                                   x.State == EnrollmentState.InProgress && 
                                                                                   x.TaughtSubject.Type == request.SubjectType && 
                                                                                   x.Student.Id == student.Id);

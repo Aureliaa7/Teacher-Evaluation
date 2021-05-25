@@ -18,8 +18,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Responses
 
         public async Task<IDictionary<string, string>> Handle(ResponsesByEnrollmentAndFormCommand request, CancellationToken cancellationToken)
         {
-            bool formExists = await unitOfWork.FormRepository.Exists(f => f.Id == request.FormId);
-            bool enrollmentExists = await unitOfWork.EnrollmentRepository.Exists(e => e.Id == request.EnrollmentId);
+            bool formExists = await unitOfWork.FormRepository.ExistsAsync(f => f.Id == request.FormId);
+            bool enrollmentExists = await unitOfWork.EnrollmentRepository.ExistsAsync(e => e.Id == request.EnrollmentId);
             if(formExists && enrollmentExists)
             {
                 var freeFormResponses = await unitOfWork.AnswerToQuestionWithTextRepository

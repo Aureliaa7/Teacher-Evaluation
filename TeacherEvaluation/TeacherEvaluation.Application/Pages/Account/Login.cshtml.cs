@@ -15,7 +15,6 @@ namespace TeacherEvaluation.Application.Pages.Account
         private readonly IMediator mediator;
         public List<string> errorMessages;
 
-
         [BindProperty]
         [DataType(DataType.EmailAddress)]
         [Required(ErrorMessage = "Email is required")]
@@ -41,22 +40,7 @@ namespace TeacherEvaluation.Application.Pages.Account
 
                 if (loginResult.ErrorMessages == null)
                 {
-                    if(string.Equals(loginResult.UserRole, "Administrator"))
-                    {
-                        return RedirectToPage("../Dashboards/Admin");
-                    }
-                    else if (string.Equals(loginResult.UserRole, "Dean"))
-                    {
-                        return RedirectToPage("../Dashboards/Dean");
-                    }
-                    else if (string.Equals(loginResult.UserRole, "Student"))
-                    {
-                        return RedirectToPage("../Dashboards/Student");
-                    }
-                    else if (string.Equals(loginResult.UserRole, "Teacher"))
-                    {
-                        return RedirectToPage("../Dashboards/Teacher");
-                    }
+                    return RedirectToPage($"../MyProfile/{loginResult.UserRole}");
                 }
                 errorMessages = loginResult.ErrorMessages;
             }

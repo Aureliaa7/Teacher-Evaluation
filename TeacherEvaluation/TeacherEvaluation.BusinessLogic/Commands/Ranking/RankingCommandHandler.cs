@@ -25,7 +25,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Ranking
 
         public async Task<IDictionary<TeacherVm, long>> Handle(RankingCommand request, CancellationToken cancellationToken)
         {
-            bool questionExists = await unitOfWork.QuestionRepository.Exists(q => q.Id == request.QuestionId);
+            bool questionExists = await unitOfWork.QuestionRepository.ExistsAsync(q => q.Id == request.QuestionId);
             if(questionExists)
             {
                 IDictionary<TeacherVm, long> topTeachers = await GetTopTeachersAsync(request.QuestionId, request.RankingType);
@@ -70,7 +70,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Ranking
             {
                 case RankingType.All:
                     {
-                        teachers = await unitOfWork.TeacherRepository.GetAll();
+                        teachers = await unitOfWork.TeacherRepository.GetAllAsync();
                         break;
                     }
                 case RankingType.Courses:
@@ -93,7 +93,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Ranking
 
         private async Task<TeacherVm> GetTeacherVmAsync(Guid teacherId)
         {
-            var teacher = await unitOfWork.TeacherRepository.GetTeacher(teacherId);
+            var teacher = await unitOfWork.TeacherRepository.GetTeacherAsync(teacherId);
             var teacherVm = new TeacherVm
             {
                 Name = string.Concat(teacher.User.LastName, " ", teacher.User.FathersInitial, " ",

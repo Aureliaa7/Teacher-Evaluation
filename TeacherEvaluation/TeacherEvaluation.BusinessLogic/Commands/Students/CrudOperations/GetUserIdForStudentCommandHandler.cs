@@ -18,10 +18,10 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
 
         public async Task<Guid> Handle(GetUserIdForStudentCommand request, CancellationToken cancellationToken)
         {
-            bool studentExists = await unitOfWork.StudentRepository.Exists(x => x.Id == request.StudentId);
+            bool studentExists = await unitOfWork.StudentRepository.ExistsAsync(x => x.Id == request.StudentId);
             if (studentExists)
             {
-                var student = await unitOfWork.StudentRepository.GetStudent(request.StudentId);
+                var student = await unitOfWork.StudentRepository.GetStudentAsync(request.StudentId);
                 return student.User.Id;
             }
             throw new ItemNotFoundException("The student was not found...");

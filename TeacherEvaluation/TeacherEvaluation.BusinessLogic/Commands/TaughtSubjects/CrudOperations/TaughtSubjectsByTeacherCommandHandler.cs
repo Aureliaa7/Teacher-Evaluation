@@ -20,7 +20,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
 
         public async Task<IDictionary<string, string>> Handle(TaughtSubjectsByTeacherCommand request, CancellationToken cancellationToken)
         {
-            bool teacherExists = await unitOfWork.TeacherRepository.Exists(t => t.Id == request.TeacherId);
+            bool teacherExists = await unitOfWork.TeacherRepository.ExistsAsync(t => t.Id == request.TeacherId);
             if(teacherExists)
             {
                 IDictionary<string, string> taughtSubjectsIdsAndTitles = new Dictionary<string, string>();

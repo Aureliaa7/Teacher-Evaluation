@@ -247,3 +247,13 @@ input::-webkit-inner-spin-button {
     margin-top: 5px;
     margin-right: 10px;
 }
+
+.add-margin-left-145 {
+    margin-left: 145px;
+}
+
+.account-details-jumbotron {
+    width: 700px;
+    height: 530px;
+    margin-top: 35px;
+}

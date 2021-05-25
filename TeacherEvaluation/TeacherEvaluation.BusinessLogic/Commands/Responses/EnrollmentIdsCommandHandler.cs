@@ -20,8 +20,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Responses
 
         public async Task<IEnumerable<Guid>> Handle(EnrollmentIdsCommand request, CancellationToken cancellationToken)
         {
-            bool formExists = await unitOfWork.FormRepository.Exists(f => f.Id == request.FormId);
-            bool teacherExists = await unitOfWork.TeacherRepository.Exists(t => t.Id == request.TeacherId);
+            bool formExists = await unitOfWork.FormRepository.ExistsAsync(f => f.Id == request.FormId);
+            bool teacherExists = await unitOfWork.TeacherRepository.ExistsAsync(t => t.Id == request.TeacherId);
 
             if(formExists && teacherExists)
             {

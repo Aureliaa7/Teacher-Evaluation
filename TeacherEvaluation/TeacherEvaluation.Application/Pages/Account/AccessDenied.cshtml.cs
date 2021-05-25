@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
 
 namespace TeacherEvaluation.Application.Pages.Account
 {
@@ -8,22 +9,8 @@ namespace TeacherEvaluation.Application.Pages.Account
 
         public void OnGet()
         {
-            if (User.IsInRole("Administrator"))
-            {
-                RedirectPage = "../Dashboards/Admin";
-            }
-            else if (User.IsInRole("Dean"))
-            {
-                RedirectPage = "../Dashboards/Dean";
-            }
-            else if (User.IsInRole("Student"))
-            {
-                RedirectPage = "../Dashboards/Student";
-            }
-            else if (User.IsInRole("Teacher"))
-            {
-                RedirectPage = "../Dashboards/Teacher";
-            }
+            string role = User.FindFirstValue(ClaimTypes.Role);
+            RedirectPage = $"../MyProfile/{role}";
         }
     }
 }
