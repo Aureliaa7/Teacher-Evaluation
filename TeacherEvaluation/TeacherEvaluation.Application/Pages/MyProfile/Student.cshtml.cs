@@ -4,12 +4,11 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using TeacherEvaluation.Application.Pages.MyProfile;
 using TeacherEvaluation.BusinessLogic.Commands.Accounts;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.BusinessLogic.ViewModels;
 
-namespace TeacherEvaluation.Application.Pages.Dashboards
+namespace TeacherEvaluation.Application.Pages.MyProfile
 {
     public class StudentModel : UserDetailsModel
     {
