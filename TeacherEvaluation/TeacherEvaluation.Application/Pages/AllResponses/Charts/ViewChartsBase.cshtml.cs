@@ -1,8 +1,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Sparc.TagCloud;
 using System;
+using System.Collections.Generic;
 using TeacherEvaluation.BusinessLogic.Commands.EvaluationForms;
 using TeacherEvaluation.BusinessLogic.Commands.TagClouds;
+using TeacherEvaluation.BusinessLogic.Exceptions;
 
 namespace TeacherEvaluation.Application.Pages.AllResponses.Charts
 {
@@ -14,32 +17,51 @@ namespace TeacherEvaluation.Application.Pages.AllResponses.Charts
 
         public JsonResult OnGetRetrieveResponses(string teacherId, string formId, string taughtSubjectId)
         {
+            IDictionary<string, IDictionary<string, int>> questionsAndResponses = new Dictionary<string, IDictionary<string, int>>();
             if (!string.IsNullOrEmpty(teacherId) &&
                 !string.IsNullOrEmpty(formId) &&
                 !string.IsNullOrEmpty(taughtSubjectId))
             {
-                ChartsDataCommand command = new ChartsDataCommand
+                try
                 {
-                    FormId = new Guid(formId),
-                    TeacherId = new Guid(teacherId),
-                    TaughtSubjectId = taughtSubjectId
-                };
+                    ChartsDataCommand command = new ChartsDataCommand
+                    {
+                        FormId = new Guid(formId),
+                        TeacherId = new Guid(teacherId),
+                        TaughtSubjectId = taughtSubjectId
+                    };
 
-                var questionsAndResponses = mediator.Send(command).Result;
-                return new JsonResult(questionsAndResponses);
+                    questionsAndResponses = mediator.Send(command).Result;
+                }
+                catch (ItemNotFoundException) { }
             }
-            return new JsonResult("");
+            return new JsonResult(questionsAndResponses);
         }
 
-        public JsonResult OnGetRetrieveTagCloud(string teacherId, string formId)
+        public JsonResult OnGetRetrieveTagCloud(string teacherId, string formId, string taughtSubjectId)
         {
-            TagCloudCommand tagCloudCommand = new TagCloudCommand
+            IEnumerable<TagCloudTag> tags = new List<TagCloudTag>();
+            if(!string.IsNullOrEmpty(teacherId) && 
+                !string.IsNullOrEmpty(formId) && 
+                !string.IsNullOrEmpty(taughtSubjectId))
             {
-                FormId = new Guid(formId),
-                TeacherId = new Guid(teacherId)
-            };
-            var tagClouds = mediator.Send(tagCloudCommand).Result;
-            return new JsonResult(tagClouds);
+                try
+                {
+                    TagCloudCommand tagCloudCommand = new TagCloudCommand
+                    {
+                        FormId = new Guid(formId),
+                        TeacherId = new Guid(teacherId),
+                        TaughtSubjectId = taughtSubjectId
+                    };
+                    tags = mediator.Send(tagCloudCommand).Result;
+                }
+                catch(ItemNotFoundException)
+                {
+                    // just go on
+                }
+            }
+            
+            return new JsonResult(tags);
         }
     }
 }

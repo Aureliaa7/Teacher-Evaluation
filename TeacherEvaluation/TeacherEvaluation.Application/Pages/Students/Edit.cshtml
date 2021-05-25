@@ -47,7 +47,7 @@
             <div class="col-md-4">
                 <label asp-for="StudyProgramme"></label><br />
                 <select id="study-programme" asp-for="StudyProgramme"
-                        class="form-control" onchange="get_domains()" onclick="get_study_programmes()">
+                        class="form-control" onchange="get_domains()" asp-items="@Model.StudyProgrammes">
                     <option>@Model.Specialization.StudyDomain.StudyProgramme</option>
                 </select>
                 <span asp-validation-for="StudyProgramme" class="text-danger" />

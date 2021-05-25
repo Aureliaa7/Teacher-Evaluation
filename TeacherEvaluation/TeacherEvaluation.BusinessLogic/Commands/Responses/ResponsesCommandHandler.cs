@@ -24,22 +24,26 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Responses
         {
             bool formExists = await unitOfWork.FormRepository.ExistsAsync(f => f.Id == request.FormId);
             bool teacherExists = await unitOfWork.TeacherRepository.ExistsAsync(t => t.Id == request.TeacherId);
+            IDictionary<string, ResponseVm> responsesInfo = new Dictionary<string, ResponseVm>();
+            IEnumerable<AnswerToQuestion> filteredResponses = new List<AnswerToQuestion>();
+
             if (formExists && teacherExists)
             {
                 var responses = await unitOfWork.AnswerRepository.GetByFormIdAsync(request.FormId);
                 if (request.TaughtSubjectId.Equals("All"))
                 {
-                    var filteredResponses = responses.Where(r => r.Enrollment.TaughtSubject.Teacher.Id == request.TeacherId);
-                    var responsesInfo = GetResponsesInfo(filteredResponses);
-
-                    return responsesInfo;
+                    filteredResponses = responses.Where(r => r.Enrollment.TaughtSubject.Teacher.Id == request.TeacherId);
+                }
+                // if the "Please select" option is selected instead of the subject
+                else if (request.TaughtSubjectId.Equals("default"))
+                {
                 }
                 else if (await unitOfWork.TaughtSubjectRepository.ExistsAsync(ts => ts.Id == new Guid(request.TaughtSubjectId)))
                 {
-                    var filteredResponses = responses.Where(r => r.Enrollment.TaughtSubject.Id == new Guid(request.TaughtSubjectId));
-                    var responsesInfo = GetResponsesInfo(filteredResponses);
-                    return responsesInfo;
+                    filteredResponses = responses.Where(r => r.Enrollment.TaughtSubject.Id == new Guid(request.TaughtSubjectId));
                 }
+                responsesInfo = GetResponsesInfo(filteredResponses);
+                return responsesInfo;
             }
             throw new ItemNotFoundException("Not found");
         }

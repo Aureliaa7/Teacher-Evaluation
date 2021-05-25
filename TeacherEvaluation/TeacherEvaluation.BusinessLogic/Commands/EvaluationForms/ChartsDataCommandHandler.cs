@@ -25,28 +25,31 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
             bool teacherExists = await unitOfWork.TeacherRepository.ExistsAsync(t => t.Id == request.TeacherId);
             if (formExists && teacherExists)
             {
-                var questions = (await unitOfWork.QuestionRepository.GetQuestionsWithRelatedEntities(request.FormId))
+                IDictionary<string, IDictionary<string, int>> result = new Dictionary<string, IDictionary<string, int>>();
+
+                var questions = (await unitOfWork.QuestionRepository.GetQuestionsWithRelatedEntitiesAsync(request.FormId))
                          .Where(q => !q.HasFreeFormAnswer)
                          .ToList();
 
                 if (request.TaughtSubjectId.Equals("All"))
                 {
-                    return await GetChartsDataOverall(request.TeacherId, questions);
+                    result = await GetChartsDataOverallAsync(request.TeacherId, questions);
                 }
-                // "Please select" is selected
+                // if the "Please select" option is selected instead of the subject
                 else if (request.TaughtSubjectId.Equals("default"))
                 {
-                    return new Dictionary<string, IDictionary<string, int>>();
                 }
                 else if (await unitOfWork.TaughtSubjectRepository.ExistsAsync(ts => ts.Id == new Guid(request.TaughtSubjectId)))
                 {
-                    return await GetChartsDataForTaughtSubject(request.TeacherId, new Guid(request.TaughtSubjectId), questions);
+                    result = await GetChartsDataForTaughtSubjectAsync(request.TeacherId, new Guid(request.TaughtSubjectId), questions);
                 }
+                
+                return result;
             }
             throw new ItemNotFoundException("Not found");
         }
 
-        private async Task<IDictionary<string, IDictionary<string, int>>> GetChartsDataOverall(Guid teacherId, List<Question> questions)
+        private async Task<IDictionary<string, IDictionary<string, int>>> GetChartsDataOverallAsync(Guid teacherId, List<Question> questions)
         {
             IDictionary<string, IDictionary<string, int>> questionsWithResponses = new Dictionary<string, IDictionary<string, int>>();
 
@@ -63,7 +66,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
             return questionsWithResponses;
         }
 
-        private async Task<IDictionary<string, IDictionary<string, int>>> GetChartsDataForTaughtSubject(Guid teacherId, Guid taughtSubjectId, List<Question> questions)
+        private async Task<IDictionary<string, IDictionary<string, int>>> GetChartsDataForTaughtSubjectAsync(Guid teacherId, Guid taughtSubjectId, List<Question> questions)
         {
             IDictionary<string, IDictionary<string, int>> questionsWithResponses = new Dictionary<string, IDictionary<string, int>>();
 

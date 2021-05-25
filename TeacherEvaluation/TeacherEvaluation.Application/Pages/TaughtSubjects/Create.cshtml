@@ -23,7 +23,7 @@
             <div class="col-md-6">
                 <label asp-for="TeacherId" class="control-label"></label><br />
                 <select id="teacher-field" asp-for="TeacherId" class="form-control" onchange="subject_assignment_is_possible()">
-                    <option>Select teacher</option>
+                    <option selected disabled hidden>Please select</option>
                 </select>
                 <span asp-validation-for="TeacherId" class="text-danger" />
             </div>
@@ -32,7 +32,7 @@
             <div class="col-md-6">
                 <label asp-for="SubjectId" class="control-label"></label><br />
                 <select id="subject-field" asp-for="SubjectId" asp-items="@Model.Subjects" class="form-control" onchange="subject_assignment_is_possible()">
-                    <option>Select subject</option>
+                    <option selected disabled hidden>Please select</option>
                 </select>
                 <span asp-validation-for="SubjectId" class="text-danger" />
             </div>

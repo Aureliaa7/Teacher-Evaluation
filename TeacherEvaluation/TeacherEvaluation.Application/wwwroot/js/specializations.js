@@ -9,7 +9,7 @@
         data: search_details,
         dataType: 'json',
         contextType: 'application/json',
-        url: "../Specializations/Index",
+        url: "/Specializations/Index",
 
         success: function (result) {
             $("#specialization option").remove();

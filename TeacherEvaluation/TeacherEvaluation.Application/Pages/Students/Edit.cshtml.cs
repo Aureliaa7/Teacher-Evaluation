@@ -1,17 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities;
+using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.Students
 {
     [Authorize]
     public class EditModel : StudentBaseModel
     {
+        [BindProperty]
+        public List<SelectListItem> StudyProgrammes { get; set; } = new List<SelectListItem>();
+
         public EditModel(IMediator mediator): base(mediator)
         {
         }
@@ -40,12 +46,29 @@ namespace TeacherEvaluation.Application.Pages.Students
                 StudyDomainId = StudyDomainId;
                 SpecializationId = student.Specialization.Id;
                 StudyYear = student.StudyYear;
+
+                InitializeStudyProgrammes(Specialization.StudyDomain.StudyProgramme.ToString());
             }
             catch (ItemNotFoundException)
             {
                 return RedirectToPage("../Errors/404");
             }
             return Page();
+        }
+
+        private void InitializeStudyProgrammes(string currentStudyProgramme)
+        {
+            foreach (var studyProgramme in Enum.GetValues(typeof(StudyProgramme)))
+            {
+                if (studyProgramme.ToString() != currentStudyProgramme)
+                {
+                    StudyProgrammes.Add(new SelectListItem
+                    {
+                        Text = studyProgramme.ToString(),
+                        Value = ((int)studyProgramme).ToString()
+                    });
+                }
+            }
         }
 
         public async Task<IActionResult> OnPostAsync()

@@ -23,7 +23,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Responses
             if(formExists && enrollmentExists)
             {
                 var freeFormResponses = await unitOfWork.AnswerToQuestionWithTextRepository
-                    .GetByEnrollmentAndFormId(request.EnrollmentId, request.FormId);
+                    .GetByEnrollmentAndFormIdAsync(request.EnrollmentId, request.FormId);
                 var responsesForLikertQuestions = await unitOfWork.AnswerToQuestionWithOptionRepository
                     .GetByEnrollmentAndFormIdAsync(request.EnrollmentId, request.FormId);
 

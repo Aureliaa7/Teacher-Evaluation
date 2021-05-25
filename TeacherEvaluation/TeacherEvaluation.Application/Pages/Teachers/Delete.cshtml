@@ -9,7 +9,9 @@
 <h3 class="row align-input-center add-top-margin">Are you sure you want to delete this?</h3>
 <hr />
 <div class="jumbotron jumbotron-details">
-    <partial name="_TeacherDetailsPartial" model="Model" />
+    <div class="add-margin-left-145">
+        <partial name="_TeacherDetailsPartial" model="Model" />
+    </div>
 
     <form method="post">
         <input type="hidden" asp-for="TeacherId" />

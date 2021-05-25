@@ -18,7 +18,7 @@ function update_subjects_drop_down() {
 }
 
 function create_table(search_details, layoutId) {
-    remove_table();
+    clear();
 
     $.ajax({
         type: "GET",
@@ -30,6 +30,9 @@ function create_table(search_details, layoutId) {
         success: function (result) {
             console.log("*** responses: ", result);
             if (Object.keys(result).length > 0) {
+
+                console.log("if");
+
                 var divRowElement = document.createElement('div');
                 divRowElement.className = "row";
                 divRowElement.id = "responses-table";
@@ -77,7 +80,7 @@ function create_table(search_details, layoutId) {
 
                     var newTd4 = document.createElement("td");
                     newTd4.innerHTML = get_grade_interval(value.grade);
-                    
+
                     newTr.appendChild(newTd1);
                     newTr.appendChild(newTd2);
                     newTr.appendChild(newTd3);
@@ -91,6 +94,16 @@ function create_table(search_details, layoutId) {
                 var mainElement = document.getElementById(layoutId);
                 mainElement.appendChild(divRowElement);
             }
+            else {
+                console.log("else");
+
+                var h4 = document.createElement("h4");
+                h4.innerText = "No data is available";
+                h4.id = "noDataAvailableH4";
+                h4.setAttribute("style", "margin-top: 100px; margin-left: 100px;");
+                var mainElement = document.getElementById(layoutId);
+                mainElement.appendChild(h4); 
+            }
         },
         error: function () {
             console.log("Something went wrong");
@@ -99,15 +112,19 @@ function create_table(search_details, layoutId) {
 }
 
 function update() {
-    remove_table();
+    clear();
     $("#selected-subject-field").val("default");
     get_taught_subjects_by_teacher_id();
 }
 
-function remove_table() {
+function clear() {
     var oldTable = document.getElementById("responses-table");
     if (oldTable != null) {
         oldTable.remove();
+    }
+    var noDataAvailableHeader = document.getElementById("noDataAvailableH4");
+    if (noDataAvailableHeader != null) {
+        noDataAvailableHeader.remove();
     }
 }
 

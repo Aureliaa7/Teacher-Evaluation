@@ -129,8 +129,7 @@ input::-webkit-inner-spin-button {
 }
 
 .jumbotron-details {
-    width: 40%;
-    margin-left: 27%;
+    width: 600px;
     margin-bottom: 6%;
     background-color: #e3dee0;
 }

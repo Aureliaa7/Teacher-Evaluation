@@ -14,7 +14,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
         public AnswerToQuestionWithTextRepository(ApplicationDbContext context) : base(context)
         { }
 
-        public async Task<IEnumerable<AnswerToQuestionWithText>> GetByEnrollmentAndFormId(Guid enrollmentId, Guid formId)
+        public async Task<IEnumerable<AnswerToQuestionWithText>> GetByEnrollmentAndFormIdAsync(Guid enrollmentId, Guid formId)
         {
             return await Context.Set<AnswerToQuestionWithText>()
                 .Where(x => x.Enrollment.Id == enrollmentId && x.Question.Form.Id == formId)
@@ -22,7 +22,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<AnswerToQuestionWithText>> GetByQuestionId(Guid id)
+        public async Task<IEnumerable<AnswerToQuestionWithText>> GetByQuestionIdAsync(Guid id)
         {
             return await Context.Set<AnswerToQuestionWithText>()
                 .Where(x => x.Question.Id == id)

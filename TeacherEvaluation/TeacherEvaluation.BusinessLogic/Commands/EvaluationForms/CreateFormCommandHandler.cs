@@ -72,8 +72,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
         {
             Notification notification = CreateEvaluateTeacherNotification(interval);
 
-            IList<NotificationAddress> recipients = new List<NotificationAddress>();
-            GetStudentsAddresses(recipients);
+            IList<NotificationAddress> recipients = GetStudentsAddresses();
             AddMessageRecipients(recipients, notification);
             AddMessageSender(notification);
             return notification;
@@ -94,16 +93,17 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
             };
         }
 
-        private void GetStudentsAddresses(IList<NotificationAddress> recipients)
+        private IList<NotificationAddress> GetStudentsAddresses()
         {
             IList<ApplicationUser> users = userManager.GetUsersInRoleAsync("Student").Result.ToList();
-
+            IList<NotificationAddress> notificationAddresses = new List<NotificationAddress>();
             foreach (ApplicationUser user in users)
             {
                 string name = string.Join(" ", user.LastName, user.FathersInitial, user.FirstName);
-                NotificationAddress recipient = new NotificationAddress(name, user.Email);
-                recipients.Add(recipient);
+                NotificationAddress notificationAddress = new NotificationAddress(name, user.Email);
+                notificationAddresses.Add(notificationAddress);
             }
+            return notificationAddresses;
         }
 
         private void AddMessageRecipients(IList<NotificationAddress> recipients, Notification notification)

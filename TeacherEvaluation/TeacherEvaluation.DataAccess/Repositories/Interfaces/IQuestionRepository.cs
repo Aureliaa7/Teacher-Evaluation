@@ -7,6 +7,6 @@ namespace TeacherEvaluation.DataAccess.Repositories.Interfaces
 {
     public interface IQuestionRepository : IRepository<Question>
     {
-        Task<IEnumerable<Question>> GetQuestionsWithRelatedEntities(Guid formId);
+        Task<IEnumerable<Question>> GetQuestionsWithRelatedEntitiesAsync(Guid formId);
     }
 }

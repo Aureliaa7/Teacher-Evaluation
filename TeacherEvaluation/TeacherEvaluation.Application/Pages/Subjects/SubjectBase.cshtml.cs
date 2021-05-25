@@ -32,7 +32,7 @@ namespace TeacherEvaluation.Application.Pages.Subjects
         [BindProperty]
         [Display(Name = "Study year")]
         [Required(ErrorMessage = "Study year is required")]
-        [Range(1, 5, ErrorMessage = "Study year must be between 1 and 4")]
+        [Range(1, 4, ErrorMessage = "Study year must be between 1 and 4")]
         public int? StudyYear { get; set; }
 
         [BindProperty]

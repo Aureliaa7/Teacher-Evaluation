@@ -9,7 +9,7 @@
         data: search_details,
         dataType: 'json',
         contextType: 'application/json',
-        url: "../StudyDomains/Index",
+        url: "/StudyDomains/Index",
 
         success: function (result) {
             $("#domain option").remove();

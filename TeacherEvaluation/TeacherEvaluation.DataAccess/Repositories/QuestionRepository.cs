@@ -15,7 +15,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
         {
         }
 
-        public async Task<IEnumerable<Question>> GetQuestionsWithRelatedEntities(Guid formId)
+        public async Task<IEnumerable<Question>> GetQuestionsWithRelatedEntitiesAsync(Guid formId)
         {
             return await Context.Set<Question>()
                 .Where(x => x.Form.Id == formId)

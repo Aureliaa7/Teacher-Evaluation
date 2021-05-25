@@ -1,12 +1,15 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Sparc.TagCloud;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.DataAccess.UnitOfWork;
+using TeacherEvaluation.Domain.DomainEntities;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.TagClouds
 {
@@ -29,28 +32,32 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TagClouds
 
             if (formExists && teacherExists)
             {
-                var questions = (await unitOfWork.QuestionRepository.GetQuestionsWithRelatedEntities(request.FormId))
+                var questions = (await unitOfWork.QuestionRepository.GetQuestionsWithRelatedEntitiesAsync(request.FormId))
                                 .Where(q => q.HasFreeFormAnswer)
                                 .ToList();
 
-                var freeFormTexts = new List<string>();
-
-                for (int contor = 0; contor < Constants.NumberOfFreeFormQuestions; contor++)
+                IEnumerable<string> freeFormTexts = new List<string>();
+                if (request.TaughtSubjectId.Equals("All"))
                 {
-                    var responses = (await unitOfWork.AnswerToQuestionWithTextRepository.GetByQuestionId(questions.ElementAt(contor).Id))
-                                     .Where(r => r.Enrollment.TaughtSubject.Teacher.Id == request.TeacherId);
-
-                    var selectedResponses = responses.Select(x => x.FreeFormAnswer);
-                    freeFormTexts.AddRange(selectedResponses);
+                    freeFormTexts = await GetTagCloudDataOverallAsync(request.TeacherId, questions);
+                }
+                // if the "Please select" option is selected instead of the subject
+                else if (request.TaughtSubjectId.Equals("default"))
+                {
+                }
+                else if (await unitOfWork.TaughtSubjectRepository.ExistsAsync(ts => ts.Id == new Guid(request.TaughtSubjectId)))
+                {
+                    freeFormTexts = await GetTagCloudDataForTaughtSubjectAsync(request.TeacherId, new Guid(request.TaughtSubjectId), questions);
                 }
 
                 var analyzer = new TagCloudAnalyzer();
                 tags = analyzer.ComputeTagCloud(freeFormTexts);
                 tags = RemoveCommonWords(tags.ToList());
                 tags = tags.Shuffle();
-            }
 
-            return tags;
+                return tags;
+            }
+            throw new ItemNotFoundException("The form or the teacher was not found...");
         }
 
         private IList<TagCloudTag> RemoveCommonWords(IList<TagCloudTag> tags)
@@ -82,6 +89,37 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TagClouds
             }
 
             return commonWords;
+        }
+
+        private async Task<IEnumerable<string>> GetTagCloudDataOverallAsync(Guid teacherId, List<Question> questions)
+        {
+            var freeFormTexts = new List<string>();
+
+            foreach (var question in questions)
+            {
+                freeFormTexts.AddRange((await unitOfWork.AnswerToQuestionWithTextRepository.GetByQuestionIdAsync(question.Id))
+                                 .Where(r => r.Enrollment.TaughtSubject.Teacher.Id == teacherId)
+                                 .Select(x => x.FreeFormAnswer)
+                                 .ToList());
+            }
+
+            return freeFormTexts;
+        }
+
+        private async Task<IEnumerable<string>> GetTagCloudDataForTaughtSubjectAsync(Guid teacherId, Guid taughtSubjectId, List<Question> questions)
+        {
+            var freeFormTexts = new List<string>();
+
+            foreach (var question in questions)
+            {
+                freeFormTexts.AddRange((await unitOfWork.AnswerToQuestionWithTextRepository.GetByQuestionIdAsync(question.Id))
+                                 .Where(r => r.Enrollment.TaughtSubject.Teacher.Id == teacherId &&
+                                        r.Enrollment.TaughtSubject.Id == taughtSubjectId)
+                                 .Select(x => x.FreeFormAnswer)
+                                 .ToList());
+            }
+
+            return freeFormTexts;
         }
     }
 }

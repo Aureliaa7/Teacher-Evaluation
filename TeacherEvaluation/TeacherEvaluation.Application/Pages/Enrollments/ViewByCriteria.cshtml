@@ -23,14 +23,14 @@
             <div class="col-md-4">
                 <label asp-for="StudyDomainId" class="control-label">Study domain</label><br />
                 <select id="domain" asp-for="StudyDomainId" class="form-control" onclick="get_specializations()">
-                    <option>Select study domain</option>
+                    <option selected disabled hidden>Please select</option>
                 </select>
                 <span asp-validation-for="StudyDomainId" class="text-danger" />
             </div>
             <div class="col-md-4">
                 <label asp-for="SpecializationId" class="control-label">Specialization</label><br />
                 <select id="specialization" asp-for="SpecializationId" class="form-control">
-                    <option>Select specialization</option>
+                    <option selected disabled hidden>Please select</option>
                 </select>
                 <span asp-validation-for="SpecializationId" class="text-danger" />
             </div>

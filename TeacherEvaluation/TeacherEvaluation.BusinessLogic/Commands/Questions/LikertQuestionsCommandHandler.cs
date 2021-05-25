@@ -23,7 +23,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Questions
             bool formExists = await unitOfWork.FormRepository.ExistsAsync(f => f.Id == request.FormId);
             if (formExists)
             {
-                var likertQuestions = (await unitOfWork.QuestionRepository.GetQuestionsWithRelatedEntities(request.FormId))
+                var likertQuestions = (await unitOfWork.QuestionRepository.GetQuestionsWithRelatedEntitiesAsync(request.FormId))
                                       .Where(q => !q.HasFreeFormAnswer);
                 return likertQuestions;
             }

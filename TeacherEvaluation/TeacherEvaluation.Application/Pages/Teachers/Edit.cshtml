@@ -49,7 +49,7 @@
             <div class="col-md-4">
                 <label asp-for="Department"></label><br />
                 <select asp-for="Department" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Enums.Department>()" class="form-control">
-                    <option>Please select</option>
+                    <option selected disabled hidden>Please select</option>
                 </select>
                 <span asp-validation-for="Department" class="text-danger" />
             </div>

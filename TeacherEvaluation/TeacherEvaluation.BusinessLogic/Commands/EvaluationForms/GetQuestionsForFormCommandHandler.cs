@@ -24,7 +24,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
             bool formExists = await unitOfWork.FormRepository.ExistsAsync(x => x.Id == request.FormId);
             if (formExists)
             {
-                var questions = await unitOfWork.QuestionRepository.GetQuestionsWithRelatedEntities(request.FormId);
+                var questions = await unitOfWork.QuestionRepository.GetQuestionsWithRelatedEntitiesAsync(request.FormId);
                 var questionsVm = new QuestionsVm
                 {
                     FreeFormQuestions = questions.Where(q => q.HasFreeFormAnswer),
