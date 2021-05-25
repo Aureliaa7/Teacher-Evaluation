@@ -70,7 +70,7 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
 
                 };
                 await mediator.Send(command);
-                return RedirectToPage("/Dashboards/Dean");
+                return RedirectToPage("/MyProfile/Dean");
             }
             else
             {

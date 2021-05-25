@@ -91,7 +91,7 @@ namespace TeacherEvaluation.Application.Pages.Attendances
                 {
                     return RedirectToPage("../Errors/404");
                 }
-                return RedirectToPage("../Dashboards/Teacher");
+                return RedirectToPage("../MyProfile/Teacher");
             }
             return Page();
         }
