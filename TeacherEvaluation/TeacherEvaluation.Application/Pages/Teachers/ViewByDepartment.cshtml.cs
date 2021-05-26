@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations;
@@ -10,6 +11,7 @@ using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.Teachers
 {
+    [Authorize(Roles = "Administrator")]
     public class ViewByDepartmentModel : PageModel
     {
         private readonly IMediator mediator;

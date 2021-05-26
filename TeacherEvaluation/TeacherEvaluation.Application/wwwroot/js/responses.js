@@ -4,7 +4,6 @@
         formId: formID,
         taughtSubjectId: $("#selected-subject-field").val()
     };
-    console.log(search_details);
 
     create_table(search_details, layoutID);
 }
@@ -28,11 +27,7 @@ function create_table(search_details, layoutId) {
         url: "/AllResponses/Responses/ViewResponsesBase?handler=RetrieveResponses",
 
         success: function (result) {
-            console.log("*** responses: ", result);
             if (Object.keys(result).length > 0) {
-
-                console.log("if");
-
                 var divRowElement = document.createElement('div');
                 divRowElement.className = "row";
                 divRowElement.id = "responses-table";
@@ -95,8 +90,6 @@ function create_table(search_details, layoutId) {
                 mainElement.appendChild(divRowElement);
             }
             else {
-                console.log("else");
-
                 var h4 = document.createElement("h4");
                 h4.innerText = "No data is available";
                 h4.id = "noDataAvailableH4";

@@ -12,7 +12,7 @@ using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.Students
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public class EditModel : StudentBaseModel
     {
         [BindProperty]

@@ -8,9 +8,11 @@ using System.ComponentModel.DataAnnotations;
 
 using TeacherEvaluation.BusinessLogic;
 using TeacherEvaluation.BusinessLogic.Commands.EvaluationForms;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TeacherEvaluation.Application.Pages.EvaluationForms
 {
+    [Authorize(Roles = "Dean")]
     public class CreateModel : PageModel
     {
         private readonly IMediator mediator;

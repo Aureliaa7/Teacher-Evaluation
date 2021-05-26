@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations;
@@ -12,6 +13,7 @@ using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.Enrollments
 {
+    [Authorize(Roles = "Administrator")]
     public class ViewByCriteriaModel : EnrollmentBaseModel
     {
         public bool DisplayTable { get; private set; }

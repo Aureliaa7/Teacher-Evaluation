@@ -20,6 +20,7 @@
                 <label asp-for="SubjectId" class="control-label">Subject</label>
                 <select id="subject-field" asp-for="SubjectId" asp-items="@Model.Subjects" class="form-control"
                         onchange="disable_or_enable_btn()">
+                    <option selected disabled hidden>Please select</option>
                 </select>
                 <span asp-validation-for="SubjectId" class="text-danger" />
             </div>

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
@@ -9,6 +10,7 @@ using TeacherEvaluation.BusinessLogic.ViewModels;
 
 namespace TeacherEvaluation.Application.Pages.MyProfile
 {
+    [Authorize(Roles = "Teacher")]
     public class TeacherModel : UserDetailsModel
     {
         public TeacherModel(IMediator mediator) : base(mediator)

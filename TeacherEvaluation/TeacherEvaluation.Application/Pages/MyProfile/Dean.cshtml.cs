@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using TeacherEvaluation.BusinessLogic.Exceptions;
 
 namespace TeacherEvaluation.Application.Pages.MyProfile
 {
+    [Authorize(Roles = "Dean")]
     public class DeanModel : UserDetailsModel
     {
         public DeanModel(IMediator mediator) : base(mediator)

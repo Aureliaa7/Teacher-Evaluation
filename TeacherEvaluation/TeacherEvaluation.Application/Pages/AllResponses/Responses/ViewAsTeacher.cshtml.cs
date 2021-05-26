@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using TeacherEvaluation.BusinessLogic.Exceptions;
 
 namespace TeacherEvaluation.Application.Pages.AllResponses.Responses
 {
+    [Authorize(Roles = "Teacher")]
     public class ViewAsTeacherModel : ViewResponsesBaseModel
     {
         public ViewAsTeacherModel(IMediator mediator) :  base(mediator)

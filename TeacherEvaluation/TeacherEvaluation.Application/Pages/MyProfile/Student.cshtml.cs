@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -10,6 +11,7 @@ using TeacherEvaluation.BusinessLogic.ViewModels;
 
 namespace TeacherEvaluation.Application.Pages.MyProfile
 {
+    [Authorize(Roles = "Student")]
     public class StudentModel : UserDetailsModel
     {
         [BindProperty]

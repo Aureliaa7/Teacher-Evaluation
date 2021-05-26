@@ -36,7 +36,5 @@ namespace TeacherEvaluation.Application.Pages.AllResponses.Responses
             }
             catch (ItemNotFoundException) { }
         }
-
-
     }
 }
