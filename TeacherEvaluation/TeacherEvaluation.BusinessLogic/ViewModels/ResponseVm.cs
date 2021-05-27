@@ -7,5 +7,6 @@ namespace TeacherEvaluation.BusinessLogic.ViewModels
         public Guid EnrollmentId { get; set; }
         public int NoAttendances { get; set; }
         public int Grade { get; set; }
+        public int MaxNoAttendances { get; set; }
     }
 }

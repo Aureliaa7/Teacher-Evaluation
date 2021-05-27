@@ -9,5 +9,6 @@ namespace TeacherEvaluation.Domain.DomainEntities
         public Subject Subject { get; set; }
         public Teacher Teacher { get; set; }
         public TaughtSubjectType Type { get; set; }
+        public int MaxNumberOfAttendances { get; set; }
     }
 }

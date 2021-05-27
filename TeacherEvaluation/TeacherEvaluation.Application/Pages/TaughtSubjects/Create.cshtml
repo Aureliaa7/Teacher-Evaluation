@@ -48,11 +48,18 @@
 
         <div class="row my-row">
             <div class="col-md-6">
+                <label class="control-label" asp-for="MaxNumberOfAttendances"></label>
+                <input class="form-control" asp-for="MaxNumberOfAttendances" />
+                <span asp-validation-for="MaxNumberOfAttendances" class="text-danger" />
+            </div>
+            <div class="col-md-6">
                 <label class="control-label">Info</label>
                 <input id="info-field" class="form-control" disabled />
             </div>
+        </div>
+
+        <div class="row my-row">
             <div class="col-md-6">
-                <br />
                 <input id="submit-button" type="submit" value="Assign" class="btn btn-dark form-control" />
             </div>
         </div>
@@ -64,4 +71,3 @@
     <script src="~/js/subjectAssignment.js"></script>
     <script src="~/js/teachers.js"></script>
 }
-

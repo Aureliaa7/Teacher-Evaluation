@@ -68,7 +68,8 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
                 {
                     TeacherId = (Guid)TeacherId,
                     SubjectId = (Guid)SubjectId,
-                    Type = (TaughtSubjectType)Type
+                    Type = (TaughtSubjectType)Type,
+                    MaxNumberOfAttendances = MaxNumberOfAttendances ??= 0
                 };
                 try
                 {

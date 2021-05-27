@@ -9,5 +9,6 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
         public Guid TeacherId { get; set; }
         public Guid SubjectId { get; set; }
         public TaughtSubjectType Type { get; set; }
+        public int MaxNumberOfAttendances { get; set; }
     }
 }

@@ -71,7 +71,7 @@ function create_table(search_details, layoutId) {
                     newTd2.appendChild(anchor);
 
                     var newTd3 = document.createElement("td");
-                    newTd3.innerHTML = get_attendances_interval();
+                    newTd3.innerHTML = get_attendances_interval(value.maxNoAttendances, value.noAttendances);
 
                     var newTd4 = document.createElement("td");
                     newTd4.innerHTML = get_grade_interval(value.grade);
@@ -121,13 +121,18 @@ function clear() {
     }
 }
 
-
-//how do i know the total number of attendances for each subject?
-// maybe when adding a new subject, the admin should also provide the total number of attendances
-// because for instance, some laboratories are held once at every 2 weeks
-//TODO this approach needs validation. Until then return a dummy string
-function get_attendances_interval() {
-    return "dummy";
+function get_attendances_interval(maxNoAttendances, noAttendances) {
+    var percentage = noAttendances / maxNoAttendances * 100;
+    if (percentage >= 25 && percentage < 50) {
+        return "25-50%";
+    }
+    else if (percentage >= 50 && percentage < 75) {
+        return "50-75%";
+    }
+    else if (percentage >= 75 && percentage <= 100) {
+        return "75-100%";
+    }
+    return "0-25%";
 }
 
 function get_grade_interval(grade) {

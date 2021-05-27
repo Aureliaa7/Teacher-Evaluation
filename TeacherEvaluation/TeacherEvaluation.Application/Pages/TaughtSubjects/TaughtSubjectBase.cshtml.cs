@@ -50,6 +50,11 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
         [Required(ErrorMessage = "Department is required")]
         public Department? Department { get; set; }
 
+        [BindProperty]
+        [Required(ErrorMessage = "Max number of attendances is required")]
+        [Display(Name = "Max number of attendances")]
+        public int? MaxNumberOfAttendances { get; set; } = null;
+
         public TaughtSubjectBaseModel(IMediator mediator)
         {
             this.mediator = mediator;

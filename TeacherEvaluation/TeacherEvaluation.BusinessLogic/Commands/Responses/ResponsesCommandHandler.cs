@@ -62,7 +62,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Responses
                 {
                     EnrollmentId = enrollmentId,
                     NoAttendances = noAttendances,
-                    Grade = grade
+                    Grade = grade,
+                    MaxNoAttendances = response.Enrollment.TaughtSubject.MaxNumberOfAttendances
                 };
                 responsesInfo.Add(string.Concat("Response ", iterator.ToString()), responseVm);
                 iterator++;

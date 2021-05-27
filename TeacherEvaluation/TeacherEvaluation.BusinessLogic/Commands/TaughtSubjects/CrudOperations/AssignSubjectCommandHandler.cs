@@ -29,7 +29,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
                 {
                     Teacher = teacher,
                     Subject = subject,
-                    Type = request.Type
+                    Type = request.Type,
+                    MaxNumberOfAttendances = request.MaxNumberOfAttendances
                 };
 
                 await unitOfWork.TaughtSubjectRepository.AddAsync(taughtSubject);
