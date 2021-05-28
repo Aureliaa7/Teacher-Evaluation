@@ -256,3 +256,7 @@ input::-webkit-inner-spin-button {
     height: 530px;
     margin-top: 35px;
 }
+
+.add-margin-bottom-80 {
+    margin-bottom: 80px;
+}
