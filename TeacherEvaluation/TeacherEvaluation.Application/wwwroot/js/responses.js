@@ -5,7 +5,7 @@
         taughtSubjectId: $("#selected-subject-field").val()
     };
 
-    create_table(search_details, layoutID);
+    create_responses_table(search_details, layoutID);
 }
 
 function update_subjects_drop_down() {
@@ -16,7 +16,7 @@ function update_subjects_drop_down() {
     }
 }
 
-function create_table(search_details, layoutId) {
+function create_responses_table(search_details, layoutId) {
     clear();
 
     $.ajax({
@@ -28,66 +28,18 @@ function create_table(search_details, layoutId) {
 
         success: function (result) {
             if (Object.keys(result).length > 0) {
-                var divRowElement = document.createElement('div');
-                divRowElement.className = "row";
-                divRowElement.id = "responses-table";
-                var tableElement = document.createElement("table");
-                tableElement.className = "table table-dark table-striped table-bordered";
-                tableElement.style.width = "650px";
-                tableElement.style.marginLeft = "180px";
-                tableElement.style.marginTop = "40px";
-                var thead = document.createElement("thead");
-                var tr = document.createElement("tr");
-                var th1 = document.createElement("th");
-                th1.innerHTML = "Response";
-                var th2 = document.createElement("th");
-                th2.innerHTML = "View";
-                var th3 = document.createElement("th");
-                th3.innerHTML = "No. Attendances";
-                var th4 = document.createElement("th");
-                th4.innerHTML = "Grade";
-                tr.appendChild(th1);
-                tr.appendChild(th2);
-                tr.appendChild(th3);
-                tr.appendChild(th4);
-                thead.appendChild(tr);
-                tableElement.appendChild(thead);
+                create_empty_table(layoutId);
+                var dataSet = create_dataset(result, search_details.formId);
 
-                var tbody = document.createElement("tbody");
-
-                Object.entries(result).forEach(([key, value]) => {
-                    console.log(key, value);
-                    var newTr = document.createElement("tr");
-                    var newTd1 = document.createElement("td");
-                    newTd1.innerHTML = key;
-
-                    var newTd2 = document.createElement("td");
-                    var anchor = document.createElement("a");
-                    var href = "./OneResponse?enrollmentId=" + value.enrollmentId + "&formId=" + search_details.formId;
-                    anchor.href = href;
-                    anchor.setAttribute("asp-route-enrollmentId", value.enrollmentId);
-                    anchor.setAttribute("asp-route-formId", search_details.formId);
-                    anchor.text = "View";
-                    newTd2.appendChild(anchor);
-
-                    var newTd3 = document.createElement("td");
-                    newTd3.innerHTML = get_attendances_interval(value.maxNoAttendances, value.noAttendances);
-
-                    var newTd4 = document.createElement("td");
-                    newTd4.innerHTML = get_grade_interval(value.grade);
-
-                    newTr.appendChild(newTd1);
-                    newTr.appendChild(newTd2);
-                    newTr.appendChild(newTd3);
-                    newTr.appendChild(newTd4);
-                    tbody.appendChild(newTr);
+                $('#responses').DataTable({
+                    data: dataSet,
+                    columns: [
+                        { title: "Response" },
+                        { title: "View" },
+                        { title: "Attendances" },
+                        { title: "Grade" }
+                    ]
                 });
-
-                tableElement.appendChild(tbody);
-                divRowElement.appendChild(tableElement);
-
-                var mainElement = document.getElementById(layoutId);
-                mainElement.appendChild(divRowElement);
             }
             else {
                 var h4 = document.createElement("h4");
@@ -99,7 +51,7 @@ function create_table(search_details, layoutId) {
             }
         },
         error: function () {
-            console.log("Something went wrong");
+            console.log("Could not create the responses table...");
         }
     });
 }
@@ -111,7 +63,7 @@ function update() {
 }
 
 function clear() {
-    var oldTable = document.getElementById("responses-table");
+    var oldTable = document.getElementById("responses-div");
     if (oldTable != null) {
         oldTable.remove();
     }
@@ -146,4 +98,36 @@ function get_grade_interval(grade) {
         return "9-10";
     }
     return "<5";
+}
+
+function create_dataset(result, formId) {
+    var dataset = [];
+    var i = 0;
+    Object.entries(result).forEach(([key, value]) => {
+        var contentCol1 = "Response" + (i + 1);
+        var responseLink = '<a href="./OneResponse?enrollmentId=' + value.enrollmentId + "&formId=" + formId +'">View</a>' ;
+        var noAttendances = get_attendances_interval(value.maxNoAttendances, value.noAttendances);
+        var grade = get_grade_interval(value.grade);
+
+        dataset[i] = [contentCol1, responseLink, noAttendances, grade];
+        i++;
+    });
+
+    return dataset;
+}
+
+function create_empty_table(layoutId) {
+    var divRowElement = document.createElement('div');
+    divRowElement.className = "row";
+    divRowElement.id = "responses-div";
+    var tableElement = document.createElement("table");
+    tableElement.className = "table table-dark table-striped table-bordered set-max-width";
+    tableElement.id = "responses";
+    tableElement.style.width = "750px";
+    tableElement.style.marginLeft = "80px";
+    tableElement.style.marginTop = "40px";
+    divRowElement.appendChild(tableElement);
+
+    var mainElement = document.getElementById(layoutId);
+    mainElement.appendChild(divRowElement);
 }
