@@ -28,7 +28,8 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
         private bool formIsAvailable;
 
         public QuestionsVm Questions { get; set; }
-        public List<SelectListItem> Subjects { get; set; }
+        public List<SelectListItem> Subjects { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> SubjectTypes { get; set; } = new List<SelectListItem>();
 
         [BindProperty]
         [EnumDataType(typeof(TaughtSubjectType))]
@@ -108,6 +109,8 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
                                                         Value = x.Id.ToString(),
                                                         Text = x.Name
                                                     }).ToList();
+                    InitializeTaughtSubjectTypes();
+
                     return Page();
                 }
 
@@ -119,6 +122,18 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
             else
             {
                 return RedirectToPage("/Errors/NoEvaluationForm");
+            }
+        }
+
+        private void InitializeTaughtSubjectTypes()
+        {
+            foreach (var type in Enum.GetValues(typeof(TaughtSubjectType)))
+            {
+                SubjectTypes.Add(new SelectListItem
+                {
+                    Value = (Convert.ToInt32(type)).ToString(),
+                    Text = type.ToString()
+                });
             }
         }
 

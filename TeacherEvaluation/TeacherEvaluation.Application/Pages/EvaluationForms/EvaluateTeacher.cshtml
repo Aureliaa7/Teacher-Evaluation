@@ -27,7 +27,7 @@
 
             <div class="col-md-4">
                 <label asp-for="Type">Taught Subject Type</label>
-                <select id="type-field" asp-for="Type" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Enums.TaughtSubjectType>()"
+                <select id="type-field" asp-for="Type" asp-items="@Model.SubjectTypes"
                         class="form-control" onchange="disable_or_enable_btn()">
                     <option selected disabled hidden>Please select</option>
                 </select>

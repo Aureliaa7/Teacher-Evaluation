@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using TeacherEvaluation.BusinessLogic;
 using TeacherEvaluation.BusinessLogic.Commands.EvaluationForms;
 using Microsoft.AspNetCore.Authorization;
+using TeacherEvaluation.Application.Validations;
 
 namespace TeacherEvaluation.Application.Pages.EvaluationForms
 {
@@ -39,12 +40,14 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
         [Required(ErrorMessage = "The start date is required")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [Display(Name = "Start date")]
+        [ValidateStartDateRange]
         public DateTime StartDate { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "The end date is required")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [Display(Name = "End date")]
+        [ValidateEndDateRange]
         public DateTime EndDate { get; set; }
 
 
