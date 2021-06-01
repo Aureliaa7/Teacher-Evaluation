@@ -20,13 +20,13 @@
                     Credits
                 </th>
                 <th>
-                    Study year
+                    Year
                 </th>
                 <th>
                     Study programme
                 </th>
                 <th>
-                    Study domain
+                    Domain
                 </th>
                 <th>
                     Specialization
@@ -69,5 +69,11 @@
 </div>
 
 @section scripts{
-    <script src="~/js/dataTable.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#subjects-index').DataTable({
+                'columnDefs': [{ 'orderable': false, 'targets': 6 }]
+            });
+        });
+    </script>
 }

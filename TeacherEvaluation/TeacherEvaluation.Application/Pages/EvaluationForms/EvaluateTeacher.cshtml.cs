@@ -211,13 +211,13 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
             }
             catch (ArgumentOutOfRangeException)
             {
-                return RedirectToPage("/EvaluationForms/EvaluateTeacher");
+                return RedirectToPage("/MyProfile/Student");
             }
             catch (ItemNotFoundException)
             {
                 return RedirectToPage("/Errors/404");
             }
-            return RedirectToPage("/EvaluationForms/EvaluateTeacher");
+            return RedirectToPage("/MyProfile/Student");
         }
     }
 }

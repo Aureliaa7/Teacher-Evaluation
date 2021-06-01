@@ -31,6 +31,7 @@ namespace TeacherEvaluation.Application.Pages.Account
         [DataType(DataType.Password)]
         [NotMapped]
         [Compare(nameof(NewPassword), ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Confirm password")]
         public string ConfirmedPassword { get; set; }
 
         public List<string> ErrorMessages { get; set; }

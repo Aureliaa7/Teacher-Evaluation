@@ -10,17 +10,18 @@
 </head>
 <body class="login-image">
     <div class="container add-margin-bottom-80">
-        <main role="main" class="pb-3">
+        <div style="margin-right:-75px;">
+            <img style="width:300px; height:220px; float:right;" src="~/images/TeacherEvaluationLogo.png" />
+        </div>
+        <main role="main" class="pb-3" style="clear:both;">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer fixed-bottom text-muted">
-        <br />
+    <footer class="border-top footer text-dark">
         <div class="container">
             &copy; <script>document.write(new Date().getFullYear())</script> - Teacher Evaluation
         </div>
-        <br />
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

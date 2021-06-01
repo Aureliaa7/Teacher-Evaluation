@@ -4,10 +4,10 @@
     ViewData["Title"] = "Login";
 }
 
-<div class="container add-margin-top-300">
-    <form method="post">
+<div class="container" style="margin-top: -50px; width:650px;">
+    <form method="post" style="height: 250px; width: 550px;">
         <div class="row align-input-center">
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <label asp-for="Email"></label><br />
                 <input asp-for="Email" class="form-control">
                 <span asp-validation-for="Email"></span>
@@ -15,15 +15,15 @@
         </div>
 
         <div class="row align-input-center">
-            <div class="col-md-3">
-                <label asp-for="Password"></label><br />
-                <input asp-for="Password" class="form-control">
-                <span asp-validation-for="Password"></span>
-            </div>
+        <div class="col-md-6">
+            <label asp-for="Password"></label><br />
+            <input asp-for="Password" class="form-control">
+            <span asp-validation-for="Password"></span>
+        </div>
         </div>
 
         <div class="row my-row">
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <button class="btn btn-dark" id="login-button" type="submit">Login</button>
             </div>
         </div>

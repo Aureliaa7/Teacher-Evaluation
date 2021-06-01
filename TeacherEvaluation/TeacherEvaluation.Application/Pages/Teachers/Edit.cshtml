@@ -15,12 +15,12 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="TeacherId" />
         <div class="row my-row">
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <label asp-for="FirstName"></label><br />
                 <input asp-for="FirstName" class="form-control">
                 <span asp-validation-for="FirstName"></span>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <label asp-for="LastName"></label><br />
                 <input asp-for="LastName" class="form-control">
                 <span asp-validation-for="LastName"></span>
@@ -28,12 +28,12 @@
         </div>
 
         <div class="row my-row">
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <label asp-for="PIN">PIN(CNP)</label><br />
                 <input asp-for="PIN" class="form-control">
                 <span asp-validation-for="PIN"></span>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <label asp-for="FathersInitial"></label><br />
                 <input asp-for="FathersInitial" class="form-control">
                 <span asp-validation-for="FathersInitial"></span>
@@ -41,12 +41,12 @@
         </div>
 
         <div class="row my-row">
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <label asp-for="Degree"></label><br />
                 <input asp-for="Degree" class="form-control">
                 <span asp-validation-for="Degree"></span>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <label asp-for="Department"></label><br />
                 <select asp-for="Department" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Enums.Department>()" class="form-control">
                     <option selected disabled hidden>Please select</option>
@@ -56,12 +56,12 @@
         </div>
 
         <div class="row my-row">
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <label asp-for="Email"></label><br />
                 <input asp-for="Email" class="form-control" readonly>
                 <span asp-validation-for="Email"></span>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <input type="submit" value="Save" class="btn btn-dark form-control" id="form-button-with-margin-top" />
             </div>
         </div>
@@ -76,4 +76,3 @@
 @section scripts{
     <partial name="_ValidationScriptsPartial" />
 }
-

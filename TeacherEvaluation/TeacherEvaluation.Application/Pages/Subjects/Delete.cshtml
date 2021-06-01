@@ -9,44 +9,46 @@
 <h3 class="row align-input-center add-top-margin">Are you sure you want to delete this?</h3>
 <hr/>
 <div class="jumbotron subject-jumbotron">
-    <dl class="row align-input-center">
-        <dt class="col-sm-4">
-            @Html.DisplayNameFor(model => model.SubjectName)
-        </dt>
-        <dd class="col-sm-8">
-            @Html.DisplayFor(model => model.SubjectName)
-        </dd>
-        <dt class="col-sm-4">
-            @Html.DisplayNameFor(model => model.NumberOfCredits)
-        </dt>
-        <dd class="col-sm-8">
-            @Html.DisplayFor(model => model.NumberOfCredits)
-        </dd>
-        <dt class="col-sm-4">
-            @Html.DisplayNameFor(model => model.StudyYear)
-        </dt>
-        <dd class="col-sm-8">
-            @Html.DisplayFor(model => model.StudyYear)
-        </dd>
-        <dt class="col-sm-4">
-            Study programme
-        </dt>
-        <dd class="col-sm-8">
-            @Html.DisplayFor(model => model.Specialization.StudyDomain.StudyProgramme)
-        </dd>
-        <dt class="col-sm-4">
-            Study domain
-        </dt>
-        <dd class="col-sm-8">
-            @Html.DisplayFor(model => model.Specialization.StudyDomain.Name)
-        </dd>
-        <dt class="col-sm-4">
-            Specialization
-        </dt>
-        <dd class="col-sm-8">
-            @Html.DisplayFor(model => model.Specialization.Name)
-        </dd>
-    </dl>
+    <div class="add-margin-left-145">
+        <dl class="row align-input-center">
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.SubjectName)
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.SubjectName)
+            </dd>
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.NumberOfCredits)
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.NumberOfCredits)
+            </dd>
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.StudyYear)
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.StudyYear)
+            </dd>
+            <dt class="col-sm-5">
+                Study programme
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.Specialization.StudyDomain.StudyProgramme)
+            </dd>
+            <dt class="col-sm-5">
+                Study domain
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.Specialization.StudyDomain.Name)
+            </dd>
+            <dt class="col-sm-5">
+                Specialization
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.Specialization.Name)
+            </dd>
+        </dl>
+    </div>
 
     <form method="post">
         <input type="hidden" asp-for="SubjectId" />

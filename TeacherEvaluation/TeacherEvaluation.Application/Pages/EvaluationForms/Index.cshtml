@@ -13,11 +13,8 @@
     }
 }
 
-@section scripts{
-    <script src="~/js/dataTable.js"></script>
-}
-
 <h4 class="row align-input-center add-top-margin">Evaluation Forms</h4>
+<hr />
 <div class="add-margin-bottom">
     <table id="forms-index" class="table table-dark table-striped table-bordered set-max-width">
         <thead>
@@ -66,3 +63,12 @@
     </table>
 </div>
 
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#forms-index').DataTable({
+                'columnDefs': [{ 'orderable': false, 'targets': 3 }]
+            });
+        });
+    </script>
+}

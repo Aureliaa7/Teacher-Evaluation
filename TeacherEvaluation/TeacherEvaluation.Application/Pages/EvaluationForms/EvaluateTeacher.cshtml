@@ -42,10 +42,9 @@
 
         @for (var contor = 0; contor < Model.NumberOfLikertQuestions; contor += 1)
         {
-            <div class="col-md-8" style="margin-left: 150px; margin-top: 80px;">
-                <label>Question @(contor + 1)</label>
-                <textarea id="question" asp-for="Questions.LikertQuestions.ElementAt(contor).Text" class="form-control non-resizable"
-                          readonly></textarea>
+            <div class="col-md-10" style="margin-left: 50px; margin-top: 80px;">
+                <label><b>Q @(contor + 1)</b></label><br/>
+                <p id="question">@Model.Questions.LikertQuestions.ElementAt(contor).Text</p>
             </div>
             <div class="row my-row">
                 @foreach (var option in Model.AnswerOptions)
@@ -61,12 +60,11 @@
         @{ var contor1 = Model.NumberOfLikertQuestions; }
         @for (var contor2 = 0; contor2 < Model.NumberOfFreeFormQuestions; contor2++)
         {
-            <div class="col-md-8" style="margin-left: 150px; margin-top: 40px;">
-                <label>Question @(contor1 + 1)</label>
-                <textarea id="question" asp-for="Questions.FreeFormQuestions.ElementAt(contor2).Text" class="form-control resizable"
-                          rows="3" cols="120" readonly></textarea>
+            <div class="col-md-11" style="margin-left: 50px; margin-top: 40px;">
+                <label><b>Q @(contor1 + 1)</b></label>
+                <p id="question">@Model.Questions.FreeFormQuestions.ElementAt(contor2).Text</p>
                 <textarea asp-for="@Model.TextAnswers[contor2]" class="form-control non-resizable" required
-                          rows="5" cols="150"></textarea>
+                          rows="5" cols="260"></textarea>
             </div>
             contor1++;
         }

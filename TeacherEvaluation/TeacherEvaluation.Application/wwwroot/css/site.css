@@ -125,13 +125,12 @@ input::-webkit-inner-spin-button {
     width: 70%;
     margin-left: 18%;
     margin-bottom: 6%;
-    background-color: #e3dee0;
 }
 
 .jumbotron-details {
     width: 600px;
     margin-bottom: 6%;
-    background-color: #e3dee0;
+    margin-left: 20%;
 }
 
 .register-jumbotron {
@@ -139,44 +138,37 @@ input::-webkit-inner-spin-button {
     margin-top: 2%;
     margin-bottom: 6%;
     margin-left: 15%;
-    background-color: #e3dee0;
 }
 
 .search-students-jumbotron {
     width: 60%;
     margin-left: 23%;
-    background-color: #e3dee0;
 }
 
 .edit-teacher-jumbotron {
     width: 60%;
     margin-left: 22%;
-    background-color: #e3dee0;
     margin-bottom: 6%;
 }
 
 .search-teachers-jumbotron {
     width: 50%;
     margin-left: 23%;
-    background-color: #e3dee0;
 }
 
 .subject-jumbotron {
     width: 60%;
     margin-left: 20%;
-    background-color: #e3dee0;
 }
 
 .taught-subject-jumbotron {
     width: 60%;
     margin-left: 20%;
-    background-color: #e3dee0;
 }
 
 .search-taught-subject-jumbotron {
     width: 50%;
     margin-left: 3%;
-    background-color: #e3dee0;
     margin-bottom: 6%;
 }
 
@@ -184,7 +176,6 @@ input::-webkit-inner-spin-button {
     width: 70%;
     margin-bottom: 6%;
     margin-left: 15%;
-    background-color: #e3dee0;
 }
 
 .add-margin-bottom-6 {
@@ -196,7 +187,6 @@ input::-webkit-inner-spin-button {
     margin-top: 2%;
     margin-bottom: 6%;
     margin-left: 15%;
-    background-color: #e3dee0;
 }
 
 .change-password-jumbotron {
@@ -204,14 +194,12 @@ input::-webkit-inner-spin-button {
     margin-top: 2%;
     margin-left: 25%;
     margin-bottom: 6%;
-    background-color: #e3dee0;
 }
 
 .evaluation-jumbotron {
     margin-top: 2%;
     margin-bottom: 6%;
     margin-left: 7%;
-    background-color: #e3dee0;
 }
 
 .attendance-jumbotron {
@@ -219,7 +207,6 @@ input::-webkit-inner-spin-button {
     margin-top: 2%;
     margin-bottom: 6%;
     margin-left: 20%;
-    background-color: #e3dee0;
 }
 
 .white-link {
