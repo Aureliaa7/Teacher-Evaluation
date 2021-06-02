@@ -25,7 +25,7 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
             Enrollments = await mediator.Send(command);
         }
 
-        public IActionResult OnGetReturnEnrolledStudents(string subjectId, string type)
+        public async Task<JsonResult> OnGetReturnEnrolledStudents(string subjectId, string type)
         {
             if (!string.IsNullOrEmpty(subjectId) && !string.IsNullOrEmpty(type))
             {
@@ -38,7 +38,7 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
                         SubjectId = new Guid(subjectId),
                         Type = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type)
                     };
-                    var students = mediator.Send(command).Result;
+                    var students = await mediator.Send(command);
                     return new JsonResult(students);
                 }
                 catch (ItemNotFoundException) { }
@@ -46,7 +46,7 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
             return new JsonResult("");
         }
 
-        public IActionResult OnGetCheckEnrollmentExistenceBySubjectStudent(string studentId, string subjectId, string type)
+        public async Task<JsonResult> OnGetCheckEnrollmentExistenceBySubjectStudent(string studentId, string subjectId, string type)
         {
             if (!string.IsNullOrEmpty(studentId) && !string.IsNullOrEmpty(subjectId) && !string.IsNullOrEmpty(type))
             {
@@ -58,7 +58,7 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
                         SubjectId = new Guid(subjectId),
                         Type = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type)
                     };
-                    bool enrollmentExists = mediator.Send(command).Result;
+                    bool enrollmentExists = await mediator.Send(command);
                     if (enrollmentExists)
                     {
                         return new JsonResult("The enrollment exists");
@@ -70,7 +70,7 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
             return new JsonResult("");
         }
 
-        public IActionResult OnGetCheckEnrollmentExistenceByStudentSubjectTeacherType(string studentId, string subjectId, string teacherId, string type)
+        public async Task<JsonResult> OnGetCheckEnrollmentExistenceByStudentSubjectTeacherType(string studentId, string subjectId, string teacherId, string type)
         {
             if(!string.IsNullOrEmpty(studentId) && !string.IsNullOrEmpty(subjectId) && !string.IsNullOrEmpty(teacherId) && !string.IsNullOrEmpty(type))
             {
@@ -83,7 +83,7 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
                         SubjectId = new Guid(subjectId),
                         Type = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type)
                     };
-                    bool enrollmentIsAvailable = mediator.Send(command).Result;
+                    bool enrollmentIsAvailable = await mediator.Send(command);
                     if (enrollmentIsAvailable)
                     {
                         return new JsonResult("This enrollment is available");

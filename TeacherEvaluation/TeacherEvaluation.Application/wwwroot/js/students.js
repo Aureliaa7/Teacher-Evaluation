@@ -1,7 +1,4 @@
 ﻿function get_students_by_specialization_and_study_year() {
-    var specialization_id = { id: $("#specialization").val() };
-    var study_year = { id: $("#study-year") };
-
     var search_details = {
         specializationId: $("#specialization").val(),
         studyYear: $("#study-year").val(),

@@ -137,7 +137,7 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
             }
         }
 
-        public IActionResult OnGetReturnTeacher(string subjectId, string type)
+        public async Task<JsonResult> OnGetReturnTeacher(string subjectId, string type)
         {
             if (!string.IsNullOrEmpty(subjectId) && !string.IsNullOrEmpty(type))
             {
@@ -153,7 +153,7 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
                 };
                 try
                 {
-                    var teacher = mediator.Send(command).Result;
+                    var teacher = await mediator.Send(command);
                     return new JsonResult(teacher);
                 }
                 catch (ItemNotFoundException) { }
@@ -161,7 +161,7 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
             return new JsonResult("");
         }
 
-        public IActionResult OnGetEnableOrDisableSubmitBtn(string subjectId, string type)
+        public async Task<JsonResult> OnGetEnableOrDisableSubmitBtn(string subjectId, string type)
         {
             if (!string.IsNullOrEmpty(subjectId) && !string.IsNullOrEmpty(type))
             {
@@ -178,7 +178,7 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
 
                 try
                 {
-                    var btnEnabled = mediator.Send(formCanBeSubmittedCommand).Result;
+                    var btnEnabled = await mediator.Send(formCanBeSubmittedCommand);
 
                     if (btnEnabled)
                     {

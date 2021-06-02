@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Sparc.TagCloud;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Commands.EvaluationForms;
 using TeacherEvaluation.BusinessLogic.Commands.TagClouds;
 using TeacherEvaluation.BusinessLogic.Exceptions;
@@ -15,7 +16,7 @@ namespace TeacherEvaluation.Application.Pages.AllResponses.Charts
         {
         }
 
-        public JsonResult OnGetRetrieveResponses(string teacherId, string formId, string taughtSubjectId)
+        public async Task<JsonResult> OnGetRetrieveChartsData(string teacherId, string formId, string taughtSubjectId)
         {
             IDictionary<string, IDictionary<string, int>> questionsAndResponses = new Dictionary<string, IDictionary<string, int>>();
             if (!string.IsNullOrEmpty(teacherId) &&
@@ -31,14 +32,14 @@ namespace TeacherEvaluation.Application.Pages.AllResponses.Charts
                         TaughtSubjectId = taughtSubjectId
                     };
 
-                    questionsAndResponses = mediator.Send(command).Result;
+                    questionsAndResponses = await mediator.Send(command);
                 }
                 catch (ItemNotFoundException) { }
             }
             return new JsonResult(questionsAndResponses);
         }
 
-        public JsonResult OnGetRetrieveTagCloud(string teacherId, string formId, string taughtSubjectId)
+        public async Task<JsonResult> OnGetRetrieveTagCloudData(string teacherId, string formId, string taughtSubjectId)
         {
             IEnumerable<TagCloudTag> tags = new List<TagCloudTag>();
             if(!string.IsNullOrEmpty(teacherId) && 
@@ -53,7 +54,7 @@ namespace TeacherEvaluation.Application.Pages.AllResponses.Charts
                         TeacherId = new Guid(teacherId),
                         TaughtSubjectId = taughtSubjectId
                     };
-                    tags = mediator.Send(tagCloudCommand).Result;
+                    tags = await mediator.Send(tagCloudCommand);
                 }
                 catch(ItemNotFoundException)
                 {

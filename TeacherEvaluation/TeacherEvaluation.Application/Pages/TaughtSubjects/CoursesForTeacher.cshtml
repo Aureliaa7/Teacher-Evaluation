@@ -11,12 +11,5 @@
 <partial name="_TaughtSubjectPartial" model="Model" />
 
 @section scripts{
-    <script>
-        $(document).ready(function () {
-            $('#taught-subjects-index').DataTable({
-                'columnDefs': [{ 'orderable': false, 'targets': 6 }]
-            });
-        });
-        console.log("hereeeeee");
-    </script>
+    <script src="~/js/taughtSubjectsDataTable.js"></script>
 }

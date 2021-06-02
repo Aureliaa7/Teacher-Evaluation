@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Commands.Responses;
 
 namespace TeacherEvaluation.Application.Pages.AllResponses.Responses
@@ -11,7 +12,7 @@ namespace TeacherEvaluation.Application.Pages.AllResponses.Responses
         {
         }
 
-        public JsonResult OnGetRetrieveResponses(string teacherId, string formId, string taughtSubjectId)
+        public async Task<JsonResult> OnGetRetrieveResponses(string teacherId, string formId, string taughtSubjectId)
         {
             if (!string.IsNullOrEmpty(teacherId) &&
                 !string.IsNullOrEmpty(formId) &&
@@ -24,7 +25,7 @@ namespace TeacherEvaluation.Application.Pages.AllResponses.Responses
                     TaughtSubjectId = taughtSubjectId
                 };
 
-                var responsesInfo = mediator.Send(command).Result;
+                var responsesInfo = await mediator.Send(command);
                 return new JsonResult(responsesInfo);
             }
             return new JsonResult("");

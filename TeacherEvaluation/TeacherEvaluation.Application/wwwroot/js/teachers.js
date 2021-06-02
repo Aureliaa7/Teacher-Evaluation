@@ -25,9 +25,6 @@
 }
 
 function get_teachers_by_subject_and_type() {
-    var subject_id = { id: $("#subject-id-field").val() };
-    var subject_type = { id: $("#type-id-field") };
-
     var search_details = {
         subjectId: $("#subject-id-field").val(),
         type: $("#type-id-field").val(),

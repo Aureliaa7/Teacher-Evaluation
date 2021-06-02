@@ -32,14 +32,14 @@ namespace TeacherEvaluation.Application.Pages.Teachers
             Teachers = await mediator.Send(command);
         }
 
-        public IActionResult OnGetReturnTeachersByDepartment(string department)
+        public async Task<JsonResult> OnGetReturnTeachersByDepartment(string department)
         {
             if (!string.IsNullOrEmpty(department))
             {
                 try
                 {
                     GetTeachersByDepartmentCommand command = new GetTeachersByDepartmentCommand { Department = (Department)Enum.Parse(typeof(Department), department) };
-                    var teachers = mediator.Send(command).Result;
+                    var teachers = await mediator.Send(command);
                     return new JsonResult(teachers);
                 }
                 catch (ItemNotFoundException) { }
@@ -47,7 +47,7 @@ namespace TeacherEvaluation.Application.Pages.Teachers
             return new JsonResult("");
         }
 
-        public IActionResult OnGetReturnTeachersBySubjectAndType(string subjectId, string type)
+        public async Task<JsonResult> OnGetReturnTeachersBySubjectAndType(string subjectId, string type)
         {
             if (!string.IsNullOrEmpty(subjectId) && !string.IsNullOrEmpty(type))
             {
@@ -58,7 +58,7 @@ namespace TeacherEvaluation.Application.Pages.Teachers
                         SubjectId = new Guid(subjectId),
                         Type = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type)
                     };
-                    var teachers = mediator.Send(getTeachersCommand).Result;
+                    var teachers = await mediator.Send(getTeachersCommand);
                     return new JsonResult(teachers);
                 }
                 catch (ItemNotFoundException) { }

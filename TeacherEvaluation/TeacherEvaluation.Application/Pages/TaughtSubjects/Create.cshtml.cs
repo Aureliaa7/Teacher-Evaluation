@@ -36,7 +36,7 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
             return Page();
         }
 
-        public IActionResult OnGetUpdateSubjectAssignmentInfoField(string teacherId, string subjectId, string type)
+        public async Task<JsonResult> OnGetUpdateSubjectAssignmentInfoField(string teacherId, string subjectId, string type)
         {
             if (!string.IsNullOrEmpty(teacherId) && !string.IsNullOrEmpty(subjectId) && !string.IsNullOrEmpty(type))
             {
@@ -48,7 +48,7 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
                         SubjectId = new Guid(subjectId),
                         Type = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type)
                     };
-                    bool assignmentExists = mediator.Send(command).Result;
+                    bool assignmentExists = await mediator.Send(command);
                     if (assignmentExists)
                     {
                         return new JsonResult("This assignment already exists");

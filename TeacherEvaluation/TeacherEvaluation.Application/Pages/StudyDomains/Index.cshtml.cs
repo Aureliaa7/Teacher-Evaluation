@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
@@ -18,7 +19,7 @@ namespace TeacherEvaluation.Application.Pages.StudyDomains
             this.mediator = mediator;
         }
 
-        public IActionResult OnGet(string studyProgramme)
+        public async Task<JsonResult> OnGet(string studyProgramme)
         {
             if (!string.IsNullOrEmpty(studyProgramme))
             {
@@ -26,7 +27,7 @@ namespace TeacherEvaluation.Application.Pages.StudyDomains
                 {
                     StudyProgramme programme = (StudyProgramme)Enum.Parse(typeof(StudyProgramme), studyProgramme);
                     GetStudyDomainsByProgrammeCommand command = new GetStudyDomainsByProgrammeCommand { StudyProgramme = programme };
-                    var domains = mediator.Send(command).Result;
+                    var domains = await mediator.Send(command);
                     return new JsonResult(domains.OrderBy(x => x.Name));
                 }
                 catch (ItemNotFoundException) { }

@@ -18,6 +18,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.StudentsForTaughtSub
             this.unitOfWork = unitOfWork;
         }
 
+        // TODO check this one
+        // if this is used to return only the current enrolled students, why did i ignore the enrollment state?
         public async Task<IEnumerable<Student>> Handle(GetStudentsForSubjectCommand request, CancellationToken cancellationToken)
         {
             bool taughtSubjectExists = await unitOfWork.TaughtSubjectRepository.ExistsAsync(x => x.Id == request.TaughtSubjectId);

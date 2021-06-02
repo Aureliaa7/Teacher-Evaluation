@@ -22,7 +22,7 @@ namespace TeacherEvaluation.Application.Pages.Students
             CurrentRole.IsAdmin = true;
         }
 
-        public IActionResult OnGetReturnStudents(string specializationId, string studyYear)
+        public async Task<JsonResult> OnGetReturnStudents(string specializationId, string studyYear)
         {
             if (!string.IsNullOrEmpty(specializationId) && !string.IsNullOrEmpty(studyYear))
             {
@@ -33,7 +33,7 @@ namespace TeacherEvaluation.Application.Pages.Students
                         SpecializationId = new Guid(specializationId),
                         StudyYear = int.Parse(studyYear)
                     };
-                    var students = mediator.Send(command).Result;
+                    var students = await mediator.Send(command);
                     return new JsonResult(students);
                 }
                 catch(ItemNotFoundException) { }

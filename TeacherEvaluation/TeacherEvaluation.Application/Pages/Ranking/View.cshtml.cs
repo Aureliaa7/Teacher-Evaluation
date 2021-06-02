@@ -45,7 +45,7 @@ namespace TeacherEvaluation.Application.Pages.Ranking
                                                 }).ToList();
         }
 
-        public JsonResult OnGetReturnTopTeachers(string questionId, string rankingType)
+        public async Task<JsonResult> OnGetReturnTopTeachers(string questionId, string rankingType)
         {
             IDictionary<string, long> teachersData = new Dictionary<string, long>();
             if (!string.IsNullOrEmpty(questionId) && !string.IsNullOrEmpty(rankingType))
@@ -56,7 +56,7 @@ namespace TeacherEvaluation.Application.Pages.Ranking
                     QuestionId = new Guid(questionId),
                     RankingType = type
                 };
-                var topTeachers = mediator.Send(command).Result;
+                var topTeachers = await mediator.Send(command);
                 teachersData = GetTeachersInfo(topTeachers);
             }
             return new JsonResult(teachersData);

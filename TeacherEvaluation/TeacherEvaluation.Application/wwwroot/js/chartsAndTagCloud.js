@@ -5,7 +5,6 @@
         taughtSubjectId: $("#selected-subject-field").val()
     };
 
-    console.log(search_details);
     remove_tag_cloud();
     create_charts(search_details, layoutID);
     create_tag_cloud(search_details, layoutID);
@@ -20,7 +19,7 @@ function create_charts(search_details, layoutId) {
         data: search_details,
         dataType: 'json',
         contextType: 'application/json',
-        url: "/AllResponses/Charts/ViewChartsBase?handler=RetrieveResponses",
+        url: "/AllResponses/Charts/ViewChartsBase?handler=RetrieveChartsData",
 
         success: function (result) {
             google.charts.load('current', {
@@ -133,7 +132,7 @@ function create_tag_cloud(search_details, layoutId) {
         data: search_details,
         dataType: 'json',
         contextType: 'application/json',
-        url: "/AllResponses/Charts/ViewChartsBase?handler=RetrieveTagCloud",
+        url: "/AllResponses/Charts/ViewChartsBase?handler=RetrieveTagCloudData",
 
         success: function (result) {
             if (result.length > 0) {

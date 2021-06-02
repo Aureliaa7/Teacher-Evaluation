@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations;
 
 /// <summary>
@@ -19,7 +20,7 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
             this.mediator = mediator;
         }
 
-        public JsonResult OnGet(string teacherId)
+        public async Task<JsonResult> OnGet(string teacherId)
         {
             if (!string.IsNullOrEmpty(teacherId))
             {
@@ -27,7 +28,7 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
                 {
                     TeacherId = new System.Guid(teacherId)
                 };
-                var taughtSubjectsIdsAndTitles = mediator.Send(command).Result;
+                var taughtSubjectsIdsAndTitles = await mediator.Send(command);
                 return new JsonResult(taughtSubjectsIdsAndTitles);
 
             }

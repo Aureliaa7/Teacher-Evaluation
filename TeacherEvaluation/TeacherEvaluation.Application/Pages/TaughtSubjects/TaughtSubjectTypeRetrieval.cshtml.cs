@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -18,7 +19,7 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
             this.mediator = mediator;
         }
 
-        public IActionResult OnGet(string subjectId)
+        public async Task<JsonResult> OnGet(string subjectId)
         {
             if (!string.IsNullOrEmpty(subjectId))
             {
@@ -26,7 +27,7 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
                 {
                     Guid currentTeacherId = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
                     GetSubjectsForTeacherCommand command = new GetSubjectsForTeacherCommand { UserId = currentTeacherId };
-                    var allTaughtSubjects = mediator.Send(command).Result;
+                    var allTaughtSubjects = await mediator.Send(command);
                     var taughtSubjects = allTaughtSubjects.Where(x => x.Subject.Id == new Guid(subjectId));
                     return new JsonResult(taughtSubjects);
                 }

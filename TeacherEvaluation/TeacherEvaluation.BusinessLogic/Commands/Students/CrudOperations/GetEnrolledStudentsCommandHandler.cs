@@ -25,8 +25,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
             if(userExists && subjectExists)
             {
                 var teacher = (await unitOfWork.TeacherRepository.GetAllWithRelatedEntitiesAsync())
-                              .Where(x => x.User.Id == request.UserId)
-                              .First();
+                                .FirstOrDefault(x => x.User.Id == request.UserId);
 
                 bool taughtSubjectExists = await unitOfWork.TaughtSubjectRepository.ExistsAsync(x => x.Subject.Id == request.SubjectId && 
                                                                                      x.Teacher.Id == teacher.Id && 
@@ -35,8 +34,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
                 if(taughtSubjectExists)
                 {
                     var taughtSubject = (await unitOfWork.TaughtSubjectRepository.GetAllWithRelatedEntitiesAsync())
-                                    .Where(x => x.Subject.Id == request.SubjectId && x.Teacher.Id == teacher.Id && x.Type == request.Type)
-                                    .First();
+                                        .FirstOrDefault(x => x.Subject.Id == request.SubjectId && x.Teacher.Id == teacher.Id && x.Type == request.Type);           
 
                     var enrollments = (await unitOfWork.EnrollmentRepository.GetEnrollmentsForTaughtSubject(taughtSubject.Id))
                                       .Where(x => x.State == Domain.DomainEntities.Enums.EnrollmentState.InProgress &&

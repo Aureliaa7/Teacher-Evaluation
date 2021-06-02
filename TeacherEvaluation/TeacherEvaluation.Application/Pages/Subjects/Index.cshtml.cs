@@ -33,20 +33,20 @@ namespace TeacherEvaluation.Application.Pages.Subjects
             Subjects = await mediator.Send(command);
         }
 
-        public IActionResult OnGetReturnSubjectsByStudent(string studentId)
+        public async Task<JsonResult> OnGetReturnSubjectsByStudent(string studentId)
         {
             if (!string.IsNullOrEmpty(studentId))
             {
                 GetUserIdForStudentCommand getUserIdCommand = new GetUserIdForStudentCommand { StudentId = new Guid(studentId) };
                 try
                 {
-                    Guid userIdStudent = mediator.Send(getUserIdCommand).Result;
+                    Guid userIdStudent = await mediator.Send(getUserIdCommand);
                     GetSubjectsForEnrollmentsCommand getSubjectsCommand = new GetSubjectsForEnrollmentsCommand
                     {
                         UserId = userIdStudent,
                         EnrollmentState = EnrollmentState.InProgress
                     };
-                    var subjects = mediator.Send(getSubjectsCommand).Result;
+                    var subjects = await mediator.Send(getSubjectsCommand);
                     return new JsonResult(subjects);
                 }
                 catch (ItemNotFoundException) { }
@@ -54,7 +54,7 @@ namespace TeacherEvaluation.Application.Pages.Subjects
             return new JsonResult("");
         }
 
-        public IActionResult OnGetReturnSubjectsBySpecializationAndStudyYear(string specializationId, string studyYear)
+        public async Task<JsonResult> OnGetReturnSubjectsBySpecializationAndStudyYear(string specializationId, string studyYear)
         {
             if (!string.IsNullOrEmpty(specializationId) && !string.IsNullOrEmpty(studyYear))
             {
@@ -65,7 +65,7 @@ namespace TeacherEvaluation.Application.Pages.Subjects
                         SpecializationId = new Guid(specializationId),
                         StudyYear = Int32.Parse(studyYear)
                     };
-                    var subjects = mediator.Send(getSubjectsCommand).Result;
+                    var subjects = await mediator.Send(getSubjectsCommand);
                     return new JsonResult(subjects);
                 }
                 catch (ItemNotFoundException) { }
