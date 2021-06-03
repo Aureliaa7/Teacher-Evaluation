@@ -2,7 +2,7 @@
     var search_details = {
         department: $("#department-field").val(),
     };
-    console.log(search_details);
+
     $.ajax({
         type: "GET",
         data: search_details,
@@ -10,9 +10,7 @@
 
         success: function (result) {
             $("#teacher-field option").remove();
-            console.log(result);
             $.each(result, function (index, item) {
-                console.log("teacher: " + item);
                 var fullNameArray = [item.user.firstName, item.user.fathersInitial, item.user.lastName];
                 var fullName = fullNameArray.join(" ");
                 $("#teacher-field").append('<option value="' + item.id + '">' + fullName + '</option>');
@@ -29,7 +27,6 @@ function get_teachers_by_subject_and_type() {
         subjectId: $("#subject-id-field").val(),
         type: $("#type-id-field").val(),
     };
-    console.log(search_details);
 
     $.ajax({
         type: "GET",
@@ -40,12 +37,9 @@ function get_teachers_by_subject_and_type() {
 
         success: function (result) {
             $("#teacher-id-field option").remove();
-            console.log(result);
             $.each(result, function (index, item) {
-                console.log(item.id);
                 var fullNameArray = [item.user.firstName, item.user.fathersInitial, item.user.lastName];
                 var fullName = fullNameArray.join(" ");
-                console.log(fullName);
                 $("#teacher-id-field").append('<option value="' + item.id + '">' + fullName + '</option>');
             });
         },

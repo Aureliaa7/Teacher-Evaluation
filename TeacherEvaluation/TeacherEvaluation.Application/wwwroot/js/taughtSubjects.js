@@ -2,7 +2,6 @@
     var search_details = {
         subjectId: $("#subject").val()
     };
-    console.log(search_details);
 
     $.ajax({
         type: "GET",
@@ -13,9 +12,7 @@
 
         success: function (result) {
             $("#type option").remove();
-            console.log(result);
             $.each(result, function (index, item) {
-                console.log("type: " + item);
                 var text = "";
                 if (item.type == '0') {
                     text = "Course"
@@ -37,8 +34,6 @@ function get_taught_subjects_by_teacher_id() {
         teacherId: $("#teacher-field").val()
     };
 
-    console.log(search_details);
-
     $.ajax({
         type: "GET",
         data: search_details,
@@ -48,7 +43,6 @@ function get_taught_subjects_by_teacher_id() {
 
         success: function (result) {
             $("#selected-subject-field option").remove();
-            console.log(result);
             $("#selected-subject-field").append('<option value="' + "default" + '">' + "Please select" + '</option>');
             $("#selected-subject-field").append('<option value="' + "All" + '">' + "All" + '</option>');
             $.each(result, function (index, item) {

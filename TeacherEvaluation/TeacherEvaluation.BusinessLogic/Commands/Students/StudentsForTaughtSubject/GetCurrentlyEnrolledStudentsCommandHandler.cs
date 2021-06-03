@@ -6,27 +6,27 @@ using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
+using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.Students.StudentsForTaughtSubject
 {
-    public class GetStudentsForSubjectCommandHandler : IRequestHandler<GetStudentsForSubjectCommand, IEnumerable<Student>>
+    public class GetCurrentlyEnrolledStudentsCommandHandler : IRequestHandler<GetCurrentlyEnrolledStudentsCommand, IEnumerable<Student>>
     {
         private readonly IUnitOfWork unitOfWork;
 
-        public GetStudentsForSubjectCommandHandler(IUnitOfWork unitOfWork)
+        public GetCurrentlyEnrolledStudentsCommandHandler(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
 
-        // TODO check this one
-        // if this is used to return only the current enrolled students, why did i ignore the enrollment state?
-        public async Task<IEnumerable<Student>> Handle(GetStudentsForSubjectCommand request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Student>> Handle(GetCurrentlyEnrolledStudentsCommand request, CancellationToken cancellationToken)
         {
             bool taughtSubjectExists = await unitOfWork.TaughtSubjectRepository.ExistsAsync(x => x.Id == request.TaughtSubjectId);
             if (taughtSubjectExists)
             {
-                var enrollments = await unitOfWork.EnrollmentRepository.GetEnrollmentsForTaughtSubject(request.TaughtSubjectId);
-                return enrollments.Select(x => x.Student).ToList();
+                var enrollments = (await unitOfWork.EnrollmentRepository.GetEnrollmentsForTaughtSubject(request.TaughtSubjectId))
+                                    .Where(e => e.State == EnrollmentState.InProgress);
+                return enrollments.Select(x => x.Student);
             }
             throw new ItemNotFoundException("The subject assignment was not found...");
         }

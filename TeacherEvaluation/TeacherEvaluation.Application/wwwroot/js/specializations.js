@@ -2,7 +2,6 @@
     var search_details = {
         studyDomainId: $("#domain").val()
     };
-    console.log(search_details);
 
     $.ajax({
         type: "GET",
@@ -13,7 +12,7 @@
 
         success: function (result) {
             $("#specialization option").remove();
-            console.log(result);
+
             $.each(result, function (index, item) {
                 console.log("specialization: " + item);
                 $("#specialization").append('<option value="' + item.id + '">' + item.name + '</option>');

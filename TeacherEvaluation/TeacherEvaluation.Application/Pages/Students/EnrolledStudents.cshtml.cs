@@ -15,7 +15,7 @@ namespace TeacherEvaluation.Application.Pages.Students
 
         public async Task OnGet(Guid? id)
         {
-            GetStudentsForSubjectCommand command = new GetStudentsForSubjectCommand { TaughtSubjectId = (Guid)id };
+            GetCurrentlyEnrolledStudentsCommand command = new GetCurrentlyEnrolledStudentsCommand { TaughtSubjectId = (Guid)id };
             Students = await mediator.Send(command);
         }
     }

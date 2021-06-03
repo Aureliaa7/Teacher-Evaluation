@@ -82,10 +82,9 @@ function create_charts(search_details, layoutId) {
                 },
                 packages: ['corechart']
             });
-            console.log("*** responses: ", result);
         },
         error: function () {
-            console.log("Something went wrong");
+            console.log("Error while retrieving charts data!");
         }
     });
 }

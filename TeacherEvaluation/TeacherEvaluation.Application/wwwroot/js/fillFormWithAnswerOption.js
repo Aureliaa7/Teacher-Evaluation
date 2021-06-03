@@ -3,14 +3,13 @@
         subjectId: $("#subject-field").val(),
         type: $("#type-field").val(),
     };
-    console.log(search_details);
+
     $.ajax({
         type: "GET",
         data: search_details,
         url: "/EvaluationForms/EvaluateTeacher?handler=ReturnTeacher",
 
         success: function (result) {
-            console.log(result);
             var fullNameArray = [result.user.firstName, result.user.fathersInitial, result.user.lastName];
             var fullName = fullNameArray.join(" ");
             $("#teacher-field").val(fullName);
@@ -26,14 +25,13 @@ function disable_or_enable_btn() {
         subjectId: $("#subject-field").val(),
         type: $("#type-field").val(),
     };
-    console.log(search_details);
+
     $.ajax({
         type: "GET",
         data: search_details,
         url: "/EvaluationForms/EvaluateTeacher?handler=EnableOrDisableSubmitBtn",
 
         success: function (result) {
-            console.log(result);
             if (result == "disable") {
                 $("#teacher-field").val('');
                 $("#submit-form-btn").attr("disabled", "disabled");

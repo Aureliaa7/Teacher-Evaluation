@@ -2,7 +2,6 @@
     var search_details = {
         studyProgramme: $("#study-programme").val()
     };
-    console.log(search_details);
 
     $.ajax({
         type: "GET",
@@ -13,9 +12,7 @@
 
         success: function (result) {
             $("#domain option").remove();
-            console.log(result);
             $.each(result, function (index, item) {
-                console.log("domain: " + item);
                 $("#domain").append('<option value="' + item.id + '">' + item.name + '</option>');
             });
         },

@@ -12,7 +12,6 @@
         url: "/Ranking/View?handler=ReturnTopTeachers",
 
         success: function (result) {
-            console.log("*** top teachers: ", result);
             remove_column_chart();
             if (Object.keys(result).length > 0) {
                 draw_column_chart(result);

@@ -3,7 +3,6 @@
         subjectId: $("#subject").val(),
         type: $("#type").val()
     };
-    console.log(search_details);
 
     $.ajax({
         type: "GET",
@@ -14,9 +13,7 @@
 
         success: function (result) {
             $("#student option").remove();
-            console.log(result);
             $.each(result, function (index, item) {
-                console.log("student: " + item);
                 var fullNameArray = [item.user.firstName, item.user.fathersInitial, item.user.lastName];
                 var fullName = fullNameArray.join(" ");
                 $("#student").append('<option value="' + item.id + '">' + fullName + '</option>');

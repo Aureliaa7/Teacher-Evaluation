@@ -2,7 +2,6 @@
     var search_details = {
         studentId: $("#student").val()
     };
-    console.log(search_details);
 
     $.ajax({
         type: "GET",
@@ -13,10 +12,7 @@
 
         success: function (result) {
             $("#subject option").remove();
-            console.log(result);
             $.each(result, function (index, item) {
-                console.log("subject id: " + item.id);
-                console.log(item.name);
                 $("#subject").append('<option value="' + item.id + '">' + item.name + '</option>');
             });
         },
@@ -31,7 +27,6 @@ function get_subjects_by_specialization_and_study_year() {
         specializationId: $("#specialization").val(),
         studyYear: $("#study-year").val(),
     };
-    console.log(search_details);
 
     $.ajax({
         type: "GET",
@@ -42,10 +37,7 @@ function get_subjects_by_specialization_and_study_year() {
 
         success: function (result) {
             $("#subject-id-field option").remove();
-            console.log(result);
             $.each(result, function (index, item) {
-                console.log("subject id: " + item.id);
-                console.log(item.name);
                 $("#subject-id-field").append('<option value="' + item.id + '">' + item.name + '</option>');
             });
         },

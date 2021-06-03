@@ -11,16 +11,14 @@ else if (User.IsInRole("Teacher"))
     Layout = "~/Pages/Shared/_TeacherLayout.cshtml";
 }
 
-<div class="add-margin-top-35 add-margin-bottom-40" style="background-color: #e9e9e9">
-    <div>
-        @foreach (var item in Model.QuestionsAndResponses)
-        {
-            <div class="add-margin-top-35 add-margin-left-45">
-                <h5>Q: @item.Key</h5>
-                <h6>A: @item.Value</h6>
-            </div>
-        }
-    </div>
+<div class="add-margin-top-70 add-margin-bottom-40" style="background-color: #e9e9e9">
+    @foreach (var item in Model.QuestionsAndResponses)
+    {
+        <div class="add-margin-top-35 add-margin-left-45">
+            <h5>Q: @item.Key</h5>
+            <h6>A: @item.Value</h6>
+        </div>
+    }
     <div class="add-margin-top-35 add-margin-bottom-40">
         @if (User.IsInRole("Dean"))
         {
