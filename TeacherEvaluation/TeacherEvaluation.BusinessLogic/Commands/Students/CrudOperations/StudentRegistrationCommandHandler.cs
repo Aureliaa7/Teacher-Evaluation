@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -98,29 +99,26 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
         private async Task EnrollStudentToCourses(Guid studentId, Guid specializationId, int studyYear)
         {
             var subjects = await unitOfWork.SubjectRepository.GetSubjectsByCriteria(specializationId, studyYear);
-            foreach(var subject in subjects)
+            foreach (var subject in subjects)
             {
-                var taughtSubjects = await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsByCriteria(ts => ts.Subject.Id == subject.Id &&
-                                                                                                          ts.Type == TaughtSubjectType.Course);
-                foreach (var taughtSubject in taughtSubjects)
+                var taughtSubject = (await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsByCriteria(ts => ts.Subject.Id == subject.Id &&
+                                                                             ts.Type == TaughtSubjectType.Course)).FirstOrDefault();
+                EnrollStudentCommand command = new EnrollStudentCommand
                 {
-                    EnrollStudentCommand command = new EnrollStudentCommand
-                    {
-                        TeacherId = taughtSubject.Teacher.Id,
-                        SubjectId = subject.Id,
-                        StudentId = studentId,
-                        Type = TaughtSubjectType.Course
-                    };
-                    try
-                    {
-                        await mediator.Send(command);
-                    }
-                    catch (ItemNotFoundException)
-                    {
-                        throw;
-                    }
+                    TeacherId = taughtSubject.Teacher.Id,
+                    SubjectId = subject.Id,
+                    StudentId = studentId,
+                    Type = TaughtSubjectType.Course
+                };
+                try
+                {
+                    await mediator.Send(command);
                 }
-            }   
+                catch (ItemNotFoundException)
+                {
+                    throw;
+                }
+            }  
         }
     }
 }

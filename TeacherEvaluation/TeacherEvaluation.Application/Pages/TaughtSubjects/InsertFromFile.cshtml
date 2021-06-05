@@ -1,0 +1,15 @@
+﻿@page
+@model TeacherEvaluation.Application.Pages.TaughtSubjects.InsertFromFileModel
+@{
+    ViewData["Title"] = "Assign subjects";
+    Layout = "_AdminLayout";
+}
+
+<h4 class="row align-input-center add-top-margin">Insert subject assignments from excel file</h4>
+<hr />
+
+<partial name="_InsertFromFilePartial" model="Model" />
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
