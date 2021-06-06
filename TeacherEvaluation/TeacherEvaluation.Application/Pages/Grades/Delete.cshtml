@@ -1,0 +1,86 @@
+﻿@page
+@model TeacherEvaluation.Application.Pages.Grades.DeleteModel
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<h3 class="row align-input-center add-top-margin">Are you sure you want to delete this?</h3>
+<hr />
+<div class="jumbotron jumbotron-details">
+    <div class="add-margin-left-145">
+        <dl class="row">
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.Grade.StudentName)
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.Grade.StudentName)
+            </dd>
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.Grade.StudyYear)
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.Grade.StudyYear)
+            </dd>
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.Grade.StudyProgramme)
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.Grade.StudyProgramme)
+            </dd>
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.Grade.Domain)
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.Grade.Domain)
+            </dd>
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.Grade.Specialization)
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.Grade.Specialization)
+            </dd>
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.Grade.Group)
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.Grade.Group)
+            </dd>
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.Grade.TeacherName)
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.Grade.TeacherName)
+            </dd>
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.Grade.Subject)
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.Grade.Subject)
+            </dd>
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.Grade.Type)
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.Grade.Type)
+            </dd>
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.Grade.Grade)
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.Grade.Grade)
+            </dd>
+            <dt class="col-sm-5">
+                @Html.DisplayNameFor(model => model.Grade.Date)
+            </dt>
+            <dd class="col-sm-7">
+                @Html.DisplayFor(model => model.Grade.Date)
+            </dd>
+        </dl>
+    </div>
+
+    <form method="post">
+        <input type="hidden" asp-for="GradeId" />
+        <input type="submit" value="Delete" class="btn btn-danger form-control" />
+    </form>
+</div>

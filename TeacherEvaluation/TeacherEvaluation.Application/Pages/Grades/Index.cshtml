@@ -1,0 +1,99 @@
+﻿@page
+@model TeacherEvaluation.Application.Pages.Grades.IndexModel
+@{
+    ViewData["Title"] = "Grades";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<h3 class="row align-input-center" style="margin-top: 70px;">Search results</h3>
+<hr />
+
+<div class="add-margin-bottom">
+    <table id="grades-index" class="table table-dark table-bordered set-max-width">
+        <thead>
+            <tr>
+                <th>
+                    Student
+                </th>
+                <th>
+                    Year
+                </th>
+                <th>
+                    Study programme
+                </th>
+                <th>
+                    Domain
+                </th>
+                <th>
+                    Specialization
+                </th>
+                <th>
+                    Group
+                </th>
+                <th>
+                    Teacher
+                </th>
+                <th>
+                    Subject
+                </th>
+                <th>
+                    Type
+                </th>
+                <th>
+                    Grade
+                </th>
+                <th>
+                    Date
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Grades)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudentName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudyYear)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudyProgramme)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Domain)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Specialization)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Group)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TeacherName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Grade)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        <a class="nav-link white-link" asp-page="./Delete" asp-route-id="@item.GradeId"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section scripts{
+    <script src="~/js/gradesDataTable.js"></script>
+}

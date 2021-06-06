@@ -19,6 +19,11 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
             this.mediator = mediator;
         }
 
+        /// <summary>
+        /// This is used by a logged in teacher
+        /// </summary>
+        /// <param name="subjectId"></param>
+        /// <returns></returns>
         public async Task<JsonResult> OnGet(string subjectId)
         {
             if (!string.IsNullOrEmpty(subjectId))
@@ -35,5 +40,29 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
             }
             return new JsonResult("");
         }
+
+        /// <summary>
+        /// This is used to get the types for taught subject by teacher id and subject id.
+        /// It's used by Admin
+        /// </summary>
+        /// <returns></returns>
+        public async Task<JsonResult> OnGetReturnTaughtSubjectTypes(string teacherId, string subjectId)
+        {
+            if (!string.IsNullOrEmpty(subjectId) && !string.IsNullOrEmpty(teacherId))
+            {
+                try
+                {
+                    var command = new GetTaughtSubjectTypesByTeacherAndSubjectCommand
+                    {
+                        SubjectId = new Guid(subjectId),
+                        TeacherId = new Guid(teacherId)
+                    };
+                    var taughtSubjectTypes = await mediator.Send(command);
+                    return new JsonResult(taughtSubjectTypes);
+                }
+                catch (ItemNotFoundException) { }
+            }
+            return new JsonResult("");
+        } 
     }
 }

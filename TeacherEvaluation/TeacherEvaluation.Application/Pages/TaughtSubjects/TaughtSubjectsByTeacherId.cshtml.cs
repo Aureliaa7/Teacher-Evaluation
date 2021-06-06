@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations;
 
@@ -26,7 +27,7 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
             {
                 TaughtSubjectsByTeacherCommand command = new TaughtSubjectsByTeacherCommand
                 {
-                    TeacherId = new System.Guid(teacherId)
+                    TeacherId = new Guid(teacherId)
                 };
                 var taughtSubjectsIdsAndTitles = await mediator.Send(command);
                 return new JsonResult(taughtSubjectsIdsAndTitles);

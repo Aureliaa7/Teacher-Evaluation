@@ -1,0 +1,15 @@
+﻿@page
+@model TeacherEvaluation.Application.Pages.Grades.InsertFromFileModel
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<h4 class="row align-input-center add-top-margin">Add grades from excel file</h4>
+<hr />
+
+<partial name="_InsertFromFilePartial" model="Model" />
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
