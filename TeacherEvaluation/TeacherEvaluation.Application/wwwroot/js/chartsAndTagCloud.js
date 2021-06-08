@@ -72,12 +72,7 @@ function create_charts(search_details, layoutId) {
                         }
                     }
                     else {
-                        var h4 = document.createElement("h4");
-                        h4.innerText = "No data is available";
-                        h4.id = "noDataAvailableH4";
-                        h4.setAttribute("style", "margin-top: 100px; margin-left: 100px;");
-                        var mainElement = document.getElementById(layoutId);
-                        mainElement.appendChild(h4); 
+                        display_unavailable_data_message(layoutId);
                     }
                 },
                 packages: ['corechart']
@@ -100,10 +95,8 @@ function remove_charts_divs() {
             chartDivRow2.remove();
         }
     }
-    var noDataAvailableHeader = document.getElementById("noDataAvailableH4");
-    if (noDataAvailableHeader != null) {
-        noDataAvailableHeader.remove();
-    }
+
+    remove_unavailable_data_message();
 }
 
 function create_new_divs(layoutId) {
@@ -139,7 +132,10 @@ function create_tag_cloud(search_details, layoutId) {
                 tagDiv.id = "tag-cloud-div";
                 tagDiv.className = "tag-cloud";
                 tagDiv.style.marginBottom = "170px;"
+                tagDiv.style.marginTop = "-80px";
+                tagDiv.style.marginLeft = "-10px"; 
                 tagDiv.style.backgroundColor = "#e9e9e9";
+                tagDiv.style.width = " 1005px";   
 
                 var h2 = document.createElement("h2");
                 h2.textContent = "Word cloud";

@@ -47,7 +47,7 @@ namespace TeacherEvaluation.Application.Pages.Ranking
 
         public async Task<JsonResult> OnGetReturnTopTeachers(string questionId, string rankingType)
         {
-            IDictionary<string, long> teachersData = new Dictionary<string, long>();
+            IDictionary<string, double> teachersData = new Dictionary<string, double>();
             if (!string.IsNullOrEmpty(questionId) && !string.IsNullOrEmpty(rankingType))
             {
                 RankingType type = (RankingType)Enum.Parse(typeof(RankingType), rankingType, true);
@@ -62,9 +62,9 @@ namespace TeacherEvaluation.Application.Pages.Ranking
             return new JsonResult(teachersData);
         }
 
-        private IDictionary<string, long> GetTeachersInfo(IDictionary<TeacherVm, long> topTeachers)
+        private IDictionary<string, double> GetTeachersInfo(IDictionary<TeacherVm, double> topTeachers)
         {
-            IDictionary<string, long> teachersDetails = new Dictionary<string, long>();
+            IDictionary<string, double> teachersDetails = new Dictionary<string, double>();
             foreach(var teacher in topTeachers)
             {
                 var teacherInfo = JsonSerializer.Serialize(teacher.Key);  // teachers details must be serialized, otherwise an error will occur

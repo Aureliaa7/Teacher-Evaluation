@@ -6,7 +6,7 @@ using TeacherEvaluation.BusinessLogic.ViewModels;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.Ranking
 {
-    public class RankingCommand : IRequest<IDictionary<TeacherVm, long>>
+    public class RankingCommand : IRequest<IDictionary<TeacherVm, double>>
     {
         public Guid QuestionId { get; set; }
         public RankingType RankingType { get; set; }

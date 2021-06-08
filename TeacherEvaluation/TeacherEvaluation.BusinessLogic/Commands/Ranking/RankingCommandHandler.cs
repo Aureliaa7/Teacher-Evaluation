@@ -14,7 +14,7 @@ using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.Ranking
 {
-    public class RankingCommandHandler : IRequestHandler<RankingCommand, IDictionary<TeacherVm, long>>
+    public class RankingCommandHandler : IRequestHandler<RankingCommand, IDictionary<TeacherVm, double>>
     {
         private readonly IUnitOfWork unitOfWork;
 
@@ -23,36 +23,38 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Ranking
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<IDictionary<TeacherVm, long>> Handle(RankingCommand request, CancellationToken cancellationToken)
+        public async Task<IDictionary<TeacherVm, double>> Handle(RankingCommand request, CancellationToken cancellationToken)
         {
             bool questionExists = await unitOfWork.QuestionRepository.ExistsAsync(q => q.Id == request.QuestionId);
             if(questionExists)
             {
-                IDictionary<TeacherVm, long> topTeachers = await GetTopTeachersAsync(request.QuestionId, request.RankingType);
+                IDictionary<TeacherVm, double> topTeachers = await GetTopTeachersAsync(request.QuestionId, request.RankingType);
                 return topTeachers;
             }
             throw new ItemNotFoundException("The question was not found...");
         }
 
-        private async Task<IDictionary<TeacherVm, long>> GetTopTeachersAsync(Guid questionId, RankingType rankingType)
+        private async Task<IDictionary<TeacherVm, double>> GetTopTeachersAsync(Guid questionId, RankingType rankingType)
         {
             IEnumerable<Teacher> teachers = await GetTeachersForRankingTypeAsync(rankingType);
-            IDictionary<Guid, long> result = new Dictionary<Guid, long>();
+            IDictionary<Guid, double> result = new Dictionary<Guid, double>();
 
             foreach (var teacher in teachers)
             {
                 var responses = await unitOfWork.AnswerToQuestionWithOptionRepository
                     .GetByQuestionIdAndTeacherIdAsync(questionId, teacher.Id);
-                long score = responses.Sum(r => (long)r.Score);
-                if (score > 0)
+                
+                if(responses.Count() > 0)
                 {
+                    long sum = responses.Sum(r => (long)r.Score);
+                    double score = sum / responses.Count();
                     result.Add(teacher.Id, score);
                 }
             }
             var orderedTeachers = (result.OrderByDescending(r => r.Value)).ToList();
-            var top = result.Take(Constants.NumberOfTopTeachers);
+            var top = orderedTeachers.Take(Constants.NumberOfTopTeachers);
 
-            IDictionary<TeacherVm, long> topTeachers = new Dictionary<TeacherVm, long>();
+            IDictionary<TeacherVm, double> topTeachers = new Dictionary<TeacherVm, double>();
             foreach (var topTeacher in top)
             {
                 var teacherVm = await GetTeacherVmAsync(topTeacher.Key);
@@ -82,8 +84,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Ranking
                     }
                 case RankingType.Laboratories:
                     {
-                        var taughtSubjects = (await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsByCriteria(ts => ts.Type == TaughtSubjectType.Laboratory))
-                                    .DistinctBy(ts => ts.Teacher.Id);
+                        var taughtSubjects = (await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsByCriteria(
+                            ts => ts.Type == TaughtSubjectType.Laboratory)).DistinctBy(ts => ts.Teacher.Id);
                         teachers = taughtSubjects.Select(ts => ts.Teacher);
                         break;
                     }

@@ -53,7 +53,7 @@ TeacherVm.fromJson = function (jsonData) {
 function draw_column_chart(result) {
     google.charts.load('current', {
         callback: function () {
-            // prepare the data for charts
+            // prepare the data for chart
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'teacherVm');
             data.addColumn('number', 'score');
@@ -63,6 +63,8 @@ function draw_column_chart(result) {
             var max = 0;
 
             for (var key in result) {
+                console.log("draw_column_chart result: ", result);
+
                 var teacherVm = TeacherVm.fromJson(key);
                 data.setCell(contor1, 0, teacherVm.name);
                 var score = result[key];

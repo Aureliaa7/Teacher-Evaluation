@@ -10,17 +10,17 @@
 <hr />
 <div class="row my-row">
     <div class="col-md-4">
+        <label>Question/Affirmation</label>
         <select id="question-field" asp-for="QuestionId" asp-items="@Model.LikertQuestions" class="form-control"
                 onchange="reset()">
-            <option selected disabled hidden>Please select the question</option>
+            <option selected disabled hidden>Please select</option>
         </select>
-    </div>
 
-    <div class="col-md-4">
+        <label class="add-margin-top-35">Taught subject type</label>
         <select id="ranking-type-field" class="form-control"
                 asp-items="Html.GetEnumSelectList<TeacherEvaluation.BusinessLogic.Enums.RankingType>()"
                 onchange="get_top_teachers()">
-            <option selected disabled hidden>Please select the taught subject type</option>
+            <option selected disabled hidden>Please select</option>
         </select>
     </div>
 </div>

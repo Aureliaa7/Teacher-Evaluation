@@ -53,6 +53,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TagClouds
                 var analyzer = new TagCloudAnalyzer();
                 tags = analyzer.ComputeTagCloud(freeFormTexts);
                 tags = RemoveCommonWords(tags.ToList());
+                tags = tags.OrderBy(t => t.Category).Take(Constants.MaxNumberOfTagsInWordCloud);
                 tags = tags.Shuffle();
 
                 return tags;

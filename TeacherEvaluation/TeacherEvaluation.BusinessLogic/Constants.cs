@@ -7,10 +7,11 @@ namespace TeacherEvaluation.BusinessLogic
         public const int NumberOfLikertQuestions = 10;
         public const int NumberOfFreeFormQuestions = 2;
         public const int TotalNumberOfQuestions = NumberOfLikertQuestions + NumberOfFreeFormQuestions;
-        public const int NumberOfTopTeachers = 3;
+        public const int NumberOfTopTeachers = 10;
         public static readonly IList<string> ExcelExtensions = new List<string>
         {
             ".xls", ".xlt", ".xlm", ".xlsx", ".xlsm", ".xltx", ".xltm", ".xlsb", ".xla", ".xlam", ".xll", ".xlw" 
         };
+        public const int MaxNumberOfTagsInWordCloud = 150;
     }
 }

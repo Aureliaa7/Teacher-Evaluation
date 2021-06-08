@@ -35,19 +35,13 @@ function create_responses_table(search_details, layoutId) {
                     data: dataSet,
                     columns: [
                         { title: "Response" },
-                        { title: "View" },
                         { title: "Attendances" },
                         { title: "Grade" }
                     ]
                 });
             }
             else {
-                var h4 = document.createElement("h4");
-                h4.innerText = "No data is available";
-                h4.id = "noDataAvailableH4";
-                h4.setAttribute("style", "margin-top: 100px; margin-left: 100px;");
-                var mainElement = document.getElementById(layoutId);
-                mainElement.appendChild(h4); 
+                display_unavailable_data_message(layoutId);
             }
         },
         error: function () {
@@ -67,10 +61,8 @@ function clear() {
     if (oldTable != null) {
         oldTable.remove();
     }
-    var noDataAvailableHeader = document.getElementById("noDataAvailableH4");
-    if (noDataAvailableHeader != null) {
-        noDataAvailableHeader.remove();
-    }
+
+    remove_unavailable_data_message();
 }
 
 function get_attendances_interval(maxNoAttendances, noAttendances) {
@@ -104,12 +96,12 @@ function create_dataset(result, formId) {
     var dataset = [];
     var i = 0;
     Object.entries(result).forEach(([key, value]) => {
-        var contentCol1 = "Response" + (i + 1);
-        var responseLink = '<a href="./OneResponse?enrollmentId=' + value.enrollmentId + "&formId=" + formId +'">View</a>' ;
+        var text = "Response " + (i + 1);
+        var responseLink = '<a href="./OneResponse?enrollmentId=' + value.enrollmentId + "&formId=" + formId +'">' + text + '</a>';
         var noAttendances = get_attendances_interval(value.maxNoAttendances, value.noAttendances);
         var grade = get_grade_interval(value.grade);
 
-        dataset[i] = [contentCol1, responseLink, noAttendances, grade];
+        dataset[i] = [responseLink, noAttendances, grade];
         i++;
     });
 
@@ -121,11 +113,10 @@ function create_empty_table(layoutId) {
     divRowElement.className = "row";
     divRowElement.id = "responses-div";
     var tableElement = document.createElement("table");
-    tableElement.className = "table table-dark table-striped table-bordered set-max-width";
+    tableElement.className = "table table-dark table-striped table-bordered";
     tableElement.id = "responses";
     tableElement.style.width = "750px";
-    tableElement.style.marginLeft = "80px";
-    tableElement.style.marginTop = "40px";
+    tableElement.style.marginLeft = "190px";
     divRowElement.appendChild(tableElement);
 
     var mainElement = document.getElementById(layoutId);

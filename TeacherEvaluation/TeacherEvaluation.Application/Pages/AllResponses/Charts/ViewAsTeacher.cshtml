@@ -10,6 +10,7 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="~/js/chartsAndTagCloud.js"></script>
     <script src="~/js/taughtSubjects.js"></script>
+    <script src="~/js/unavailableData.js"></script>
     <script>
         $(document).ready(function () {
             get_taught_subjects_by_teacher_id();
@@ -21,7 +22,7 @@
 <hr />
 <input id="teacher-field" type="hidden" asp-for="TeacherId" />
 
-<div class="col-md-4">
+<div class="col-md-4 teacher-dropdown">
     <select id="selected-subject-field" asp-for="SelectedSubjectId" class="form-control"
             onchange="get_responses('@Model.FormId', 'mainElementTeacherLayout')">
         <option selected disabled hidden>Please select</option>

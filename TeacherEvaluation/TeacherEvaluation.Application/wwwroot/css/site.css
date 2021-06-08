@@ -79,7 +79,7 @@ input::-webkit-inner-spin-button {
 
 .login-image {
     margin-bottom: 60px;
-    background-image: url("../images/notebook.jpg");
+    background-image: url("/images/notebook.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -111,7 +111,7 @@ input::-webkit-inner-spin-button {
 }
 
 .bckg-image {
-    background-image: url("../images/background2.jpg");
+    background-image: url("/images/background2.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -250,4 +250,16 @@ input::-webkit-inner-spin-button {
 
 .add-margin-top-70 {
     margin-top: 70px;
+}
+
+.teacher-dropdown {
+    margin-left: 365px;
+}
+
+.table td {
+    text-align: center;
+}
+
+.table th {
+    text-align: center;
 }
