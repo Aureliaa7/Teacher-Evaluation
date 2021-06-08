@@ -26,7 +26,7 @@
             </div>
 
             <div class="col-md-4">
-                <label asp-for="Type">Taught Subject Type</label>
+                <label asp-for="Type">Taught subject type</label>
                 <select id="type-field" asp-for="Type" asp-items="@Model.SubjectTypes"
                         class="form-control" onchange="disable_or_enable_btn()">
                     <option selected disabled hidden>Please select</option>
@@ -40,11 +40,14 @@
             </div>
         </div>
 
+        <div class="add-margin-top-70">
+            <h6>Please evaluate your teacher on a 1 to 10 scale for each of the following criteria:</h6>
+        </div>
+
         @for (var contor = 0; contor < Model.NumberOfLikertQuestions; contor += 1)
         {
             <div class="col-md-10" style="margin-left: 50px; margin-top: 80px;">
-                <label><b>Q @(contor + 1)</b></label><br/>
-                <p id="question">@Model.Questions.LikertQuestions.ElementAt(contor).Text</p>
+                <p id="question">@(contor + 1). @Model.Questions.LikertQuestions.ElementAt(contor).Text</p>
             </div>
             <div class="row my-row">
                 @foreach (var option in Model.AnswerOptions)
@@ -61,8 +64,7 @@
         @for (var contor2 = 0; contor2 < Model.NumberOfFreeFormQuestions; contor2++)
         {
             <div class="col-md-11" style="margin-left: 50px; margin-top: 40px;">
-                <label><b>Q @(contor1 + 1)</b></label>
-                <p id="question">@Model.Questions.FreeFormQuestions.ElementAt(contor2).Text</p>
+                <p id="question">@(contor1 + 1). @Model.Questions.FreeFormQuestions.ElementAt(contor2).Text</p>
                 <textarea asp-for="@Model.TextAnswers[contor2]" class="form-control non-resizable" required
                           rows="5" cols="260"></textarea>
             </div>
@@ -85,7 +87,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>You can't evaluate the selected teacher. You either have evaluated this teacher or you are't enrolled...</p>
+                <p>You can't evaluate the selected teacher. You either have evaluated this teacher or you aren't enrolled...</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

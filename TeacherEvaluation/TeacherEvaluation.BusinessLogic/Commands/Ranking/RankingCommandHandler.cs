@@ -44,7 +44,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Ranking
                 var responses = await unitOfWork.AnswerToQuestionWithOptionRepository
                     .GetByQuestionIdAndTeacherIdAsync(questionId, teacher.Id);
                 
-                if(responses.Count() > 0)
+                if(responses.Any())
                 {
                     long sum = responses.Sum(r => (long)r.Score);
                     double score = sum / responses.Count();

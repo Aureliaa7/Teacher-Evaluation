@@ -25,7 +25,6 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
     {
         private readonly IMediator mediator;
         private Form form;
-        private bool formIsAvailable;
 
         public QuestionsVm Questions { get; set; }
         public List<SelectListItem> Subjects { get; set; } = new List<SelectListItem>();
@@ -61,20 +60,6 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
         public EvaluateTeacherModel(IMediator mediator)
         {
             this.mediator = mediator;
-            formIsAvailable = true;
-            AnswerOptions = GetAnswerOptions();
-
-            try
-            {
-                GetEvaluationFormCommand command = new GetEvaluationFormCommand();
-                form = mediator.Send(command).Result;
-                GetQuestionsForFormCommand getQuestionsCommand = new GetQuestionsForFormCommand { FormId = form.Id };
-                Questions = mediator.Send(getQuestionsCommand).Result;
-            }
-            catch (AggregateException)
-            {
-                formIsAvailable = false;
-            }
         }
 
         private IDictionary<string, int> GetAnswerOptions()
@@ -88,12 +73,19 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
             return answerOptions;
         }
 
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            Guid userIdStudent = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            AnswerOptions = GetAnswerOptions();
 
-            if (formIsAvailable)
+            try
             {
+                GetEvaluationFormCommand command = new GetEvaluationFormCommand();
+                form = await mediator.Send(command);
+                GetQuestionsForFormCommand getQuestionsCommand = new GetQuestionsForFormCommand { FormId = form.Id };
+                Questions = await mediator.Send(getQuestionsCommand);
+
+                Guid userIdStudent = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
                 GetSubjectsForEnrollmentsCommand getSubjectsCommand = new GetSubjectsForEnrollmentsCommand
                 {
                     UserId = userIdStudent,
@@ -116,13 +108,17 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
 
                 catch (ItemNotFoundException)
                 {
-                    return RedirectToPage("/Errors/404");
                 }
             }
-            else
+            catch (NoEvaluationFormException)
             {
                 return RedirectToPage("/Errors/NoEvaluationForm");
             }
+            catch (ItemNotFoundException)
+            {
+            }
+
+            return RedirectToPage("/Errors/404");
         }
 
         private void InitializeTaughtSubjectTypes()
