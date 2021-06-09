@@ -25,7 +25,7 @@ namespace TeacherEvaluation.Application.Pages.Specializations
                 try
                 {
                     GetSpecializationsByDomainCommand command = new GetSpecializationsByDomainCommand { StudyDomainId = new Guid(studyDomainId) };
-                    var specializations = await mediator .Send(command);
+                    var specializations = await mediator.Send(command);
                     return new JsonResult(specializations.OrderBy(x => x.Name));
                 }
                 catch(ItemNotFoundException) { }

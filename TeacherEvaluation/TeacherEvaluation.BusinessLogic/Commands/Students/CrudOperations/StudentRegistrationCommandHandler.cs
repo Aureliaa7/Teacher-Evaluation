@@ -98,7 +98,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
 
         private async Task EnrollStudentToCourses(Guid studentId, Guid specializationId, int studyYear)
         {
-            var subjects = await unitOfWork.SubjectRepository.GetSubjectsByCriteria(specializationId, studyYear);
+            var subjects = await unitOfWork.SubjectRepository.GetSubjectsByCriteriaAsync(specializationId, studyYear);
             foreach (var subject in subjects)
             {
                 var taughtSubject = (await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsByCriteria(ts => ts.Subject.Id == subject.Id &&

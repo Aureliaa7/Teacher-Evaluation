@@ -59,7 +59,8 @@ namespace TeacherEvaluation.Application.Pages.Attendances
             var subjects = new List<Subject>();
             if (taughtSubjects.Count() > 0)
             {
-                subjects.Add(taughtSubjects.OrderBy(x => x.Subject.Name).First().Subject);
+                var filteredSubjects = taughtSubjects.GroupBy(x => x.Subject.Name).Select(x => x.First()).ToList();
+                subjects.AddRange(filteredSubjects.OrderBy(x => x.Subject.Name).Select(x => x.Subject));
 
                 Subjects = subjects.Select(x =>
                                                 new SelectListItem

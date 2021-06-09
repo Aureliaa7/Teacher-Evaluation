@@ -25,6 +25,7 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
     {
         private readonly IMediator mediator;
         private Form form;
+        private bool isFormAvailable = true;
 
         public QuestionsVm Questions { get; set; }
         public List<SelectListItem> Subjects { get; set; } = new List<SelectListItem>();
@@ -60,6 +61,8 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
         public EvaluateTeacherModel(IMediator mediator)
         {
             this.mediator = mediator;
+
+            Task.Run(() => InitializeAsync()).Wait();
         }
 
         private IDictionary<string, int> GetAnswerOptions()
@@ -75,6 +78,41 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
 
         public async Task<IActionResult> OnGetAsync()
         {
+            if(!isFormAvailable)
+            {
+                return RedirectToPage("/Errors/NoEvaluationForm");
+            }
+            Guid userIdStudent = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            var getSubjectsCommand = new GetSubjectsForEnrollmentsBySemesterCommand
+            {
+                UserId = userIdStudent,
+                Semester = form.Semester
+            };
+
+            try
+            {
+                var subjects = await mediator.Send(getSubjectsCommand);
+                subjects = subjects.OrderBy(x => x.Name);
+                Subjects = subjects.Select(x =>
+                                                new SelectListItem
+                                                {
+                                                    Value = x.Id.ToString(),
+                                                    Text = x.Name
+                                                }).ToList();
+                InitializeTaughtSubjectTypes();
+
+                return Page();
+            }
+
+            catch (ItemNotFoundException)
+            {
+            }
+        return RedirectToPage("/Errors/404");
+        }
+
+        private async Task InitializeAsync()
+        {
             AnswerOptions = GetAnswerOptions();
 
             try
@@ -83,42 +121,15 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
                 form = await mediator.Send(command);
                 GetQuestionsForFormCommand getQuestionsCommand = new GetQuestionsForFormCommand { FormId = form.Id };
                 Questions = await mediator.Send(getQuestionsCommand);
-
-                Guid userIdStudent = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
-                var getSubjectsCommand = new GetSubjectsForEnrollmentsBySemesterCommand
-                {
-                    UserId = userIdStudent,
-                    Semester = form.Semester
-                };
-
-                try
-                {
-                    var subjects = await mediator.Send(getSubjectsCommand);
-                    Subjects = subjects.Select(x =>
-                                                    new SelectListItem
-                                                    {
-                                                        Value = x.Id.ToString(),
-                                                        Text = x.Name
-                                                    }).ToList();
-                    InitializeTaughtSubjectTypes();
-
-                    return Page();
-                }
-
-                catch (ItemNotFoundException)
-                {
-                }
             }
             catch (NoEvaluationFormException)
             {
-                return RedirectToPage("/Errors/NoEvaluationForm");
+                isFormAvailable = false;
             }
+
             catch (ItemNotFoundException)
             {
             }
-
-            return RedirectToPage("/Errors/404");
         }
 
         private void InitializeTaughtSubjectTypes()
@@ -157,7 +168,6 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
             return new JsonResult("");
         }
 
-        //TODO to be fixed: It throws NullException
         public async Task<JsonResult> OnGetEnableOrDisableSubmitBtn(string subjectId, string type)
         {
             if (!string.IsNullOrEmpty(subjectId) && !string.IsNullOrEmpty(type))

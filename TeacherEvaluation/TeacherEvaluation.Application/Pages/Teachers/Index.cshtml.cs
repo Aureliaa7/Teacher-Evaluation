@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -29,7 +30,8 @@ namespace TeacherEvaluation.Application.Pages.Teachers
         public async Task OnGetAsync()
         {
             GetAllTeachersCommand command = new GetAllTeachersCommand();
-            Teachers = await mediator.Send(command);
+            var teachers = await mediator.Send(command);
+            Teachers = teachers.OrderBy(t => t.User.FirstName);
         }
 
         public async Task<JsonResult> OnGetReturnTeachersByDepartment(string department)
@@ -40,11 +42,13 @@ namespace TeacherEvaluation.Application.Pages.Teachers
                 {
                     GetTeachersByDepartmentCommand command = new GetTeachersByDepartmentCommand { Department = (Department)Enum.Parse(typeof(Department), department) };
                     var teachers = await mediator.Send(command);
+                    teachers = teachers.OrderBy(t => t.User.FirstName);
+
                     return new JsonResult(teachers);
                 }
                 catch (ItemNotFoundException) { }
             }
-            return new JsonResult("");
+            return new JsonResult(new List<Teacher>());
         }
 
         public async Task<JsonResult> OnGetReturnTeachersBySubjectAndType(string subjectId, string type)
@@ -59,11 +63,13 @@ namespace TeacherEvaluation.Application.Pages.Teachers
                         Type = (TaughtSubjectType)Enum.Parse(typeof(TaughtSubjectType), type)
                     };
                     var teachers = await mediator.Send(getTeachersCommand);
+                    teachers = teachers.OrderBy(t => t.User.FirstName);
+
                     return new JsonResult(teachers);
                 }
                 catch (ItemNotFoundException) { }
             }
-            return new JsonResult("");
+            return new JsonResult(new List<Teacher>());
         }
     }
 }

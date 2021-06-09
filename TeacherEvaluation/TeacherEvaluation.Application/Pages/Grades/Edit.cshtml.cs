@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
@@ -66,8 +64,6 @@ namespace TeacherEvaluation.Application.Pages.Grades
         [Required(ErrorMessage = "Study year is required")]
         [Range(1, 4, ErrorMessage = "The study year must be between 1 and 4")]
         public int? StudyYear { get; set; } = null;
-
-        public List<SelectListItem> TaughtSubjects { get; set; }
 
         public EditModel(IMediator mediator)
         {

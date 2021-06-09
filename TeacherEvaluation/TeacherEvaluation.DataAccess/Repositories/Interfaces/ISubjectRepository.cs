@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TeacherEvaluation.Domain.DomainEntities;
-using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.DataAccess.Repositories.Interfaces
 {
     public interface ISubjectRepository : IRepository<Subject>
     {
-        Task<Subject> GetWithRelatedEntities(Guid id);
-        Task<IEnumerable<Subject>> GetAllWithRelatedEntities();
-        Task<IEnumerable<Subject>> GetSubjectsByCriteria(Guid specializationId, int studyYear);
+        Task<Subject> GetWithRelatedEntitiesAsync(Guid id);
+        Task<IEnumerable<Subject>> GetAllWithRelatedEntitiesAsync();
+        Task<IEnumerable<Subject>> GetSubjectsByCriteriaAsync(Guid specializationId, int studyYear);
+        Task DeleteAsync(Guid id);
     }
 }

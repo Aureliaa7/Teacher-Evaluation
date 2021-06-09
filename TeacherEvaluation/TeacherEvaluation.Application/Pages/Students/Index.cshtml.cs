@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -34,6 +35,7 @@ namespace TeacherEvaluation.Application.Pages.Students
                         StudyYear = int.Parse(studyYear)
                     };
                     var students = await mediator.Send(command);
+                    students = students.OrderBy(s => s.User.LastName);
                     return new JsonResult(students);
                 }
                 catch(ItemNotFoundException) { }

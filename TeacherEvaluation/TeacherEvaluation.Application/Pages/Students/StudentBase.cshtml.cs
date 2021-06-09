@@ -19,6 +19,7 @@ namespace TeacherEvaluation.Application.Pages.Students
         public Guid? StudentId { get; set; }
 
         [BindProperty]
+        [EmailAddress]
         public string Email { get; set; }
 
         [BindProperty]
@@ -29,14 +30,12 @@ namespace TeacherEvaluation.Application.Pages.Students
 
         [BindProperty]
         [Required(ErrorMessage = "First name is required")]
-        [RegularExpression(pattern: "[a-zA-Z\\s]+", ErrorMessage = "Invalid text")]
         [MinLength(3)]
         [Display(Name = "First name")]
         public string FirstName { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "Last name is required")]
-        [RegularExpression(pattern: "[a-zA-Z\\s]+", ErrorMessage = "Invalid text")]
         [MinLength(3)]
         [Display(Name = "Last name")]
         public string LastName { get; set; }

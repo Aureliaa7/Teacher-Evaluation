@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -46,6 +47,7 @@ namespace TeacherEvaluation.Application.Pages.Subjects
                         UserId = userIdStudent
                     };
                     var subjects = await mediator.Send(command);
+                    subjects = subjects.OrderBy(s => s.Name);
 
                     return new JsonResult(subjects);
                 }
@@ -66,6 +68,7 @@ namespace TeacherEvaluation.Application.Pages.Subjects
                         StudyYear = Int32.Parse(studyYear)
                     };
                     var subjects = await mediator.Send(getSubjectsCommand);
+                    subjects = subjects.OrderBy(s => s.Name);
                     return new JsonResult(subjects);
                 }
                 catch (ItemNotFoundException) { }

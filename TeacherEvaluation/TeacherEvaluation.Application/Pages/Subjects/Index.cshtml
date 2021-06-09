@@ -23,6 +23,9 @@
                     Year
                 </th>
                 <th>
+                    Semester
+                </th>
+                <th>
                     Study programme
                 </th>
                 <th>
@@ -48,6 +51,9 @@
                     @Html.DisplayFor(modelItem => item.StudyYear)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Semester)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Specialization.StudyDomain.StudyProgramme)
                 </td>
                 <td>
@@ -58,7 +64,7 @@
                 </td>
                 <td>
                     <div class="row">
-                        <a class="nav-link white-link" asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a> 
+                        <a class="nav-link white-link" asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a>
                         <a class="nav-link white-link" asp-page="./Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>
                     </div>
                 </td>
@@ -72,7 +78,7 @@
     <script>
         $(document).ready(function () {
             $('#subjects-index').DataTable({
-                'columnDefs': [{ 'orderable': false, 'targets': 6 }]
+                'columnDefs': [{ 'orderable': false, 'targets': 7 }]
             });
         });
     </script>

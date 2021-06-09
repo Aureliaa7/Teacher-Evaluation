@@ -21,7 +21,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Subjects.CrudOperations
             bool subjectExists = await unitOfWork.SubjectRepository.ExistsAsync(x => x.Id == request.Id);
             if (subjectExists)
             {
-                return await unitOfWork.SubjectRepository.GetWithRelatedEntities(request.Id);
+                return await unitOfWork.SubjectRepository.GetWithRelatedEntitiesAsync(request.Id);
             }
             throw new ItemNotFoundException("The subject was not found...");
         }

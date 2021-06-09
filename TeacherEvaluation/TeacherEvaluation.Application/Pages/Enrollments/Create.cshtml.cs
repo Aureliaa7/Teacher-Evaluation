@@ -26,6 +26,7 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
         { 
             GetAllSubjectsCommand getSubjectsCommand = new GetAllSubjectsCommand();
             var subjects = await mediator.Send(getSubjectsCommand);
+            subjects = subjects.OrderBy(x => x.Name);
             Subjects = subjects.Select(x =>
                                             new SelectListItem
                                             {
