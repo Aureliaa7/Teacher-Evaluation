@@ -26,7 +26,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Subjects.CrudOperations
                     Name = request.Name,
                     NumberOfCredits = request.NumberOfCredits,
                     Specialization = specialization,
-                    StudyYear = request.StudyYear
+                    StudyYear = request.StudyYear,
+                    Semester = request.Semester
                 };
                 await unitOfWork.SubjectRepository.AddAsync(newSubject);
                 await unitOfWork.SaveChangesAsync();

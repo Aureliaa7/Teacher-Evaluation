@@ -32,8 +32,6 @@ namespace TeacherEvaluation.Application.Pages.Subjects
             Subjects = await mediator.Send(command);
         }
 
-        //TODO  create another command to return the in progress enrollments
-        // TODO test it
         public async Task<JsonResult> OnGetReturnSubjectsByStudent(string studentId)
         {
             if (!string.IsNullOrEmpty(studentId))

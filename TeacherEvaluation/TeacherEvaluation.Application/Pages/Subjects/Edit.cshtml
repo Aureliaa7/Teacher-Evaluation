@@ -10,13 +10,8 @@
 <hr />
 <div class="jumbotron subject-jumbotron">
     <form method="post">
+        <input type="hidden" asp-for="SubjectId" />
         <partial name="_SubjectPartial" model="Model" />
-
-        <div class="row my-row">
-            <div class="col-md-6">
-                <input type="submit" value="Save" class="btn btn-dark form-control" id="form-button" />
-            </div>
-        </div>
     </form>
     <div>
         <br />

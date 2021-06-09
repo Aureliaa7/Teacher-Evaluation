@@ -52,5 +52,9 @@ namespace TeacherEvaluation.Application.Pages.Subjects
         public Guid SpecializationId { get; set; }
 
         public Specialization Specialization { get; set; }
+
+        [BindProperty]
+        [Required]
+        public Semester Semester { get; set; }
     }
 }

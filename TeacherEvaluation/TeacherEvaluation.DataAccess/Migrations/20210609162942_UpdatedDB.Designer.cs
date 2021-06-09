@@ -10,8 +10,8 @@ using TeacherEvaluation.DataAccess.Data;
 namespace TeacherEvaluation.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210527124646_AddedMaxNumberOfAttendances")]
-    partial class AddedMaxNumberOfAttendances
+    [Migration("20210609162942_UpdatedDB")]
+    partial class UpdatedDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -164,6 +164,9 @@ namespace TeacherEvaluation.DataAccess.Migrations
                     b.Property<int>("NumberOfAttendances")
                         .HasColumnType("int");
 
+                    b.Property<int>("Semester")
+                        .HasColumnType("int");
+
                     b.Property<int>("State")
                         .HasColumnType("int");
 
@@ -193,10 +196,10 @@ namespace TeacherEvaluation.DataAccess.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("EnrollmentState")
+                    b.Property<int>("MinNumberOfAttendances")
                         .HasColumnType("int");
 
-                    b.Property<int>("MinNumberOfAttendances")
+                    b.Property<int>("Semester")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
@@ -322,6 +325,9 @@ namespace TeacherEvaluation.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("NumberOfCredits")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Semester")
                         .HasColumnType("int");
 
                     b.Property<Guid?>("SpecializationId")

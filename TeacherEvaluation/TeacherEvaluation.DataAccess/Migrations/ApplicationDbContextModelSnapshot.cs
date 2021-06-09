@@ -156,9 +156,6 @@ namespace TeacherEvaluation.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("EnrollmentDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<Guid?>("GradeId")
                         .HasColumnType("uniqueidentifier");
 
@@ -326,6 +323,9 @@ namespace TeacherEvaluation.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("NumberOfCredits")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Semester")
                         .HasColumnType("int");
 
                     b.Property<Guid?>("SpecializationId")

@@ -60,6 +60,7 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
         {
         }
 
+        //todo maybe the semester for the evaluation form should be given by Dean
         public async Task<IActionResult> OnPostAsync()
         {
             if (ModelState.IsValid)
@@ -72,7 +73,6 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
                     MinNumberOfAttendances = (int)NumberOfAttendances,
                     StartDate = StartDate,
                     EndDate = EndDate
-
                 };
                 await mediator.Send(command);
                 return RedirectToPage("/MyProfile/Dean");

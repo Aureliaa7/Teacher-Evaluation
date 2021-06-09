@@ -16,9 +16,6 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
             this.unitOfWork = unitOfWork;
         }
 
-        //TODO check this one
-        // do i really need the enrollment state here? It doesn't seem so.
-        // But do i need the Semester? 
         protected override async Task Handle(SaveEvaluationFormResponsesCommand request, CancellationToken cancellationToken)
         {
             bool formExists = await unitOfWork.FormRepository.ExistsAsync(x => x.Id == request.FormId);

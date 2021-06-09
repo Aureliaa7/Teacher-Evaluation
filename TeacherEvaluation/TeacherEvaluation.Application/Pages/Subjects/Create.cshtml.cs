@@ -27,10 +27,11 @@ namespace TeacherEvaluation.Application.Pages.Subjects
                     Name = SubjectName,
                     NumberOfCredits = (int)NumberOfCredits,
                     StudyYear = (int) StudyYear,
-                    SpecializationId = SpecializationId
+                    SpecializationId = SpecializationId,
+                    Semester = Semester
                 };
                 await mediator.Send(command);
-                return RedirectToPage("../Subjects/Index");
+                return RedirectToPage("/Subjects/Index");
             }
             return Page();
         }
