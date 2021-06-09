@@ -33,7 +33,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Attendances.CrudOperations
                                         .Where(x => x.Subject.Id == request.SubjectId && x.Teacher.Id == teacher.Id && x.Type == request.Type)
                                         .First();
 
-                    var enrollmentsForTaughtSubject = await unitOfWork.EnrollmentRepository.GetEnrollmentsForTaughtSubject(taughtSubject.Id);
+                    var enrollmentsForTaughtSubject = await unitOfWork.EnrollmentRepository.GetEnrollmentsForTaughtSubjectAsync(taughtSubject.Id);
                     var searchedEnrollment = enrollmentsForTaughtSubject.Where(x => x.Student.Id == request.StudentId)
                                                                         .First();
                     searchedEnrollment.NumberOfAttendances = request.NumberOfAttendances;

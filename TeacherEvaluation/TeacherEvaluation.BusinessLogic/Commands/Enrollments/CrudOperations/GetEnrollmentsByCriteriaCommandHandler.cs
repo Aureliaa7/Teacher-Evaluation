@@ -24,7 +24,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations
             bool specializationExists = await unitOfWork.SpecializationRepository.ExistsAsync(x => x.Id == request.SpecializationId);
             if(studyDomainExists && specializationExists)
             {
-                var allEnrollments = await unitOfWork.EnrollmentRepository.GetAllWithRelatedEntities();
+                var allEnrollments = await unitOfWork.EnrollmentRepository.GetAllWithRelatedEntitiesAsync();
                 var enrollments = new List<Enrollment>();
                 enrollments = allEnrollments.Where(x => (x.Student.Specialization.StudyDomain.StudyProgramme == request.StudyProgramme) &&
                                                                     (x.Student.Specialization.StudyDomain.Id == request.StudyDomainId) &&

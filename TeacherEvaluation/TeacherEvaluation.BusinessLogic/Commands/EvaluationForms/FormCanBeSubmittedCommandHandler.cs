@@ -37,7 +37,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
 
                     if (enrollmentExists)
                     {
-                        var enrollment = await unitOfWork.EnrollmentRepository.GetEnrollmentBySubjectStateTypeAndStudent(
+                        var enrollment = await unitOfWork.EnrollmentRepository.GetEnrollmentBySubjectStateTypeAndStudentAsync(
                             request.SubjectId, EnrollmentState.InProgress, request.SubjectType, student.Id);
 
                         var answersForForm = await unitOfWork.AnswerToQuestionWithOptionRepository.GetByEnrollmentAndFormIdAsync(enrollment.Id, request.FormId);

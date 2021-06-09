@@ -77,8 +77,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Ranking
                     }
                 case RankingType.Courses:
                     {
-                        var taughtSubjects = (await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsByCriteria(ts => ts.Type == TaughtSubjectType.Course))
-                                    .DistinctBy(ts => ts.Teacher.Id);
+                        var taughtSubjects = (await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsByCriteria(
+                            ts => ts.Type == TaughtSubjectType.Course)).DistinctBy(ts => ts.Teacher.Id);
                         teachers = taughtSubjects.Select(ts => ts.Teacher);
                         break;
                     }

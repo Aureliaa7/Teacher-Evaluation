@@ -24,7 +24,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
             if(userExists)
             {
                 var student = await unitOfWork.StudentRepository.GetByUserIdAsync(request.UserId);
-                var enrollments = await unitOfWork.EnrollmentRepository.GetForStudent(student.Id);
+                var enrollments = await unitOfWork.EnrollmentRepository.GetForStudentAsync(student.Id);
                 var takenSubjectsVm = enrollments.Where(x => x.TaughtSubject.Type == request.SubjectType && x.State == request.EnrollmentState)
                                                 .Select(x => new TakenSubjectVm
                                                 {

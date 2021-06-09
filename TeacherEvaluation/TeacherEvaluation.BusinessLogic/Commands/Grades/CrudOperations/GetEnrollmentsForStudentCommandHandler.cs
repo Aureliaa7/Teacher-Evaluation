@@ -22,7 +22,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations
             bool studentExists = await unitOfWork.StudentRepository.ExistsAsync(x => x.Id == request.Id);
             if (studentExists)
             {
-                return await unitOfWork.EnrollmentRepository.GetForStudent(request.Id);
+                return await unitOfWork.EnrollmentRepository.GetForStudentAsync(request.Id);
             }
             throw new ItemNotFoundException("The student was not found...");
         }

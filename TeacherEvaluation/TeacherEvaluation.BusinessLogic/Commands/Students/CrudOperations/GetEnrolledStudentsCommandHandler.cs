@@ -36,7 +36,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
                     var taughtSubject = (await unitOfWork.TaughtSubjectRepository.GetAllWithRelatedEntitiesAsync())
                                         .FirstOrDefault(x => x.Subject.Id == request.SubjectId && x.Teacher.Id == teacher.Id && x.Type == request.Type);           
 
-                    var enrollments = (await unitOfWork.EnrollmentRepository.GetEnrollmentsForTaughtSubject(taughtSubject.Id))
+                    var enrollments = (await unitOfWork.EnrollmentRepository.GetEnrollmentsForTaughtSubjectAsync(taughtSubject.Id))
                                       .Where(x => x.State == Domain.DomainEntities.Enums.EnrollmentState.InProgress &&
                                        x.NumberOfAttendances == 0);
                     return enrollments.Select(x => x.Student).ToList();

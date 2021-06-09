@@ -10,7 +10,6 @@ using TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Commands.Subjects.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities;
-using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.Subjects
 {
@@ -33,6 +32,8 @@ namespace TeacherEvaluation.Application.Pages.Subjects
             Subjects = await mediator.Send(command);
         }
 
+        //TODO  create another command to return the in progress enrollments
+        // TODO test it
         public async Task<JsonResult> OnGetReturnSubjectsByStudent(string studentId)
         {
             if (!string.IsNullOrEmpty(studentId))
@@ -41,12 +42,13 @@ namespace TeacherEvaluation.Application.Pages.Subjects
                 try
                 {
                     Guid userIdStudent = await mediator.Send(getUserIdCommand);
-                    GetSubjectsForEnrollmentsCommand getSubjectsCommand = new GetSubjectsForEnrollmentsCommand
+
+                    var command = new GetSubjectsForInProgressEnrollmentsCommand
                     {
-                        UserId = userIdStudent,
-                        EnrollmentState = EnrollmentState.InProgress
+                        UserId = userIdStudent
                     };
-                    var subjects = await mediator.Send(getSubjectsCommand);
+                    var subjects = await mediator.Send(command);
+
                     return new JsonResult(subjects);
                 }
                 catch (ItemNotFoundException) { }

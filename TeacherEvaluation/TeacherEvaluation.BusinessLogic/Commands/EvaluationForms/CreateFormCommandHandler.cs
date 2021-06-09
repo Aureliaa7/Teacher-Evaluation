@@ -1,12 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using TeacherEvaluation.BusinessLogic.Extensions;
 using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
-using TeacherEvaluation.Domain.DomainEntities.Enums;
 using TeacherEvaluation.Domain.Identity;
 using TeacherEvaluation.EmailSender;
 using TeacherEvaluation.EmailSender.NotificationModel;
@@ -35,7 +36,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
             {
                 StartDate = request.StartDate,
                 EndDate = request.EndDate,
-                EnrollmentState = EnrollmentState.InProgress,
+                Semester = SemesterExtension.GetSemesterByDate(DateTime.UtcNow),
                 MinNumberOfAttendances = request.MinNumberOfAttendances
             };
             await unitOfWork.FormRepository.AddAsync(form);

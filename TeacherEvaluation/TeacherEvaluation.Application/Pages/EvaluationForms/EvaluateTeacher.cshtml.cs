@@ -86,10 +86,10 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
 
                 Guid userIdStudent = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-                GetSubjectsForEnrollmentsCommand getSubjectsCommand = new GetSubjectsForEnrollmentsCommand
+                var getSubjectsCommand = new GetSubjectsForEnrollmentsBySemesterCommand
                 {
                     UserId = userIdStudent,
-                    EnrollmentState = form.EnrollmentState
+                    Semester = form.Semester
                 };
 
                 try
@@ -144,8 +144,8 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
                 {
                     SubjectId = subjectIdGuid,
                     UserIdForStudent = userIdStudent,
-                    EnrollmentState = form.EnrollmentState,
-                    SubjectType = taughtSubjectType
+                    SubjectType = taughtSubjectType,
+                    Semester = form.Semester
                 };
                 try
                 {
@@ -157,6 +157,7 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
             return new JsonResult("");
         }
 
+        //TODO to be fixed: It throws NullException
         public async Task<JsonResult> OnGetEnableOrDisableSubmitBtn(string subjectId, string type)
         {
             if (!string.IsNullOrEmpty(subjectId) && !string.IsNullOrEmpty(type))
@@ -192,7 +193,7 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
             Guid userIdStudent = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
             SaveEvaluationFormResponsesCommand command = new SaveEvaluationFormResponsesCommand
             {
-                EnrollmentState = form.EnrollmentState,
+                Semester = form.Semester,
                 FormId = form.Id,
                 Questions = Questions,
                 Scores = Scores,

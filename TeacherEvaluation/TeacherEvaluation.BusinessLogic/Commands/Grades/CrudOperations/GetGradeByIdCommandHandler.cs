@@ -26,7 +26,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations
                 throw new ItemNotFoundException("The grade was not found!");
             }
 
-            var enrollment = (await unitOfWork.EnrollmentRepository.GetAllWithRelatedEntities())
+            var enrollment = (await unitOfWork.EnrollmentRepository.GetAllWithRelatedEntitiesAsync())
                 .FirstOrDefault(e => e.Grade.Id == request.Id);
             if(enrollment != null)
             {

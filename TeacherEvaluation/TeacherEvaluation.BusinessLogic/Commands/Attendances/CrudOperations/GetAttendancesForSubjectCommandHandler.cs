@@ -25,7 +25,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Attendances.CrudOperations
                 var students = await unitOfWork.StudentRepository.GetAllWithRelatedEntitiesAsync();
                 var student = students.Where(x => x.User.Id == request.UserId).First();
 
-                var enrollments = await unitOfWork.EnrollmentRepository.GetEnrollmentsForTaughtSubject(request.TaughtSubjectId);
+                var enrollments = await unitOfWork.EnrollmentRepository.GetEnrollmentsForTaughtSubjectAsync(request.TaughtSubjectId);
                 var enrollment = enrollments.Where(x => x.Student.Id == student.Id).First();
                 return enrollment.NumberOfAttendances;
             }

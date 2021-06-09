@@ -11,5 +11,7 @@ namespace TeacherEvaluation.Domain.DomainEntities
         public Grade Grade { get; set; }
         public EnrollmentState State { get; set; }
         public int NumberOfAttendances { get; set; }
+        public Semester Semester { get; set; }
+        public DateTime EnrollmentDate { get; set; }
     }
 }

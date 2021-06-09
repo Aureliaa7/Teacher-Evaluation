@@ -1,7 +1,9 @@
 ﻿using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
+using TeacherEvaluation.BusinessLogic.Extensions;
 using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
@@ -40,7 +42,9 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations
                     TaughtSubject = taughtSubject,
                     Grade = grade,
                     State = EnrollmentState.InProgress,
-                    NumberOfAttendances = 0
+                    NumberOfAttendances = 0,
+                    EnrollmentDate = DateTime.UtcNow,
+                    Semester = SemesterExtension.GetSemesterByDate(DateTime.UtcNow)
                 };
                 await unitOfWork.EnrollmentRepository.AddAsync(newEnrollment);
                 await unitOfWork.SaveChangesAsync();

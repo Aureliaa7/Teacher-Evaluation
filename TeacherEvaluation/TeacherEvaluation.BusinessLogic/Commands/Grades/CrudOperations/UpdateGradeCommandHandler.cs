@@ -25,11 +25,11 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations
             bool subjectExists = await unitOfWork.SubjectRepository.ExistsAsync(x => x.Id == request.SubjectId);
             if (studentExists && subjectExists)
             {
-                IEnumerable<Enrollment> enrollments = await unitOfWork.EnrollmentRepository.GetForStudent(request.StudentId);
+                IEnumerable<Enrollment> enrollments = await unitOfWork.EnrollmentRepository.GetForStudentAsync(request.StudentId);
                 Enrollment enrollment = enrollments.Where(x => x.TaughtSubject.Subject.Id == request.SubjectId && x.TaughtSubject.Type == request.Type).First();
                 enrollment.Grade.Value = request.Value;
                 enrollment.Grade.Date = request.Date;
-                enrollment.State = EnrollmentState.Done;
+                enrollment.State = request.Value >= 5 ? EnrollmentState.Done : EnrollmentState.InProgress;
                 unitOfWork.EnrollmentRepository.Update(enrollment);
                 await unitOfWork.SaveChangesAsync();
             }

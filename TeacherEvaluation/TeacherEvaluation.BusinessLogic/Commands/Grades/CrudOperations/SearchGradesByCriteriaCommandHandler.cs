@@ -41,7 +41,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations
                 throw new ItemNotFoundException("The taught subject was not found!");
             }
 
-            var enrollments = await unitOfWork.EnrollmentRepository.GetEnrollmentsForTaughtSubject(taughtSubject.Id);
+            var enrollments = await unitOfWork.EnrollmentRepository.GetEnrollmentsForTaughtSubjectAsync(taughtSubject.Id);
             var filteredEnrollments = enrollments.Where(e => e.Grade.Value != null && e.Grade.Date != null &&
                         e.Grade.Date.Value.Year == request.FromYear);
 

@@ -16,6 +16,9 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
             this.unitOfWork = unitOfWork;
         }
 
+        //TODO check this one
+        // do i really need the enrollment state here? It doesn't seem so.
+        // But do i need the Semester? 
         protected override async Task Handle(SaveEvaluationFormResponsesCommand request, CancellationToken cancellationToken)
         {
             bool formExists = await unitOfWork.FormRepository.ExistsAsync(x => x.Id == request.FormId);
@@ -24,13 +27,13 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
             {
                 var student = await unitOfWork.StudentRepository.GetByUserIdAsync(request.UserIdForStudent);
                 var enrollmentExists = await unitOfWork.EnrollmentRepository.ExistsAsync(x => x.TaughtSubject.Subject.Id == request.SubjectId &&
-                                                                              x.State == request.EnrollmentState &&
+                                                                              x.Semester == request.Semester &&
                                                                               x.TaughtSubject.Type == request.SubjectType &&
                                                                               x.Student.Id == student.Id);
                 if (enrollmentExists)
                 {
-                    var enrollment = await unitOfWork.EnrollmentRepository.GetEnrollmentBySubjectStateTypeAndStudent(
-                        request.SubjectId, request.EnrollmentState, request.SubjectType, student.Id);
+                    var enrollment = await unitOfWork.EnrollmentRepository.GetEnrollmentBySubjectSemesterTypeAndStudentAsync(
+                        request.SubjectId, request.Semester, request.SubjectType, student.Id);
 
                     int contor = 0;
                     foreach (var question in request.Questions.LikertQuestions)

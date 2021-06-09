@@ -16,7 +16,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
         {
         }
 
-        public async Task<Enrollment> GetEnrollment(Guid id)
+        public async Task<Enrollment> GetEnrollmentAsync(Guid id)
         {
             return await Context.Set<Enrollment>()
                .Where(x => x.Id == id && x.TaughtSubject != null)
@@ -34,7 +34,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .FirstAsync();
         }
 
-        public async Task<IEnumerable<Enrollment>> GetAllWithRelatedEntities()
+        public async Task<IEnumerable<Enrollment>> GetAllWithRelatedEntitiesAsync()
         {
             return await Context.Set<Enrollment>()
                 .Where(x => x.TaughtSubject != null)
@@ -53,7 +53,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Enrollment>> GetForStudent(Guid studentId)
+        public async Task<IEnumerable<Enrollment>> GetForStudentAsync(Guid studentId)
         {
             return await Context.Set<Enrollment>()
                 .Where(x => x.Student.Id == studentId && x.TaughtSubject != null)
@@ -72,7 +72,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Enrollment>> GetEnrollmentsForTaughtSubject(Guid id)
+        public async Task<IEnumerable<Enrollment>> GetEnrollmentsForTaughtSubjectAsync(Guid id)
         {
             return await Context.Set<Enrollment>()
                 .Where(x => x.TaughtSubject.Id == id)
@@ -90,7 +90,11 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .ToListAsync();
         }
 
-        public async Task<Enrollment> GetEnrollmentBySubjectStateTypeAndStudent(Guid subjectId, EnrollmentState state, TaughtSubjectType type, Guid studentId)
+        public async Task<Enrollment> GetEnrollmentBySubjectStateTypeAndStudentAsync(
+            Guid subjectId, 
+            EnrollmentState state, 
+            TaughtSubjectType type, 
+            Guid studentId)
         {
             return await Context.Set<Enrollment>()
                 .Where(x => x.TaughtSubject != null &&
@@ -108,7 +112,32 @@ namespace TeacherEvaluation.DataAccess.Repositories
                     .ThenInclude(x => x.Specialization)
                         .ThenInclude(x => x.StudyDomain)
                 .Include(x => x.Grade)
-                .FirstAsync();
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<Enrollment> GetEnrollmentBySubjectSemesterTypeAndStudentAsync(
+           Guid subjectId,
+           Semester semester,
+           TaughtSubjectType type,
+           Guid studentId)
+        {
+            return await Context.Set<Enrollment>()
+                .Where(x => x.TaughtSubject != null &&
+                    x.TaughtSubject.Subject.Id == subjectId &&
+                    x.Semester == semester && x.Student.Id == studentId &&
+                    x.TaughtSubject.Type == type)
+                .Include(x => x.TaughtSubject)
+                    .ThenInclude(x => x.Teacher)
+                        .ThenInclude(x => x.User)
+                .Include(x => x.TaughtSubject)
+                    .ThenInclude(x => x.Subject)
+                .Include(x => x.Student)
+                    .ThenInclude(x => x.User)
+                .Include(x => x.Student)
+                    .ThenInclude(x => x.Specialization)
+                        .ThenInclude(x => x.StudyDomain)
+                .Include(x => x.Grade)
+                .FirstOrDefaultAsync();
         }
     }
 }

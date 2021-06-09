@@ -25,8 +25,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
                 if(subjectExists)
                 {
                     var student = await unitOfWork.StudentRepository.GetByUserIdAsync(request.UserIdForStudent);
-                    var enrollment = await unitOfWork.EnrollmentRepository.GetEnrollmentBySubjectStateTypeAndStudent(
-                        request.SubjectId, request.EnrollmentState, request.SubjectType, student.Id);
+                    var enrollment = await unitOfWork.EnrollmentRepository.GetEnrollmentBySubjectSemesterTypeAndStudentAsync(
+                        request.SubjectId, request.Semester, request.SubjectType, student.Id);
                     var teacherId = enrollment.TaughtSubject.Teacher.Id;
                     return await unitOfWork.TeacherRepository.GetTeacherAsync(teacherId);
                 }

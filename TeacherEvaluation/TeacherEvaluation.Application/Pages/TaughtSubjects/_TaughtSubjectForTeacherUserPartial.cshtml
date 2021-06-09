@@ -1,0 +1,59 @@
+﻿@model TeacherEvaluation.Application.Pages.TaughtSubjects.TaughtSubjectBaseModel
+
+<div class="add-margin-bottom">
+
+    @if (Model.TaughtSubjects.Any())
+    {
+        <table id="taught-subjects-index" class="table table-dark table-striped table-bordered set-max-width">
+            <thead>
+                <tr>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Credits
+                    </th>
+                    <th>
+                        Type
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.TaughtSubjects)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Subject.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Subject.NumberOfCredits)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        @if (Model.CurrentRole.IsTeacher)
+                        {
+                            <td>
+                                <a asp-page="../Students/EnrolledStudents" asp-route-id="@item.Id">Students</a>
+                            </td>
+                        }
+                        else if (Model.CurrentRole.IsAdmin)
+                        {
+                            <td>
+                                <div class="row">
+                                    <a class="nav-link white-link" asp-page="./Details" asp-route-id="@item.Id"><i class="fa fa-info-circle"></i></a>
+                                    <a class="nav-link white-link" asp-page="./Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>
+                                </div>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h5 class="align-text-center">No data is available</h5>
+    }
+</div>

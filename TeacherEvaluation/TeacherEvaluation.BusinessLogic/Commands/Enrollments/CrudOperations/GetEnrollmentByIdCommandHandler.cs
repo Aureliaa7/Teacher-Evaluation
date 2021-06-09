@@ -21,7 +21,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations
             bool enrollmentExists = await unitOfWork.EnrollmentRepository.ExistsAsync(x => x.Id == request.Id);
             if (enrollmentExists)
             {
-                return await unitOfWork.EnrollmentRepository.GetEnrollment(request.Id);
+                return await unitOfWork.EnrollmentRepository.GetEnrollmentAsync(request.Id);
             }
             throw new ItemNotFoundException("The enrollment was not found...");
         }

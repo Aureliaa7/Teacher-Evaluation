@@ -8,7 +8,7 @@ namespace TeacherEvaluation.Domain.DomainEntities
         public Guid Id { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public EnrollmentState EnrollmentState { get; set; }
+        public Semester Semester { get; set; }
         public int MinNumberOfAttendances { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.StudentsForTaughtSub
             bool taughtSubjectExists = await unitOfWork.TaughtSubjectRepository.ExistsAsync(x => x.Id == request.TaughtSubjectId);
             if (taughtSubjectExists)
             {
-                var enrollments = (await unitOfWork.EnrollmentRepository.GetEnrollmentsForTaughtSubject(request.TaughtSubjectId))
+                var enrollments = (await unitOfWork.EnrollmentRepository.GetEnrollmentsForTaughtSubjectAsync(request.TaughtSubjectId))
                                     .Where(e => e.State == EnrollmentState.InProgress);
                 return enrollments.Select(x => x.Student);
             }
