@@ -24,6 +24,8 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .Include(entity => entity.Teacher)
                     .ThenInclude(teacher => teacher.User)
                 .Include(entity => entity.Subject)
+                    .ThenInclude(subject => subject.Specialization)
+                        .ThenInclude(specialization => specialization.StudyDomain)
                 .FirstAsync();
         }
 
@@ -33,6 +35,8 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .Include(entity => entity.Teacher)
                     .ThenInclude(user => user.User)
                 .Include(entity => entity.Subject)
+                    .ThenInclude(subject => subject.Specialization)
+                        .ThenInclude(specialization => specialization.StudyDomain)
                 .AsNoTracking()
                 .ToListAsync();
         }
@@ -44,6 +48,8 @@ namespace TeacherEvaluation.DataAccess.Repositories
               .Include(entity => entity.Teacher)
                   .ThenInclude(teacher => teacher.User)
               .Include(entity => entity.Subject)
+                .ThenInclude(subject => subject.Specialization)
+                        .ThenInclude(specialization => specialization.StudyDomain)
               .FirstAsync();
         }
 
@@ -54,6 +60,8 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .Include(entity => entity.Teacher)
                    .ThenInclude(teacher => teacher.User)
                 .Include(entity => entity.Subject)
+                    .ThenInclude(subject => subject.Specialization)
+                        .ThenInclude(specialization => specialization.StudyDomain)
                 .AsNoTracking()
                 .ToListAsync();
         }

@@ -5,6 +5,19 @@
 }
 
 <div class="container" style="margin-top: -50px; width:650px;">
+    @if (Model.ErrorMessages.Count > 0)
+    {
+        <div class="alert alert-danger">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            @foreach (var error in Model.ErrorMessages)
+            {
+                <span>@error</span>
+                <br />
+                <br />
+            }
+        </div>
+    }
+
     <form method="post" style="height: 250px; width: 550px;">
         <div class="row align-input-center">
             <div class="col-md-6">
@@ -15,11 +28,11 @@
         </div>
 
         <div class="row align-input-center">
-        <div class="col-md-6">
-            <label asp-for="Password"></label><br />
-            <input asp-for="Password" class="form-control">
-            <span asp-validation-for="Password"></span>
-        </div>
+            <div class="col-md-6">
+                <label asp-for="Password"></label><br />
+                <input asp-for="Password" class="form-control">
+                <span asp-validation-for="Password"></span>
+            </div>
         </div>
 
         <div class="row my-row">
@@ -27,19 +40,7 @@
                 <button class="btn btn-dark" id="login-button" type="submit">Login</button>
             </div>
         </div>
-
-        <div class="row my-row">
-            <div class="col-md-3">
-                @if (Model.errorMessages != null)
-                {
-                    @foreach (var error in Model.errorMessages)
-                    {
-                        <span class="field-validation-error">@error</span>
-                    }
-                }
-            </div>
-        </div>
-</form>
+    </form>
 </div>
 
 

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Commands.Accounts;
 
@@ -60,7 +61,9 @@ namespace TeacherEvaluation.Application.Pages.Account
 
                 if (responseError == null)
                 {
-                    return RedirectToPage("../Index");
+                    string role = User.FindFirstValue(ClaimTypes.Role);
+
+                    return RedirectToPage($"/MyProfile/{role}");
                 }
                 ErrorMessages = responseError;
             }

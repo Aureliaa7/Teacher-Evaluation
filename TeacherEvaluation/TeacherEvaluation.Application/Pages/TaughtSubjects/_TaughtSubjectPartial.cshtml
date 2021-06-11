@@ -19,6 +19,12 @@
                     <th>
                         Type
                     </th>
+                    <th>
+                        Specialization
+                    </th>
+                    <th>
+                        Semester
+                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -26,33 +32,39 @@
                 @foreach (var item in Model.TaughtSubjects)
                 {
                     var teacherName = item.Teacher.User.LastName + " " + item.Teacher.User.FathersInitial + " " + item.Teacher.User.FirstName;
-                    <tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject.NumberOfCredits)
+                    </td>
+                    <td>@teacherName</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject.Specialization.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject.Semester)
+                    </td>
+                    @if (Model.CurrentRole.IsTeacher)
+                    {
                         <td>
-                            @Html.DisplayFor(modelItem => item.Subject.Name)
+                            <a asp-page="../Students/EnrolledStudents" asp-route-id="@item.Id">Students</a>
                         </td>
+                    }
+                    else if (Model.CurrentRole.IsAdmin)
+                    {
                         <td>
-                            @Html.DisplayFor(modelItem => item.Subject.NumberOfCredits)
+                            <div class="row">
+                                <a class="nav-link white-link" asp-page="./Details" asp-route-id="@item.Id"><i class="fa fa-info-circle"></i></a>
+                                <a class="nav-link white-link" asp-page="./Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>
+                            </div>
                         </td>
-                        <td>@teacherName</td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Type)
-                        </td>
-                        @if (Model.CurrentRole.IsTeacher)
-                        {
-                            <td>
-                                <a asp-page="../Students/EnrolledStudents" asp-route-id="@item.Id">Students</a>
-                            </td>
-                        }
-                        else if (Model.CurrentRole.IsAdmin)
-                        {
-                            <td>
-                                <div class="row">
-                                    <a class="nav-link white-link" asp-page="./Details" asp-route-id="@item.Id"><i class="fa fa-info-circle"></i></a>
-                                    <a class="nav-link white-link" asp-page="./Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>
-                                </div>
-                            </td>
-                        }
-                    </tr>
+                    }
+                </tr>
                 }
             </tbody>
         </table>

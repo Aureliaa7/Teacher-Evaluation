@@ -51,6 +51,7 @@ namespace TeacherEvaluation.Application.Pages.Subjects
         [Required(ErrorMessage = "Specialization is required")]
         public Guid SpecializationId { get; set; }
 
+        [BindProperty]
         public Specialization Specialization { get; set; }
 
         [BindProperty]

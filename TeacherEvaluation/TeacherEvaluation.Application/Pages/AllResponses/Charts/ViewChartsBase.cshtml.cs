@@ -4,7 +4,7 @@ using Sparc.TagCloud;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TeacherEvaluation.BusinessLogic.Commands.EvaluationForms;
+using TeacherEvaluation.BusinessLogic.Commands.Charts;
 using TeacherEvaluation.BusinessLogic.Commands.TagClouds;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 

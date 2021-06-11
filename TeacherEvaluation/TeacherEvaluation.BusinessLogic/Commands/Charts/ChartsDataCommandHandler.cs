@@ -8,7 +8,7 @@ using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
 
-namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
+namespace TeacherEvaluation.BusinessLogic.Commands.Charts
 {
     public class ChartsDataCommandHandler : IRequestHandler<ChartsDataCommand, IDictionary<string, IDictionary<string, int>>>
     {

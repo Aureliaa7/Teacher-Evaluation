@@ -13,7 +13,7 @@ namespace TeacherEvaluation.Application.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly IMediator mediator;
-        public List<string> errorMessages;
+        public List<string> ErrorMessages;
 
         [BindProperty]
         [DataType(DataType.EmailAddress)]
@@ -28,7 +28,7 @@ namespace TeacherEvaluation.Application.Pages.Account
         public LoginModel(IMediator mediator)
         {
             this.mediator = mediator;
-            errorMessages = new List<string>();
+            ErrorMessages = new List<string>();
         }
 
         public async Task<IActionResult> OnPost()
@@ -42,7 +42,7 @@ namespace TeacherEvaluation.Application.Pages.Account
                 {
                     return RedirectToPage($"../MyProfile/{loginResult.UserRole}");
                 }
-                errorMessages = loginResult.ErrorMessages;
+                ErrorMessages = loginResult.ErrorMessages;
             }
             return Page();
         }

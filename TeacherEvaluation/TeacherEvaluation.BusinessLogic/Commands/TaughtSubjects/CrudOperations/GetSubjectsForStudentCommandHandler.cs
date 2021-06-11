@@ -33,8 +33,11 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
                                                     NumberOfCredits = x.TaughtSubject.Subject.NumberOfCredits,
                                                     TeacherName = x.TaughtSubject.Teacher.User.LastName + " " +
                                                     x.TaughtSubject.Teacher.User.FathersInitial + " " +
-                                                    x.TaughtSubject.Teacher.User.FirstName
+                                                    x.TaughtSubject.Teacher.User.FirstName,
+                                                    StudyYear = x.Student.StudyYear,
+                                                    Semester = x.Semester
                                                 });
+                takenSubjectsVm = takenSubjectsVm.OrderBy(ts => ts.StudyYear);
                 
                 return takenSubjectsVm;
             }

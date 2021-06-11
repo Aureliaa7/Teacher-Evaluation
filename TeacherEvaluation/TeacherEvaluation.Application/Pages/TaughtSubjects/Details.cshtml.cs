@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities;
+using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.TaughtSubjects
 {
@@ -30,9 +31,7 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
             try
             {
                 TaughtSubject taughtSubject = await mediator.Send(command);
-                TeacherName = taughtSubject.Teacher.User.FirstName + " " + taughtSubject.Teacher.User.LastName;
-                SubjectTitle = taughtSubject.Subject.Name;
-                Type = taughtSubject.Type;
+                SetDetails(taughtSubject);
             }
             catch (ItemNotFoundException)
             {

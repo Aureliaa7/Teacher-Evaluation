@@ -30,9 +30,7 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
             try
             {
                 TaughtSubject taughtSubjectToBeDeleted = await mediator.Send(command);
-                TeacherName = taughtSubjectToBeDeleted.Teacher.User.FirstName + " " + taughtSubjectToBeDeleted.Teacher.User.LastName;
-                SubjectTitle = taughtSubjectToBeDeleted.Subject.Name;
-                Type = taughtSubjectToBeDeleted.Type;
+                SetDetails(taughtSubjectToBeDeleted);
             }
             catch (ItemNotFoundException)
             {

@@ -19,6 +19,12 @@
                     <th>
                         Number of attendances
                     </th>
+                    <th>
+                        Year
+                    </th>
+                    <th>
+                        Semester
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -36,6 +42,12 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.NumberOfAttendances)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudyYear)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Semester)
                     </td>
                 </tr>
                 }

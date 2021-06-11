@@ -37,6 +37,7 @@ namespace TeacherEvaluation.Application.Pages.Subjects
                 NumberOfCredits = subjectToBeDeleted.NumberOfCredits;
                 StudyYear = subjectToBeDeleted.StudyYear;
                 Specialization = subjectToBeDeleted.Specialization;
+                Semester = subjectToBeDeleted.Semester;
             }catch(ItemNotFoundException)
             {
                 return RedirectToPage("../Errors/404");

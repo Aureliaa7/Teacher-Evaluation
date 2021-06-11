@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
+namespace TeacherEvaluation.BusinessLogic.Commands.Charts
 {
     public class ChartsDataCommand : IRequest<IDictionary<string, IDictionary<string, int>>>
     {

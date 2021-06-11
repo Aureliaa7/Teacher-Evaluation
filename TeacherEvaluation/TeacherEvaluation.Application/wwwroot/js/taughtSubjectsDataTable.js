@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
     $('#taught-subjects-index').DataTable({
-        'columnDefs': [{ 'orderable': false, 'targets': 4 }]
+        'columnDefs': [{ 'orderable': false, 'targets': 6 }]
     });
 });
