@@ -34,7 +34,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations
                     Type = request.Type
                 };
 
-                Enrollment newEnrollment = new Enrollment()
+                Enrollment newEnrollment = new Enrollment
                 {
                     Student = student,
                     TaughtSubject = taughtSubject,

@@ -28,7 +28,7 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
                 return Page();
             }
 
-            var command = new InsertFromFileCommand
+            var command = new InsertTaughtSubjectsFromFileCommand
             {
                 ExcelFile = ExcelFile
             };

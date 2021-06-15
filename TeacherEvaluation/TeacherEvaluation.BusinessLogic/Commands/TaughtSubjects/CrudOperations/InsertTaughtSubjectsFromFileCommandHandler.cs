@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Extensions;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
 
-namespace TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations
+namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
 {
-    class InsertGradesFromExcelFileCommandHandler : IRequestHandler<InsertGradesFromExcelFileCommand, List<string>>
+    class InsertTaughtSubjectsFromFileCommandHandler : IRequestHandler<InsertTaughtSubjectsFromFileCommand, List<string>>
     {
         private readonly IMediator mediator;
 
-        public InsertGradesFromExcelFileCommandHandler(IMediator mediator)
+        public InsertTaughtSubjectsFromFileCommandHandler(IMediator mediator)
         {
             this.mediator = mediator;
         }
 
-        public async Task<List<string>> Handle(InsertGradesFromExcelFileCommand request, CancellationToken cancellationToken)
+        public async Task<List<string>> Handle(InsertTaughtSubjectsFromFileCommand request, CancellationToken cancellationToken)
         {
             var errors = new List<string>();
             var newfile = new FileInfo(request.ExcelFile.FileName);
@@ -46,16 +46,16 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations
                     {
                         if (workSheet.IsExcelRowValid(i))
                         {
-                            var command = new UpdateGradeCommand
+                            var command = new AssignSubjectCommand
                             {
-                                StudentId = new Guid(workSheet.Cells[i, 1].Value.ToString()),
-                                SubjectId = new Guid(workSheet.Cells[i, 2].Value.ToString()),
-                                Value = Convert.ToInt32(workSheet.Cells[i, 3].Value.ToString()),
-                                Date = DateTime.Parse(workSheet.Cells[i, 4].Value.ToString()),
+                                SubjectId = new Guid(workSheet.Cells[i, 1].Value.ToString()),
+                                TeacherId = new Guid(workSheet.Cells[i, 2].Value.ToString()),
+                                MaxNumberOfAttendances = Convert.ToInt32(workSheet.Cells[i, 4].Value.ToString())
                             };
-                            bool isValidSubjectType = Enum.TryParse(workSheet.Cells[i, 5].Value.ToString().ConvertFirstLetterToUpperCase(),
+
+                            bool isValidType = Enum.TryParse(workSheet.Cells[i, 3].Value.ToString().ConvertFirstLetterToUpperCase(),
                                 out TaughtSubjectType type);
-                            if (isValidSubjectType)
+                            if(isValidType)
                             {
                                 command.Type = type;
                                 await mediator.Send(command);
@@ -63,7 +63,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations
                             else
                             {
                                 errors.Add($"Row {i} from {workSheet.Name} is invalid! There is no subject type named" +
-                                   $"{workSheet.Cells[i, 5].Value}");
+                                    $"{workSheet.Cells[i, 3].Value}");
                             }
                         }
                         else
@@ -73,7 +73,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations
                     }
                     catch (Exception ex)
                     {
-                        errors.Add($"Row {i} from {workSheet.Name}: {ex.Message}");
+                        errors.Add(ex.Message);
                     }
                 }
             }

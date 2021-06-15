@@ -18,6 +18,16 @@
                 <span asp-validation-for="NumberOfAttendances"></span>
             </div>
             <div class="col-md-4">
+                <label asp-for="Semester"></label><br />
+                <select id="type-field" asp-for="Semester" asp-items="Html.GetEnumSelectList<TeacherEvaluation.Domain.DomainEntities.Enums.Semester>()"
+                        class="form-control">
+                    <option selected disabled hidden>Please select</option>
+                </select>
+                <span asp-validation-for="Semester" class="text-danger" />
+            </div>
+        </div>
+        <div class="row my-row">
+            <div class="col-md-4">
                 <label asp-for="StartDate"></label><br />
                 <input asp-for="StartDate" class="form-control">
                 <span asp-validation-for="StartDate"></span>
@@ -34,14 +44,14 @@
         </div>
         @for (var contor = 0; contor < Model.NoLikertQuestions; contor += 1)
         {
-            <div class="row my-row">
-                <div class="col-md-10">
-                    <label>Question @(contor+1)</label>
-                    <textarea id="question" asp-for="LikertQuestions[contor]" class="form-control" rows="3" cols="50"
-                              required style="resize: none;"></textarea>
-                    <span asp-validation-for="LikertQuestions[contor]"></span>
-                </div>
+        <div class="row my-row">
+            <div class="col-md-10">
+                <label>Question @(contor+1)</label>
+                <textarea id="question" asp-for="LikertQuestions[contor]" class="form-control" rows="3" cols="50"
+                          required style="resize: none;"></textarea>
+                <span asp-validation-for="LikertQuestions[contor]"></span>
             </div>
+        </div>
         }
 
         <div class="row margin-left-85 add-top-margin">
@@ -49,14 +59,14 @@
         </div>
         @for (var contor = 0; contor < Model.NoFreeFormQuestions; contor += 1)
         {
-            <div class="row my-row">
-                <div class="col-md-10">
-                    <label>Question @(contor+1)</label>
-                    <textarea id="question" asp-for="FreeFormQuestions[contor]" class="form-control" rows="3" cols="50" 
-                              required style="resize: none;"></textarea>
-                    <span asp-validation-for="FreeFormQuestions[contor]"></span>
-                </div>
+        <div class="row my-row">
+            <div class="col-md-10">
+                <label>Question @(contor+1)</label>
+                <textarea id="question" asp-for="FreeFormQuestions[contor]" class="form-control" rows="3" cols="50"
+                          required style="resize: none;"></textarea>
+                <span asp-validation-for="FreeFormQuestions[contor]"></span>
             </div>
+        </div>
         }
 
         <div class="row my-row">

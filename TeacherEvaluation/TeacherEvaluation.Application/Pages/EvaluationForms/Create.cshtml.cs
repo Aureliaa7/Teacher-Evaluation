@@ -10,6 +10,7 @@ using TeacherEvaluation.BusinessLogic;
 using TeacherEvaluation.BusinessLogic.Commands.EvaluationForms;
 using Microsoft.AspNetCore.Authorization;
 using TeacherEvaluation.Application.Validations;
+using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.EvaluationForms
 {
@@ -50,6 +51,9 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
         [ValidateEndDateRange]
         public DateTime EndDate { get; set; }
 
+        [BindProperty]
+        [Required(ErrorMessage = "The semester is required")]
+        public Semester Semester { get; set; }
 
         public CreateModel(IMediator mediator)
         {
@@ -60,19 +64,19 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
         {
         }
 
-        //todo maybe the semester for the evaluation form should be given by Dean
         public async Task<IActionResult> OnPostAsync()
         {
             if (ModelState.IsValid)
             {
                 LikertQuestions.AddRange(FreeFormQuestions);
 
-                CreateFormCommand command = new CreateFormCommand
+                CreateEvaluationFormCommand command = new CreateEvaluationFormCommand
                 {
                     Questions = LikertQuestions,
                     MinNumberOfAttendances = (int)NumberOfAttendances,
                     StartDate = StartDate,
-                    EndDate = EndDate
+                    EndDate = EndDate,
+                    Semester = Semester
                 };
                 await mediator.Send(command);
                 return RedirectToPage("/MyProfile/Dean");

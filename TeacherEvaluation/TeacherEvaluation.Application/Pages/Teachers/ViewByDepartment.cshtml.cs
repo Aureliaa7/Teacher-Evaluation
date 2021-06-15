@@ -1,33 +1,24 @@
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations;
-using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.Teachers
 {
     [Authorize(Roles = "Administrator")]
-    public class ViewByDepartmentModel : PageModel
+    public class ViewByDepartmentModel : TeachersListModel
     {
-        private readonly IMediator mediator;
         public bool TableIsVisible;
 
         [BindProperty]
         [EnumDataType(typeof(Department))]
         public Department Department { get; set; }
 
-        [BindProperty]
-        public IEnumerable<Teacher> Teachers { get; set; }
-
-        public ViewByDepartmentModel(IMediator mediator)
+        public ViewByDepartmentModel(IMediator mediator) : base(mediator)
         {
-            this.mediator = mediator;
-            Teachers = new List<Teacher>();
         }
 
         public void OnGet()

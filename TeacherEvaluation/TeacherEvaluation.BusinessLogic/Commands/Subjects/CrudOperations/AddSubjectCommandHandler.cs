@@ -20,7 +20,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Subjects.CrudOperations
         {
             bool specializationExists = await unitOfWork.SpecializationRepository.ExistsAsync(x => x.Id == request.SpecializationId);
             if (specializationExists) {
-                var specialization = await unitOfWork.SpecializationRepository.GetSpecialization(request.SpecializationId);
+                var specialization = await unitOfWork.SpecializationRepository.GetSpecializationAsync(request.SpecializationId);
                 Subject newSubject = new Subject
                 {
                     Name = request.Name,

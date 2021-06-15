@@ -1,11 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using TeacherEvaluation.BusinessLogic.Extensions;
 using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.Identity;
@@ -14,13 +12,13 @@ using TeacherEvaluation.EmailSender.NotificationModel;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
 {
-    public class CreateFormCommandHandler : AsyncRequestHandler<CreateFormCommand>
+    public class CreateEvaluationFormCommandHandler : AsyncRequestHandler<CreateEvaluationFormCommand>
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly INotificationService notificationService;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public CreateFormCommandHandler(
+        public CreateEvaluationFormCommandHandler(
             IUnitOfWork unitOfWork, 
             INotificationService notificationService,
             UserManager<ApplicationUser> userManager)
@@ -30,13 +28,13 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
             this.userManager = userManager;
         }
 
-        protected override async Task Handle(CreateFormCommand request, CancellationToken cancellationToken)
+        protected override async Task Handle(CreateEvaluationFormCommand request, CancellationToken cancellationToken)
         {
             Form form = new Form
             {
                 StartDate = request.StartDate,
                 EndDate = request.EndDate,
-                Semester = SemesterExtension.GetSemesterByDate(DateTime.UtcNow),
+                Semester = request.Semester,
                 MinNumberOfAttendances = request.MinNumberOfAttendances
             };
             await unitOfWork.FormRepository.AddAsync(form);

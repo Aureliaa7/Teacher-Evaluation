@@ -62,7 +62,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
                 bool specializationExists = await unitOfWork.SpecializationRepository.ExistsAsync(x => x.Id == request.SpecializationId);
                 if (specializationExists)
                 {
-                    var specialization = await unitOfWork.SpecializationRepository.GetSpecialization(request.SpecializationId);
+                    var specialization = await unitOfWork.SpecializationRepository.GetSpecializationAsync(request.SpecializationId);
 
                     Student student = new Student
                     {
@@ -76,8 +76,9 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
                     await EnrollStudentToCourses(student.Id, request.SpecializationId, request.StudyYear);
                     await unitOfWork.SaveChangesAsync();
 
-                    Notification notification = EmailSending.ConfigureAccountCreationMessage(confirmationUrl, newApplicationUser, request.Password);
-                    emailService.Send(notification);
+                    //TODO uncomment the following lines
+                    //Notification notification = EmailSending.ConfigureAccountCreationMessage(confirmationUrl, newApplicationUser, request.Password);
+                    //emailService.Send(notification);
 
                     errorMessages = null;
                 }
@@ -88,6 +89,12 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
             }
             else
             {
+                var user = await unitOfWork.UserRepository.GetAsync(x => x.Email.Equals(request.Email));
+                if (user != null)
+                {
+                    await unitOfWork.UserRepository.RemoveAsync(user.Id);
+                    await unitOfWork.SaveChangesAsync();
+                }
                 foreach (var errorMessage in result.Errors)
                 {
                     errorMessages.Add(errorMessage.Description);

@@ -7,7 +7,8 @@ namespace TeacherEvaluation.DataAccess.Repositories.Interfaces
 {
     public interface ISpecializationRepository : IRepository<Specialization>
     {
-        Task<IEnumerable<Specialization>> GetAllWithRelatedEntities();
-        Task<Specialization> GetSpecialization(Guid id);
+        Task<IEnumerable<Specialization>> GetAllWithRelatedEntitiesAsync();
+        Task<Specialization> GetSpecializationAsync(Guid id);
+        Task<Specialization> GetByNameAsync(string name);
     }
 }

@@ -14,5 +14,6 @@ namespace TeacherEvaluation.DataAccess.Repositories.Interfaces
         Task<T> RemoveAsync(Guid id);
         T Update(T entity);
         Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate);
+        Task<T> GetAsync(Expression<Func<T, bool>> predicate);
     }
 }

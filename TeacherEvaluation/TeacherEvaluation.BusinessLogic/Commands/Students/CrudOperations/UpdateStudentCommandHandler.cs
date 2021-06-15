@@ -22,7 +22,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
             bool specializationExists = await unitOfWork.SpecializationRepository.ExistsAsync(x => x.Id == request.SpecializationId);
             if (studentExists && specializationExists)
             {
-                var specialization = await unitOfWork.SpecializationRepository.GetSpecialization(request.SpecializationId);
+                var specialization = await unitOfWork.SpecializationRepository.GetSpecializationAsync(request.SpecializationId);
                 Student studentToBeUpdated = await unitOfWork.StudentRepository.GetStudentAsync(request.Id);
                 studentToBeUpdated.User.PIN = request.PIN;
                 studentToBeUpdated.Specialization = specialization;

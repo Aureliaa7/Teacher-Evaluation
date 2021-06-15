@@ -1,11 +1,9 @@
 ﻿using MediatR;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
-using TeacherEvaluation.BusinessLogic.Extensions;
 using TeacherEvaluation.DataAccess.UnitOfWork;
 using TeacherEvaluation.Domain.DomainEntities;
 
@@ -27,12 +25,14 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations
             {
                 var student = await unitOfWork.StudentRepository.GetByUserIdAsync(request.UserId);
                 var allEnrollments = await unitOfWork.EnrollmentRepository.GetForStudentAsync(student.Id);
-                var currentSemester = SemesterExtension.GetSemesterByDate(DateTime.UtcNow);
-                var enrollments = allEnrollments.Where(e => e.Semester == currentSemester);
-                var subjectEnrollments = enrollments.GroupBy(x => x.TaughtSubject.Subject.Name)
-                    .Select(x => x.First()).ToList();
 
-                return subjectEnrollments.Select(x => x.TaughtSubject.Subject).ToList();
+                var filteredEnrollments = allEnrollments.Where(e => e.TaughtSubject.Subject.StudyYear == student.StudyYear &&
+                                                    e.TaughtSubject.Subject.Semester == request.Semester)
+                                                    .GroupBy(e => e.TaughtSubject.Subject.Name)
+                                                    .Select(e => e.First())
+                                                    .ToList();
+
+                return filteredEnrollments.Select(x => x.TaughtSubject.Subject).ToList();
             }
             throw new ItemNotFoundException("The user was not found...");
         }

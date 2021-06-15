@@ -23,7 +23,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
             bool domainExists = await unitOfWork.StudyDomainRepository.ExistsAsync(x => x.Id == request.StudyDomainId);
             if(domainExists)
             {
-                var allSpecializations = await unitOfWork.SpecializationRepository.GetAllWithRelatedEntities();
+                var allSpecializations = await unitOfWork.SpecializationRepository.GetAllWithRelatedEntitiesAsync();
                 return allSpecializations.Where(x => x.StudyDomain.Id == request.StudyDomainId);
             }
             throw new ItemNotFoundException("The study domain was not found...");
