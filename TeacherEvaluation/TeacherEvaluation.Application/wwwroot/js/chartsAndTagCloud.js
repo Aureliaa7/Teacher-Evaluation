@@ -7,7 +7,10 @@
 
     remove_tag_cloud();
     create_charts(search_details, layoutID);
-    create_tag_cloud(search_details, layoutID);
+    setTimeout(function () {
+        create_tag_cloud(search_details, layoutID);
+    }, 3000); 
+   // create_tag_cloud(search_details, layoutID);
 }
 
 function create_charts(search_details, layoutId) {
@@ -39,6 +42,7 @@ function create_charts(search_details, layoutId) {
 
                         var contor2 = 0;
                         var optionAnswersWithNoAnswers = result[question];
+
                         for (var optionAnswer in optionAnswersWithNoAnswers) {
                             var numberOfAnswers = optionAnswersWithNoAnswers[optionAnswer];
                             if (numberOfAnswers > 0) {

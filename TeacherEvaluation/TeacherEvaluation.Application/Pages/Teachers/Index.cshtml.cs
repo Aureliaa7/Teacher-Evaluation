@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
@@ -15,16 +14,10 @@ using TeacherEvaluation.Domain.DomainEntities.Enums;
 namespace TeacherEvaluation.Application.Pages.Teachers
 {
     [Authorize(Roles = "Administrator")]
-    public class IndexModel : PageModel
+    public class IndexModel : TeachersListModel
     {
-        private readonly IMediator mediator;
-
-        public IEnumerable<Teacher> Teachers { get; set; }
-
-        public IndexModel(IMediator mediator)
+        public IndexModel(IMediator mediator) : base(mediator)
         {
-            this.mediator = mediator;
-            Teachers = new List<Teacher>();
         }
 
         public async Task OnGetAsync()

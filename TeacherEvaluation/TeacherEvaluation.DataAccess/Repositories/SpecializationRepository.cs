@@ -14,7 +14,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
         public SpecializationRepository(ApplicationDbContext context) : base(context)
         {
         }
-        public async Task<IEnumerable<Specialization>> GetAllWithRelatedEntities()
+        public async Task<IEnumerable<Specialization>> GetAllWithRelatedEntitiesAsync()
         {
             return await Context.Set<Specialization>()
                 .Include(x => x.StudyDomain)
@@ -22,12 +22,20 @@ namespace TeacherEvaluation.DataAccess.Repositories
                 .ToListAsync();
         }
 
-        public async Task<Specialization> GetSpecialization(Guid id)
+        public async Task<Specialization> GetSpecializationAsync(Guid id)
         {
             return await Context.Set<Specialization>()
                 .Where(x => x.Id == id)
                 .Include(x => x.StudyDomain)
                 .FirstAsync();
+        }
+
+        public async Task<Specialization> GetByNameAsync(string name)
+        {
+            return await Context.Set<Specialization>()
+                .Where(x => x.Name.Equals(name))
+                .Include(x => x.StudyDomain)
+                .FirstOrDefaultAsync();
         }
     }
 }

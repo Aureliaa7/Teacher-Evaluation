@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using TeacherEvaluation.BusinessLogic.Extensions;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
@@ -40,26 +41,40 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
             {
                 int totalRows = workSheet.Dimension.Rows;
 
-                // i starts from 2 because the first row contains the column names
                 for (int i = 2; i <= totalRows; i++)
                 {
-                    var command = new TeacherRegistrationCommand
+                    if (workSheet.IsExcelRowValid(i))
                     {
-                        FirstName = workSheet.Cells[i, 1].Value.ToString(),
-                        LastName = workSheet.Cells[i, 2].Value.ToString(),
-                        FathersInitial = workSheet.Cells[i, 3].Value.ToString(),
-                        Email = workSheet.Cells[i, 4].Value.ToString(),
-                        PIN = workSheet.Cells[i, 5].Value.ToString(),
-                        Password = workSheet.Cells[i, 6].Value.ToString(),
-                        ConfirmationUrlTemplate = request.ConfirmationUrlTemplate,
-                        Degree = workSheet.Cells[i, 7].Value.ToString()
-                    };
-                    Enum.TryParse(workSheet.Cells[i, 8].Value.ToString(), out Department department);
-                    command.Department = department;
-                    var _errors = await mediator.Send(command);
-                    if (_errors != null)
+                        var command = new TeacherRegistrationCommand
+                        {
+                            FirstName = workSheet.Cells[i, 1].Value.ToString(),
+                            LastName = workSheet.Cells[i, 2].Value.ToString(),
+                            FathersInitial = workSheet.Cells[i, 3].Value.ToString(),
+                            Email = workSheet.Cells[i, 4].Value.ToString(),
+                            PIN = workSheet.Cells[i, 5].Value.ToString(),
+                            Password = workSheet.Cells[i, 6].Value.ToString(),
+                            ConfirmationUrlTemplate = request.ConfirmationUrlTemplate,
+                            Degree = workSheet.Cells[i, 7].Value.ToString()
+                        };
+                        bool isValidDepartment = Enum.TryParse(workSheet.Cells[i, 8].Value.ToString().ToUpper(), out Department department);
+                        if(isValidDepartment)
+                        {
+                            command.Department = department;
+                            var _errors = await mediator.Send(command);
+                            if (_errors != null)
+                            {
+                                errors.AddRange(_errors);
+                            }
+                        }
+                        else
+                        {
+                            errors.Add($"Row {i} from {workSheet.Name} is invalid! There is no department named" +
+                                $"{workSheet.Cells[i, 8].Value}");
+                        }
+                    }
+                    else
                     {
-                        errors.AddRange(_errors);
+                        errors.Add($"Row {i} from {workSheet.Name} is invalid! There may be missing data.");
                     }
                 }
             }

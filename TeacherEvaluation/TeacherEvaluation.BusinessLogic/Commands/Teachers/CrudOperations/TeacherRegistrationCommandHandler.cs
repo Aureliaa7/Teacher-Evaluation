@@ -59,13 +59,20 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
                 await unitOfWork.TeacherRepository.AddAsync(teacher);
                 await unitOfWork.SaveChangesAsync();
 
-                Notification notification = EmailSending.ConfigureAccountCreationMessage(confirmationUrl, newApplicationUser, request.Password);
-                emailService.Send(notification);
+                //TODO uncomment the following lines
+                // Notification notification = EmailSending.ConfigureAccountCreationMessage(confirmationUrl, newApplicationUser, request.Password);
+                //emailService.Send(notification);
 
                 errorMessages = null;
             }
             else
             {
+                var user = await unitOfWork.UserRepository.GetAsync(x => x.Email.Equals(request.Email));
+                if (user != null)
+                {
+                    await unitOfWork.UserRepository.RemoveAsync(user.Id);
+                    await unitOfWork.SaveChangesAsync();
+                }
                 foreach (var errorMessage in result.Errors)
                 {
                     errorMessages.Add(errorMessage.Description);

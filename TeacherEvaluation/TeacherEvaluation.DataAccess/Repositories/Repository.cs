@@ -63,5 +63,10 @@ namespace TeacherEvaluation.DataAccess.Repositories
             var exists = Context.Set<T>().Where(predicate);
             return Task.FromResult(exists.Any());
         }
+
+        public async Task<T> GetAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await Context.Set<T>().FirstOrDefaultAsync(predicate);
+        }
     }
 }

@@ -86,9 +86,9 @@ function draw_column_chart(result) {
 
             var options = {
                 title: "Top teachers",
-                width: 600,
-                height: 400,
-                bar: { groupWidth: "50" },
+                width: 800,
+                height: 580,
+                bar: { groupWidth: "80%" },
                 backgroundColor: { fill: "#e9e9e9" },
                 vAxis: {
                     gridlines: { count: max }, 
@@ -111,7 +111,7 @@ function create_div() {
     var div = document.createElement('div');
     div.id = "ranking-div";
     var mainElement = document.getElementById("mainElementDeanLayout");
-    div.setAttribute("style", "width: 420px; height: 420px; margin-left: 60px; margin-top: 100px;");
+    div.setAttribute("style", "width: 800px; height: 580px; margin-left: 170px; margin-top: 70px; margin-bottom: 85px;");
     mainElement.appendChild(div);
     return div;
 }

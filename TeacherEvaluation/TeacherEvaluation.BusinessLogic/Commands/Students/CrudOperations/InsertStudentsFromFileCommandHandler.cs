@@ -5,16 +5,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using TeacherEvaluation.BusinessLogic.Extensions;
+using TeacherEvaluation.DataAccess.UnitOfWork;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
 {
     class InsertStudentsFromFileCommandHandler : IRequestHandler<InsertStudentsFromFileCommand, List<string>>
     {
         private readonly IMediator mediator;
+        private readonly IUnitOfWork unitOfWork;
 
-        public InsertStudentsFromFileCommandHandler(IMediator mediator)
+        public InsertStudentsFromFileCommandHandler(IMediator mediator, IUnitOfWork unitOfWork)
         {
             this.mediator = mediator;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<List<string>> Handle(InsertStudentsFromFileCommand request, CancellationToken cancellationToken)
@@ -43,24 +47,41 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
                 {
                     try
                     {
-                        var command = new StudentRegistrationCommand
+                        if (workSheet.IsExcelRowValid(i))
                         {
-                            FirstName = workSheet.Cells[i, 1].Value.ToString(),
-                            LastName = workSheet.Cells[i, 2].Value.ToString(),
-                            FathersInitial = workSheet.Cells[i, 3].Value.ToString(),
-                            Email = workSheet.Cells[i, 4].Value.ToString(),
-                            PIN = workSheet.Cells[i, 5].Value.ToString(),
-                            Group = workSheet.Cells[i, 6].Value.ToString(),
-                            Password = workSheet.Cells[i, 7].Value.ToString(),
-                            SpecializationId = new Guid(workSheet.Cells[i, 8].Value.ToString()),
-                            StudyYear = Convert.ToInt16(workSheet.Cells[i, 9].Value),
-                            ConfirmationUrlTemplate = request.ConfirmationUrlTemplate
-                        };
+                            string specializationName = workSheet.Cells[i, 8].Value.ToString();
+                            var specialization = await unitOfWork.SpecializationRepository.GetByNameAsync(specializationName);
+                            if (specialization != null)
+                            {
+                                var a = workSheet.Cells[i, 1]?.Value.ToString();
+                                var command = new StudentRegistrationCommand
+                                {
+                                    FirstName = workSheet.Cells[i, 1].Value.ToString(),
+                                    LastName = workSheet.Cells[i, 2].Value.ToString(),
+                                    FathersInitial = workSheet.Cells[i, 3].Value.ToString(),
+                                    Email = workSheet.Cells[i, 4].Value.ToString(),
+                                    PIN = workSheet.Cells[i, 5].Value.ToString(),
+                                    Group = workSheet.Cells[i, 6].Value.ToString(),
+                                    Password = workSheet.Cells[i, 7].Value.ToString(),
+                                    SpecializationId = specialization.Id,
+                                    StudyYear = Convert.ToInt16(workSheet.Cells[i, 9].Value),
+                                    ConfirmationUrlTemplate = request.ConfirmationUrlTemplate
+                                };
 
-                        var _errors = await mediator.Send(command);
-                        if (_errors != null)
+                                var _errors = await mediator.Send(command);
+                                if (_errors != null)
+                                {
+                                    errors.AddRange(_errors);
+                                }
+                            }
+                            else
+                            {
+                                errors.Add($"Specialization {specializationName} was not found!");
+                            }
+                        }
+                        else 
                         {
-                            errors.AddRange(_errors);
+                            errors.Add($"Row {i} from {workSheet.Name} is invalid! There may be missing data.");
                         }
                     }
                     catch(Exception ex)
