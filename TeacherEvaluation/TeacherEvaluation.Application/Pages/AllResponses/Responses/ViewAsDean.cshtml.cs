@@ -4,10 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations;
-using TeacherEvaluation.BusinessLogic.Exceptions;
 
 namespace TeacherEvaluation.Application.Pages.AllResponses.Responses
 {
@@ -24,18 +21,7 @@ namespace TeacherEvaluation.Application.Pages.AllResponses.Responses
         public async Task OnGet(Guid formId)
         {
             FormId = formId;
-            try
-            {
-                GetAllTeachersCommand getTeachersCommand = new GetAllTeachersCommand();
-                var teachers = await mediator.Send(getTeachersCommand);
-
-                Teachers = teachers.Select(x => new SelectListItem
-                {
-                    Value = x.Id.ToString(),
-                    Text = x.User.FirstName + " " + x.User.LastName
-                }).ToList();
-            }
-            catch (ItemNotFoundException) { }
+            Teachers = await GetAllTeachersAsync();
         }
     }
 }

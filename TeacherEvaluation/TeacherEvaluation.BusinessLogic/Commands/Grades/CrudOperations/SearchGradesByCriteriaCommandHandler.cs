@@ -33,7 +33,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations
                 throw new ItemNotFoundException("The subject was not found!");
             }
             
-            var taughtSubject = (await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsByCriteria(
+            var taughtSubject = (await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsByCriteriaAsync(
                 ts => ts.Subject.Id == request.SubjectId && ts.Teacher.Id == request.TeacherId &&
                 ts.Type == request.Type)).FirstOrDefault();
             if(taughtSubject == null)

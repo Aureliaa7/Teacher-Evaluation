@@ -6,6 +6,6 @@ namespace TeacherEvaluation.DataAccess.Repositories.Interfaces
 {
     public interface IFormRepository : IRepository<Form>
     {
-        Task<Form> GetByDate(DateTime currentDate);
+        Task<Form> GetByDateAsync(DateTime currentDate);
     }
 }

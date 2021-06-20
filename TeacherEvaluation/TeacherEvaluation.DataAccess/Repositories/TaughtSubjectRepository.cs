@@ -53,7 +53,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
               .FirstAsync();
         }
 
-        public async Task<IEnumerable<TaughtSubject>> GetTaughtSubjectsByCriteria(Expression<Func<TaughtSubject, bool>> predicate)
+        public async Task<IEnumerable<TaughtSubject>> GetTaughtSubjectsByCriteriaAsync(Expression<Func<TaughtSubject, bool>> predicate)
         {
             return await Context.Set<TaughtSubject>()
                 .Where(predicate)

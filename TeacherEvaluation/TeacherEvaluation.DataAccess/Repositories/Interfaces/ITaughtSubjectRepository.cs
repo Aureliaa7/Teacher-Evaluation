@@ -12,6 +12,6 @@ namespace TeacherEvaluation.DataAccess.Repositories.Interfaces
         Task<TaughtSubject> GetTaughtSubjectAsync(Guid id);
         Task<IEnumerable<TaughtSubject>> GetAllWithRelatedEntitiesAsync();
         Task<TaughtSubject> GetTaughtSubjectAsync(Guid teacherId, Guid subjectId, TaughtSubjectType type);
-        Task<IEnumerable<TaughtSubject>> GetTaughtSubjectsByCriteria(Expression<Func<TaughtSubject, bool>> predicate);
+        Task<IEnumerable<TaughtSubject>> GetTaughtSubjectsByCriteriaAsync(Expression<Func<TaughtSubject, bool>> predicate);
     }
 }

@@ -14,7 +14,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
         {
         }
 
-        public async Task<Form> GetByDate(DateTime currentDate)
+        public async Task<Form> GetByDateAsync(DateTime currentDate)
         {
             return await Context.Set<Form>()
                 .Where(x => x.StartDate <= currentDate && x.EndDate > currentDate)

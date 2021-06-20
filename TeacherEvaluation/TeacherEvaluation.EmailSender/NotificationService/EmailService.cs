@@ -2,6 +2,7 @@
 using MimeKit;
 using System.Linq;
 using TeacherEvaluation.EmailSender.NotificationModel;
+using TeacherEvaluation.EmailSender.NotificationService.Interfaces;
 
 namespace TeacherEvaluation.EmailSender.NotificationService
 {

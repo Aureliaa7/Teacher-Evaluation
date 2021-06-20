@@ -22,25 +22,25 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Responses
 
         public async Task<IDictionary<string, ResponseVm>> Handle(ResponsesCommand request, CancellationToken cancellationToken)
         {
-            bool formExists = await unitOfWork.FormRepository.ExistsAsync(f => f.Id == request.FormId);
-            bool teacherExists = await unitOfWork.TeacherRepository.ExistsAsync(t => t.Id == request.TeacherId);
+            bool formExists = await unitOfWork.FormRepository.ExistsAsync(f => f.Id == request.ResponseRetrievalCriteria.FormId);
+            bool teacherExists = await unitOfWork.TeacherRepository.ExistsAsync(t => t.Id == request.ResponseRetrievalCriteria.TeacherId);
             IDictionary<string, ResponseVm> responsesInfo = new Dictionary<string, ResponseVm>();
             IEnumerable<AnswerToQuestion> filteredResponses = new List<AnswerToQuestion>();
 
             if (formExists && teacherExists)
             {
-                var responses = await unitOfWork.AnswerRepository.GetByFormIdAsync(request.FormId);
-                if (request.TaughtSubjectId.Equals("All"))
+                var responses = await unitOfWork.AnswerRepository.GetByFormIdAsync(request.ResponseRetrievalCriteria.FormId);
+                if (request.ResponseRetrievalCriteria.TaughtSubjectId.Equals("All"))
                 {
-                    filteredResponses = responses.Where(r => r.Enrollment.TaughtSubject.Teacher.Id == request.TeacherId);
+                    filteredResponses = responses.Where(r => r.Enrollment.TaughtSubject.Teacher.Id == request.ResponseRetrievalCriteria.TeacherId);
                 }
                 // if the "Please select" option is selected instead of the subject
-                else if (request.TaughtSubjectId.Equals("default"))
+                else if (request.ResponseRetrievalCriteria.TaughtSubjectId.Equals("default"))
                 {
                 }
-                else if (await unitOfWork.TaughtSubjectRepository.ExistsAsync(ts => ts.Id == new Guid(request.TaughtSubjectId)))
+                else if (await unitOfWork.TaughtSubjectRepository.ExistsAsync(ts => ts.Id == new Guid(request.ResponseRetrievalCriteria.TaughtSubjectId)))
                 {
-                    filteredResponses = responses.Where(r => r.Enrollment.TaughtSubject.Id == new Guid(request.TaughtSubjectId));
+                    filteredResponses = responses.Where(r => r.Enrollment.TaughtSubject.Id == new Guid(request.ResponseRetrievalCriteria.TaughtSubjectId));
                 }
                 responsesInfo = GetResponsesInfo(filteredResponses);
                 return responsesInfo;

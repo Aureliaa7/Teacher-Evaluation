@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using TeacherEvaluation.BusinessLogic;
 using TeacherEvaluation.BusinessLogic.Commands.Responses;
 
 namespace TeacherEvaluation.Application.Pages.AllResponses.Responses
@@ -20,9 +21,12 @@ namespace TeacherEvaluation.Application.Pages.AllResponses.Responses
             {
                 ResponsesCommand command = new ResponsesCommand
                 {
-                    FormId = new Guid(formId),
-                    TeacherId = new Guid(teacherId),
-                    TaughtSubjectId = taughtSubjectId
+                    ResponseRetrievalCriteria = new EvaluationFormResponseRetrievalCriteria
+                    {
+                        FormId = new Guid(formId),
+                        TeacherId = new Guid(teacherId),
+                        TaughtSubjectId = taughtSubjectId
+                    }
                 };
 
                 var responsesInfo = await mediator.Send(command);

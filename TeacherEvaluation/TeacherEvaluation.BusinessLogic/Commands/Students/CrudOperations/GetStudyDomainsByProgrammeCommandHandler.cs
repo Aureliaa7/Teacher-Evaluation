@@ -17,7 +17,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
         }
         public async Task<IEnumerable<StudyDomain>> Handle(GetStudyDomainsByProgrammeCommand request, CancellationToken cancellationToken)
         {
-            return await unitOfWork.StudyDomainRepository.GetByStudyProgramme(request.StudyProgramme);
+            return await unitOfWork.StudyDomainRepository.GetByStudyProgrammeAsync(request.StudyProgramme);
         }
     }
 }

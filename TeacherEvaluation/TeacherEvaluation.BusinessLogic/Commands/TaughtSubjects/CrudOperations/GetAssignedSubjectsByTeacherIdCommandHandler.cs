@@ -24,7 +24,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
                 throw new Exception("The teacher was not found!");
             }
 
-            var taughtSubjects = await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsByCriteria(
+            var taughtSubjects = await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsByCriteriaAsync(
                 ts => ts.Teacher.Id == request.TeacherId);
 
             var subjectsAndIds = new Dictionary<string, string>();

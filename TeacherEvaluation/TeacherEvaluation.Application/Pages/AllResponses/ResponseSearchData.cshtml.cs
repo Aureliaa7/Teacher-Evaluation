@@ -1,7 +1,13 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations;
+using TeacherEvaluation.BusinessLogic.Exceptions;
 
 namespace TeacherEvaluation.Application.Pages.AllResponses
 {
@@ -21,6 +27,25 @@ namespace TeacherEvaluation.Application.Pages.AllResponses
         public ResponseSearchDataModel(IMediator mediator)
         {
             this.mediator = mediator;
+        }
+
+        public async Task<List<SelectListItem>> GetAllTeachersAsync()
+        {
+            var teachers = new List<SelectListItem>();
+            try
+            {
+                GetAllTeachersCommand getTeachersCommand = new GetAllTeachersCommand();
+                var _teachers = await mediator.Send(getTeachersCommand);
+                var orderedTeachers = _teachers.OrderBy(t => t.User.FirstName).ThenBy(t => t.User.LastName);
+
+                teachers = orderedTeachers.Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.User.FirstName + " " + x.User.LastName
+                }).ToList();
+            }
+            catch (ItemNotFoundException) { }
+            return teachers;
         }
     }
 }

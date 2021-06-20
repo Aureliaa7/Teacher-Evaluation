@@ -24,7 +24,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
             if(teacherExists)
             {
                 IDictionary<string, string> taughtSubjectsIdsAndTitles = new Dictionary<string, string>();
-                var taughtSubjects = await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsByCriteria(ts => ts.Teacher.Id == request.TeacherId);
+                var taughtSubjects = await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsByCriteriaAsync(ts => ts.Teacher.Id == request.TeacherId);
                 taughtSubjects = taughtSubjects.OrderBy(ts => ts.Subject.Name);
                 foreach(var ts in taughtSubjects)
                 {

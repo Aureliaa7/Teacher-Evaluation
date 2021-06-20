@@ -77,14 +77,14 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Ranking
                     }
                 case RankingType.Courses:
                     {
-                        var taughtSubjects = (await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsByCriteria(
+                        var taughtSubjects = (await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsByCriteriaAsync(
                             ts => ts.Type == TaughtSubjectType.Course)).DistinctBy(ts => ts.Teacher.Id);
                         teachers = taughtSubjects.Select(ts => ts.Teacher);
                         break;
                     }
                 case RankingType.Laboratories:
                     {
-                        var taughtSubjects = (await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsByCriteria(
+                        var taughtSubjects = (await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsByCriteriaAsync(
                             ts => ts.Type == TaughtSubjectType.Laboratory)).DistinctBy(ts => ts.Teacher.Id);
                         teachers = taughtSubjects.Select(ts => ts.Teacher);
                         break;

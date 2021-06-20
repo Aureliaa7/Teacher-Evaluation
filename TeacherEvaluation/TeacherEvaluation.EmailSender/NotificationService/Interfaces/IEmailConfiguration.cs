@@ -1,6 +1,6 @@
-﻿namespace TeacherEvaluation.EmailSender.NotificationService
+﻿namespace TeacherEvaluation.EmailSender.NotificationService.Interfaces
 {
-    public class IEmailConfiguration
+    public interface IEmailConfiguration
     {
         public string SmtpServer { get; set; }
         public int SmtpPort { get; set; }

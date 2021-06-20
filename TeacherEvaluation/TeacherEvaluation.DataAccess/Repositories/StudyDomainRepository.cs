@@ -15,7 +15,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
         {
         }
 
-        public async Task<IEnumerable<StudyDomain>> GetByStudyProgramme(StudyProgramme studyProgramme)
+        public async Task<IEnumerable<StudyDomain>> GetByStudyProgrammeAsync(StudyProgramme studyProgramme)
         {
             return await Context.Set<StudyDomain>()
                 .Where(x => x.StudyProgramme == studyProgramme)

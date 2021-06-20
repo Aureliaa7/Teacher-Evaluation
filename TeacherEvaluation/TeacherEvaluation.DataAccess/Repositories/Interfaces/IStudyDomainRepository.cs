@@ -7,6 +7,6 @@ namespace TeacherEvaluation.DataAccess.Repositories.Interfaces
 {
     public interface IStudyDomainRepository : IRepository<StudyDomain>
     {
-        Task<IEnumerable<StudyDomain>> GetByStudyProgramme(StudyProgramme studyProgramme);
+        Task<IEnumerable<StudyDomain>> GetByStudyProgrammeAsync(StudyProgramme studyProgramme);
     }
 }

@@ -11,8 +11,8 @@ using TeacherEvaluation.Domain.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TeacherEvaluation.EmailSender.NotificationService;
-using TeacherEvaluation.EmailSender.NotificationModel;
 using TeacherEvaluation.DataAccess.UnitOfWork;
+using TeacherEvaluation.EmailSender.NotificationService.Interfaces;
 
 namespace TeacherEvaluation.Application
 {

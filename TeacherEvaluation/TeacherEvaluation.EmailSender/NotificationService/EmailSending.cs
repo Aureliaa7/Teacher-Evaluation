@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using TeacherEvaluation.Domain.Identity;
+﻿using TeacherEvaluation.Domain.Identity;
 using TeacherEvaluation.EmailSender.NotificationModel;
 
 namespace TeacherEvaluation.EmailSender.NotificationService

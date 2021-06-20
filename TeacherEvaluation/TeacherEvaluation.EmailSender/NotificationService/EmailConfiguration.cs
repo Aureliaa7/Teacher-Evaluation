@@ -1,4 +1,6 @@
-﻿namespace TeacherEvaluation.EmailSender.NotificationService
+﻿using TeacherEvaluation.EmailSender.NotificationService.Interfaces;
+
+namespace TeacherEvaluation.EmailSender.NotificationService
 {
     public class EmailConfiguration : IEmailConfiguration
     {

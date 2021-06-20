@@ -23,7 +23,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations
             if (userExists)
             {
                 var teacher = await unitOfWork.TeacherRepository.GetByUserIdAsync(request.UserId);
-                return await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsByCriteria(ts => ts.Teacher.Id == teacher.Id &&
+                return await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsByCriteriaAsync(ts => ts.Teacher.Id == teacher.Id &&
                                                                                             ts.Type == request.Type);
             }
             throw new ItemNotFoundException("The teacher was not found...");

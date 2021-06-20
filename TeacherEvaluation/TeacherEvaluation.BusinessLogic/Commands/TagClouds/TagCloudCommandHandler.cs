@@ -26,28 +26,29 @@ namespace TeacherEvaluation.BusinessLogic.Commands.TagClouds
 
         public async Task<IEnumerable<TagCloudTag>> Handle(TagCloudCommand request, CancellationToken cancellationToken)
         {
-            bool formExists = await unitOfWork.FormRepository.ExistsAsync(f => f.Id == request.FormId);
-            bool teacherExists = await unitOfWork.TeacherRepository.ExistsAsync(t => t.Id == request.TeacherId);
+            bool formExists = await unitOfWork.FormRepository.ExistsAsync(f => f.Id == request.ResponseRetrievalCriteria.FormId);
+            bool teacherExists = await unitOfWork.TeacherRepository.ExistsAsync(t => t.Id == request.ResponseRetrievalCriteria.TeacherId);
             IEnumerable<TagCloudTag> tags = new List<TagCloudTag>();
 
             if (formExists && teacherExists)
             {
-                var questions = (await unitOfWork.QuestionRepository.GetQuestionsWithRelatedEntitiesAsync(request.FormId))
+                var questions = (await unitOfWork.QuestionRepository.GetQuestionsWithRelatedEntitiesAsync(request.ResponseRetrievalCriteria.FormId))
                                 .Where(q => q.HasFreeFormAnswer)
                                 .ToList();
 
                 IEnumerable<string> freeFormTexts = new List<string>();
-                if (request.TaughtSubjectId.Equals("All"))
+                if (request.ResponseRetrievalCriteria.TaughtSubjectId.Equals("All"))
                 {
-                    freeFormTexts = await GetTagCloudDataOverallAsync(request.TeacherId, questions);
+                    freeFormTexts = await GetTagCloudDataOverallAsync(request.ResponseRetrievalCriteria.TeacherId, questions);
                 }
                 // if the "Please select" option is selected instead of the subject
-                else if (request.TaughtSubjectId.Equals("default"))
+                else if (request.ResponseRetrievalCriteria.TaughtSubjectId.Equals("default"))
                 {
                 }
-                else if (await unitOfWork.TaughtSubjectRepository.ExistsAsync(ts => ts.Id == new Guid(request.TaughtSubjectId)))
+                else if (await unitOfWork.TaughtSubjectRepository.ExistsAsync(ts => ts.Id == new Guid(request.ResponseRetrievalCriteria.TaughtSubjectId)))
                 {
-                    freeFormTexts = await GetTagCloudDataForTaughtSubjectAsync(request.TeacherId, new Guid(request.TaughtSubjectId), questions);
+                    freeFormTexts = await GetTagCloudDataForTaughtSubjectAsync(request.ResponseRetrievalCriteria.TeacherId, 
+                        new Guid(request.ResponseRetrievalCriteria.TaughtSubjectId), questions);
                 }
 
                 var analyzer = new TagCloudAnalyzer();

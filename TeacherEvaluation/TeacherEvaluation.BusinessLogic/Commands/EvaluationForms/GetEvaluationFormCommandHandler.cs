@@ -23,7 +23,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
             bool isFormAvailable = await unitOfWork.FormRepository.ExistsAsync(x => x.StartDate <= currentDate && x.EndDate > currentDate);
             if (isFormAvailable)
             {
-                return await unitOfWork.FormRepository.GetByDate(currentDate);
+                return await unitOfWork.FormRepository.GetByDateAsync(currentDate);
             }
             throw new NoEvaluationFormException("No form available for now");
         }

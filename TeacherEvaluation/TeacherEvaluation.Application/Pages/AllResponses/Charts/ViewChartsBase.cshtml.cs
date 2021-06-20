@@ -4,6 +4,7 @@ using Sparc.TagCloud;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TeacherEvaluation.BusinessLogic;
 using TeacherEvaluation.BusinessLogic.Commands.Charts;
 using TeacherEvaluation.BusinessLogic.Commands.TagClouds;
 using TeacherEvaluation.BusinessLogic.Exceptions;
@@ -27,9 +28,12 @@ namespace TeacherEvaluation.Application.Pages.AllResponses.Charts
                 {
                     ChartsDataCommand command = new ChartsDataCommand
                     {
-                        FormId = new Guid(formId),
-                        TeacherId = new Guid(teacherId),
-                        TaughtSubjectId = taughtSubjectId
+                        ResponseRetrievalCriteria = new EvaluationFormResponseRetrievalCriteria
+                        {
+                            FormId = new Guid(formId),
+                            TeacherId = new Guid(teacherId),
+                            TaughtSubjectId = taughtSubjectId
+                        }
                     };
 
                     questionsAndResponses = await mediator.Send(command);
@@ -50,9 +54,12 @@ namespace TeacherEvaluation.Application.Pages.AllResponses.Charts
                 {
                     TagCloudCommand tagCloudCommand = new TagCloudCommand
                     {
-                        FormId = new Guid(formId),
-                        TeacherId = new Guid(teacherId),
-                        TaughtSubjectId = taughtSubjectId
+                        ResponseRetrievalCriteria = new EvaluationFormResponseRetrievalCriteria
+                        {
+                            FormId = new Guid(formId),
+                            TeacherId = new Guid(teacherId),
+                            TaughtSubjectId = taughtSubjectId
+                        } 
                     };
                     tags = await mediator.Send(tagCloudCommand);
                 }

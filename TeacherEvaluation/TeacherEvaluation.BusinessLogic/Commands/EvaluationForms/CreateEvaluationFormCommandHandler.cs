@@ -9,6 +9,7 @@ using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.Identity;
 using TeacherEvaluation.EmailSender;
 using TeacherEvaluation.EmailSender.NotificationModel;
+using TeacherEvaluation.EmailSender.NotificationService.Interfaces;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
 {

@@ -14,6 +14,7 @@ using TeacherEvaluation.Domain.DomainEntities.Enums;
 using TeacherEvaluation.Domain.Identity;
 using TeacherEvaluation.EmailSender.NotificationModel;
 using TeacherEvaluation.EmailSender.NotificationService;
+using TeacherEvaluation.EmailSender.NotificationService.Interfaces;
 
 namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
 {
@@ -108,7 +109,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
             var subjects = await unitOfWork.SubjectRepository.GetSubjectsByCriteriaAsync(specializationId, studyYear);
             foreach (var subject in subjects)
             {
-                var taughtSubject = (await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsByCriteria(ts => ts.Subject.Id == subject.Id &&
+                var taughtSubject = (await unitOfWork.TaughtSubjectRepository.GetTaughtSubjectsByCriteriaAsync(ts => ts.Subject.Id == subject.Id &&
                                                                              ts.Type == TaughtSubjectType.Course)).FirstOrDefault();
                 EnrollStudentCommand command = new EnrollStudentCommand
                 {
