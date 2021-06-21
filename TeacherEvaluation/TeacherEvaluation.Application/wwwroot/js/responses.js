@@ -52,7 +52,6 @@ function create_responses_table(search_details, layoutId) {
 
 function update() {
     clear();
-    $("#selected-subject-field").val("default");
     get_taught_subjects_by_teacher_id();
 }
 
