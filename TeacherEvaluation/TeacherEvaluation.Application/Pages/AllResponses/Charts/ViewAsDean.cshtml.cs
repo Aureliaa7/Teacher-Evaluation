@@ -1,9 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace TeacherEvaluation.Application.Pages.AllResponses.Charts
@@ -11,9 +8,6 @@ namespace TeacherEvaluation.Application.Pages.AllResponses.Charts
     [Authorize(Roles = "Dean")]
     public class ViewAsDeanModel : ViewChartsBaseModel
     {
-        [BindProperty]
-        public List<SelectListItem> Teachers { get; set; } = new List<SelectListItem>();
-
         public ViewAsDeanModel(IMediator mediator) : base(mediator)
         {
         }
@@ -21,6 +15,7 @@ namespace TeacherEvaluation.Application.Pages.AllResponses.Charts
         public async Task OnGetAsync(Guid formId)
         {
             FormId = formId;
+            JSFunctionToBeCalled = $"draw_charts_and_tag_cloud('{FormId}', 'mainElementDeanLayout')";
             Teachers = await GetAllTeachersAsync();
         }
     }

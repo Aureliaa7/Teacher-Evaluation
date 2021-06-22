@@ -55,6 +55,7 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
                 {
                     return RedirectToPage("../Errors/404");
                 }
+                catch (Exception) { }
 
                 return RedirectToPage("../Enrollments/Index");
             }

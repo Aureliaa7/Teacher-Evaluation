@@ -36,16 +36,9 @@ namespace TeacherEvaluation.Application.Pages.Students
             try
             {
                 Student student = await mediator.Send(command);
-                FirstName = student.User.FirstName;
-                LastName = student.User.LastName;
-                Email = student.User.Email;
-                FathersInitial = student.User.FathersInitial;
-                PIN = student.User.PIN;
-                Group = student.Group;
-                Specialization = student.Specialization;
+                InitializeDetails(student);
                 StudyDomainId = StudyDomainId;
                 SpecializationId = student.Specialization.Id;
-                StudyYear = student.StudyYear;
 
                 InitializeStudyProgrammes(Specialization.StudyDomain.StudyProgramme.ToString());
             }

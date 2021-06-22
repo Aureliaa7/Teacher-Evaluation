@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations;
+using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.Students
@@ -33,7 +34,10 @@ namespace TeacherEvaluation.Application.Pages.Students
                     StudyYear = (int)StudyYear
                 };
                 CurrentRole.IsAdmin = true;
-                Students = await mediator.Send(command);
+                try {
+                    Students = await mediator.Send(command);
+                }
+                catch(ItemNotFoundException) { }
             }
         }
 

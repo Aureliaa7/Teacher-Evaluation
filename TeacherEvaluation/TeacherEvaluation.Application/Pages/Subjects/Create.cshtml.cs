@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TeacherEvaluation.BusinessLogic.Commands.Subjects.CrudOperations;
+using TeacherEvaluation.BusinessLogic.Exceptions;
 
 namespace TeacherEvaluation.Application.Pages.Subjects
 {
@@ -30,8 +31,15 @@ namespace TeacherEvaluation.Application.Pages.Subjects
                     SpecializationId = SpecializationId,
                     Semester = Semester
                 };
-                await mediator.Send(command);
-                return RedirectToPage("/Subjects/Index");
+                try
+                {
+                    await mediator.Send(command);
+                    return RedirectToPage("/Subjects/Index");
+                }
+                catch(ItemNotFoundException)
+                {
+                    return RedirectToPage("/Errors/404");
+                }
             }
             return Page();
         }

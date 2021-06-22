@@ -87,5 +87,26 @@ namespace TeacherEvaluation.Application.Pages.Enrollments
             this.mediator = mediator;
             Enrollments = new List<Enrollment>();
         }
+
+        protected void InitializeDetails(Enrollment enrollment)
+        {
+            string studentFirstName = enrollment.Student.User.FirstName;
+            string studentFathersInitial = enrollment.Student.User.FathersInitial;
+            string studentLastName = enrollment.Student.User.LastName;
+
+            string teacherFirstName = enrollment.TaughtSubject.Teacher.User.FirstName;
+            string teacherFathersInitial = enrollment.TaughtSubject.Teacher.User.FathersInitial;
+            string teacherLastName = enrollment.TaughtSubject.Teacher.User.LastName;
+
+            TeacherName = string.Join(" ", teacherLastName, teacherFathersInitial, teacherFirstName);
+            SubjectTitle = enrollment.TaughtSubject.Subject.Name;
+            Type = enrollment.TaughtSubject.Type;
+            StudentName = string.Join(" ", studentLastName, studentFathersInitial, studentFirstName);
+            Group = enrollment.Student.Group;
+            Specialization = enrollment.Student.Specialization.Name;
+            StudyDomain = enrollment.Student.Specialization.StudyDomain.Name;
+            StudyProgramme = enrollment.Student.Specialization.StudyDomain.StudyProgramme;
+            StudyYear = enrollment.Student.StudyYear;
+        }
     }
 }

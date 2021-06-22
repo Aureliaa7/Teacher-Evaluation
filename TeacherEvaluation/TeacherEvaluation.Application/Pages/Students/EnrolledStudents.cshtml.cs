@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Commands.Students.StudentsForTaughtSubject;
+using TeacherEvaluation.BusinessLogic.Exceptions;
 
 namespace TeacherEvaluation.Application.Pages.Students
 {
@@ -16,7 +17,11 @@ namespace TeacherEvaluation.Application.Pages.Students
         public async Task OnGet(Guid? id)
         {
             GetCurrentlyEnrolledStudentsCommand command = new GetCurrentlyEnrolledStudentsCommand { TaughtSubjectId = (Guid)id };
-            Students = await mediator.Send(command);
+            try
+            {
+                Students = await mediator.Send(command);
+            }
+            catch (ItemNotFoundException) { }
         }
     }
 }

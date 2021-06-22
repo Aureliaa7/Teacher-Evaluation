@@ -6,6 +6,10 @@
     Layout = "~/Pages/Shared/_TeacherLayout.cshtml";
 }
 
+<partial name="_ViewAsTeacherPartial" />
+<partial name="_ChartsTagCloudPartial" />
+
+
 @section scripts{
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="~/js/chartsAndTagCloud.js"></script>
@@ -17,16 +21,3 @@
         });
     </script>
 }
-
-<h3 class="row align-input-center" style="margin-top: 70px;">Select the subject</h3>
-<hr />
-<input id="teacher-field" type="hidden" asp-for="TeacherId" />
-
-<div class="col-md-4 teacher-dropdown">
-    <select id="selected-subject-field" asp-for="SelectedSubjectId" class="form-control"
-            onchange="get_responses('@Model.FormId', 'mainElementTeacherLayout')">
-        <option selected disabled hidden>Please select</option>
-    </select>
-</div>
-
-<partial name="_ChartsTagCloudPartial" />

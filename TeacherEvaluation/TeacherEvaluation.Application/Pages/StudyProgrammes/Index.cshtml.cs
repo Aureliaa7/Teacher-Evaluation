@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,13 +9,6 @@ namespace TeacherEvaluation.Application.Pages.StudyProgrammes
 {
     public class IndexModel : PageModel
     {
-        private readonly IMediator mediator;
-
-        public IndexModel(IMediator mediator)
-        {
-            this.mediator = mediator;
-        }
-
         public IActionResult OnGet()
         {
             var studyProgrammes = new SelectList(Enum.GetValues(typeof(StudyProgramme)).OfType<Enum>()

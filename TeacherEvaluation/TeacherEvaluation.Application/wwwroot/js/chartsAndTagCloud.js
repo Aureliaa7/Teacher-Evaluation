@@ -1,4 +1,4 @@
-﻿function get_responses(formID, layoutID) {
+﻿function draw_charts_and_tag_cloud(formID, layoutID) {
     var search_details = {
         teacherId: $("#teacher-field").val(),
         formId: formID,

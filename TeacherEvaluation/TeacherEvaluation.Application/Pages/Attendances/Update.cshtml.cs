@@ -19,7 +19,7 @@ using TeacherEvaluation.Domain.DomainEntities.Enums;
 namespace TeacherEvaluation.Application.Pages.Attendances
 {
     [Authorize(Roles = "Teacher")]
-    public class CreateModel : PageModel
+    public class UpdateModel : PageModel
     {
         private readonly IMediator mediator;
 
@@ -46,7 +46,7 @@ namespace TeacherEvaluation.Application.Pages.Attendances
         [Display(Name = "Number of attendances")]
         public int? NumberOfAttendances { get; set; } = null;
 
-        public CreateModel(IMediator mediator)
+        public UpdateModel(IMediator mediator)
         {
             this.mediator = mediator;
         }

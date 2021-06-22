@@ -38,7 +38,8 @@ namespace TeacherEvaluation.Application.Pages.Subjects
                 StudyYear = subjectToBeDeleted.StudyYear;
                 Specialization = subjectToBeDeleted.Specialization;
                 Semester = subjectToBeDeleted.Semester;
-            }catch(ItemNotFoundException)
+            }
+            catch(ItemNotFoundException)
             {
                 return RedirectToPage("../Errors/404");
             }

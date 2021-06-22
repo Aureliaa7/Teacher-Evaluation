@@ -30,14 +30,7 @@ namespace TeacherEvaluation.Application.Pages.Students
             try
             {
                 Student student = await mediator.Send(command);
-                FirstName = student.User.FirstName;
-                LastName = student.User.LastName;
-                Email = student.User.Email;
-                FathersInitial = student.User.FathersInitial;
-                PIN = student.User.PIN;
-                Group = student.Group;
-                Specialization = student.Specialization;
-                StudyYear = student.StudyYear;
+                InitializeDetails(student);
             }
             catch (ItemNotFoundException)
             {

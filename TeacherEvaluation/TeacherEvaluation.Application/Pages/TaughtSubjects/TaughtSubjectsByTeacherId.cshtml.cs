@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations;
+using TeacherEvaluation.BusinessLogic.Exceptions;
 
 /// <summary>
 /// It is used for the second dropdown(the one with courses and laboratories)
@@ -29,9 +30,12 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
                 {
                     TeacherId = new Guid(teacherId)
                 };
-                var taughtSubjectsIdsAndTitles = await mediator.Send(command);
-                return new JsonResult(taughtSubjectsIdsAndTitles);
-
+                try
+                {
+                    var taughtSubjectsIdsAndTitles = await mediator.Send(command);
+                    return new JsonResult(taughtSubjectsIdsAndTitles);
+                }
+                catch (ItemNotFoundException) { }
             }
             return new JsonResult("");
         }

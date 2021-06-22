@@ -25,6 +25,7 @@ namespace TeacherEvaluation.Application.Pages.AllResponses.Responses
             try
             {
                 TeacherId = await mediator.Send(getTeacherIdCommand);
+                JSFunctionToBeCalled = $"get_responses('{FormId}', 'mainElementTeacherLayout')";
             }
             catch (ItemNotFoundException)
             {

@@ -25,8 +25,9 @@ namespace TeacherEvaluation.Application.Pages.AllResponses.Charts
             try
             {
                 TeacherId = await mediator.Send(getTeacherIdCommand);
+                JSFunctionToBeCalled = $"draw_charts_and_tag_cloud('{FormId}', 'mainElementTeacherLayout')";
             }
-            catch(ItemNotFoundException)
+            catch (ItemNotFoundException)
             {
             }
         }

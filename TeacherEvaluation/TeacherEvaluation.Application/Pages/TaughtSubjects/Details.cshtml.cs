@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using TeacherEvaluation.BusinessLogic.Commands.TaughtSubjects.CrudOperations;
 using TeacherEvaluation.BusinessLogic.Exceptions;
 using TeacherEvaluation.Domain.DomainEntities;
-using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.TaughtSubjects
 {

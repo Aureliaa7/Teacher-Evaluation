@@ -87,5 +87,17 @@ namespace TeacherEvaluation.Application.Pages.Students
             Students = new List<Student>();
             CurrentRole = new CurrentRole();
         }
+
+        protected void InitializeDetails(Student student)
+        {
+            FirstName = student.User.FirstName;
+            LastName = student.User.LastName;
+            Email = student.User.Email;
+            FathersInitial = student.User.FathersInitial;
+            PIN = student.User.PIN;
+            Group = student.Group;
+            Specialization = student.Specialization;
+            StudyYear = student.StudyYear;
+        }
     }
 }

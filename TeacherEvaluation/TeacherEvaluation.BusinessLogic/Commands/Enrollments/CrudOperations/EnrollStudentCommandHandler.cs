@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Exceptions;
@@ -19,6 +20,13 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Enrollments.CrudOperations
 
         protected override async Task Handle(EnrollStudentCommand request, CancellationToken cancellationToken)
         {
+            bool enrollmentExists = await unitOfWork.EnrollmentRepository.ExistsAsync(e => e.Student.Id == request.StudentId && e.TaughtSubject.Teacher.Id == request.TeacherId
+            && e.TaughtSubject.Subject.Id == request.SubjectId);
+            if (enrollmentExists)
+            {
+                throw new Exception("The enrollment already exists!");
+            }
+
             bool teacherExists = await unitOfWork.TaughtSubjectRepository.ExistsAsync(x => x.Teacher.Id == request.TeacherId);
             bool subjectExists = await unitOfWork.TaughtSubjectRepository.ExistsAsync(x => x.Subject.Id == request.SubjectId);
             bool studentExists = await unitOfWork.StudentRepository.ExistsAsync(x => x.Id == request.StudentId);

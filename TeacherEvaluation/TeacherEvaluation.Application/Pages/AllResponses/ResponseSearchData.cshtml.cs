@@ -24,11 +24,16 @@ namespace TeacherEvaluation.Application.Pages.AllResponses
         [BindProperty]
         public string SelectedSubjectId { get; set; }
 
+        [BindProperty]
+        public List<SelectListItem> Teachers { get; set; } = new List<SelectListItem>();
+
+        public string JSFunctionToBeCalled { get; set; }
+
         public ResponseSearchDataModel(IMediator mediator)
         {
             this.mediator = mediator;
         }
-
+        
         public async Task<List<SelectListItem>> GetAllTeachersAsync()
         {
             var teachers = new List<SelectListItem>();

@@ -30,13 +30,7 @@ namespace TeacherEvaluation.Application.Pages.Teachers
             try
             {
                 Teacher teacherToBeDeleted = await mediator.Send(command);
-                FirstName = teacherToBeDeleted.User.FirstName;
-                LastName = teacherToBeDeleted.User.LastName;
-                Email = teacherToBeDeleted.User.Email;
-                FathersInitial = teacherToBeDeleted.User.FathersInitial;
-                PIN = teacherToBeDeleted.User.PIN;
-                Department = teacherToBeDeleted.Department;
-                Degree = teacherToBeDeleted.Degree;
+                InitializeDetails(teacherToBeDeleted);
             }
             catch (ItemNotFoundException)
             {

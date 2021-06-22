@@ -22,15 +22,15 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations
 
         protected async override Task Handle(UpdateGradeCommand request, CancellationToken cancellationToken)
         {
+            if (request.Value <= 0 || request.Value > 10)
+            {
+                throw new Exception($"Grade {request.Value} is invalid!");
+            }
+
             bool studentExists = await unitOfWork.StudentRepository.ExistsAsync(x => x.Id == request.StudentId);
             bool subjectExists = await unitOfWork.SubjectRepository.ExistsAsync(x => x.Id == request.SubjectId);
             if (studentExists && subjectExists)
             {
-                if(request.Value <= 0 || request.Value > 10)
-                {
-                    throw new Exception($"Grade {request.Value} is invalid!");
-                }
-
                 IEnumerable<Enrollment> enrollments = await unitOfWork.EnrollmentRepository.GetForStudentAsync(request.StudentId);
                 Enrollment enrollment = enrollments.Where(x => x.TaughtSubject.Subject.Id == request.SubjectId && x.TaughtSubject.Type == request.Type).First();
                 enrollment.Grade.Value = request.Value;

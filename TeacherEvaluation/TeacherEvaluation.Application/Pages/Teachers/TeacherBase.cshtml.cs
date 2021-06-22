@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using TeacherEvaluation.Domain.DomainEntities;
 using TeacherEvaluation.Domain.DomainEntities.Enums;
 
 namespace TeacherEvaluation.Application.Pages.Teachers
@@ -59,5 +60,16 @@ namespace TeacherEvaluation.Application.Pages.Teachers
         [Required(ErrorMessage = "Department is required")]
         [EnumDataType(typeof(Department))]
         public Department Department { get; set; }
+
+        protected void InitializeDetails(Teacher teacher)
+        {
+            FirstName = teacher.User.FirstName;
+            LastName = teacher.User.LastName;
+            Email = teacher.User.Email;
+            FathersInitial = teacher.User.FathersInitial;
+            PIN = teacher.User.PIN;
+            Degree = teacher.Degree;
+            Department = teacher.Department;
+        }
     }
 }

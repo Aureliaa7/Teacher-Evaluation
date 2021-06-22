@@ -41,9 +41,9 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
             await unitOfWork.FormRepository.AddAsync(form);
 
             var freeFormQuestions = request.Questions.TakeLast(Constants.NumberOfFreeFormQuestions);
-            await SaveQuestions(freeFormQuestions, true, form);
+            await AddQuestions(freeFormQuestions, true, form);
             var questionsWithAnswerOption = request.Questions.Take(Constants.NumberOfLikertQuestions);
-            await SaveQuestions(questionsWithAnswerOption, false, form);
+            await AddQuestions(questionsWithAnswerOption, false, form);
             await unitOfWork.SaveChangesAsync();
 
             // notify students
@@ -54,7 +54,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
             notificationService.Send(notification);
         }
 
-        private async Task SaveQuestions(IEnumerable<string> questions, bool haveTextAnswer, Form form)
+        private async Task AddQuestions(IEnumerable<string> questions, bool haveTextAnswer, Form form)
         {
             foreach (var question in questions)
             {

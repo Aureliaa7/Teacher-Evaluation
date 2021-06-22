@@ -26,7 +26,8 @@ namespace TeacherEvaluation.Application.Pages.TaughtSubjects
                 GetTaughtSubjectsByTypeCommand command = new GetTaughtSubjectsByTypeCommand { UserId = currentUserId, Type = TaughtSubjectType.Course };
                 TaughtSubjects = await mediator.Send(command);
                 CurrentRole.IsTeacher = true;
-            }catch (ItemNotFoundException)
+            }
+            catch (ItemNotFoundException)
             {
                 return RedirectToPage("../Errors/404");
             }

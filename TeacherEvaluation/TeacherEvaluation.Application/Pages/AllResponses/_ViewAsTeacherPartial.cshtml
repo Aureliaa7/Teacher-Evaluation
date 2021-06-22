@@ -1,0 +1,12 @@
+﻿@model TeacherEvaluation.Application.Pages.AllResponses.ResponseSearchDataModel
+
+<h3 class="row align-input-center" style="margin-top: 70px;">Select the subject</h3>
+<hr />
+<input id="teacher-field" type="hidden" asp-for="TeacherId" />
+
+<div class="col-md-4 teacher-dropdown add-margin-bottom-40">
+    <select id="selected-subject-field" asp-for="SelectedSubjectId" class="form-control"
+            onchange=@Model.JSFunctionToBeCalled>
+        <option selected disabled hidden>Please select</option>
+    </select>
+</div>

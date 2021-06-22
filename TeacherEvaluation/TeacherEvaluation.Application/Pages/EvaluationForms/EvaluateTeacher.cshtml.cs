@@ -216,14 +216,11 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
             {
                 await mediator.Send(command);
             }
-            catch (ArgumentOutOfRangeException)
-            {
-                return RedirectToPage("/MyProfile/Student");
-            }
             catch (ItemNotFoundException)
             {
                 return RedirectToPage("/Errors/404");
             }
+            catch(Exception) { }
             return RedirectToPage("/MyProfile/Student");
         }
     }

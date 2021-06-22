@@ -19,7 +19,6 @@ namespace TeacherEvaluation.Application.Pages.Ranking
     public class ViewModel : PageModel
     {
         private readonly IMediator mediator;
-        private Guid formId;
 
         public ViewModel(IMediator mediator)
         {
@@ -34,7 +33,6 @@ namespace TeacherEvaluation.Application.Pages.Ranking
 
         public async Task OnGetAsync(Guid formId)
         {
-            this.formId = formId;
             var command = new LikertQuestionsCommand { FormId = formId } ;
             var likertQuestions = await mediator.Send(command);
             LikertQuestions = likertQuestions.Select(x =>
