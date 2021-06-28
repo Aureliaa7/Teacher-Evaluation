@@ -60,9 +60,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
                 await unitOfWork.TeacherRepository.AddAsync(teacher);
                 await unitOfWork.SaveChangesAsync();
 
-                //TODO uncomment the following lines
-                // Notification notification = EmailSending.ConfigureAccountCreationMessage(confirmationUrl, newApplicationUser, request.Password);
-                //emailService.Send(notification);
+                Notification notification = EmailSending.ConfigureAccountCreationMessage(confirmationUrl, newApplicationUser, request.Password);
+                emailService.Send(notification);
 
                 errorMessages = null;
             }

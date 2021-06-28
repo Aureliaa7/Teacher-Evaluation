@@ -77,9 +77,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
                     await EnrollStudentToCourses(student.Id, request.SpecializationId, request.StudyYear);
                     await unitOfWork.SaveChangesAsync();
 
-                    //TODO uncomment the following lines
-                    //Notification notification = EmailSending.ConfigureAccountCreationMessage(confirmationUrl, newApplicationUser, request.Password);
-                    //emailService.Send(notification);
+                    Notification notification = EmailSending.ConfigureAccountCreationMessage(confirmationUrl, newApplicationUser, request.Password);
+                    emailService.Send(notification);
 
                     errorMessages = null;
                 }
