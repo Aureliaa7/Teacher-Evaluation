@@ -5,18 +5,22 @@ namespace TeacherEvaluation.EmailSender.NotificationService
 {
     public class EmailSending
     {
-        public static Notification ConfigureAccountCreationMessage(string url, ApplicationUser newApplicationUser, string password)
+        public static EmailMessage ConfigureAccountCreationMessage(string url, ApplicationUser newApplicationUser, string password)
         {
-            Notification notification = NotifyAccountCreation(url, newApplicationUser, password);
+            EmailMessage notification = NotifyAccountCreation(url, newApplicationUser, password);
 
-            NotificationAddress recipient = GetRecipientAddress(newApplicationUser);
+            EmailAddress recipient = GetRecipientAddress(newApplicationUser);
             notification.ToAddresses.Add(recipient);
-            notification.FromAddress = new NotificationAddress("noreply-teacher.evaluation", "teacher.evaluation.project2021@gmail.com");
+            notification.FromAddress = new EmailAddress
+            {
+                Name = "noreply-teacher.evaluation",
+                Address = "teacher.evaluation.project2021@gmail.com"
+            };
 
             return notification;
         }
 
-        private static Notification NotifyAccountCreation(string url, ApplicationUser newApplicationUser, string password)
+        private static EmailMessage NotifyAccountCreation(string url, ApplicationUser newApplicationUser, string password)
         {
             string bodyResourceName = "TeacherEvaluation.EmailSender.NotificationTemplates.EmailConfirmationNotificationBody.txt";
             string subjectResourceName = "TeacherEvaluation.EmailSender.NotificationTemplates.EmailConfirmationNotificationSubject.txt";
@@ -27,18 +31,22 @@ namespace TeacherEvaluation.EmailSender.NotificationService
             string loginPageUrl = url;
             string accountPassword = password;
 
-            return new Notification
+            return new EmailMessage
             {
                 Subject = notificationSubject,
                 Content = string.Format(notificationBody, recipientName, loginPageUrl, accountPassword)
             };
         }
 
-        private static NotificationAddress GetRecipientAddress(ApplicationUser newApplicationUser)
+        private static EmailAddress GetRecipientAddress(ApplicationUser newApplicationUser)
         {
             ApplicationUser user = newApplicationUser;
             string name = string.Join(" ", newApplicationUser.LastName, newApplicationUser.FathersInitial, newApplicationUser.FirstName);
-            return new NotificationAddress(name, user.Email);
+            return new EmailAddress
+            {
+                Name = name,
+                Address = user.Email
+            };
         }
     }
 }

@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.6" />
-    <PackageReference Include="Sparc.TagCloud" Version="0.0.1" />
   </ItemGroup>
 
 </Project>

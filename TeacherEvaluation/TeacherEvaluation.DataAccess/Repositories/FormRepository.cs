@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using TeacherEvaluation.DataAccess.Data;
 using TeacherEvaluation.Domain.DomainEntities;
@@ -17,8 +16,7 @@ namespace TeacherEvaluation.DataAccess.Repositories
         public async Task<Form> GetByDateAsync(DateTime currentDate)
         {
             return await Context.Set<Form>()
-                .Where(x => x.StartDate <= currentDate && x.EndDate > currentDate)
-                .FirstAsync();
+                .FirstOrDefaultAsync(x => x.StartDate <= currentDate && x.EndDate > currentDate);
         }
     }
 }

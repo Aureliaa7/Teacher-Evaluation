@@ -52,10 +52,10 @@ namespace TeacherEvaluation.DataAccess.Repositories
             return entityToBeDeleted;
         }
 
-        public T Update(T entity)
+        public Task<T> UpdateAsync(T entity)
         {
             Context.Set<T>().Update(entity);
-            return entity;
+            return Task.FromResult(entity);
         }
 
         public Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate)

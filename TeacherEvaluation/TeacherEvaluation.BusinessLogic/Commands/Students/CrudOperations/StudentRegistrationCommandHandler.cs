@@ -22,11 +22,11 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly INotificationService emailService;
+        private readonly IEmailService emailService;
         private readonly IMediator mediator;
 
         public StudentRegistrationCommandHandler(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, 
-            INotificationService emailService, IMediator mediator)
+            IEmailService emailService, IMediator mediator)
         {
             this.unitOfWork = unitOfWork;
             this.userManager = userManager;
@@ -77,8 +77,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
                     await EnrollStudentToCourses(student.Id, request.SpecializationId, request.StudyYear);
                     await unitOfWork.SaveChangesAsync();
 
-                    Notification notification = EmailSending.ConfigureAccountCreationMessage(confirmationUrl, newApplicationUser, request.Password);
-                    emailService.Send(notification);
+                    EmailMessage notification = EmailSending.ConfigureAccountCreationMessage(confirmationUrl, newApplicationUser, request.Password);
+                    await emailService.SendAsync(notification);
 
                     errorMessages = null;
                 }

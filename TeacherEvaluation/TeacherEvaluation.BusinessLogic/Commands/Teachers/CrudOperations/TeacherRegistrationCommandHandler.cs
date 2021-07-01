@@ -17,8 +17,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly INotificationService emailService;
-        public TeacherRegistrationCommandHandler(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, INotificationService emailService)
+        private readonly IEmailService emailService;
+        public TeacherRegistrationCommandHandler(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, IEmailService emailService)
         {
             this.unitOfWork = unitOfWork;
             this.userManager = userManager;
@@ -60,8 +60,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Teachers.CrudOperations
                 await unitOfWork.TeacherRepository.AddAsync(teacher);
                 await unitOfWork.SaveChangesAsync();
 
-                Notification notification = EmailSending.ConfigureAccountCreationMessage(confirmationUrl, newApplicationUser, request.Password);
-                emailService.Send(notification);
+                EmailMessage notification = EmailSending.ConfigureAccountCreationMessage(confirmationUrl, newApplicationUser, request.Password);
+                await emailService.SendAsync(notification);
 
                 errorMessages = null;
             }

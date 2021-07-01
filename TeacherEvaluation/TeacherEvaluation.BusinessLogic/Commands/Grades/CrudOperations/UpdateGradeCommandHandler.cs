@@ -36,7 +36,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Grades.CrudOperations
                 enrollment.Grade.Value = request.Value;
                 enrollment.Grade.Date = request.Date;
                 enrollment.State = request.Value >= 5 ? EnrollmentState.Done : EnrollmentState.InProgress;
-                unitOfWork.EnrollmentRepository.Update(enrollment);
+                await unitOfWork.EnrollmentRepository.UpdateAsync(enrollment);
                 await unitOfWork.SaveChangesAsync();
             }
             else

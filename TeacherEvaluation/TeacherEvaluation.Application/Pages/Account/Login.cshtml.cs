@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Commands.Accounts;
 
@@ -38,7 +39,7 @@ namespace TeacherEvaluation.Application.Pages.Account
                 LoginCommand loginUserCommand = new LoginCommand { Email = Email, Password = Password };
                 LoginResult loginResult = await mediator.Send(loginUserCommand);
 
-                if (loginResult.ErrorMessages == null)
+                if (!loginResult.ErrorMessages.Any())
                 {
                     return RedirectToPage($"../MyProfile/{loginResult.UserRole}");
                 }

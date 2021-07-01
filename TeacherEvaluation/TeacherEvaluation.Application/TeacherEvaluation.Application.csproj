@@ -20,7 +20,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
-    <PackageReference Include="Sparc.TagCloud" Version="0.0.1" />
     <PackageReference Include="SweetAlert" Version="1.0.0" />
   </ItemGroup>
 

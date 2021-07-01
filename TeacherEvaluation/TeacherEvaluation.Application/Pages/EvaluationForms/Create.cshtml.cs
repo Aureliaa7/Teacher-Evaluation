@@ -41,14 +41,14 @@ namespace TeacherEvaluation.Application.Pages.EvaluationForms
         [Required(ErrorMessage = "The start date is required")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [Display(Name = "Start date")]
-        [ValidateStartDateRange]
+        [ValidateEvaluationFormStartDate]
         public DateTime StartDate { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "The end date is required")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [Display(Name = "End date")]
-        [ValidateEndDateRange]
+        [ValidateEvaluationFormEndDate]
         public DateTime EndDate { get; set; }
 
         [BindProperty]

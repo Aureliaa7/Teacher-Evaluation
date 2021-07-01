@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,7 +17,6 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Accounts
             this.signInManager = signInManager;
             this.userManager = userManager;
             loginResult = new LoginResult();
-            loginResult.ErrorMessages = new List<string>();
         }
 
         public async Task<LoginResult> Handle(LoginCommand command, CancellationToken cancellationToken)
@@ -27,14 +25,13 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Accounts
 
             if (result.Succeeded)
             {
-                loginResult.ErrorMessages = null;
                 var user = await userManager.FindByEmailAsync(command.Email);
                 var roles = await userManager.GetRolesAsync(user);
                 loginResult.UserRole = roles.FirstOrDefault();
             }
             else
             {
-                loginResult.ErrorMessages.Add("Invalid login attempt");
+                loginResult.ErrorMessages.Add("Wrong credentials");
             }
             return loginResult;
         }

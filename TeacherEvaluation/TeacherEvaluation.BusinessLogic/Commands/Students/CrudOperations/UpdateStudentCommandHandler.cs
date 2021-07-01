@@ -32,7 +32,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Students.CrudOperations
                 studentToBeUpdated.User.LastName = request.LastName;
                 studentToBeUpdated.User.Email = request.Email;
                 studentToBeUpdated.User.FathersInitial = request.FathersInitial;
-                unitOfWork.StudentRepository.Update(studentToBeUpdated);
+                await unitOfWork.StudentRepository.UpdateAsync(studentToBeUpdated);
                 await unitOfWork.SaveChangesAsync();
             }
             else

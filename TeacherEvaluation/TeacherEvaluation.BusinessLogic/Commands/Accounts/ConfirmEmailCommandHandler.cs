@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TeacherEvaluation.Domain.Identity;
@@ -32,10 +33,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Accounts
 
             if (!result.Succeeded)
             {
-                foreach (var error in result.Errors)
-                {
-                    errorMessages.Add(error.Description);
-                }
+                errorMessages.AddRange(result.Errors.Select(err => err.Description));
             }
 
             return errorMessages;

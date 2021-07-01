@@ -12,7 +12,7 @@ namespace TeacherEvaluation.DataAccess.Repositories.Interfaces
         Task<T> AddAsync(T entity);
         Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities);
         Task<T> RemoveAsync(Guid id);
-        T Update(T entity);
+        Task<T> UpdateAsync(T entity);
         Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate);
         Task<T> GetAsync(Expression<Func<T, bool>> predicate);
     }

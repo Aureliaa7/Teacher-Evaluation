@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <PackageReference Include="MailKit" Version="2.12.0" />
-    <PackageReference Include="Sparc.TagCloud" Version="0.0.1" />
   </ItemGroup>
 
   <ItemGroup>

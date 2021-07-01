@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using TeacherEvaluation.BusinessLogic.Commands.Accounts;
@@ -30,12 +30,11 @@ namespace TeacherEvaluation.Application.Pages.Account
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [NotMapped]
         [Compare(nameof(NewPassword), ErrorMessage = "The password and confirmation password do not match.")]
         [Display(Name = "Confirm password")]
         public string ConfirmedPassword { get; set; }
 
-        public List<string> ErrorMessages { get; set; }
+        public List<string> ErrorMessages { get; set; } = new List<string>();
 
         public ChangePasswordModel(IMediator mediator)
         {
@@ -57,15 +56,14 @@ namespace TeacherEvaluation.Application.Pages.Account
                     NewPassword = NewPassword
                 };
 
-                List<string> responseError = await mediator.Send(changePasswordCommand);
+                ErrorMessages = await mediator.Send(changePasswordCommand);
 
-                if (responseError == null)
+                if (!ErrorMessages.Any())
                 {
                     string role = User.FindFirstValue(ClaimTypes.Role);
 
                     return RedirectToPage($"/MyProfile/{role}");
                 }
-                ErrorMessages = responseError;
             }
             return Page();
         }

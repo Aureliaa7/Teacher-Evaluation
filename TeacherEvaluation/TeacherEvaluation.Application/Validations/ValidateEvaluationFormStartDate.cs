@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TeacherEvaluation.Application.Validations
 {
-    public class ValidateStartDateRange : ValidationAttribute
+    public class ValidateEvaluationFormStartDate : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {

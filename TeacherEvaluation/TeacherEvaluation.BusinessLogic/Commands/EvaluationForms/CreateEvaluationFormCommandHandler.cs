@@ -16,12 +16,12 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
     public class CreateEvaluationFormCommandHandler : AsyncRequestHandler<CreateEvaluationFormCommand>
     {
         private readonly IUnitOfWork unitOfWork;
-        private readonly INotificationService notificationService;
+        private readonly IEmailService notificationService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public CreateEvaluationFormCommandHandler(
             IUnitOfWork unitOfWork, 
-            INotificationService notificationService,
+            IEmailService notificationService,
             UserManager<ApplicationUser> userManager)
         {
             this.unitOfWork = unitOfWork;
@@ -50,8 +50,8 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
             string startDate = request.StartDate.ToString("yyyy-MM-dd hh:mm:ss");
             string endDate = request.EndDate.ToString("yyyy-MM-dd hh:mm:ss");
             string interval = string.Join(" - ", startDate, endDate);
-            Notification notification = ConfigureNotificationMessage(interval);
-            notificationService.Send(notification);
+            EmailMessage notification = ConfigureNotificationMessage(interval);
+            await notificationService .SendAsync(notification);
         }
 
         private async Task AddQuestions(IEnumerable<string> questions, bool haveTextAnswer, Form form)
@@ -68,17 +68,18 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
             }
         }
 
-        private Notification ConfigureNotificationMessage(string interval)
+        private EmailMessage ConfigureNotificationMessage(string interval)
         {
-            Notification notification = CreateEvaluateTeacherNotification(interval);
+            EmailMessage notification = CreateEvaluateTeacherNotification(interval);
 
-            IList<NotificationAddress> recipients = GetStudentsAddresses();
-            AddMessageRecipients(recipients, notification);
-            AddMessageSender(notification);
+            IList<EmailAddress> toAddresses = GetStudentsAddresses();
+
+            ((List<EmailAddress>)notification.ToAddresses).AddRange(toAddresses);
+            notification.FromAddress = new EmailAddress { Name = "noreply-teacher.evaluation", Address = "teacher.evaluation.project2021@gmail.com" };
             return notification;
         }
 
-        private Notification CreateEvaluateTeacherNotification(string interval)
+        private EmailMessage CreateEvaluateTeacherNotification(string interval)
         {
             string bodyResourceName = "TeacherEvaluation.EmailSender.NotificationTemplates.EvaluateTeacherNotificationBody.txt";
             string subjectResourceName = "TeacherEvaluation.EmailSender.NotificationTemplates.EvaluateTeacherNotificationSubject.txt";
@@ -86,37 +87,29 @@ namespace TeacherEvaluation.BusinessLogic.Commands.EvaluationForms
             string notificationBody = ResourceProvider.GetResourceText(bodyResourceName);
             string notificationSubject = ResourceProvider.GetResourceText(subjectResourceName);
 
-            return new Notification
+            return new EmailMessage
             {
                 Subject = notificationSubject,
                 Content = string.Format(notificationBody, interval)
             };
         }
 
-        private IList<NotificationAddress> GetStudentsAddresses()
+        private IList<EmailAddress> GetStudentsAddresses()
         {
             IList<ApplicationUser> users = userManager.GetUsersInRoleAsync("Student").Result.ToList();
-            IList<NotificationAddress> notificationAddresses = new List<NotificationAddress>();
+            IList<EmailAddress> notificationAddresses = new List<EmailAddress>();
             foreach (ApplicationUser user in users)
             {
                 string name = string.Join(" ", user.LastName, user.FathersInitial, user.FirstName);
-                NotificationAddress notificationAddress = new NotificationAddress(name, user.Email);
+                EmailAddress notificationAddress = new EmailAddress
+                {
+                    Name = name,
+                    Address = user.Email
+                };
+
                 notificationAddresses.Add(notificationAddress);
             }
             return notificationAddresses;
-        }
-
-        private void AddMessageRecipients(IList<NotificationAddress> recipients, Notification notification)
-        {
-            foreach (NotificationAddress recipient in recipients)
-            {
-                notification.ToAddresses.Add(recipient);
-            }
-        }
-
-        private void AddMessageSender(Notification notification)
-        {
-            notification.FromAddress = new NotificationAddress("noreply-teacher.evaluation", "teacher.evaluation.project2021@gmail.com");
         }
     }
 }

@@ -7,10 +7,10 @@
 
     remove_tag_cloud();
     create_charts(search_details, layoutID);
+    // without this 200ms delay, the tag cloud will be displayed before the pie charts
     setTimeout(function () {
         create_tag_cloud(search_details, layoutID);
-    }, 100); 
-   // create_tag_cloud(search_details, layoutID);
+    }, 200); 
 }
 
 function create_charts(search_details, layoutId) {

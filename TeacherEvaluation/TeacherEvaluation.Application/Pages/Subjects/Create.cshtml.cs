@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -46,7 +47,7 @@ namespace TeacherEvaluation.Application.Pages.Subjects
 
         private bool ModelIsValid()
         {
-            return (SubjectName != null && NumberOfCredits != null && StudyYear != null && SpecializationId != null);
+            return (SubjectName != null && NumberOfCredits != null && StudyYear != null && SpecializationId != Guid.Empty);
         }
     }
 }

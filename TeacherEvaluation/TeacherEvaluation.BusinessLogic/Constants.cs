@@ -13,5 +13,6 @@ namespace TeacherEvaluation.BusinessLogic
             ".xls", ".xlt", ".xlm", ".xlsx", ".xlsm", ".xltx", ".xltm", ".xlsb", ".xla", ".xlam", ".xll", ".xlw" 
         };
         public const int MaxNumberOfTagsInWordCloud = 150;
+        public const int MinNumberOfDaysToEvaluateTeachers = 2;
     }
 }

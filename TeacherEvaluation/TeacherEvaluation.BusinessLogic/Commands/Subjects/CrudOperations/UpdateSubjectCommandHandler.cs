@@ -31,7 +31,7 @@ namespace TeacherEvaluation.BusinessLogic.Commands.Subjects.CrudOperations
                     subjectToBeUpdated.StudyYear = request.StudyYear;
                     subjectToBeUpdated.Specialization = specialization;
                     subjectToBeUpdated.Semester = request.Semester;
-                    unitOfWork.SubjectRepository.Update(subjectToBeUpdated);
+                    await unitOfWork.SubjectRepository.UpdateAsync(subjectToBeUpdated);
                     await unitOfWork.SaveChangesAsync();
                 }
                 else

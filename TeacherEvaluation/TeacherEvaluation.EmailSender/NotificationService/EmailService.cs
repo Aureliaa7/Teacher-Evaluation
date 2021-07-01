@@ -1,12 +1,13 @@
 ﻿using MailKit.Net.Smtp;
 using MimeKit;
 using System.Linq;
+using System.Threading.Tasks;
 using TeacherEvaluation.EmailSender.NotificationModel;
 using TeacherEvaluation.EmailSender.NotificationService.Interfaces;
 
 namespace TeacherEvaluation.EmailSender.NotificationService
 {
-    public class EmailService : INotificationService
+    public class EmailService : IEmailService
     {
 		private readonly IEmailConfiguration emailConfiguration;
 		public EmailService(IEmailConfiguration emailConfiguration)
@@ -14,7 +15,7 @@ namespace TeacherEvaluation.EmailSender.NotificationService
 			this.emailConfiguration = emailConfiguration;
 		}
 
-		public void Send(Notification notification)
+		public async Task SendAsync(EmailMessage notification)
 		{
 			var message = new MimeMessage();
 			message.To.AddRange(notification.ToAddresses.Select(recipient => new MailboxAddress(recipient.Name, recipient.Address)));
@@ -34,11 +35,13 @@ namespace TeacherEvaluation.EmailSender.NotificationService
 				var username = emailConfiguration.SmtpUsername;
 				var password = emailConfiguration.SmtpPassword;
 
-				emailClient.Connect(emailConfiguration.SmtpServer, emailConfiguration.SmtpPort, true);
+				// establish a connection to the specified mail server
+				await emailClient.ConnectAsync(emailConfiguration.SmtpServer, emailConfiguration.SmtpPort, true);
 				emailClient.AuthenticationMechanisms.Remove("XOAUTH2");
-				emailClient.Authenticate(emailConfiguration.SmtpUsername, emailConfiguration.SmtpPassword);
-				emailClient.Send(message);
-				emailClient.Disconnect(true);
+				await emailClient.AuthenticateAsync(emailConfiguration.SmtpUsername, emailConfiguration.SmtpPassword);
+				await emailClient.SendAsync(message);
+				// disconnect the service
+				await emailClient.DisconnectAsync(true);
 			}
 		}
 	}

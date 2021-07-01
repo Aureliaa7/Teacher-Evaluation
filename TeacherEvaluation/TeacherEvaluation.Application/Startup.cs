@@ -47,7 +47,7 @@ namespace TeacherEvaluation.Application
             }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddSingleton<IEmailConfiguration>(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
-            services.AddTransient<INotificationService, EmailService>();
+            services.AddTransient<IEmailService, EmailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
